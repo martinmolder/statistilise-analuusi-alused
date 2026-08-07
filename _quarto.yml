@@ -1,0 +1,82 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Statistilise analüüsi alused"
+  subtitle: "Praktikumimaterjalid, 2026 sügis"
+  author: "Martin Mölder"
+  date: today
+  date-format: "DD.MM.YYYY"
+  search: true
+  chapters:
+    - index.qmd
+    - part: "Alustamine"
+      chapters:
+        - 01-r-alused.qmd
+        - 02-andmete-laadimine.qmd
+    - part: "Andmete ettevalmistus"
+      chapters:
+        - 03-andmete-ettevalmistus-1.qmd
+        - 04-andmete-ettevalmistus-2.qmd
+    - part: "Andmete kirjeldamine"
+      chapters:
+        - 05-kirjeldamine-ja-visualiseerimine.qmd
+    - part: "Järeldav statistika"
+      chapters:
+        - 06-valim-ja-ebakindlus.qmd
+        - 07-hupoteeside-testimine.qmd
+    - part: "Seosed ja mudelid"
+      chapters:
+        - 08-korrelatsioon-ja-regressioon.qmd
+        - 09-mitmene-regressioon.qmd
+        - 10-tulemuste-esitamine.qmd
+        - 11-logistiline-regressioon.qmd
+
+lang: et
+
+# Eestikeelsed liidesetekstid. Quartol ei ole eesti keele tõlkefaili, seega
+# määrame vajalikud stringid ise.
+language:
+  title-block-author-single: "Autor"
+  title-block-author-plural: "Autorid"
+  title-block-published: "Avaldatud"
+  toc-title-document: "Selle peatüki sisu"
+  toc-title-website: "Selle peatüki sisu"
+  callout-tip-title: "Nõuanne"
+  callout-note-title: "Märkus"
+  callout-warning-title: "Hoiatus"
+  callout-important-title: "Oluline"
+  callout-caution-title: "Ettevaatust"
+  search-text-placeholder: "Otsi"
+  crossref-fig-title: "Joonis"
+  crossref-tbl-title: "Tabel"
+  section-title-footnotes: "Viited"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    number-sections: false
+    code-copy: true
+    code-overflow: wrap
+    fig-width: 7
+    fig-height: 4.5
+    link-external-icon: false
+
+# Välised lingid avanevad uues aknas (vt _extensions/valised-lingid.lua)
+filters:
+  - _extensions/valised-lingid.lua
+
+execute:
+  warning: false
+  message: false
+  echo: true
+  freeze: auto
+
+knitr:
+  opts_chunk:
+    comment: "##"
+    collapse: false

@@ -1,0 +1,262 @@
+# 2. Andmete laadimine
+
+Eelmises praktikumis tegime ise väikese andmetabeli. Päris töös nii ei lähe — andmed
+tulevad kuskilt mujalt ja meie esimene ülesanne on nad R-i sisse saada.
+
+## Kust meie andmed tulevad?
+
+Kogu kursuse vältel kasutame **Euroopa Sotsiaaluuringu** (*European Social Survey*, ESS)
+andmeid.
+
+ESS on suur rahvusvaheline küsitlusuuring, mida on läbi viidud alates 2001. aastast
+umbes iga kahe aasta tagant. Ta mõõdab inimeste hoiakuid, väärtusi ja käitumist
+kolmekümnes Euroopa riigis. Uuringut rahastatakse avalikest vahenditest ja **andmed on
+kõigile tasuta kättesaadavad** — seetõttu on ESS üks kõige laialdasemalt kasutatavaid
+andmestikke Euroopa sotsiaalteadustes.
+
+Meie kasutame **11. vooru** (ESS11), mille andmed koguti aastatel 2023–2024, ja sealt
+**Eesti osa**: 1293 vastajat.
+
+Mõned asjad, mida ESS-i kohta teada tasub:
+
+* **Valim on juhuvalim.** Vastajad ei ole vabatahtlikud, kes ise kuskil registreerusid.
+  Nad on juhuslikult välja valitud kogu Eesti elanikkonnast. See on kõige olulisem
+  asjaolu, mis lubab meil hiljem oma valimi põhjal üldistusi teha.
+* **Küsitlus on näost näkku.** Intervjueerija käib kodus ja küsib küsimused ette.
+* **Küsimustik on kahes osas.** Üks osa on igas voorus sama (usaldus, poliitiline huvi,
+  hoiakud sisserände suhtes), teine osa vahetub — igas voorus on üks või kaks
+  eriteemat. ESS11 eriteema oli tervis ja heaolu.
+
+> **Viitamine.** Kui sa kasutad ESS-i andmeid oma töös, siis pead neile viitama. Meie
+> andmestiku viide on:
+>
+> European Social Survey European Research Infrastructure (ESS ERIC) (2026). *ESS11 —
+> integrated file, edition 4.2.* Sikt — Norwegian Agency for Shared Services in Education
+> and Research. doi:10.21338/ess11e04_2
+
+Kui sa tahad hiljem oma bakalaureusetöö jaoks ESS-i andmeid, siis saad nad ise alla
+laadida aadressilt [europeansocialsurvey.org](https://www.europeansocialsurvey.org).
+Selleks tuleb luua tasuta konto.
+
+## Koodiraamat
+
+Andmefail üksi ei ütle sulle midagi. Muutuja nimi andmestiks on `lrscale` ja väärtus on 7 — mida
+see tähendab?
+
+Selle jaoks on **koodiraamat** (*codebook*). See on dokument, kus on kirjas iga muutuja
+kohta:
+
+* mis on tema nimi failis;
+* mis küsimus vastajale täpselt esitati, sõna-sõnalt;
+* mis väärtused on võimalikud ja mida iga väärtus tähendab;
+* kuidas on tähistatud puuduvad väärtused.
+
+ESS-i koodiraamat on meil failis `ESS11 codebook.html`. Ava ta oma veebilehitsejas ja
+otsi sealt üles muutuja `lrscale`.
+
+> **Ilma koodiraamatuta ei saa andmetega tööd teha.** Mitte "on raskem" — ei saa. Sa ei
+> tea, mida arvud tähendavad, sa ei tea, kummas skaala otsas on "rohkem", ja sa ei tea, millised
+> koodid tähendavad tegelikult "ei oska öelda".
+>
+> Enne kui sa mõnda muutujat kasutad, vaata ta koodiraamatust üle. Iga kord. See on
+> viieminutiline töö, mis päästab sind tundide kaupa segadusest.
+
+Kõige olulisem küsimus, mida koodiraamatult küsida: **kummas otsas on rohkem?**
+Küsitlustes on väga tavaline, et skaala on "tagurpidi" — näiteks 1 = väga huvitatud ja
+4 = üldse mitte huvitatud. Ehk siis suurem number tähistab tegelikult vähemal määral seda omadust, mida see muutuja mõõdab. Kui sa seda ei märka, siis tuleb kogu su analüüs
+vastupidises suunas ja järeldused rist vastupidised võrreldes sellega, mis on õige. 
+
+## Failiformaadid
+
+Andmed võivad tulla mitmes formaadis. Igaühe R-i laadimise jaoks on oma funktsioon.
+
+### R-i enda formaat
+
+R-il on oma andmeformaat laiendiga `.rdata` (või `.RData`). Seda on kõige lihtsam
+salvestada ja laadida.
+
+* `load()` loeb faili töökeskkonda. Ainus argument on faili nimi.
+* `save()` salvestab. Esimene argument on objekt, mida salvestada, ja argument `file`
+  ütleb, mis nimega fail teha.
+
+```{r}
+#| label: rdata
+#| eval: false
+load("data/ess11_ee_clean.rdata")
+save(data, file = "data/minu_andmed.rdata")
+```
+
+Pane tähele üht erisust: `load()` **ei vaja** objekti nime. Fail teab ise, mis objektid
+tema sees on, ja nad ilmuvad töökeskkonda oma nimedega. Seetõttu tasub `load()` järel
+alati vaadata, mis töökeskkonda tekkis.
+
+> Kui sa töötad R-ga, siis on mõistlik oma töödeldud andmed salvestada just selles
+> formaadis. Ta on mahult väike, kiire ja säilitab kõik — faktorid, sildid, andmetüübid.
+
+### CSV failid
+
+CSV (*comma separated values*) on kõige ühilduvam formaat. Sisuliselt on tegemist
+tekstifailiga, kus väärtused on eraldatud komadega. Lugemiseks on funktsioon `read.csv()` ja salvestamiseks `write.csv()`.
+
+Kolm argumenti, mida läheb peaaegu alati vaja:
+
+* `sep` ütleb, **mis märk väärtusi üksteisest eraldab**. Vaikimisi on see koma, aga see ei ole sugugi alati nii — Euroopas kasutatakse sageli semikoolonit, sest koma on siin kümnendkohaeraldaja. Kui fail avaneb ühe pika segase veeruna, siis on peaaegu alati just see argument valesti.
+* `header` ütleb, kas **esimeses reas on muutujate nimed** või juba andmed.
+* `row.names` ütleb salvestamisel, kas ridade numbrid tuleb eraldi veeruna faili kirjutada. Enamasti ei ole vaja.
+
+```{r}
+#| label: csv
+#| eval: false
+andmed <- read.csv("fail.csv", sep = ",", header = TRUE)
+write.csv(andmed, file = "valjund.csv", row.names = FALSE)
+```
+
+> CSV on hea vahetusformaat, aga tal on üks suur puudus: ta **ei säilita mitte
+> midagi** peale toorete väärtuste. Sildid, faktorid, puuduvate väärtuste
+> definitsioonid — kõik kaob.
+
+### SPSS failid
+
+SPSS on statistikaprogramm, mida on küsitlusuuringutes kaua kasutatud, ja väga paljud
+andmestikud — sealhulgas ESS — on saadaval ka selles formaadis, laiendiga `.sav`.
+
+Selle lugemiseks kasutame paketti **haven** ja funktsiooni `read_sav()`. Tulemuse
+mõõtmeid — esmalt ridade, siis veergude arvu — näitab funktsioon `dim()`.
+
+```{r}
+#| label: sav
+library(haven)
+
+ee <- read_sav("data/ess11_ee_raw.sav")
+
+dim(ee)
+```
+
+Meil on 1293 vastajat ja 426 muutujat.
+
+> **Vanemates materjalides õpetatakse funktsiooni `read.spss()` paketist `foreign`.**
+> See töötab ka, aga on aeglane ja kaotab osa infost. `haven::read_sav()` on tänapäeval
+> standard. Kui sa kohtad kuskil vana koodi, siis tea, mis see on — aga ise kasuta uut.
+
+### Stata failid
+
+Stata on veel üks statistikaprogramm, laiend `.dta`. Sama pakett `haven` loeb ka neid —
+selleks on funktsioon `read_dta()`, mis töötab täpselt nagu `read_sav()`.
+
+```{r}
+#| label: dta
+#| eval: false
+andmed <- read_dta("fail.dta")
+```
+
+## Esmane pilk andmetele
+
+Kui andmed on sees, siis mida esimesena teha?
+
+Funktsioon `head()` näitab esimesi ridu.
+
+```{r}
+#| label: head
+head(ee[, c("idno", "agea", "gndr", "lrscale")])
+```
+
+Funktsioon `str()` näitab objekti struktuuri — muutujad, nende tüübid ja esimesed
+väärtused.
+
+```{r}
+#| label: str
+str(ee[, c("idno", "agea", "gndr", "lrscale")])
+```
+
+Funktsioon `summary()` annab igast muutujast kokkuvõtte.
+
+```{r}
+#| label: summary
+summary(ee[, c("agea", "lrscale")])
+```
+
+Funktsioon `table()` teeb sagedustabeli — loendab, mitu korda iga väärtus esineb.
+
+```{r}
+#| label: table
+table(ee$gndr)
+```
+
+Ja RStudios saab andmetabelit vaadata ka tabelina: tee "Environment" aknas objekti nimel
+hiireklõps.
+
+Kui objekti enam vaja ei lähe, saab ta töökeskkonnast eemaldada funktsiooniga `rm()`.
+
+```{r}
+#| label: rm
+#| eval: false
+rm(ee)
+```
+
+## Muutujate skaalad
+
+Enne kui edasi läheme, kordame üle kõige olulisema asja, mida muutuja kohta teada tuleb:
+**mis skaalal ta on mõõdetud.** Sellest sõltub, millist analüüsi temaga üldse teha
+tohib.
+
+Muutujad jagunevad kõige üldisemalt kaheks: **pidevad** ja **kategoorilised**.
+
+### Pidevad muutujad
+
+Pidevad muutujad on arvulised muutujad, mis võivad kahe arvu vahel võtta ükskõik
+millise väärtuse. Tüüpiliselt on need nähtused, mis "loomulikult" esinevad numbritena —
+vanus, sissetulek eurodes, pikkus.
+
+Pidevatel muutujatel on kaks alaliiki. Kõige lihtsam viis nende eristamiseks on küsida:
+**kas 0 tähendab selle nähtuse puudumist?**
+
+* Kui jah — **suhteskaala**. Näiteks raha või vanus: 0 eurot tähendab, et raha ei ole.
+* Kui ei — **intervallskaala**. Näiteks temperatuur Celsiuse skaalal: 0 kraadi ei
+  tähenda, et temperatuuri ei ole.
+
+Nende meetodite puhul, mida me sellel kursusel vaatame, ei ole nende kahe vahel vahet.
+Oluline on ainult teada, kas muutuja on pidev või mitte.
+
+### Kategoorilised muutujad
+
+Kategoorilised muutujad jagavad juhtumid gruppidesse. Ka nemad jagunevad kaheks,
+sõltuvalt sellest, kas kategooriatel on **järjestus**.
+
+* **Ordinaalne** muutuja — kategooriatel on järjestus. Näiteks haridustase või
+  sissetulekudetsiil: on selge, milline kategooria on "suurem".
+* **Nominaalne** muutuja — järjestust ei ole. Näiteks erakondlik eelistus või elukoha
+  maakond. Ei ole mõtet küsida, kas Reformierakond on Keskerakonnast "suurem".
+
+**Binaarne** muutuja on kategoorilise muutuja erivorm, millel on täpselt kaks
+kategooriat — näiteks kas käis valimas või ei käinud. Neid kodeeritakse tavaliselt
+arvudega 0 ja 1 ning nad on regressioonimudelites eriti kasulikud.
+
+### Praktiline reegel
+
+Piir ordinaalsete ja pidevate muutujate vahel on hägune. Küsitlusuuringutes on
+peaaegu kõik muutujad rangelt võttes ordinaalsed.
+
+> **Reegel, mida sellel kursusel kasutame:** kui ordinaalsel muutujal on **viis või
+> enam kategooriat**, mis on järjest nummerdatud, siis võib teda statistilises mõttes
+> käsitleda pideva muutujana. Sellisel juhul ei ole pidevate muutujatega seotud
+> statistilised eeldused liiga palju rikutud.
+
+Meie andmestikus tähendab see näiteks, et vasak-parem enesepaigutust (skaala 0–10) ja
+usaldust poliitikute vastu (0–10) võime käsitleda pidevatena, aga poliitilist huvi
+(neli kategooriat) mitte.
+
+## Järgmiseks
+
+Nüüd, kus andmed on sees ja me teame, mida muutujate skaalad tähendavad, saame hakata
+andmestikku korda tegema. Sellega tegeleme kahes järgmises praktikumis — ja see on
+kursuse kõige praktilisem osa.
+
+## Harjutused
+
+::: {.harjutus}
+**1. Koodiraamat.** Otsi ESS-i koodiraamatust üles muutujad `stfeco`, `happy` ja `rlgatnd`. Kirjuta iga kohta välja: mis küsimus esitati, mis on skaala ulatus ja **kummas otsas on rohkem**.
+
+**2. Andmete sisse lugemine.** Loe fail `data/ess11_ee_raw.sav` sisse ja vaata, mitu rida ja veergu seal on. Vaata funktsiooniga `summary()` muutujat `agea` — mis on kõige noorem ja kõige vanem vastaja?
+
+**3. Skaalad.** Otsusta iga muutuja kohta, mis skaalal ta on mõõdetud ja kas teda võib käsitleda pidevana: `gndr`, `eisced`, `happy`, `prtvtiee`, `agea`. Põhjenda.
+:::

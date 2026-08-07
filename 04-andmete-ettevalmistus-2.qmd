@@ -1,0 +1,490 @@
+# 4. Andmete ettevalmistus II
+
+Eelmises praktikumis vaatasime, mis meie andmestikus on. Nüüd teeme temast
+analüüsivalmis andmestiku: valime muutujad, kodeerime nad ümber, ehitame mitmest
+küsimusest uued muutujad ja salvestame tulemuse.
+
+```{r}
+#| label: paketid
+library(haven)
+library(dplyr)
+
+ee_raw <- read_sav("data/ess11_ee_raw.sav")
+```
+
+## Muutujate valimine
+
+426 muutujast läheb meile vaja umbes kolmekümmend. Valime nad välja funktsiooniga
+`select()`, millega tegime tutvust eelmises praktikumis.
+
+Kirjutame valiku teemade kaupa ja kommenteerime ära, mis on mis. See ei ole
+ilutsemine — kolme kuu pärast ei mäleta sa ise ka, miks just need muutujad valitud said.
+
+```{r}
+#| label: vali
+ee <- ee_raw |>
+  select(
+    idno, pspwght, anweight,
+    # demograafia
+    agea, gndr, eisced, hinctnta, domicil,
+    # poliitika
+    lrscale, polintr, vote, prtvtiee, stfdem, ppltrst,
+    # suhtumine sisserändesse (indeksi koostisosad)
+    imbgeco, imueclt, imwbcnt,
+    # institutsionaalne usaldus (indeksi koostisosad)
+    trstprl, trstlgl, trstplc, trstplt, trstprt, trstep, trstun,
+    # tervis
+    health
+  )
+
+dim(ee)
+```
+
+## Valimisosalus: kategooria, mis ei ole puuduv väärtus
+
+Eelmises praktikumis leidsime, et muutujal `vote` on kolm kategooriat ja kolmas neist —
+"ei olnud hääleõiguslik", 111 inimest — tuleb R-i sisse päris arvuna 3.
+
+```{r}
+#| label: vote-enne
+table(zap_labels(ee$vote), useNA = "ifany")
+```
+
+Teeme sellest korraliku muutuja. Meil on vaja kahte asja korraga:
+
+1. kategooria 3 peab muutuma puuduvaks väärtuseks;
+2. kodeering 1/2 peab muutuma kodeeringuks 1/0, sest logistiline regressioon
+   (praktikum 5) tahab sõltuvat tunnust just sellisel kujul.
+
+Selleks on funktsioon `case_when()`. Ta on **mitmene tingimuslause**: iga rida tema sees
+on kujul `tingimus ~ väärtus` ning neid loetakse ülevalt alla — esimene sobiv tingimus
+annab tulemuse. Argument `.default` määrab, mis saab kõigist ülejäänutest.
+
+`NA_real_` on puuduv väärtus arvulise muutuja jaoks. R-is on igal andmetüübil oma
+`NA`-variant (`NA_character_` tekstile, `NA_real_` arvudele) ja `case_when()` nõuab, et
+kõik harud annaksid sama tüüpi väärtuse.
+
+```{r}
+#| label: vote-recode
+ee <- ee |>
+  mutate(
+    valis = case_when(
+      as.numeric(vote) == 1 ~ 1,   # jah, käisin valimas
+      as.numeric(vote) == 2 ~ 0,   # ei käinud
+      .default = NA_real_          # 3 = ei olnud hääleõiguslik, ja NA-d
+    )
+  )
+
+table(ee$valis, useNA = "ifany")
+```
+
+871 valis, 304 ei valinud, 118 on puuduvad (111 hääleõiguseta + 7 vastamata).
+
+> Kontrolli alati ümber kodeerimise järel tabeliga, kas tulemus on selline, nagu sa
+> ootasid. Arvud peavad kokku minema. Kui nad ei lähe, siis on tingimustes viga — ja
+> `case_when()` ei ütle sulle seda ise.
+
+## Mitmest küsimusest üks muutuja
+
+### Miks küsitluses ei ole päris pidevaid muutujaid
+
+Peaaegu kõik meid huvitavad nähtused — hoiakud, väärtused, usaldus — ei ole
+otseselt mõõdetavad. Me küsime nende kohta küsimusi ja vastaja valib mõne vastuse skaalal, millel võib olla neli või seitse või üksteist (või mõni muu arv) kategooriat.
+
+Iga selline üksik küsimus on **jäme ja mürane mõõdik**. Jäme, sest kategooriaid on vähe ja
+vastaja tegelik hoiak jääb kuhugi kahe astme vahele. Mürane, sest vastust mõjutab
+küsimuse sõnastus, vastaja tuju ja see, mida temalt eelmisena küsiti.
+
+Lahendus on küsida sama asja kohta **mitu küsimust** ja need kokku panna. Nii saame
+peenema skaala ja osa juhuslikust mürast taandub välja.
+
+### Miks mitte lihtsalt keskmine
+
+Kõige lihtsam viis kokku panemiseks oleks võtta küsimuste keskmine. See aga eeldab, et
+kõik küsimused mõõdavad uuritavat nähtust **ühtviisi hästi**, mis üldiselt ei ole tõsi.
+Mõni küsimus tabab asja täpsemalt, mõni on kaudsem.
+
+Seetõttu kasutame **faktoranalüüsi**. Selle mõte on järgmine: kui mitu küsimust on
+omavahel seotud, siis on selle taga ilmselt üks ühine nähtus, mida nad kõik mõõdavad.
+See ühine nähtus ongi **faktor**. Faktoranalüüs leiab ta üles ja annab meile kaks asja:
+
+* **faktorlaadungid** — kui tugevalt iga küsimus selle ühise nähtusega seotud on. Mida
+  suurem laadung, seda paremini see küsimus nähtust mõõdab ja seda rohkem ta
+  lõpptulemuses kaalub;
+* **faktorskoorid** — iga vastaja väärtus sellel leitud ühisel nähtusel. Just see ongi
+  meie uus muutuja.
+
+> Rohkem me faktoranalüüsi sellel kursusel ei käsitle — see on omaette teema omaette
+> kursusel. Meile piisab teadmisest, et ta annab paremini kaalutud kokkuvõtte muutujatest, mis mõõdavad sama asja, kui lihtne
+> keskmine.
+
+### Suhtumine sisserändesse
+
+Kolm küsimust, kõik skaalal 0–10:
+
+| Muutuja | 0 | 10 |
+|---------|---|-----|
+| `imbgeco` | halb majandusele | hea majandusele |
+| `imueclt` | kahjustab kultuuri | rikastab kultuuri |
+| `imwbcnt` | halvem koht elamiseks | parem koht elamiseks |
+
+Enne kokku panemist tuleb kaks asja üle kontrollida: kas küsimused on **omavahel seotud** ja kas nad on **samas suunas**. Mõlemad on siin täidetud — küsimused on tugevalt seotud ja kõik käivad samas suunas, nii et suurem väärtus tähendab positiivsemat suhtumist.
+
+> Kuidas seda kontrollida, vaatame praktikumis 8, kui jõuame korrelatsiooni juurde. Praegu võta see teadmiseks.
+
+Nüüd faktoranalüüs funktsiooniga `factanal()`. Argumendid:
+
+* esimene argument — andmetabel ainult nende küsimustega, mida analüüsida;
+* `factors` — mitu ühist nähtust otsida. Meil on üks;
+* `scores` — väärtusega `"regression"` palume arvutada iga vastaja faktorskoori.
+
+Enne seda tuleb andmed ette valmistada. `factanal()` tahab tavalisi arvulisi muutujaid ja ei oska puuduvate väärtustega midagi peale hakata.
+
+* `lapply()` rakendab funktsiooni igale andmetabeli veerule eraldi. Siin: tee igast veerust `as.numeric()`. Ta sarnaneb funktsioonile `sapply()`, mida kasutasime eelmises praktikumis, kuid annab tulemuse nimekirjana.
+* `as.data.frame()` teeb saadud nimekirjast tagasi andmetabeli.
+* `complete.cases()` annab `TRUE` nende ridade kohta, kus ühtegi puuduvat väärtust ei ole.
+
+```{r}
+#| label: ranne-fa
+ranne_kysimused <- c("imbgeco", "imueclt", "imwbcnt")
+
+ranne_veerud <- lapply(ee[ranne_kysimused], as.numeric)
+ranne_andmed <- as.data.frame(ranne_veerud)
+ranne_terved <- complete.cases(ranne_andmed)
+
+ranne_fa <- factanal(
+  ranne_andmed[ranne_terved, ],
+  factors = 1,
+  scores = "regression"
+)
+
+ranne_fa$loadings
+```
+
+Laadungid on kõik tugevad ja positiivsed. Kõige rohkem kaalub kolmas küsimus (kas sisserändajad teevad Eesti paremaks või halvemaks kohaks), kõige vähem esimene (mõju majandusele).
+
+Rida `Proportion Var` ütleb, kui suure osa kolme küsimuse koguvarieeruvusest see üks ühine nähtus ära seletab.
+
+### Faktorskooride tagasi panemine
+
+Nüüd paneme skoorid andmetabelisse. Siin on üks konks, mis kipub ununema: **kuna faktoranalüüs kasutas ainult osa ridadest, ei saa me skoore lihtsalt veeruks panna** — nad ei satuks õigete inimeste kohale.
+
+Seega teeme esmalt tühja muutuja ja täidame ainult need read, mille kohta skoor arvutati.
+
+```{r}
+#| label: ranne-skoorid
+ee$ranne <- NA_real_
+ee$ranne[ranne_terved] <- ranne_fa$scores[, 1]
+```
+
+Teine konks: **faktori suund on matemaatiliselt suvaline.** Analüüs ei tea, kumb ots on "positiivne suhtumine" — ta leiab ainult telje, mitte selle nime. Seega kontrollime ise üle ja pöörame vajadusel ümber.
+
+Selleks on **tingimuslause** `if () { }`. Ümarsulgudes on tingimus, looksulgudes see, mida teha, kui tingimus on tõene. Kui tingimus on väär, siis ei tehta midagi.
+
+> Erinevus funktsioonidest `if_else()` ja `case_when()`: need kaks töötavad muutuja iga väärtusega eraldi. `if ()` otsustab **ühe korra**, kas tervet plokki üldse käivitada.
+
+Suuna kontrollimiseks kasutame funktsiooni `cor()`, mis mõõdab kahe muutuja seost. Meid huvitab siin ainult **märk**: kui faktorskoor on mõne algse küsimusega negatiivselt seotud, siis on ta tagurpidi ja tuleb ümber pöörata. Argument `use = "complete.obs"` ütleb, et arvutada ainult nende vastajate põhjal, kellel mõlemad väärtused olemas on.
+
+> Korrelatsiooni juurde tuleme põhjalikult tagasi praktikumis 8. Praegu on vaja teada ainult üht asja: **positiivne arv tähendab sama suunda, negatiivne vastupidist.**
+
+Miinusmärk arvu ees pöörab kõik väärtused vastasmärgiliseks.
+
+```{r}
+#| label: ranne-suund
+imwbcnt_arvuna <- as.numeric(ee$imwbcnt)
+ranne_suund <- cor(ee$ranne, imwbcnt_arvuna, use = "complete.obs")
+
+if (ranne_suund < 0) {
+  ee$ranne <- -ee$ranne
+}
+
+summary(ee$ranne)
+```
+
+Suurem väärtus tähendab nüüd positiivsemat suhtumist sisserändesse.
+
+::: {.arutelu}
+**Arutelu.** Faktorskoori keskmine on null ja standardhälve umbes üks. **Mida tähendab siis see, kui inimese väärtus on −1,5?** Ja kas seda muutujat saab tõlgendada nii nagu algseid küsimusi skaalal 0–10?
+:::
+
+### Institutsionaalne usaldus
+
+Teeme sama asja teise näite peal. ESS-is küsitakse usalduse kohta seitset küsimust, kõik skaalal 0–10, kus 0 tähendab "ei usalda üldse" ja 10 "usaldan täielikult":
+
+| Muutuja | Mida usaldatakse |
+|---|---|
+| `trstprl` | Riigikogu |
+| `trstlgl` | õigussüsteem |
+| `trstplc` | politsei |
+| `trstplt` | poliitikud |
+| `trstprt` | erakonnad |
+| `trstep` | Euroopa Parlament |
+| `trstun` | ÜRO |
+
+Ka need on eelnevalt üle kontrollitud: kõik samas suunas ja omavahel tugevalt seotud.
+
+```{r}
+#| label: usaldus-fa
+usaldus_kysimused <- c(
+  "trstprl", "trstlgl", "trstplc",
+  "trstplt", "trstprt", "trstep", "trstun"
+)
+
+usaldus_veerud <- lapply(ee[usaldus_kysimused], as.numeric)
+usaldus_andmed <- as.data.frame(usaldus_veerud)
+usaldus_terved <- complete.cases(usaldus_andmed)
+
+usaldus_fa <- factanal(
+  usaldus_andmed[usaldus_terved, ],
+  factors = 1,
+  scores = "regression"
+)
+
+usaldus_fa$loadings
+```
+
+Kõik seitse laadungit on positiivsed ja tugevad. Kõige nõrgemalt laadub usaldus politsei vastu — inimesed, kes ei usalda poliitikuid, usaldavad politseid sageli siiski.
+
+```{r}
+#| label: usaldus-skoorid
+ee$usaldus <- NA_real_
+ee$usaldus[usaldus_terved] <- usaldus_fa$scores[, 1]
+
+trstplt_arvuna <- as.numeric(ee$trstplt)
+usaldus_suund <- cor(ee$usaldus, trstplt_arvuna, use = "complete.obs")
+
+if (usaldus_suund < 0) {
+  ee$usaldus <- -ee$usaldus
+}
+
+summary(ee$usaldus)
+```
+
+> **Pane tähele, et kood on mõlema indeksi puhul täpselt sama kujuga.** Muutuvad ainult muutujate nimed. See ongi üks põhjus, miks tasub kood kirjutada selgete sammudena — teist korda on ta juba valmis muster, mida saab kohandada.
+
+
+## Väikeste kategooriate kokku panemine
+
+Vaatame erakondlikku eelistust. Funktsioon `as_factor()` teeb `haven_labelled`
+muutujast faktori, kasutades kategooriate nimedena silte.
+
+Funktsioon `sort()` järjestab tabeli; argument `decreasing = TRUE` teeb seda suuremast
+väiksemani.
+
+```{r}
+#| label: erakonnad
+erakond_kogu <- as_factor(ee$prtvtiee)
+
+sort(table(erakond_kogu), decreasing = TRUE)
+```
+
+Kuus erakonda on korraliku suurusega — 93 kuni 231 vastajat. Ülejäänud on üksikud
+juhtumid: 21, 10, 5, 3.
+
+**Viie vastajaga grupi kohta ei saa statistiliselt midagi öelda.** Iga arv, mille sa
+selle grupi kohta arvutad, sõltub täielikult sellest, kes need viis inimest juhtumisi
+olid. Seega paneme nad kokku kategooriasse "muu".
+
+Ühtlasi kasutame **lühikesi nimetusi**. Pikad erakonnanimed ei mahu tabelitesse ega joonistele ära ning lõhuvad vormistuse. Lühendame kohe siin, mitte hiljem iga joonise juures eraldi.
+
+Kirjutame iga sammu eraldi reale, et oleks näha, mis järjekorras asjad toimuvad.
+
+```{r}
+#| label: erakond-kokku
+# 1. samm. Teeme siltidest faktori ja siis tekstilise muutuja, et nendega
+#    saaks võrrelda.
+erakond_faktorina <- as_factor(ee$prtvtiee)
+erakond_tekstina <- as.character(erakond_faktorina)
+
+# 2. samm. case_when() annab igale suuremale erakonnale lühikese nime ja
+#    kõigile ülejäänutele "Muu". Puuduvad väärtused peavad puuduvaks jääma,
+#    mitte muutuma kategooriaks "Muu" -- seetõttu on neil oma rida.
+erakond_lyhike <- case_when(
+  erakond_tekstina == "Eesti Reformierakond" ~ "Reform",
+  erakond_tekstina == "Isamaa Erakond" ~ "Isamaa",
+  erakond_tekstina == "Eesti 200" ~ "E200",
+  erakond_tekstina == "Sotsiaaldemokraatlik Erakond" ~ "SDE",
+  erakond_tekstina == "Eesti Konservatiivne Rahvaerakond" ~ "EKRE",
+  erakond_tekstina == "Eesti Keskerakond" ~ "Kesk",
+  is.na(erakond_tekstina) ~ NA_character_,
+  .default = "Muu"
+)
+
+# 3. samm. factor() teeb tekstist kategoorilise muutuja. Argument levels
+#    määrab kategooriate JÄRJEKORRA.
+ee$erakond <- factor(
+  erakond_lyhike,
+  levels = c("Reform", "Isamaa", "E200", "SDE", "EKRE", "Kesk", "Muu")
+)
+
+table(ee$erakond, useNA = "ifany")
+```
+
+> **Kategooriate järjekord on oluline.** Esimene kategooria jääb regressioonimudelis
+> **referentskategooriaks** — selleks, mille suhtes kõiki teisi võrreldakse (praktikum
+> 11). Joonistel kuvatakse kategooriad samuti selles järjekorras. Seega tasub järjekord
+> läbi mõelda juba siin, mitte hiljem iga joonise juures eraldi.
+
+## Siltide tõlkimine
+
+ESS-i sildid on inglise keeles. Kuna kogu meie töö on eesti keeles ja need sildid
+lähevad hiljem otse joonistele ja tabelitesse, on kõige mõistlikum nad **kohe siin ära
+tõlkida.** Nii ei pea seda tegema iga joonise juures uuesti.
+
+Funktsioon `levels()` näitab faktori kategooriaid nende järjekorras. Sama funktsiooniga
+saab neid ka **asendada**, kui kirjutada ta võrdusmärgist vasakule.
+
+> **Kontrolli alati enne asendamist, mis järjekorras kategooriad on.** Kui sa selle
+> valesti arvad, siis satuvad sildid vale kategooria juurde — ja mitte miski ei anna
+> sulle veateadet. Sinu joonisel on lihtsalt vale info.
+
+```{r}
+#| label: sildid-vaata
+levels(as_factor(ee$gndr))
+levels(as_factor(ee$domicil))
+levels(as_factor(ee$health))
+```
+
+Funktsioon `droplevels()` viskab välja kategooriad, mida andmetes tegelikult ei esine —
+siltides on ka "Refusal" ja "Don't know", aga ühelgi vastajal neid väärtusi ei ole.
+
+```{r}
+#| label: sildid-tolgi
+ee$sugu <- droplevels(as_factor(ee$gndr))
+levels(ee$sugu) <- c("mees", "naine")
+
+ee$elukoht <- droplevels(as_factor(ee$domicil))
+levels(ee$elukoht) <- c(
+  "suurlinn",
+  "äärelinn",
+  "väikelinn",
+  "maa-asula",
+  "maakodu"
+)
+
+
+table(ee$elukoht)
+```
+
+## Ülejäänud muutujad
+
+Pidevad ja järjestatud muutujad teeme arvulisteks ja anname neile eestikeelsed nimed.
+
+Muutuja `eisced` on haridustase skaalal 1–7. ESS-i failis on ka koodid 0 ("ei saa
+harmoniseerida") ja 55 ("muu"), mis **ei ole** märgitud puuduvateks väärtusteks. Eesti
+andmetes neid ei esine — aga me kontrollime seda, mitte ei eelda.
+
+```{r}
+#| label: eisced-kontroll
+table(zap_labels(ee$eisced), useNA = "ifany")
+```
+
+Ainult väärtused 1–7. Korras.
+
+```{r}
+#| label: umbernimetamine
+ee <- ee |>
+  mutate(
+    vanus = as.numeric(agea),
+    haridus = as.numeric(eisced),
+    sissetulek = as.numeric(hinctnta),
+    vasak_parem = as.numeric(lrscale),
+    usaldus_pol = as.numeric(trstplt),
+    usaldus_rii = as.numeric(trstprl),
+    usaldus_inim = as.numeric(ppltrst),
+    rahulolu_dem = as.numeric(stfdem),
+    # tervis: ESS-is 1 = väga hea ... 5 = väga halb. Pöörame ümber, et suurem
+    # väärtus tähendaks paremat tervist. Viis kategooriat, seega võime teda
+    # käsitleda pidevana.
+    tervis = 6 - as.numeric(health),
+    # huvi poliitika vastu: ESS-is 1 = väga huvitatud ... 4 = üldse mitte.
+    # NELI kategooriat on pideva muutuja jaoks liiga vähe, seega teeme temast
+    # binaarse muutuja.
+    huvi_pol = case_when(
+      as.numeric(polintr) %in% c(1, 2) ~ 1,
+      as.numeric(polintr) %in% c(3, 4) ~ 0,
+      .default = NA_real_
+    )
+  )
+```
+
+> Pane tähele viimast rida. `polintr` on **kolmas** tagurpidi muutuja, mis meil ette
+> tuli. Küsitlusandmetes on see täiesti tavaline. Kontrolli iga järjestatud muutuja
+> puhul, kummas otsas on "rohkem".
+
+## Analüüsivalmis andmestik
+
+Võtame lõpuks välja ainult need muutujad, mida päriselt kasutame.
+
+```{r}
+#| label: lopp
+data <- ee |>
+  select(
+    idno, pspwght, anweight,
+    vanus, sugu, haridus, sissetulek, elukoht,
+    vasak_parem, huvi_pol, valis, erakond,
+    usaldus_pol, usaldus_rii, usaldus_inim, rahulolu_dem,
+    ranne, usaldus, tervis
+  )
+
+str(data)
+```
+
+Ja vaatame kokkuvõtte. Funktsioon `summary()` töötab ka terve andmetabeli peal korraga.
+
+```{r}
+#| label: kokkuvote
+summary(data)
+```
+
+Kui palju juhtumeid on iga muutuja puhul tegelikult olemas?
+
+```{r}
+#| label: olemas
+sapply(data, function(x) sum(!is.na(x)))
+```
+
+> Hüüumärk `!` tähendab R-is "mitte". `!is.na(x)` tähendab seega "ei ole puuduv" ehk
+> "on olemas".
+
+Salvestame. Funktsioon `save()` salvestab objekti R-i enda formaadis; argument `file`
+määrab faili nime. Hiljem saab selle tagasi laadida funktsiooniga `load()`.
+
+```{r}
+#| label: salvesta
+#| eval: false
+save(data, file = "data/ess11_ee_clean.rdata")
+```
+
+## Kokkuvõte
+
+Objekt `data` on see, millega me alates järgmisest praktikumist töötame. Kogu see töö on
+koos ühes failis: `R/ettevalmistus.R`.
+
+Mida me kahes praktikumis tegime:
+
+| Samm | Miks |
+|------|------|
+| valisime muutujad | 426-st läks vaja 19 |
+| kodeerisime `vote` ümber | üks kategooria ei olnud päris vastus |
+| ehitasime kaks indeksit | üksik küsimus on liiga jäme mõõdik |
+| tegime poliitikahuvist binaarse muutuja | neli kategooriat on pidevaks liiga vähe |
+| pöörasime kaks muutujat ümber | skaala oli tagurpidi |
+| panime väiksed erakonnad kokku | viie vastajaga grupist ei saa järeldusi teha |
+| tõlkisime sildid | joonised ja tabelid tulevad eesti keeles |
+
+> **See ongi see osa tööst, mida keegi ei näe ja mida kõik alahindavad.** Sinu
+> uurimustöös ei ole seda peatükki. Aga kui sa selle töö tegemata jätad või valesti
+> teed, siis on kõik ülejäänud peatükid valed.
+
+## Harjutused
+
+::: {.harjutus}
+**1. Ümber kodeerimine.** Tee muutujast `haridus` binaarne muutuja, mis näitab, kas inimesel on kõrgharidus (`haridus` on 6 või 7) või mitte. Kontrolli tabeliga, kas arvud lähevad kokku.
+
+**2. Kategooriate kokku panemine.** Tee muutujast `elukoht` uus muutuja, kus on ainult kaks kategooriat: linn (suurlinn, äärelinn, väikelinn) ja maa (maa-asula, maakodu).
+
+**3. Faktori järjekord.** Muuda muutuja `erakond` tasemete järjekorda nii, et referentskategooriaks jääks EKRE. Kontrolli funktsiooniga `levels()`.
+
+**4. Oma indeks.** ESS-is on rahulolu mõõtvad muutujad `stfeco` (majandus), `stfgov` (valitsus), `stfedu` (haridus) ja `stfhlth` (tervishoid), kõik skaalal 0–10. Tee neist faktoranalüüsi abil üks muutuja. Millised laadungid tulevad? Ära unusta suunda kontrollida.
+:::

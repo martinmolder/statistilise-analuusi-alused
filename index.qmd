@@ -1,0 +1,166 @@
+# Sissejuhatus {.unnumbered}
+
+Käesolevad materjalid on mõeldud kasutamiseks ainekursuse "Statistilise analüüsi
+alused" raames.
+
+Kursusel on kaks üldist eesmärki. Esiteks anda ülevaade kõige esmasematest
+statistilistest meetoditest ja lihtsamatest mudelitest. Teiseks näidata, kuidas neid
+rakendada, kasutades R-i.
+
+Suur osa sotsiaalteadustest ja ka laiemalt ühiskondi ning inimeste käitumist
+puudutavatest analüüsidest on statistilised analüüsid. Teatud statistilised baasoskused
+on seega lahutamatu osa pädeva sotsiaalteadlase tööriistakomplektist. R on statistiliseks
+analüüsiks mõeldud tarkvara, mis on praegusel hetkel enamikes teadusvaldkondades kõige
+laialdasemalt kasutatav.
+
+See kursus ei eelda erilisi eelteadmisi. Me alustame päris algusest, puhtalt lehelt.
+Kasuks tulevad üldised arvutikasutamise oskused ning kuskil mälusopis loodetavasti ikka
+veel pesitsevad teadmised keskkoolimatemaatikast. Me ei lähe sügavale siin tutvustatavate
+meetodite matemaatikasse — pigem keskendume meetodite üldisele loogikale, nende
+rakendamistingimustele ja R-is kasutamisele.
+
+## Kuidas kursus üles on ehitatud
+
+Me alustame sellest, kuidas R oma arvutis tööle saada, ja liigume sealt edasi R-i
+kasutamise põhiloogika juurde. Seejärel tuleb **andmete ettevalmistus** — kaks
+praktikumi, mis on pühendatud sellele, kuidas võtta päris andmestik sellisel kujul, nagu
+ta uuringu läbiviijalt tuleb, ja teha temast analüüsikõlblik andmestik.
+
+> **Miks nii palju aega andmete ettevalmistusele?** Sest see on see osa tööst, mis
+> päriselt aega võtab, ja see on koht, kus tehakse enamik vigu. Analüüsi enda tegemine on
+> tavaliselt üks või kaks koodirida. Kõik ülejäänu on ettevalmistus.
+
+Sealt edasi vaatame, kuidas andmeid kirjeldada ja visuaalselt kuvada. Siis liigume
+järeldava statistika juurde: kuidas hinnata ebakindlust ja kuidas testida hüpoteese.
+Lõpuks jõuame regressioonimudeliteni, mis on statistilise analüüsi üks kõige
+esmasemaid tööriistu. Me käsitleme kahte regressiooni vormi, sõltuvalt sellest, kas meid
+huvitav tunnus on arvuline (näiteks rahulolu demokraatiaga) või kahe kategooriaga
+(näiteks valimisosalus).
+
+### Kaks rada raskemate teemade juures
+
+Osa selle kursuse materjalist on raskem kui ülejäänu. Kõige raskem koht on praktikum 8,
+kus me vaatame, kust tuleb ebakindlus ja kuidas teda mõõta.
+
+Nendes kohtades on materjal esitatud **kahel viisil**, sakkide "Lihtsam seletus" ja
+"Täpsem seletus" all. Nad räägivad täpselt samast asjast: üks katsete ja piltide abil,
+teine võrdlemisi lihtsate valemitega, mis võimaldavad täpsemalt mõista, mis toimub.
+
+> **Vali see, mis sulle sobib.** Kui üks jääb segaseks, proovi teist. Kui aru saad
+> mõlemast, siis veel parem — need kaks toetavad teineteist.
+>
+> Kumbki rada ei ole "õige" ega "lihtsustatud". Lihtsam rada ei jäta midagi olulist
+> välja; ta lihtsalt jõuab samale arusaamale teist teed pidi.
+
+## Andmed
+
+Kogu kursuse vältel kasutame **Euroopa Sotsiaaluuringu** (*European Social Survey*, ESS)
+11. vooru **Eesti** andmeid. Andmed koguti aastatel 2023–2024 ja vastajaid on 1293.
+
+ESS on suur rahvusvaheline küsitlusuuring, mille valim on juhuvalim ja mille andmed on
+kõigile tasuta kättesaadavad. Seetõttu on ta üks kõige laialdasemalt kasutatavaid
+andmestikke Euroopa sotsiaalteadustes — ja täiesti mõeldav valik ka sinu enda
+bakalaureusetöö jaoks.
+
+> **Viitamine.** Kui sa kasutad neid andmeid, pead neile viitama:
+>
+> European Social Survey European Research Infrastructure (ESS ERIC) (2026). *ESS11 —
+> integrated file, edition 4.2.* Sikt — Norwegian Agency for Shared Services in Education
+> and Research. doi:10.21338/ess11e04_2
+
+ESS-i andmed on avaldatud litsentsi [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.et) all. See tähendab, et neid tohib vabalt kasutada ja edasi jagada, kuid **viitamise kohustusega**, **ainult mittetulunduslikul eesmärgil** ning nii, et tuletatud andmestikud jäävad sama litsentsi alla. Üliõpilastöö puhul on kõik need tingimused täidetud — pead lihtsalt korrektselt viitama.
+
+## Kust sotsiaalteadlane andmeid saab
+
+ESS ei ole ainus võimalus. Allpool on loetelu suurematest küsitlusuuringutest, mille andmed on **tasuta kättesaadavad** ja mida saab kasutada ka oma lõputöös. Enamik neist nõuab tasuta konto loomist.
+
+**Rahvusvahelised hoiakuuuringud**
+
+* [European Social Survey (ESS)](https://www.europeansocialsurvey.org) — hoiakud, väärtused, käitumine, ~30 Euroopa riiki, alates 2001. Meie kursuse andmestik.
+* [International Social Survey Programme (ISSP)](https://issp.org) — igal aastal üks teema (religioon, perekond, ebavõrdsus, keskkond), ligi 45 riiki, alates 1985.
+* [World Values Survey](https://www.worldvaluessurvey.org) ja [European Values Study](https://europeanvaluesstudy.eu) — väärtused ja hoiakud maailma ulatuses, pikad aegread alates 1981.
+* [Eurobaromeeter](https://europa.eu/eurobarometer) — Euroopa Komisjoni regulaarsed küsitlused, väga sage ja päevakajaline, kõik EL-i riigid.
+
+**Poliitika ja valimised**
+
+* [Comparative Study of Electoral Systems (CSES)](https://cses.org) — valimisjärgsed küsitlused, valimiskäitumine ja hoiakud, ühtlustatud üle riikide.
+* [Eesti Rahvusliku Valimisuuringu andmed](https://www.tlu.ee) ja Eesti valimiste järgsed küsitlused — vaata ka Eesti Sotsiaalteaduslikku Andmearhiivi.
+
+**Eesti andmed**
+
+* [Eesti Sotsiaalteaduslik Andmearhiiv (ESTA)](https://esta.ut.ee) — Tartu Ülikooli juures asuv arhiiv, kus on Eestis läbi viidud küsitlusuuringute andmed. Esimene koht, kust Eesti-spetsiifilisi andmeid otsida.
+* [Statistikaamet](https://www.stat.ee) — ametlik statistika, mitte küsitlusandmed, aga sageli vajalik taustainfo.
+
+> **Enne kui mõne andmestiku kasuks otsustad, kontrolli kolme asja:** kas seal on need muutujad, mida sa vajad; kui palju on juhtumeid sinu huvipakkuvas riigis või grupis; ja kas valim on juhuvalim. Viimane on kõige olulisem — ilma selleta ei saa sa üldistusi teha.
+
+## Kuidas neid materjale kasutada
+
+Need materjalid on mõeldud **koos läbi tegemiseks**, mitte lugemiseks. Iga koodinäide on
+mõeldud selleks, et sa ta ise oma arvutis läbi jooksutaksid.
+
+Mõned praktilised soovitused.
+
+* **Tee endale RStudio projekt** ja hoia kogu kursuse töö seal (vt praktikum 1).
+* **Kasuta ühte koodifaili** kogu kursuse jooksul. Järgmine praktikum jätkab sealt, kus
+  eelmine pooleli jäi.
+* **Kommenteeri oma koodi.** Sa kirjutad neid kommentaare iseendale kolme kuu pärast.
+* **Ära kopeeri koodi pimesi.** Kirjuta ta ise ümber ja muuda midagi ära — see on
+  ainus viis, kuidas ta päriselt selgeks saab.
+
+Lisaks praktikumidele sisaldab kursus ka loenguid, kus me R-ga otseselt ei tegele, vaid
+räägime õpitavate meetodite üldisest loogikast, rakendamisest ja tõlgendamisest.
+
+## Täiendavad materjalid
+
+Loengud ja need materjalid on üldiselt piisavad selle aine õpieesmärkide saavutamiseks.
+Siiski on alati mõistlik mujalt juurde lugeda. Kõik alljärgnevad on Moodle'is olemas.
+
+* **Gravetter, F. J. ja Wallnau, L. B. (2016). *Statistics for the behavioral sciences.***
+  Väga lihtne ja arusaadav sissejuhatus statistikasse, mis on mõeldud tudengitele, kellel
+  on vähe eelnevat kokkupuudet numbritega.
+
+* **Agresti, A. ja Finlay, B. (2008). *Statistical Methods for the Social Sciences.***
+  Oluliselt laiem sissejuhatus, mis on mõeldud nõudlikumale lugejale ja viib teadmised
+  suhteliselt kaugele.
+
+* **Field, A., Miles, J. ja Field, Z. (2012). *Discovering statistics using R.***
+  Keerukuselt kuskil nende kahe vahel. Käsitleb kõiki neid teemasid, mida me sellel
+  kursusel vaatame, ja palju muud — esmalt lihtsalt, kuid jõuab ka väga keerukate
+  nüanssideni. Kõik peatükid on loetavad kihtidena, kuni vajaliku raskusastmeni.
+
+**Vabalt veebis kättesaadavad ja ajakohased**
+
+* **Wickham, H., Çetinkaya-Rundel, M. ja Grolemund, G. *R for Data Science* (2. trükk).** [r4ds.hadley.nz](https://r4ds.hadley.nz). Standardviide tänapäevase R-i kohta — just selle stiili järgi on kirjutatud ka meie andmetöötluse osad. Ei ole statistikaõpik, vaid R-i õpik.
+
+* **Navarro, D. *Learning Statistics with R*.** [learningstatisticswithr.com](https://learningstatisticswithr.com). Tasemelt ja toonilt lähedane Gravetteri ja Wallnau raamatule, aga R-põhine ja tasuta. Hea valik, kui tahad sama asja lugeda teise inimese sõnadega.
+
+> Selle kursuse lõpus peaks igal osalejal olema baasteadmised selleks, et teha oma
+> bakalaureusetöö jaoks kohane statistiline analüüs. Kuid laiemas pildis on see kõik
+> alles algus — statistilise analüüsi maailm on peaaegu piiritu ja pidevalt arenev. Selle
+> valdkonna baasteadmised jäävad aga alati samaks ning nende põhjal on alati võimalik
+> oma valitud suundades edasi liikuda.
+
+## Materjalide koostamisest
+
+Nende materjalide 2026. aasta versiooni koostamisel on kasutatud tehisintellekti abi — konkreetselt Anthropicu keelemudelit Claude.
+
+Mudel aitas järgmiste ülesannetega:
+
+* varasemate materjalide läbivaatamine ja probleemide leidmine;
+* materjalide ümberstruktureerimine ja teksti mustandite kirjutamine;
+* R-koodi kirjutamine ja kontrollimine uue andmestiku peal;
+* näidete arvutuslik kontrollimine ning eelmise versiooni vigade tuvastamine.
+
+Kogu sisu on autori poolt üle vaadatud, kontrollitud ja toimetatud ning vastutus materjalide eest on autoril.
+
+> Miks seda siin mainitakse? Sellepärast, et sama läbipaistvust ootame ka teilt. Tehisintellekti kasutamine ei ole keelatud, kuid ta tuleb ära märkida — vaata täpsemalt praktikumist 1 ja Tartu Ülikooli [suunist tehisintellekti kasutamise kohta](https://ut.ee/en/content/guidelines-using-ai-applications-teaching-and-studies).
+
+## Materjalide kasutamine
+
+Need materjalid on avaldatud litsentsi [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.et) all.
+
+Neid tohib vabalt kasutada, kopeerida, jagada ja kohandada — nii õppetöös kui mujal — **tingimusel, et viidatakse autorile**:
+
+> Mölder, M. (2026). *Statistilise analüüsi alused: praktikumimaterjalid.* Tartu Ülikool.
+
+See kehtib materjalide enda kohta: teksti, koodinäidete ja jooniste kohta. **Andmetel on oma litsents** (CC BY-NC-SA 4.0, vt eespool jaotist "Andmed") ning see kehtib edasi ka siis, kui andmeid koos nende materjalidega kasutatakse.

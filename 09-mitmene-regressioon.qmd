@@ -1,0 +1,331 @@
+# 9. Mitmene regressioon
+
+```{r}
+#| label: andmed
+library(dplyr)
+library(ggplot2)
+load("data/ess11_ee_clean.rdata")
+```
+
+Kahe muutujaga regressioon näitas meile mudeli põhiloogika. Aga see on alles algus.
+Regressioon on **raamistik**, mitte üksik test, ja tema tegelik jõud tuleb välja siis,
+kui mudelisse tuleb rohkem muutujaid.
+
+## Mitu sõltumatut muutujat
+
+Lisamine on lihtne: kirjuta valemisse plussmärkidega juurde.
+
+Ennustame rahulolu demokraatiaga usalduse, vanuse ja hariduse põhjal.
+
+```{r}
+#| label: mitu
+mudel1 <- lm(
+  rahulolu_dem ~ usaldus_pol + vanus + haridus,
+  data = data
+)
+
+summary(mudel1)
+```
+
+Tabelit loetakse täpselt sama moodi, nagu eelmises praktikumis. Aga koefitsientide
+**tähendus** on nüüd natuke teine ja see on kogu asja tuum.
+
+> **Iga koefitsient näitab selle muutuja seost sõltuva muutujaga siis, kui kõik teised
+> mudelis olevad muutujad on konstantsed.**
+>
+> Ehk: kui meie fookus on usaldusel ja kui võtta kaks inimest, kes on ühevanused ja sama haridusega, aga kellest üks
+> usaldab poliitikuid ühe punkti võrra rohkem — kui palju erineb nende rahulolu
+> demokraatiaga?
+>
+> Teisisõnu tähendab see seda, et me tõlgendame muutujate seoseid olukorras, kus teiste muutujate mõju on juba arvesse võetud. Ehk siis kuidas seletab usaldus rahulolu, siis kui me vanuse ja hariduse seletusvõime oleme juba arvesse võtnud.
+>
+> See on oluline nüanss, kuna usaldus võib omakorda olla seotud hariduse ja vanusega ning seega võib usalduse näiline seos olla ühtemoodi, kui vaatame teda üksinda ja teistmoodi kui vaatame teda koos teiste muutujatega. 
+
+Seda nimetatakse **teiste muutujate suhtes kontrollimiseks**.
+
+Miks see oluline on? Sest muutujad on omavahel seotud. Vanus ja haridus on seotud.
+Haridus ja sissetulek on seotud. Kui me vaataksime ainult haridust, näeksime osaliselt
+ka vanuse mõju, sest vanemad inimesed on Eestis teistsuguse haridusega kui nooremad.
+
+Vaatame, mis juhtub, kui muutujaid järjest juurde panna.
+
+```{r}
+#| label: astmeline
+m_a <- lm(rahulolu_dem ~ vanus, data = data)
+m_b <- lm(rahulolu_dem ~ vanus + usaldus_pol, data = data)
+
+round(
+  c(
+    ainult_vanus = coef(m_a)["vanus"],
+    koos_usaldusega = coef(m_b)["vanus"]
+  ),
+  4
+)
+```
+
+Vanuse koefitsient muutus, kui mudelisse tuli usaldus. See ei ole viga — see on kogu
+mõte. Osa sellest, mis enne paistis vanuse seosena, oli tegelikult usalduse seos.
+
+> **Regressiooni tulemused sõltuvad sellest, mis mudelis on.** See on regressiooni kõige
+> olulisem omadus ja kõige sagedasema vea allikas.
+>
+> Sellest järeldub üks ebamugav asi: **mudel peab olema õigesti kokku pandud.** Kõik, mis
+> peab seal olema, peab seal olema, ja midagi üleliigset ei tohi olla.
+>
+> Kust sa tead, mis peab seal olema? **Statistika ei ütle sulle seda.** Selle jaoks tuleb
+> lugeda oma teema kohta kirjandust ja varasemaid uuringuid.
+
+## Binaarsed muutujad
+
+Kuni siiani olid kõik sõltumatud muutujad pidevad. Mudelisse võib panna ka
+kategoorilisi.
+
+Kõige lihtsam juhtum on **binaarne** muutuja — kaks kategooriat. Lisame soo.
+
+```{r}
+#| label: binaarne
+mudel2 <- lm(
+  rahulolu_dem ~ usaldus_pol + vanus + haridus + sugu,
+  data = data
+)
+
+summary(mudel2)
+```
+
+Tabelis on nüüd rida nimega `sugunaine`. Kust ta tuli?
+
+R võttis faktori `sugu`, mille kategooriad on "mees" ja "naine", ning tegi temast
+binaarse muutuja. **Esimene kategooria jäi referentskategooriaks** ja koefitsient näitab,
+kui palju **teine** kategooria referentskategooriast erineb.
+
+Meil on "mees" esimene, seega näitab koefitsient, kui palju naiste rahulolu erineb
+meeste omast, kui kõik muu on sama.
+
+> **Siin läheb praktikumis 4 tehtud töö arvesse.** Me määrasime seal faktorite
+> kategooriate järjekorra. Just see järjekord määrab, milline kategooria on
+> referentskategooria — ja seega ka selle, kuidas tabelit lugeda tuleb.
+
+Kui muutuja on arvuline, mitte faktor, siis **peab** ta olema kodeeritud 0 ja 1. Meie
+muutuja `valis` on just selline.
+
+```{r}
+#| label: valis-mudel
+mudel3 <- lm(rahulolu_dem ~ usaldus_pol + valis, data = data)
+
+round(coef(mudel3), 3)
+```
+
+## Kolme või enama kategooriaga muutujad
+
+Regressioonimudel ei oska otseselt hakkama saada muutujaga, millel on rohkem kui kaks
+kategooriat. Aga sellise muutuja saab **teisendada mitmeks binaarseks muutujaks**: $n$
+kategooriaga muutujast tehakse $n-1$ binaarset muutujat.
+
+See kategooria, mis oma muutujat ei saa, jääb **referentskategooriaks**.
+
+R teeb selle automaatselt, kui muutuja on faktor.
+
+```{r}
+#| label: mitu-kategooriat
+mudel4 <- lm(
+  rahulolu_dem ~ usaldus_pol + vanus + sugu + elukoht,
+  data = data
+)
+
+summary(mudel4)
+```
+
+Elukohal oli viis kategooriat, seega tekkis neli rida. "Suurlinn" oli esimene ja jäi
+referentskategooriaks. Iga koefitsient näitab, kui palju see elukohatüüp suurlinnast
+erineb.
+
+Vaatame sama asja erakondadega — seal on erinevused suuremad.
+
+```{r}
+#| label: erakond-mudel
+mudel5 <- lm(
+  rahulolu_dem ~ usaldus_pol + vanus + erakond,
+  data = data
+)
+
+summary(mudel5)
+```
+
+Referentskategooria on Reformierakond. Iga koefitsient näitab, kui palju selle erakonna
+valijate rahulolu erineb Reformierakonna valijate omast, kui usaldus ja vanus on samad.
+
+> **Referentskategooria valik ei muuda mudelit, aga muudab tabeli lugemist.** Kui sa
+> tahad teist referentskategooriat, muuda faktori tasemete järjekorda funktsiooniga
+> `factor()` — nii nagu tegime praktikumis 4.
+
+### Käsitsi, et näha, mis toimub
+
+Harjutamise mõttes teeme sama asja käsitsi, et oleks selge, mida R meie eest ära teeb.
+
+```{r}
+#| label: kasitsi-dummy
+data$el_aarelinn <- if_else(data$elukoht == "äärelinn", 1, 0)
+data$el_vaikelinn <- if_else(data$elukoht == "väikelinn", 1, 0)
+data$el_maa <- if_else(data$elukoht == "maa-asula", 1, 0)
+data$el_maakodu <- if_else(data$elukoht == "maakodu", 1, 0)
+
+mudel6 <- lm(
+  rahulolu_dem ~ usaldus_pol + vanus + sugu +
+    el_aarelinn + el_vaikelinn + el_maa + el_maakodu,
+  data = data
+)
+
+round(coef(mudel6), 4)
+```
+
+Täpselt samad koefitsiendid, mis mudelis 4. "Suurlinn" ei saanud oma muutujat — kui kõik neli on null, siis on inimene suurlinnas.
+
+> **Kontrolli, kas dummy-muutujad said tehtud õigesti.** Kui mõne koefitsiendi asemel on tabelis `NA`, siis on midagi valesti läinud — kõige sagedamini on siltide kirjapilt vale ja `if_else()` ei leidnud ühtegi vastet, mistõttu muutuja jäi läbivalt nulliks.
+>
+> Kontrolli nii:
+>
+> ```r
+> table(data$el_aarelinn)
+> ```
+>
+> Kui seal on ainult nullid, siis vaata `levels(data$elukoht)` ja võrdle kirjapilti.
+
+## Mudeli hindamine
+
+Kohandatud R-ruut ütleb, kui suure osa varieeruvusest mudel seletab.
+
+```{r}
+#| label: r2
+summary(mudel4)$adj.r.squared
+```
+
+Juhtumite arvu saab funktsiooniga `nobs()`.
+
+```{r}
+#| label: nobs
+nobs(mudel4)
+nrow(data)
+```
+
+> **Vaata neid kahte arvu.** Andmestikus on 1293 rida, aga mudelis on juhtumeid vähem.
+> Vahe on need inimesed, kellel oli mõni mudelis olev muutuja puudu — R viskas nad
+> automaatselt välja.
+>
+> Praktikumis 3 nägime, et need inimesed ei ole juhuslik valik. **Kontrolli see arv iga
+> mudeli puhul üle ja raporteeri ta.**
+
+Usaldusvahemikud koefitsientide ümber annab funktsioon `confint()`.
+
+```{r}
+#| label: confint
+round(confint(mudel4), 3)
+```
+
+Kui usaldusvahemik sisaldab nulli, siis ei ole koefitsient statistiliselt oluline — sama
+info, mis p-väärtuses, aga sageli arusaadavamal kujul.
+
+## Ennustatud väärtused
+
+Mudelit saab kasutada ka ennustamiseks. Funktsioon `predict()` annab ennustatud
+väärtused.
+
+Selleks tuleb kirjeldada, **millise inimese** kohta me ennustust tahame. Teeme väikese andmetabeli, kus on määratud kõik mudelis olevad muutujad. Argument `newdata` ütleb `predict()`-le, milliste väärtuste kohta ennustada.
+
+Hoiame kõik muutujad peale ühe konstantsena ja laseme usaldusel muutuda. Nii on näha just selle ühe muutuja mõju.
+
+```{r}
+#| label: predict
+uued <- data.frame(
+  usaldus_pol = c(2, 5, 8),
+  vanus = 50,
+  sugu = factor("naine", levels = levels(data$sugu)),
+  elukoht = factor("suurlinn", levels = levels(data$elukoht))
+)
+
+ennustused <- predict(mudel4, newdata = uued)
+
+round(ennustused, 2)
+```
+
+```{r}
+#| label: predict-arvud
+#| include: false
+e <- round(ennustused, 2)
+```
+
+Kuidas seda lugeda? Kõik kolm rida käivad **sama inimese** kohta: 50-aastane suurlinnas elav naine. Erinevus on ainult selles, kui palju ta poliitikuid usaldab.
+
+| Usaldus poliitikute vastu | Ennustatud rahulolu demokraatiaga |
+|---|---|
+| 2 punkti | `r e[1]` punkti |
+| 5 punkti | `r e[2]` punkti |
+| 8 punkti | `r e[3]` punkti |
+
+Mõlemad skaalad ulatuvad 0-st 10-ni. Ehk: kui muidu ühesugustest inimestest üks usaldab poliitikuid 2 punkti väärt ja teine 8 punkti väärt, siis erineb nende ennustatud rahulolu demokraatiaga `r round(e[3] - e[1], 2)` punkti võrra.
+
+> See on hea viis oma mudelist aru saamiseks. Koefitsient on abstraktne — "0,54 punkti ühiku kohta". Ennustatud väärtus on konkreetne: kaks inimest, kaks arvu, mida saab omavahel võrrelda.
+
+::: {.harjutus}
+**Harjutus.** Tee sama ennustus 25-aastase ja 70-aastase mehe kohta, kes elab maa-asulas ja usaldab poliitikuid 5 punkti väärt. Kui suur on nende vahe? Kas see üllatab sind, kui vaatad vanuse koefitsienti mudelis?
+:::
+
+## Kas kaalud muudaksid tulemust?
+
+Praktikumis 3 lubasime selle juurde tagasi tulla. Vaatame.
+
+```{r}
+#| label: kaalud
+mudel_kaalutud <- lm(
+  rahulolu_dem ~ usaldus_pol + vanus + haridus,
+  data = data,
+  weights = pspwght
+)
+
+round(
+  cbind(
+    kaalumata = coef(mudel1),
+    kaalutud = coef(mudel_kaalutud)
+  ),
+  4
+)
+```
+
+Koefitsiendid on praktiliselt samad. Nagu lubatud: **kaalud on olulised rahvastiku
+kirjeldamisel, mitte seoste hindamisel.**
+
+## Kuidas seda kirja panna
+
+::: {.callout-tip title="Kuidas seda kirja panna"}
+Mitmese regressiooni puhul ei kirjutata iga koefitsienti eraldi lahti — selleks on tabel
+(praktikum 6). Tekstis tuuakse välja **kõige olulisemad tulemused** ja mudel tervikuna.
+
+**Rahulolu demokraatiaga ennustamiseks koostati lineaarne regressioonimudel, kus
+sõltumatute muutujatena olid usaldus poliitikute vastu, vanus, sugu ja elukoht (tabel
+1). Mudelisse kaasati 1211 vastajat; ülejäänud jäid välja puuduvate väärtuste tõttu.**
+
+**Tugevaim seos ilmnes usalduse ja rahulolu vahel: iga punkti võrra suurem usaldus
+poliitikute vastu vastab keskmiselt 0,54 punkti võrra suuremale rahulolule
+demokraatiaga, kui vanus, sugu ja elukoht on konstantsed (β = 0,54; SE = 0,02;
+p < 0,001). Elukoha ja soo seosed ei osutunud statistiliselt oluliseks. Mudel seletab
+30% rahulolu varieeruvusest (kohandatud R² = 0,30).**
+
+Neli asja, mis peavad kindlasti kirjas olema:
+
+* **"kui teised muutujad on konstantsed"** — ilma selleta on tõlgendus vale;
+* **juhtumite arv mudelis** ja miks ta erineb valimi suurusest;
+* **kohandatud R-ruut**, mitte tavaline;
+* **ka need muutujad, mis ei olnud olulised.** Nende ärajätmine tabelist või tekstist on
+  tulemuste valikuline esitamine.
+:::
+
+## Harjutused
+
+::: {.harjutus}
+**1. Mudeli ehitamine.** Sobita mudel, kus `ranne` on sõltuv muutuja ning sõltumatud on vanus, haridus ja sissetulek. Milline neist on tugevaim seletaja? Kontrolli standardiseeritud koefitsientidega.
+
+**2. Kategooriline muutuja.** Lisa eelmisesse mudelisse `erakond`. Kuidas tulemused muutuvad? Millise erakonna valijad erinevad referentskategooriast kõige rohkem?
+
+**3. Juhtumite arv.** Vaata, mitu juhtumit igas mudelis on. Miks arv väheneb, kui muutujaid juurde tuleb?
+
+**4. Ennustatud väärtused.** Arvuta ennustatud `ranne` väärtus kolme erineva haridustaseme kohta, hoides ülejäänud muutujad konstantsena.
+:::

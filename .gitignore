@@ -1,0 +1,32 @@
+# Quarto
+/_book/
+/.quarto/
+*_files/
+*.knit.md
+*.utf8.md
+
+# ESS originaalfailid -- NEID EI PANE REPOSITOORIUMISSE.
+# Need laeb igaüks ise alla ESS-i andmeportaalist (vt praktikum 2).
+# Repositooriumis on ainult tuletatud õppefailid kaustas data/.
+/ESS11e04_2-subset/
+/ESS country data - EE/
+/_archive/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+.Rapp.history
+
+# Vanade materjalide genereeritud HTML (8 MB) -- lähtefail .rmd jääb alles
+previous/Praktikumimaterjalid-R.html
+
+# Tööriistade kohalikud seaded
+/.claude/
+
+# Süsteem
+.DS_Store
+.idea/
+Thumbs.db
+
+**/*.quarto_ipynb
