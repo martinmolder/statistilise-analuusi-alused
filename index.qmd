@@ -74,7 +74,7 @@ ESS-i andmed on avaldatud litsentsi [CC BY-NC-SA 4.0](https://creativecommons.or
 
 ESS ei ole ainus võimalus. Allpool on loetelu suurematest küsitlusuuringutest, mille andmed on **tasuta kättesaadavad** ja mida saab kasutada ka oma lõputöös. Enamik neist nõuab tasuta konto loomist.
 
-**Rahvusvahelised hoiakuuuringud**
+**Rahvusvahelised küsitlusuuringud**
 
 * [European Social Survey (ESS)](https://www.europeansocialsurvey.org) — hoiakud, väärtused, käitumine, ~30 Euroopa riiki, alates 2001. Meie kursuse andmestik.
 * [International Social Survey Programme (ISSP)](https://issp.org) — igal aastal üks teema (religioon, perekond, ebavõrdsus, keskkond), ligi 45 riiki, alates 1985.
