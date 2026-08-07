@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="et" xml:lang="et"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4. Andmete ettevalmistus II – Statistilise analüüsi alused</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./05-kirjeldamine-ja-visualiseerimine.html" rel="next">
+<link href="./03-andmete-ettevalmistus-1.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-bf8030b5a8b8f2de5bceddfb8bf38a1d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "Otsi",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-andmete-ettevalmistus-1.html">Andmete ettevalmistus</a></li><li class="breadcrumb-item"><a href="./04-andmete-ettevalmistus-2.html"><span class="chapter-title">4. Andmete ettevalmistus II</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistilise analüüsi alused</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sissejuhatus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Alustamine</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-r-alused.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1. R ja RStudio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-andmete-laadimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2. Andmete laadimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Andmete ettevalmistus</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Andmete ettevalmistus I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">4. Andmete ettevalmistus II</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Andmete kirjeldamine</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Järeldav statistika</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-valim-ja-ebakindlus.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6. Valim ja ebakindlus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-hupoteeside-testimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Hüpoteeside testimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Seosed ja mudelid</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-korrelatsioon-ja-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Mitmene regressioon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Tulemuste esitamine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-logistiline-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Logistiline regressioon</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Selle peatüki sisu</h2>
+   
+  <ul>
+  <li><a href="#muutujate-valimine" id="toc-muutujate-valimine" class="nav-link active" data-scroll-target="#muutujate-valimine">Muutujate valimine</a></li>
+  <li><a href="#valimisosalus-kategooria-mis-ei-ole-puuduv-väärtus" id="toc-valimisosalus-kategooria-mis-ei-ole-puuduv-väärtus" class="nav-link" data-scroll-target="#valimisosalus-kategooria-mis-ei-ole-puuduv-väärtus">Valimisosalus: kategooria, mis ei ole puuduv väärtus</a></li>
+  <li><a href="#mitmest-küsimusest-üks-muutuja" id="toc-mitmest-küsimusest-üks-muutuja" class="nav-link" data-scroll-target="#mitmest-küsimusest-üks-muutuja">Mitmest küsimusest üks muutuja</a>
+  <ul class="collapse">
+  <li><a href="#miks-küsitluses-ei-ole-päris-pidevaid-muutujaid" id="toc-miks-küsitluses-ei-ole-päris-pidevaid-muutujaid" class="nav-link" data-scroll-target="#miks-küsitluses-ei-ole-päris-pidevaid-muutujaid">Miks küsitluses ei ole päris pidevaid muutujaid</a></li>
+  <li><a href="#miks-mitte-lihtsalt-keskmine" id="toc-miks-mitte-lihtsalt-keskmine" class="nav-link" data-scroll-target="#miks-mitte-lihtsalt-keskmine">Miks mitte lihtsalt keskmine</a></li>
+  <li><a href="#suhtumine-sisserändesse" id="toc-suhtumine-sisserändesse" class="nav-link" data-scroll-target="#suhtumine-sisserändesse">Suhtumine sisserändesse</a></li>
+  <li><a href="#faktorskooride-tagasi-panemine" id="toc-faktorskooride-tagasi-panemine" class="nav-link" data-scroll-target="#faktorskooride-tagasi-panemine">Faktorskooride tagasi panemine</a></li>
+  <li><a href="#institutsionaalne-usaldus" id="toc-institutsionaalne-usaldus" class="nav-link" data-scroll-target="#institutsionaalne-usaldus">Institutsionaalne usaldus</a></li>
+  </ul></li>
+  <li><a href="#väikeste-kategooriate-kokku-panemine" id="toc-väikeste-kategooriate-kokku-panemine" class="nav-link" data-scroll-target="#väikeste-kategooriate-kokku-panemine">Väikeste kategooriate kokku panemine</a></li>
+  <li><a href="#siltide-tõlkimine" id="toc-siltide-tõlkimine" class="nav-link" data-scroll-target="#siltide-tõlkimine">Siltide tõlkimine</a></li>
+  <li><a href="#ülejäänud-muutujad" id="toc-ülejäänud-muutujad" class="nav-link" data-scroll-target="#ülejäänud-muutujad">Ülejäänud muutujad</a></li>
+  <li><a href="#analüüsivalmis-andmestik" id="toc-analüüsivalmis-andmestik" class="nav-link" data-scroll-target="#analüüsivalmis-andmestik">Analüüsivalmis andmestik</a></li>
+  <li><a href="#kokkuvõte" id="toc-kokkuvõte" class="nav-link" data-scroll-target="#kokkuvõte">Kokkuvõte</a></li>
+  <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-andmete-ettevalmistus-1.html">Andmete ettevalmistus</a></li><li class="breadcrumb-item"><a href="./04-andmete-ettevalmistus-2.html"><span class="chapter-title">4. Andmete ettevalmistus II</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">4. Andmete ettevalmistus II</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Eelmises praktikumis vaatasime, mis meie andmestikus on. Nüüd teeme temast analüüsivalmis andmestiku: valime muutujad, kodeerime nad ümber, ehitame mitmest küsimusest uued muutujad ja salvestame tulemuse.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ee_raw <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"data/ess11_ee_raw.sav"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="muutujate-valimine" class="level2">
+<h2 class="anchored" data-anchor-id="muutujate-valimine">Muutujate valimine</h2>
+<p>426 muutujast läheb meile vaja umbes kolmekümmend. Valime nad välja funktsiooniga <code>select()</code>, millega tegime tutvust eelmises praktikumis.</p>
+<p>Kirjutame valiku teemade kaupa ja kommenteerime ära, mis on mis. See ei ole ilutsemine — kolme kuu pärast ei mäleta sa ise ka, miks just need muutujad valitud said.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ee <span class="ot">&lt;-</span> ee_raw <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    idno, pspwght, anweight,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># demograafia</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    agea, gndr, eisced, hinctnta, domicil,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># poliitika</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    lrscale, polintr, vote, prtvtiee, stfdem, ppltrst,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># suhtumine sisserändesse (indeksi koostisosad)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    imbgeco, imueclt, imwbcnt,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># institutsionaalne usaldus (indeksi koostisosad)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    trstprl, trstlgl, trstplc, trstplt, trstprt, trstep, trstun,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># tervis</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    health</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ee)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 1293   25</code></pre>
+</div>
+</div>
+</section>
+<section id="valimisosalus-kategooria-mis-ei-ole-puuduv-väärtus" class="level2">
+<h2 class="anchored" data-anchor-id="valimisosalus-kategooria-mis-ei-ole-puuduv-väärtus">Valimisosalus: kategooria, mis ei ole puuduv väärtus</h2>
+<p>Eelmises praktikumis leidsime, et muutujal <code>vote</code> on kolm kategooriat ja kolmas neist — “ei olnud hääleõiguslik”, 111 inimest — tuleb R-i sisse päris arvuna 3.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">zap_labels</span>(ee<span class="sc">$</span>vote), <span class="at">useNA =</span> <span class="st">"ifany"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+##    1    2    3 &lt;NA&gt; 
+##  871  304  111    7</code></pre>
+</div>
+</div>
+<p>Teeme sellest korraliku muutuja. Meil on vaja kahte asja korraga:</p>
+<ol type="1">
+<li>kategooria 3 peab muutuma puuduvaks väärtuseks;</li>
+<li>kodeering 1/2 peab muutuma kodeeringuks 1/0, sest logistiline regressioon (praktikum 5) tahab sõltuvat tunnust just sellisel kujul.</li>
+</ol>
+<p>Selleks on funktsioon <code>case_when()</code>. Ta on <strong>mitmene tingimuslause</strong>: iga rida tema sees on kujul <code>tingimus ~ väärtus</code> ning neid loetakse ülevalt alla — esimene sobiv tingimus annab tulemuse. Argument <code>.default</code> määrab, mis saab kõigist ülejäänutest.</p>
+<p><code>NA_real_</code> on puuduv väärtus arvulise muutuja jaoks. R-is on igal andmetüübil oma <code>NA</code>-variant (<code>NA_character_</code> tekstile, <code>NA_real_</code> arvudele) ja <code>case_when()</code> nõuab, et kõik harud annaksid sama tüüpi väärtuse.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ee <span class="ot">&lt;-</span> ee <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">valis =</span> <span class="fu">case_when</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(vote) <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,   <span class="co"># jah, käisin valimas</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(vote) <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">0</span>,   <span class="co"># ei käinud</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA_real_</span>          <span class="co"># 3 = ei olnud hääleõiguslik, ja NA-d</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ee<span class="sc">$</span>valis, <span class="at">useNA =</span> <span class="st">"ifany"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+##    0    1 &lt;NA&gt; 
+##  304  871  118</code></pre>
+</div>
+</div>
+<p>871 valis, 304 ei valinud, 118 on puuduvad (111 hääleõiguseta + 7 vastamata).</p>
+<blockquote class="blockquote">
+<p>Kontrolli alati ümber kodeerimise järel tabeliga, kas tulemus on selline, nagu sa ootasid. Arvud peavad kokku minema. Kui nad ei lähe, siis on tingimustes viga — ja <code>case_when()</code> ei ütle sulle seda ise.</p>
+</blockquote>
+</section>
+<section id="mitmest-küsimusest-üks-muutuja" class="level2">
+<h2 class="anchored" data-anchor-id="mitmest-küsimusest-üks-muutuja">Mitmest küsimusest üks muutuja</h2>
+<section id="miks-küsitluses-ei-ole-päris-pidevaid-muutujaid" class="level3">
+<h3 class="anchored" data-anchor-id="miks-küsitluses-ei-ole-päris-pidevaid-muutujaid">Miks küsitluses ei ole päris pidevaid muutujaid</h3>
+<p>Peaaegu kõik meid huvitavad nähtused — hoiakud, väärtused, usaldus — ei ole otseselt mõõdetavad. Me küsime nende kohta küsimusi ja vastaja valib mõne vastuse skaalal, millel võib olla neli või seitse või üksteist (või mõni muu arv) kategooriat.</p>
+<p>Iga selline üksik küsimus on <strong>jäme ja mürane mõõdik</strong>. Jäme, sest kategooriaid on vähe ja vastaja tegelik hoiak jääb kuhugi kahe astme vahele. Mürane, sest vastust mõjutab küsimuse sõnastus, vastaja tuju ja see, mida temalt eelmisena küsiti.</p>
+<p>Lahendus on küsida sama asja kohta <strong>mitu küsimust</strong> ja need kokku panna. Nii saame peenema skaala ja osa juhuslikust mürast taandub välja.</p>
+</section>
+<section id="miks-mitte-lihtsalt-keskmine" class="level3">
+<h3 class="anchored" data-anchor-id="miks-mitte-lihtsalt-keskmine">Miks mitte lihtsalt keskmine</h3>
+<p>Kõige lihtsam viis kokku panemiseks oleks võtta küsimuste keskmine. See aga eeldab, et kõik küsimused mõõdavad uuritavat nähtust <strong>ühtviisi hästi</strong>, mis üldiselt ei ole tõsi. Mõni küsimus tabab asja täpsemalt, mõni on kaudsem.</p>
+<p>Seetõttu kasutame <strong>faktoranalüüsi</strong>. Selle mõte on järgmine: kui mitu küsimust on omavahel seotud, siis on selle taga ilmselt üks ühine nähtus, mida nad kõik mõõdavad. See ühine nähtus ongi <strong>faktor</strong>. Faktoranalüüs leiab ta üles ja annab meile kaks asja:</p>
+<ul>
+<li><strong>faktorlaadungid</strong> — kui tugevalt iga küsimus selle ühise nähtusega seotud on. Mida suurem laadung, seda paremini see küsimus nähtust mõõdab ja seda rohkem ta lõpptulemuses kaalub;</li>
+<li><strong>faktorskoorid</strong> — iga vastaja väärtus sellel leitud ühisel nähtusel. Just see ongi meie uus muutuja.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Rohkem me faktoranalüüsi sellel kursusel ei käsitle — see on omaette teema omaette kursusel. Meile piisab teadmisest, et ta annab paremini kaalutud kokkuvõtte muutujatest, mis mõõdavad sama asja, kui lihtne keskmine.</p>
+</blockquote>
+</section>
+<section id="suhtumine-sisserändesse" class="level3">
+<h3 class="anchored" data-anchor-id="suhtumine-sisserändesse">Suhtumine sisserändesse</h3>
+<p>Kolm küsimust, kõik skaalal 0–10:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Muutuja</th>
+<th>0</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>imbgeco</code></td>
+<td>halb majandusele</td>
+<td>hea majandusele</td>
+</tr>
+<tr class="even">
+<td><code>imueclt</code></td>
+<td>kahjustab kultuuri</td>
+<td>rikastab kultuuri</td>
+</tr>
+<tr class="odd">
+<td><code>imwbcnt</code></td>
+<td>halvem koht elamiseks</td>
+<td>parem koht elamiseks</td>
+</tr>
+</tbody>
+</table>
+<p>Enne kokku panemist tuleb kaks asja üle kontrollida: kas küsimused on <strong>omavahel seotud</strong> ja kas nad on <strong>samas suunas</strong>. Mõlemad on siin täidetud — küsimused on tugevalt seotud ja kõik käivad samas suunas, nii et suurem väärtus tähendab positiivsemat suhtumist.</p>
+<blockquote class="blockquote">
+<p>Kuidas seda kontrollida, vaatame praktikumis 8, kui jõuame korrelatsiooni juurde. Praegu võta see teadmiseks.</p>
+</blockquote>
+<p>Nüüd faktoranalüüs funktsiooniga <code>factanal()</code>. Argumendid:</p>
+<ul>
+<li>esimene argument — andmetabel ainult nende küsimustega, mida analüüsida;</li>
+<li><code>factors</code> — mitu ühist nähtust otsida. Meil on üks;</li>
+<li><code>scores</code> — väärtusega <code>"regression"</code> palume arvutada iga vastaja faktorskoori.</li>
+</ul>
+<p>Enne seda tuleb andmed ette valmistada. <code>factanal()</code> tahab tavalisi arvulisi muutujaid ja ei oska puuduvate väärtustega midagi peale hakata.</p>
+<ul>
+<li><code>lapply()</code> rakendab funktsiooni igale andmetabeli veerule eraldi. Siin: tee igast veerust <code>as.numeric()</code>. Ta sarnaneb funktsioonile <code>sapply()</code>, mida kasutasime eelmises praktikumis, kuid annab tulemuse nimekirjana.</li>
+<li><code>as.data.frame()</code> teeb saadud nimekirjast tagasi andmetabeli.</li>
+<li><code>complete.cases()</code> annab <code>TRUE</code> nende ridade kohta, kus ühtegi puuduvat väärtust ei ole.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ranne_kysimused <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"imbgeco"</span>, <span class="st">"imueclt"</span>, <span class="st">"imwbcnt"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ranne_veerud <span class="ot">&lt;-</span> <span class="fu">lapply</span>(ee[ranne_kysimused], as.numeric)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>ranne_andmed <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(ranne_veerud)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>ranne_terved <span class="ot">&lt;-</span> <span class="fu">complete.cases</span>(ranne_andmed)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>ranne_fa <span class="ot">&lt;-</span> <span class="fu">factanal</span>(</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  ranne_andmed[ranne_terved, ],</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">factors =</span> <span class="dv">1</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">scores =</span> <span class="st">"regression"</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>ranne_fa<span class="sc">$</span>loadings</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+## Loadings:
+##         Factor1
+## imbgeco 0.705  
+## imueclt 0.781  
+## imwbcnt 0.871  
+## 
+##                Factor1
+## SS loadings      1.867
+## Proportion Var   0.622</code></pre>
+</div>
+</div>
+<p>Laadungid on kõik tugevad ja positiivsed. Kõige rohkem kaalub kolmas küsimus (kas sisserändajad teevad Eesti paremaks või halvemaks kohaks), kõige vähem esimene (mõju majandusele).</p>
+<p>Rida <code>Proportion Var</code> ütleb, kui suure osa kolme küsimuse koguvarieeruvusest see üks ühine nähtus ära seletab.</p>
+</section>
+<section id="faktorskooride-tagasi-panemine" class="level3">
+<h3 class="anchored" data-anchor-id="faktorskooride-tagasi-panemine">Faktorskooride tagasi panemine</h3>
+<p>Nüüd paneme skoorid andmetabelisse. Siin on üks konks, mis kipub ununema: <strong>kuna faktoranalüüs kasutas ainult osa ridadest, ei saa me skoore lihtsalt veeruks panna</strong> — nad ei satuks õigete inimeste kohale.</p>
+<p>Seega teeme esmalt tühja muutuja ja täidame ainult need read, mille kohta skoor arvutati.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ee<span class="sc">$</span>ranne <span class="ot">&lt;-</span> <span class="cn">NA_real_</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>ee<span class="sc">$</span>ranne[ranne_terved] <span class="ot">&lt;-</span> ranne_fa<span class="sc">$</span>scores[, <span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Teine konks: <strong>faktori suund on matemaatiliselt suvaline.</strong> Analüüs ei tea, kumb ots on “positiivne suhtumine” — ta leiab ainult telje, mitte selle nime. Seega kontrollime ise üle ja pöörame vajadusel ümber.</p>
+<p>Selleks on <strong>tingimuslause</strong> <code>if () { }</code>. Ümarsulgudes on tingimus, looksulgudes see, mida teha, kui tingimus on tõene. Kui tingimus on väär, siis ei tehta midagi.</p>
+<blockquote class="blockquote">
+<p>Erinevus funktsioonidest <code>if_else()</code> ja <code>case_when()</code>: need kaks töötavad muutuja iga väärtusega eraldi. <code>if ()</code> otsustab <strong>ühe korra</strong>, kas tervet plokki üldse käivitada.</p>
+</blockquote>
+<p>Suuna kontrollimiseks kasutame funktsiooni <code>cor()</code>, mis mõõdab kahe muutuja seost. Meid huvitab siin ainult <strong>märk</strong>: kui faktorskoor on mõne algse küsimusega negatiivselt seotud, siis on ta tagurpidi ja tuleb ümber pöörata. Argument <code>use = "complete.obs"</code> ütleb, et arvutada ainult nende vastajate põhjal, kellel mõlemad väärtused olemas on.</p>
+<blockquote class="blockquote">
+<p>Korrelatsiooni juurde tuleme põhjalikult tagasi praktikumis 8. Praegu on vaja teada ainult üht asja: <strong>positiivne arv tähendab sama suunda, negatiivne vastupidist.</strong></p>
+</blockquote>
+<p>Miinusmärk arvu ees pöörab kõik väärtused vastasmärgiliseks.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>imwbcnt_arvuna <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(ee<span class="sc">$</span>imwbcnt)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ranne_suund <span class="ot">&lt;-</span> <span class="fu">cor</span>(ee<span class="sc">$</span>ranne, imwbcnt_arvuna, <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (ranne_suund <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  ee<span class="sc">$</span>ranne <span class="ot">&lt;-</span> <span class="sc">-</span>ee<span class="sc">$</span>ranne</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ee<span class="sc">$</span>ranne)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.      NAs 
+## -2.37418 -0.53874  0.02006  0.00000  0.59555  2.30370       85</code></pre>
+</div>
+</div>
+<p>Suurem väärtus tähendab nüüd positiivsemat suhtumist sisserändesse.</p>
+<div class="arutelu">
+<p><strong>Arutelu.</strong> Faktorskoori keskmine on null ja standardhälve umbes üks. <strong>Mida tähendab siis see, kui inimese väärtus on −1,5?</strong> Ja kas seda muutujat saab tõlgendada nii nagu algseid küsimusi skaalal 0–10?</p>
+</div>
+</section>
+<section id="institutsionaalne-usaldus" class="level3">
+<h3 class="anchored" data-anchor-id="institutsionaalne-usaldus">Institutsionaalne usaldus</h3>
+<p>Teeme sama asja teise näite peal. ESS-is küsitakse usalduse kohta seitset küsimust, kõik skaalal 0–10, kus 0 tähendab “ei usalda üldse” ja 10 “usaldan täielikult”:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Muutuja</th>
+<th>Mida usaldatakse</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>trstprl</code></td>
+<td>Riigikogu</td>
+</tr>
+<tr class="even">
+<td><code>trstlgl</code></td>
+<td>õigussüsteem</td>
+</tr>
+<tr class="odd">
+<td><code>trstplc</code></td>
+<td>politsei</td>
+</tr>
+<tr class="even">
+<td><code>trstplt</code></td>
+<td>poliitikud</td>
+</tr>
+<tr class="odd">
+<td><code>trstprt</code></td>
+<td>erakonnad</td>
+</tr>
+<tr class="even">
+<td><code>trstep</code></td>
+<td>Euroopa Parlament</td>
+</tr>
+<tr class="odd">
+<td><code>trstun</code></td>
+<td>ÜRO</td>
+</tr>
+</tbody>
+</table>
+<p>Ka need on eelnevalt üle kontrollitud: kõik samas suunas ja omavahel tugevalt seotud.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>usaldus_kysimused <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"trstprl"</span>, <span class="st">"trstlgl"</span>, <span class="st">"trstplc"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"trstplt"</span>, <span class="st">"trstprt"</span>, <span class="st">"trstep"</span>, <span class="st">"trstun"</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>usaldus_veerud <span class="ot">&lt;-</span> <span class="fu">lapply</span>(ee[usaldus_kysimused], as.numeric)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>usaldus_andmed <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(usaldus_veerud)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>usaldus_terved <span class="ot">&lt;-</span> <span class="fu">complete.cases</span>(usaldus_andmed)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>usaldus_fa <span class="ot">&lt;-</span> <span class="fu">factanal</span>(</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  usaldus_andmed[usaldus_terved, ],</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">factors =</span> <span class="dv">1</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">scores =</span> <span class="st">"regression"</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>usaldus_fa<span class="sc">$</span>loadings</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+## Loadings:
+##         Factor1
+## trstprl 0.845  
+## trstlgl 0.732  
+## trstplc 0.587  
+## trstplt 0.871  
+## trstprt 0.847  
+## trstep  0.854  
+## trstun  0.700  
+## 
+##                Factor1
+## SS loadings      4.292
+## Proportion Var   0.613</code></pre>
+</div>
+</div>
+<p>Kõik seitse laadungit on positiivsed ja tugevad. Kõige nõrgemalt laadub usaldus politsei vastu — inimesed, kes ei usalda poliitikuid, usaldavad politseid sageli siiski.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ee<span class="sc">$</span>usaldus <span class="ot">&lt;-</span> <span class="cn">NA_real_</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ee<span class="sc">$</span>usaldus[usaldus_terved] <span class="ot">&lt;-</span> usaldus_fa<span class="sc">$</span>scores[, <span class="dv">1</span>]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>trstplt_arvuna <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(ee<span class="sc">$</span>trstplt)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>usaldus_suund <span class="ot">&lt;-</span> <span class="fu">cor</span>(ee<span class="sc">$</span>usaldus, trstplt_arvuna, <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (usaldus_suund <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  ee<span class="sc">$</span>usaldus <span class="ot">&lt;-</span> <span class="sc">-</span>ee<span class="sc">$</span>usaldus</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ee<span class="sc">$</span>usaldus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.      NAs 
+## -2.12429 -0.67805  0.08064  0.00000  0.76016  2.57866      176</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Pane tähele, et kood on mõlema indeksi puhul täpselt sama kujuga.</strong> Muutuvad ainult muutujate nimed. See ongi üks põhjus, miks tasub kood kirjutada selgete sammudena — teist korda on ta juba valmis muster, mida saab kohandada.</p>
+</blockquote>
+</section>
+</section>
+<section id="väikeste-kategooriate-kokku-panemine" class="level2">
+<h2 class="anchored" data-anchor-id="väikeste-kategooriate-kokku-panemine">Väikeste kategooriate kokku panemine</h2>
+<p>Vaatame erakondlikku eelistust. Funktsioon <code>as_factor()</code> teeb <code>haven_labelled</code> muutujast faktori, kasutades kategooriate nimedena silte.</p>
+<p>Funktsioon <code>sort()</code> järjestab tabeli; argument <code>decreasing = TRUE</code> teeb seda suuremast väiksemani.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>erakond_kogu <span class="ot">&lt;-</span> <span class="fu">as_factor</span>(ee<span class="sc">$</span>prtvtiee)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(erakond_kogu), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## erakond_kogu
+##              Eesti Reformierakond                    Isamaa Erakond 
+##                               231                               125 
+##                         Eesti 200      Sotsiaaldemokraatlik Erakond 
+##                               117                               104 
+## Eesti Konservatiivne Rahvaerakond                 Eesti Keskerakond 
+##                               104                                93 
+##                      Parempoolsed                  Üksikkandidaadid 
+##                                21                                10 
+##        Erakond Eestimaa Rohelised                             Other 
+##                                 5                                 3 
+##                 Eesti Vabaerakond    Eestimaa Ühendatud Vasakpartei 
+##                                 0                                 0 
+##                    Not applicable                           Refusal 
+##                                 0                                 0 
+##                        Don't know                         No answer 
+##                                 0                                 0</code></pre>
+</div>
+</div>
+<p>Kuus erakonda on korraliku suurusega — 93 kuni 231 vastajat. Ülejäänud on üksikud juhtumid: 21, 10, 5, 3.</p>
+<p><strong>Viie vastajaga grupi kohta ei saa statistiliselt midagi öelda.</strong> Iga arv, mille sa selle grupi kohta arvutad, sõltub täielikult sellest, kes need viis inimest juhtumisi olid. Seega paneme nad kokku kategooriasse “muu”.</p>
+<p>Ühtlasi kasutame <strong>lühikesi nimetusi</strong>. Pikad erakonnanimed ei mahu tabelitesse ega joonistele ära ning lõhuvad vormistuse. Lühendame kohe siin, mitte hiljem iga joonise juures eraldi.</p>
+<p>Kirjutame iga sammu eraldi reale, et oleks näha, mis järjekorras asjad toimuvad.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. samm. Teeme siltidest faktori ja siis tekstilise muutuja, et nendega</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#    saaks võrrelda.</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>erakond_faktorina <span class="ot">&lt;-</span> <span class="fu">as_factor</span>(ee<span class="sc">$</span>prtvtiee)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>erakond_tekstina <span class="ot">&lt;-</span> <span class="fu">as.character</span>(erakond_faktorina)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. samm. case_when() annab igale suuremale erakonnale lühikese nime ja</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    kõigile ülejäänutele "Muu". Puuduvad väärtused peavad puuduvaks jääma,</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    mitte muutuma kategooriaks "Muu" -- seetõttu on neil oma rida.</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>erakond_lyhike <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  erakond_tekstina <span class="sc">==</span> <span class="st">"Eesti Reformierakond"</span> <span class="sc">~</span> <span class="st">"Reform"</span>,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  erakond_tekstina <span class="sc">==</span> <span class="st">"Isamaa Erakond"</span> <span class="sc">~</span> <span class="st">"Isamaa"</span>,</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  erakond_tekstina <span class="sc">==</span> <span class="st">"Eesti 200"</span> <span class="sc">~</span> <span class="st">"E200"</span>,</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  erakond_tekstina <span class="sc">==</span> <span class="st">"Sotsiaaldemokraatlik Erakond"</span> <span class="sc">~</span> <span class="st">"SDE"</span>,</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  erakond_tekstina <span class="sc">==</span> <span class="st">"Eesti Konservatiivne Rahvaerakond"</span> <span class="sc">~</span> <span class="st">"EKRE"</span>,</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  erakond_tekstina <span class="sc">==</span> <span class="st">"Eesti Keskerakond"</span> <span class="sc">~</span> <span class="st">"Kesk"</span>,</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">is.na</span>(erakond_tekstina) <span class="sc">~</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">.default =</span> <span class="st">"Muu"</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. samm. factor() teeb tekstist kategoorilise muutuja. Argument levels</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="co">#    määrab kategooriate JÄRJEKORRA.</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>ee<span class="sc">$</span>erakond <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  erakond_lyhike,</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Reform"</span>, <span class="st">"Isamaa"</span>, <span class="st">"E200"</span>, <span class="st">"SDE"</span>, <span class="st">"EKRE"</span>, <span class="st">"Kesk"</span>, <span class="st">"Muu"</span>)</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ee<span class="sc">$</span>erakond, <span class="at">useNA =</span> <span class="st">"ifany"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+## Reform Isamaa   E200    SDE   EKRE   Kesk    Muu   &lt;NA&gt; 
+##    231    125    117    104    104     93     39    480</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Kategooriate järjekord on oluline.</strong> Esimene kategooria jääb regressioonimudelis <strong>referentskategooriaks</strong> — selleks, mille suhtes kõiki teisi võrreldakse (praktikum 11). Joonistel kuvatakse kategooriad samuti selles järjekorras. Seega tasub järjekord läbi mõelda juba siin, mitte hiljem iga joonise juures eraldi.</p>
+</blockquote>
+</section>
+<section id="siltide-tõlkimine" class="level2">
+<h2 class="anchored" data-anchor-id="siltide-tõlkimine">Siltide tõlkimine</h2>
+<p>ESS-i sildid on inglise keeles. Kuna kogu meie töö on eesti keeles ja need sildid lähevad hiljem otse joonistele ja tabelitesse, on kõige mõistlikum nad <strong>kohe siin ära tõlkida.</strong> Nii ei pea seda tegema iga joonise juures uuesti.</p>
+<p>Funktsioon <code>levels()</code> näitab faktori kategooriaid nende järjekorras. Sama funktsiooniga saab neid ka <strong>asendada</strong>, kui kirjutada ta võrdusmärgist vasakule.</p>
+<blockquote class="blockquote">
+<p><strong>Kontrolli alati enne asendamist, mis järjekorras kategooriad on.</strong> Kui sa selle valesti arvad, siis satuvad sildid vale kategooria juurde — ja mitte miski ei anna sulle veateadet. Sinu joonisel on lihtsalt vale info.</p>
+</blockquote>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(<span class="fu">as_factor</span>(ee<span class="sc">$</span>gndr))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] "Male"      "Female"    "No answer"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(<span class="fu">as_factor</span>(ee<span class="sc">$</span>domicil))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] "A big city"                       "Suburbs or outskirts of big city"
+## [3] "Town or small city"               "Country village"                 
+## [5] "Farm or home in countryside"      "Refusal"                         
+## [7] "Don't know"                       "No answer"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(<span class="fu">as_factor</span>(ee<span class="sc">$</span>health))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] "Very good"  "Good"       "Fair"       "Bad"        "Very bad"  
+## [6] "Refusal"    "Don't know" "No answer"</code></pre>
+</div>
+</div>
+<p>Funktsioon <code>droplevels()</code> viskab välja kategooriad, mida andmetes tegelikult ei esine — siltides on ka “Refusal” ja “Don’t know”, aga ühelgi vastajal neid väärtusi ei ole.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ee<span class="sc">$</span>sugu <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(<span class="fu">as_factor</span>(ee<span class="sc">$</span>gndr))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ee<span class="sc">$</span>sugu) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mees"</span>, <span class="st">"naine"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>ee<span class="sc">$</span>elukoht <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(<span class="fu">as_factor</span>(ee<span class="sc">$</span>domicil))</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(ee<span class="sc">$</span>elukoht) <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"suurlinn"</span>,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"äärelinn"</span>,</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"väikelinn"</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"maa-asula"</span>,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"maakodu"</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ee<span class="sc">$</span>elukoht)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+##  suurlinn  äärelinn väikelinn maa-asula   maakodu 
+##       435       133       385       249        89</code></pre>
+</div>
+</div>
+</section>
+<section id="ülejäänud-muutujad" class="level2">
+<h2 class="anchored" data-anchor-id="ülejäänud-muutujad">Ülejäänud muutujad</h2>
+<p>Pidevad ja järjestatud muutujad teeme arvulisteks ja anname neile eestikeelsed nimed.</p>
+<p>Muutuja <code>eisced</code> on haridustase skaalal 1–7. ESS-i failis on ka koodid 0 (“ei saa harmoniseerida”) ja 55 (“muu”), mis <strong>ei ole</strong> märgitud puuduvateks väärtusteks. Eesti andmetes neid ei esine — aga me kontrollime seda, mitte ei eelda.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">zap_labels</span>(ee<span class="sc">$</span>eisced), <span class="at">useNA =</span> <span class="st">"ifany"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+##    1    2    3    4    5    6    7 &lt;NA&gt; 
+##   23  138   35  381  219  204  291    2</code></pre>
+</div>
+</div>
+<p>Ainult väärtused 1–7. Korras.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ee <span class="ot">&lt;-</span> ee <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">vanus =</span> <span class="fu">as.numeric</span>(agea),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">haridus =</span> <span class="fu">as.numeric</span>(eisced),</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sissetulek =</span> <span class="fu">as.numeric</span>(hinctnta),</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">vasak_parem =</span> <span class="fu">as.numeric</span>(lrscale),</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">usaldus_pol =</span> <span class="fu">as.numeric</span>(trstplt),</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">usaldus_rii =</span> <span class="fu">as.numeric</span>(trstprl),</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">usaldus_inim =</span> <span class="fu">as.numeric</span>(ppltrst),</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">rahulolu_dem =</span> <span class="fu">as.numeric</span>(stfdem),</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># tervis: ESS-is 1 = väga hea ... 5 = väga halb. Pöörame ümber, et suurem</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># väärtus tähendaks paremat tervist. Viis kategooriat, seega võime teda</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># käsitleda pidevana.</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">tervis =</span> <span class="dv">6</span> <span class="sc">-</span> <span class="fu">as.numeric</span>(health),</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># huvi poliitika vastu: ESS-is 1 = väga huvitatud ... 4 = üldse mitte.</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># NELI kategooriat on pideva muutuja jaoks liiga vähe, seega teeme temast</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># binaarse muutuja.</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">huvi_pol =</span> <span class="fu">case_when</span>(</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(polintr) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(polintr) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>) <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA_real_</span></span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<blockquote class="blockquote">
+<p>Pane tähele viimast rida. <code>polintr</code> on <strong>kolmas</strong> tagurpidi muutuja, mis meil ette tuli. Küsitlusandmetes on see täiesti tavaline. Kontrolli iga järjestatud muutuja puhul, kummas otsas on “rohkem”.</p>
+</blockquote>
+</section>
+<section id="analüüsivalmis-andmestik" class="level2">
+<h2 class="anchored" data-anchor-id="analüüsivalmis-andmestik">Analüüsivalmis andmestik</h2>
+<p>Võtame lõpuks välja ainult need muutujad, mida päriselt kasutame.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> ee <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    idno, pspwght, anweight,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    vanus, sugu, haridus, sissetulek, elukoht,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    vasak_parem, huvi_pol, valis, erakond,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    usaldus_pol, usaldus_rii, usaldus_inim, rahulolu_dem,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    ranne, usaldus, tervis</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## tibble [1,293 × 19] (S3: tbl_df/tbl/data.frame)
+##  $ idno        : num [1:1293] 50030 50069 50119 50137 50147 ...
+##   ..- attr(*, "label")= chr "Respondent's identification number"
+##   ..- attr(*, "format.spss")= chr "F8.2"
+##  $ pspwght     : num [1:1293] 1.086 0.776 0.846 0.941 2.126 ...
+##   ..- attr(*, "label")= chr "Post-stratification weight including design weight"
+##   ..- attr(*, "format.spss")= chr "F8.2"
+##  $ anweight    : num [1:1293] 0.0959 0.0686 0.0747 0.0831 0.1877 ...
+##   ..- attr(*, "label")= chr "Analysis weight"
+##   ..- attr(*, "format.spss")= chr "F8.2"
+##  $ vanus       : num [1:1293] 36 82 69 69 69 51 16 41 75 17 ...
+##  $ sugu        : Factor w/ 2 levels "mees","naine": 1 2 1 2 2 1 2 2 2 2 ...
+##  $ haridus     : num [1:1293] 4 7 7 3 2 3 1 5 4 2 ...
+##  $ sissetulek  : num [1:1293] 9 3 7 5 6 NA 1 7 4 4 ...
+##  $ elukoht     : Factor w/ 5 levels "suurlinn","äärelinn",..: 3 1 3 4 1 4 2 4 3 4 ...
+##  $ vasak_parem : num [1:1293] 5 5 8 NA NA 5 5 5 NA 5 ...
+##  $ huvi_pol    : num [1:1293] 1 1 1 1 0 1 0 0 0 1 ...
+##  $ valis       : num [1:1293] 1 1 1 1 NA 1 NA 1 1 NA ...
+##  $ erakond     : Factor w/ 7 levels "Reform","Isamaa",..: 5 4 1 6 NA 1 NA 1 6 NA ...
+##  $ usaldus_pol : num [1:1293] 0 8 8 5 4 5 4 7 2 4 ...
+##  $ usaldus_rii : num [1:1293] 0 6 8 5 3 5 5 9 8 5 ...
+##  $ usaldus_inim: num [1:1293] 1 7 8 10 5 3 4 7 7 5 ...
+##  $ rahulolu_dem: num [1:1293] 5 8 7 7 4 9 6 8 8 7 ...
+##  $ ranne       : num [1:1293] -2.2837 -0.0352 1.1169 -0.666 0.0909 ...
+##  $ usaldus     : num [1:1293] -1.9 1.42 1.12 NA NA ...
+##  $ tervis      : num [1:1293] 3 4 4 2 3 3 2 4 3 4 ...
+##  - attr(*, "label")= chr "ESS11 edition 4.2, Eesti"</code></pre>
+</div>
+</div>
+<p>Ja vaatame kokkuvõtte. Funktsioon <code>summary()</code> töötab ka terve andmetabeli peal korraga.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##       idno          pspwght          anweight           vanus          sugu    
+##  Min.   :50030   Min.   :0.7718   Min.   :0.06816   Min.   :15.00   mees :577  
+##  1st Qu.:58499   1st Qu.:0.7784   1st Qu.:0.06875   1st Qu.:37.00   naine:716  
+##  Median :67095   Median :0.9030   Median :0.07975   Median :50.00              
+##  Mean   :67662   Mean   :1.0000   Mean   :0.08832   Mean   :50.07              
+##  3rd Qu.:77009   3rd Qu.:1.1380   3rd Qu.:0.10051   3rd Qu.:64.00              
+##  Max.   :86448   Max.   :2.1313   Max.   :0.18824   Max.   :90.00              
+##                                                     NAs    :7                  
+##     haridus        sissetulek          elukoht     vasak_parem    
+##  Min.   :1.000   Min.   : 1.000   suurlinn :435   Min.   : 0.000  
+##  1st Qu.:4.000   1st Qu.: 4.000   äärelinn :133   1st Qu.: 5.000  
+##  Median :5.000   Median : 6.000   väikelinn:385   Median : 5.000  
+##  Mean   :4.868   Mean   : 6.298   maa-asula:249   Mean   : 5.672  
+##  3rd Qu.:6.000   3rd Qu.: 9.000   maakodu  : 89   3rd Qu.: 7.000  
+##  Max.   :7.000   Max.   :10.000   NAs      :  2   Max.   :10.000  
+##  NAs    :2       NAs    :114                      NAs    :185     
+##     huvi_pol          valis           erakond     usaldus_pol    
+##  Min.   :0.0000   Min.   :0.0000   Reform :231   Min.   : 0.000  
+##  1st Qu.:0.0000   1st Qu.:0.0000   Isamaa :125   1st Qu.: 2.000  
+##  Median :0.0000   Median :1.0000   E200   :117   Median : 3.000  
+##  Mean   :0.4554   Mean   :0.7413   SDE    :104   Mean   : 3.443  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   EKRE   :104   3rd Qu.: 5.000  
+##  Max.   :1.0000   Max.   :1.0000   (Other):132   Max.   :10.000  
+##  NAs    :4        NAs    :118      NAs    :480   NAs    :16      
+##   usaldus_rii      usaldus_inim     rahulolu_dem        ranne         
+##  Min.   : 0.000   Min.   : 0.000   Min.   : 0.000   Min.   :-2.37418  
+##  1st Qu.: 3.000   1st Qu.: 5.000   1st Qu.: 3.000   1st Qu.:-0.53874  
+##  Median : 5.000   Median : 6.000   Median : 5.000   Median : 0.02006  
+##  Mean   : 4.579   Mean   : 5.692   Mean   : 5.108   Mean   : 0.00000  
+##  3rd Qu.: 7.000   3rd Qu.: 7.000   3rd Qu.: 7.000   3rd Qu.: 0.59555  
+##  Max.   :10.000   Max.   :10.000   Max.   :10.000   Max.   : 2.30370  
+##  NAs    :22       NAs    :2        NAs    :66       NAs    :85        
+##     usaldus             tervis    
+##  Min.   :-2.12429   Min.   :1.00  
+##  1st Qu.:-0.67805   1st Qu.:3.00  
+##  Median : 0.08064   Median :4.00  
+##  Mean   : 0.00000   Mean   :3.59  
+##  3rd Qu.: 0.76016   3rd Qu.:4.00  
+##  Max.   : 2.57866   Max.   :5.00  
+##  NAs    :176        NAs    :1</code></pre>
+</div>
+</div>
+<p>Kui palju juhtumeid on iga muutuja puhul tegelikult olemas?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(data, <span class="cf">function</span>(x) <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(x)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##         idno      pspwght     anweight        vanus         sugu      haridus 
+##         1293         1293         1293         1286         1293         1291 
+##   sissetulek      elukoht  vasak_parem     huvi_pol        valis      erakond 
+##         1179         1291         1108         1289         1175          813 
+##  usaldus_pol  usaldus_rii usaldus_inim rahulolu_dem        ranne      usaldus 
+##         1277         1271         1291         1227         1208         1117 
+##       tervis 
+##         1292</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Hüüumärk <code>!</code> tähendab R-is “mitte”. <code>!is.na(x)</code> tähendab seega “ei ole puuduv” ehk “on olemas”.</p>
+</blockquote>
+<p>Salvestame. Funktsioon <code>save()</code> salvestab objekti R-i enda formaadis; argument <code>file</code> määrab faili nime. Hiljem saab selle tagasi laadida funktsiooniga <code>load()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data, <span class="at">file =</span> <span class="st">"data/ess11_ee_clean.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="kokkuvõte" class="level2">
+<h2 class="anchored" data-anchor-id="kokkuvõte">Kokkuvõte</h2>
+<p>Objekt <code>data</code> on see, millega me alates järgmisest praktikumist töötame. Kogu see töö on koos ühes failis: <code>R/ettevalmistus.R</code>.</p>
+<p>Mida me kahes praktikumis tegime:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Samm</th>
+<th>Miks</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>valisime muutujad</td>
+<td>426-st läks vaja 19</td>
+</tr>
+<tr class="even">
+<td>kodeerisime <code>vote</code> ümber</td>
+<td>üks kategooria ei olnud päris vastus</td>
+</tr>
+<tr class="odd">
+<td>ehitasime kaks indeksit</td>
+<td>üksik küsimus on liiga jäme mõõdik</td>
+</tr>
+<tr class="even">
+<td>tegime poliitikahuvist binaarse muutuja</td>
+<td>neli kategooriat on pidevaks liiga vähe</td>
+</tr>
+<tr class="odd">
+<td>pöörasime kaks muutujat ümber</td>
+<td>skaala oli tagurpidi</td>
+</tr>
+<tr class="even">
+<td>panime väiksed erakonnad kokku</td>
+<td>viie vastajaga grupist ei saa järeldusi teha</td>
+</tr>
+<tr class="odd">
+<td>tõlkisime sildid</td>
+<td>joonised ja tabelid tulevad eesti keeles</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>See ongi see osa tööst, mida keegi ei näe ja mida kõik alahindavad.</strong> Sinu uurimustöös ei ole seda peatükki. Aga kui sa selle töö tegemata jätad või valesti teed, siis on kõik ülejäänud peatükid valed.</p>
+</blockquote>
+</section>
+<section id="harjutused" class="level2">
+<h2 class="anchored" data-anchor-id="harjutused">Harjutused</h2>
+<div class="harjutus">
+<p><strong>1. Ümber kodeerimine.</strong> Tee muutujast <code>haridus</code> binaarne muutuja, mis näitab, kas inimesel on kõrgharidus (<code>haridus</code> on 6 või 7) või mitte. Kontrolli tabeliga, kas arvud lähevad kokku.</p>
+<p><strong>2. Kategooriate kokku panemine.</strong> Tee muutujast <code>elukoht</code> uus muutuja, kus on ainult kaks kategooriat: linn (suurlinn, äärelinn, väikelinn) ja maa (maa-asula, maakodu).</p>
+<p><strong>3. Faktori järjekord.</strong> Muuda muutuja <code>erakond</code> tasemete järjekorda nii, et referentskategooriaks jääks EKRE. Kontrolli funktsiooniga <code>levels()</code>.</p>
+<p><strong>4. Oma indeks.</strong> ESS-is on rahulolu mõõtvad muutujad <code>stfeco</code> (majandus), <code>stfgov</code> (valitsus), <code>stfedu</code> (haridus) ja <code>stfhlth</code> (tervishoid), kõik skaalal 0–10. Tee neist faktoranalüüsi abil üks muutuja. Millised laadungid tulevad? Ära unusta suunda kontrollida.</p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./03-andmete-ettevalmistus-1.html" class="pagination-link" aria-label="3. Andmete ettevalmistus I">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">3. Andmete ettevalmistus I</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="pagination-link" aria-label="5. Kirjeldamine ja visualiseerimine">
+        <span class="nav-page-text"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="et" xml:lang="et"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>11. Logistiline regressioon – Statistilise analüüsi alused</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./10-tulemuste-esitamine.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-bf8030b5a8b8f2de5bceddfb8bf38a1d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "Otsi",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./11-logistiline-regressioon.html"><span class="chapter-title">11. Logistiline regressioon</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistilise analüüsi alused</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sissejuhatus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Alustamine</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-r-alused.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1. R ja RStudio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-andmete-laadimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2. Andmete laadimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Andmete ettevalmistus</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Andmete ettevalmistus I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus II</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Andmete kirjeldamine</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Järeldav statistika</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-valim-ja-ebakindlus.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6. Valim ja ebakindlus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-hupoteeside-testimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Hüpoteeside testimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Seosed ja mudelid</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-korrelatsioon-ja-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Mitmene regressioon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Tulemuste esitamine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-logistiline-regressioon.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">11. Logistiline regressioon</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Selle peatüki sisu</h2>
+   
+  <ul>
+  <li><a href="#miks-tavaline-regressioon-ei-sobi" id="toc-miks-tavaline-regressioon-ei-sobi" class="nav-link active" data-scroll-target="#miks-tavaline-regressioon-ei-sobi">Miks tavaline regressioon ei sobi</a></li>
+  <li><a href="#tõenäosus-šansid-ja-logit" id="toc-tõenäosus-šansid-ja-logit" class="nav-link" data-scroll-target="#tõenäosus-šansid-ja-logit">Tõenäosus, šansid ja logit</a></li>
+  <li><a href="#mudeli-sobitamine" id="toc-mudeli-sobitamine" class="nav-link" data-scroll-target="#mudeli-sobitamine">Mudeli sobitamine</a></li>
+  <li><a href="#tulemuste-tõlgendamine" id="toc-tulemuste-tõlgendamine" class="nav-link" data-scroll-target="#tulemuste-tõlgendamine">Tulemuste tõlgendamine</a>
+  <ul class="collapse">
+  <li><a href="#šansside-suhe" id="toc-šansside-suhe" class="nav-link" data-scroll-target="#šansside-suhe">Šansside suhe</a></li>
+  <li><a href="#ennustatud-tõenäosused" id="toc-ennustatud-tõenäosused" class="nav-link" data-scroll-target="#ennustatud-tõenäosused">Ennustatud tõenäosused</a></li>
+  </ul></li>
+  <li><a href="#mudeli-sobivus" id="toc-mudeli-sobivus" class="nav-link" data-scroll-target="#mudeli-sobivus">Mudeli sobivus</a>
+  <ul class="collapse">
+  <li><a href="#klassifitseerimistäpsus" id="toc-klassifitseerimistäpsus" class="nav-link" data-scroll-target="#klassifitseerimistäpsus">Klassifitseerimistäpsus</a></li>
+  </ul></li>
+  <li><a href="#tulemuste-esitamine" id="toc-tulemuste-esitamine" class="nav-link" data-scroll-target="#tulemuste-esitamine">Tulemuste esitamine</a></li>
+  <li><a href="#kuidas-seda-kirja-panna" id="toc-kuidas-seda-kirja-panna" class="nav-link" data-scroll-target="#kuidas-seda-kirja-panna">Kuidas seda kirja panna</a></li>
+  <li><a href="#kursuse-lõpp" id="toc-kursuse-lõpp" class="nav-link" data-scroll-target="#kursuse-lõpp">Kursuse lõpp</a></li>
+  <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./11-logistiline-regressioon.html"><span class="chapter-title">11. Logistiline regressioon</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">11. Logistiline regressioon</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pscl)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/ess11_ee_clean.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Viimane teema. Siiani on meie sõltuv muutuja olnud alati pidev. Aga väga sageli ei ole ta seda — käis valimas või ei käinud, töötab või ei tööta, jäi haigeks või ei jäänud.</p>
+<p>Selliste sõltuvate muutujate jaoks on <strong>logistiline regressioon</strong>.</p>
+<section id="miks-tavaline-regressioon-ei-sobi" class="level2">
+<h2 class="anchored" data-anchor-id="miks-tavaline-regressioon-ei-sobi">Miks tavaline regressioon ei sobi</h2>
+<p>Meie muutuja <code>valis</code> on kodeeritud 0 ja 1 — täpselt nii, nagu me ta praktikumis 4 ette valmistasime.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>valis, <span class="at">useNA =</span> <span class="st">"ifany"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+##    0    1 &lt;NA&gt; 
+##  304  871  118</code></pre>
+</div>
+</div>
+<p>Mis juhtuks, kui me teeksime tavalise regressiooni? Sõltuva muutuja väärtused on 0 ja 1, seega ennustaks mudel midagi nende vahel — ja seda võiks tõlgendada tõenäosusena.</p>
+<p>Proovime.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>halb <span class="ot">&lt;-</span> <span class="fu">lm</span>(valis <span class="sc">~</span> huvi_pol <span class="sc">+</span> vanus <span class="sc">+</span> haridus, <span class="at">data =</span> data)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ennustused <span class="ot">&lt;-</span> <span class="fu">predict</span>(halb)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(ennustused)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.3236606 1.0408087</code></pre>
+</div>
+</div>
+<p><strong>Vaata ülemist otsa.</strong> Mudel ennustab suurimaks väärtuseks 1.041. Tõenäosus ei saa olla suurem kui 1 — see on võimatu.</p>
+<p>Ja see ei ole üksikjuhtum. Loeme kokku, mitme inimese kohta mudel võimatu ennustuse annab:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(ennustused <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 35</code></pre>
+</div>
+</div>
+<p>35 inimest. Vaatame ka pilti.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>joonise_andmed <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ennustus =</span> ennustused)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(joonise_andmed, <span class="fu">aes</span>(<span class="at">x =</span> ennustus)) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"firebrick3"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"mudeli ennustatud tõenäosus"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"vastajate arv"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Tavaline regressioon ennustab võimatuid tõenäosusi"</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="11-logistiline-regressioon_files/figure-html/halb-mudel-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Punane joon on tõenäosuse ülempiir. Osa ennustusi jääb sellest paremale.</p>
+<p>Probleem on põhimõtteline. <strong>Sirge joon läheb lõputult üles ja alla, aga tõenäosus on piiritletud nulli ja ühe vahele.</strong> Sirge ei oska kuskil peatuda. Meil on vaja midagi, mis otstes ära kõverduks — lameneks, kui läheneb nullile või ühele.</p>
+<div class="arutelu">
+<p><strong>Arutelu.</strong> Mudel ennustas 35 inimese kohta tõenäosuse, mis on üle ühe. <strong>Miks on see tõsisem probleem kui lihtsalt “mõned arvud on veidi valed”?</strong> Mõtle sellele, mida sa nende ennustustega peale hakkaksid.</p>
+</div>
+</section>
+<section id="tõenäosus-šansid-ja-logit" class="level2">
+<h2 class="anchored" data-anchor-id="tõenäosus-šansid-ja-logit">Tõenäosus, šansid ja logit</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Lihtsam seletus</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Täpsem seletus</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Probleem oli see, et tõenäosus on piiratud nulli ja ühe vahele, aga sirge joon ei ole. Lahendus on <strong>skaala ümber vahetada</strong>: selle asemel et ennustada tõenäosust otse, ennustame midagi muud, mis on tõenäosusega üks-ühele seotud, aga millel piire ei ole.</p>
+<p>Kuidas see käib? Kahes sammus.</p>
+<p><strong>Esimene samm: tõenäosuse asemel šansid.</strong></p>
+<p>Šansid on igapäevakeelest tuttavad — “šansid on kolm ühele”. See tähendab: kolm korda tõenäolisem, et juhtub, kui et ei juhtu. Kihlvedudes ja spordis kasutatakse just seda keelt.</p>
+<p>Šansid saadakse tõenäosusest lihtsalt: <strong>kui suur on tõenäosus, et juhtub, võrreldes tõenäosusega, et ei juhtu.</strong> Kui tõenäosus on 0,75, siis šansid on kolm ühele. Kui tõenäosus on 0,5, siis šansid on üks ühele.</p>
+<p>Mis sellega võidetakse? Tõenäosus lõppes ühe juures ära. Šansid <strong>ei lõpe kunagi</strong> — nad kasvavad lõpmatuseni. Ülemine piir on kadunud.</p>
+<p>Alumine piir on aga alles: šansid ei saa olla negatiivsed. Nad lähenevad nullile, aga ei jõua sinna kunagi.</p>
+<p><strong>Teine samm: šanssidest logaritm.</strong></p>
+<p>Logaritmi võtmine on tehe, mis teeb ühe kindla asja: <strong>ta venitab nullilähedased arvud laiali ja surub suured arvud kokku.</strong> Arvudest, mis olid nulli ja ühe vahel, saavad negatiivsed arvud; arvudest, mis olid ühest suuremad, saavad positiivsed.</p>
+<p>Nii kaob ka alumine piir. Tulemus võib olla ükskõik milline arv — nii negatiivne kui positiivne, ilma otsteta.</p>
+<p>Seda lõpptulemust nimetatakse <strong>logitiks</strong>. Ta on lihtsalt tõenäosus, mis on kahe sammuga ümber pandud skaalale, millel ei ole otsi. Ja just sellel skaalal saab tavaline sirge joon oma tööd teha.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Piirid</th>
+<th>Kas sirge sobib?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>tõenäosus</td>
+<td>0 kuni 1</td>
+<td>ei</td>
+</tr>
+<tr class="even">
+<td>šansid</td>
+<td>0 kuni lõpmatus</td>
+<td>ei</td>
+</tr>
+<tr class="odd">
+<td><strong>logit</strong></td>
+<td><strong>piirideta</strong></td>
+<td><strong>jah</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Kõige olulisem: <strong>see teisendus ei muuda infot, ainult skaalat.</strong> Igast logitist saab tagasi arvutada šansid ja igast šansist tagasi tõenäosuse. Midagi ei lähe kaotsi.</p>
+<section id="mida-sa-pead-teadma-tulemuste-lugemiseks" class="level3">
+<h3 class="anchored" data-anchor-id="mida-sa-pead-teadma-tulemuste-lugemiseks">Mida sa pead teadma tulemuste lugemiseks</h3>
+<p><strong>Sina ei pea seda teisendust ise tegema.</strong> R teeb ta ära. Sina pead teadma kolme asja.</p>
+<p><strong>Esiteks: koefitsiendi märk.</strong> See on kõige olulisem ja seda saab lugeda otse tabelist.</p>
+<ul>
+<li><strong>Positiivne</strong> koefitsient logistilise regressiooni mudelis tähendab, et selle muutuja kasvades <strong>kasvab tõenäosus</strong>, et sõltuv muutuja on 1.</li>
+<li><strong>Negatiivne</strong> koefitsient tähendab, et tõenäosus <strong>kahaneb</strong>.</li>
+</ul>
+<p><strong>Teiseks: koefitsiendi arvulist väärtust ei saa otse tõlgendada.</strong> Ta on logiti skaalal ja lause “logit kasvab 0,8 võrra” ei tähenda inimese jaoks midagi. Selle jaoks on kaks lahendust, mida allpool vaatame: <strong>šansside suhe</strong> ja <strong>joonis</strong>.</p>
+<p><strong>Kolmandaks: p-väärtust loetakse täpselt sama moodi</strong> nagu tavalises regressioonis. Nullhüpotees on, et koefitsient on null ehk seost ei ole.</p>
+<blockquote class="blockquote">
+<p>Jäta siinkohal meelde üks asi: <strong>tee joonis.</strong> Ennustatud tõenäosuste joonis ütleb sulle ja su lugejale rohkem kui ükski koefitsient. Sellel joonisel on y-teljel tavaline tõenäosus, mitte logit, ja teda saab lugeda ilma igasuguse teisenduseta.</p>
+</blockquote>
+</section>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Vaatame, kust logit tuleb. Teekond käib kolmes sammus.</p>
+<p><strong>Samm 1: tõenäosuse asemel šansid.</strong></p>
+<p>Šansid on tõenäosus, et midagi juhtub, jagatud tõenäosusega, et ei juhtu:</p>
+<p><span class="math display">\[\text{šansid} = \frac{Pr(y=1)}{1 - Pr(y=1)}\]</span></p>
+<p>Kui tõenäosus on piiratud 0 ja 1 vahele, siis šansid ulatuvad <strong>nullist lõpmatuseni</strong>. Nad ei saa olla negatiivsed. Oleme poolel teel.</p>
+<p>Joonistame selle. Funktsioon <code>seq()</code> teeb arvujada — argument <code>length.out</code> ütleb, mitu arvu jadas olema peab. Funktsioon <code>geom_line()</code> joonistab punktide asemel joone.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> prob <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> prob)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>sansside_andmed <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">prob =</span> prob, <span class="at">odds =</span> odds)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sansside_andmed, <span class="fu">aes</span>(prob, odds)) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"dodgerblue3"</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"tõenäosus"</span>, <span class="at">y =</span> <span class="st">"šansid"</span>) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="11-logistiline-regressioon_files/figure-html/sansid-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Samm 2: šanssidest logaritm.</strong></p>
+<p>Logaritmi võtmine tähendab arvu väljendamist mõne teise arvu astmena. Naturaallogaritmi alus on matemaatiline konstant <span class="math inline">\(e\)</span>, mille väärtus on umbes 2,71.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="fl">2.71</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.9969486</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">10</span>, <span class="at">base =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 1</code></pre>
+</div>
+</div>
+<p>Logaritmi saab võtta igast nullist suuremast arvust ja tulemus võib olla <strong>miinus lõpmatusest lõpmatuseni</strong>. Arvu 1 logaritm on null; alla ühe on negatiivne, üle ühe positiivne.</p>
+<p>Täpselt see, mida vaja. Šansside logaritmi nimetatakse <strong>logitiks</strong>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> prob <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> prob)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>logit_andmed <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">prob =</span> prob, <span class="at">logit =</span> <span class="fu">log</span>(odds))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(logit_andmed, <span class="fu">aes</span>(prob, logit)) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"dodgerblue3"</span>) <span class="sc">+</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"tõenäosus"</span>, <span class="at">y =</span> <span class="st">"log šansid (logit)"</span>) <span class="sc">+</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="11-logistiline-regressioon_files/figure-html/logit-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Nüüd on skaala piiramatu ja tavaline lineaarne mudel saab temaga hakkama.</p>
+<p><strong>Samm 3: tagasi.</strong></p>
+<p>Logaritmi vastandtehe on astendamine. Funktsioon <code>exp()</code> tõstab <span class="math inline">\(e\)</span> antud astmele.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 2.718282</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.3678794</code></pre>
+</div>
+</div>
+<p>Nii saame logitist tagasi šansid ja šanssidest tagasi tõenäosuse:</p>
+<p><span class="math display">\[\text{tõenäosus} = \frac{\text{šansid}}{1 + \text{šansid}}\]</span></p>
+<p><strong>Kokkuvõttes:</strong> logistiline regressioon ennustab logitit, sest logit käitub nii, nagu lineaarne mudel vajab. Tõlgendamiseks teeme tagasitee.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="mudeli-sobitamine" class="level2">
+<h2 class="anchored" data-anchor-id="mudeli-sobitamine">Mudeli sobitamine</h2>
+<p>Logistilise regressiooni funktsioon on <code>glm()</code> — <em>generalized linear model</em>, üldistatud lineaarne mudel. Valem kirjutatakse täpselt nagu <code>lm()</code> puhul, kuid lisaks tuleb argumendiga <code>family</code> öelda, millist sõltuva muutuja teisendust kasutada.</p>
+<p>Väärtus <code>"binomial"</code> tähendab, et sõltuv muutuja on binaarne, ja see annab logit-mudeli.</p>
+<p>Ennustame, kas inimene käis valimas, tema vanuse, soo, hariduse ja poliitikahuvi põhjal.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>logit1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  valis <span class="sc">~</span> vanus <span class="sc">+</span> sugu <span class="sc">+</span> haridus <span class="sc">+</span> huvi_pol,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+## Call:
+## glm(formula = valis ~ vanus + sugu + haridus + huvi_pol, family = "binomial", 
+##     data = data)
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -1.731733   0.301076  -5.752 8.83e-09 ***
+## vanus        0.011713   0.004147   2.824  0.00474 ** 
+## sugunaine   -0.109644   0.148560  -0.738  0.46049    
+## haridus      0.403180   0.049425   8.157 3.42e-16 ***
+## huvi_pol     0.898893   0.155360   5.786 7.21e-09 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1330.6  on 1163  degrees of freedom
+## Residual deviance: 1178.1  on 1159  degrees of freedom
+##   (129 observations deleted due to missingness)
+## AIC: 1188.1
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+</section>
+<section id="tulemuste-tõlgendamine" class="level2">
+<h2 class="anchored" data-anchor-id="tulemuste-tõlgendamine">Tulemuste tõlgendamine</h2>
+<p>Koefitsiendid on logiti skaalal. Nagu öeldud, ei ole nende arvuline väärtus otseselt mõistetav — aga <strong>märk on.</strong></p>
+<p>Vanus, haridus ja poliitikahuvi on kõik positiivsed ja statistiliselt olulised: vanemad, haritumad ja poliitikast rohkem huvitatud inimesed käivad suurema tõenäosusega valimas.</p>
+<section id="šansside-suhe" class="level3">
+<h3 class="anchored" data-anchor-id="šansside-suhe">Šansside suhe</h3>
+<p>Logiti koefitsienti ei saa otse tõlgendada. Aga kui teha talle logaritmi vastandtehe funktsiooniga <code>exp()</code>, saame arvu, mida saab — <strong>šansside suhte</strong> (<em>odds ratio</em>).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>koefitsiendid <span class="ot">&lt;-</span> <span class="fu">coef</span>(logit1)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>sansside_suhted <span class="ot">&lt;-</span> <span class="fu">exp</span>(koefitsiendid)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(sansside_suhted, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## (Intercept)       vanus   sugunaine     haridus    huvi_pol 
+##       0.177       1.012       0.896       1.497       2.457</code></pre>
+</div>
+</div>
+<p><strong>Kuidas šansside suhet lugeda?</strong></p>
+<p>Kõige olulisem on üks vahe, mida aetakse pidevalt segamini.</p>
+<blockquote class="blockquote">
+<p><strong>Logiti koefitsient ütleb, mitme VÕRRA logit muutub. Šansside suhe ütleb, mitu KORDA šansid muutuvad.</strong></p>
+<p>Esimene on liitmine, teine on korrutamine. Sellepärast on nende võrdluspunktid ka erinevad: koefitsiendi puhul on “seost ei ole” väärtus <strong>null</strong>, šansside suhte puhul <strong>üks</strong>.</p>
+</blockquote>
+<p>Seega:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Šansside suhe</th>
+<th>Mida tähendab</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>üle 1</strong></td>
+<td>šansid kasvavad — seos on positiivne</td>
+</tr>
+<tr class="even">
+<td><strong>täpselt 1</strong></td>
+<td>seost ei ole</td>
+</tr>
+<tr class="odd">
+<td><strong>alla 1</strong></td>
+<td>šansid kahanevad — seos on negatiivne</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Näide meie mudelist.</strong> Poliitikahuvi šansside suhe on 2.46. Muutuja on binaarne: 1 tähendab poliitikast huvitatud, 0 mitte huvitatud.</p>
+<p>Tõlgendus: <strong>poliitikast huvitatud inimeste šansid valimas käia on 2.46 korda suuremad kui mittehuvitatutel</strong>, kui vanus ja haridus on samad.</p>
+<p>Vanuse šansside suhe on 1.012. See tundub olematu, aga pane tähele skaalat: ta käib <strong>ühe eluaasta</strong> kohta. Kümne aasta kohta tuleb ta astmesse tõsta, mitte kümnega korrutada — ja siis on ta juba 1.12.</p>
+<blockquote class="blockquote">
+<p><strong>Kaks lõksu, mille otsa komistatakse pidevalt.</strong></p>
+<p><strong>Esiteks: šansid ei ole tõenäosus.</strong> Kui šansid kahekordistuvad, siis tõenäosus <strong>ei</strong> kahekordistu. Kui tõenäosus oli 0,5, siis šansid olid üks ühele; kahekordistudes saavad nad kaks ühele, mis vastab tõenäosusele 0,67 — mitte 1,0. Ja mida lähemal on tõenäosus ühele, seda vähem ta üldse muutub.</p>
+<p><strong>Teiseks: “kaks korda suuremad šansid” ei tähenda “kaks korda tõenäolisem”.</strong> Ajakirjanduses aetakse neid pidevalt segamini ja teadustöös ei tohi seda teha.</p>
+</blockquote>
+<p>Just sellepärast on ennustatud tõenäosuste joonis nii kasulik — seal on tavaline tõenäosus, mille tõlgendamisel eksida ei saa.</p>
+<div class="harjutus">
+<p><strong>Harjutus.</strong> Arvuta hariduse šansside suhe kolme haridusastme kohta korraga (ehk tõsta ta kolmandasse astmesse). Kui palju kasvavad valimas käimise šansid, kui haridustase on kolm astet kõrgem?</p>
+</div>
+</section>
+<section id="ennustatud-tõenäosused" class="level3">
+<h3 class="anchored" data-anchor-id="ennustatud-tõenäosused">Ennustatud tõenäosused</h3>
+<p>Kõige arusaadavam viis on ikkagi joonis. Sama funktsioon, mida praktikumis 10 kasutasime, töötab ka siin — ja ta teeb tagasiteisenduse tõenäosusteks ise ära, nii et y-teljel on tavaline tõenäosus, mitte logit.</p>
+<p>Joonisel kasutame ka funktsiooni <code>ylim()</code>, mis fikseerib y-telje ulatuse. Paneme ta 0-st 1-ni, sest tõenäosus saabki ainult selles vahemikus olla — nii on kohe näha, kui suur osa võimalikust skaalast tegelikult kasutuses on.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ennustus_huvi <span class="ot">&lt;-</span> <span class="fu">predict_response</span>(logit1, <span class="at">terms =</span> <span class="st">"huvi_pol"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>huvi_tabel <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(ennustus_huvi)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>huvi_tabel<span class="sc">$</span>x <span class="ot">&lt;-</span> <span class="fu">factor</span>(huvi_tabel<span class="sc">$</span>x)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(huvi_tabel, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> predicted)) <span class="sc">+</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high),</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.15</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"grey40"</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"dodgerblue3"</span>) <span class="sc">+</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"ei ole huvitatud"</span>, <span class="st">"on huvitatud"</span>)) <span class="sc">+</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"tõenäosus valimas käia"</span>,</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Valimas käimise ennustatud tõenäosus"</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="11-logistiline-regressioon_files/figure-html/pred-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Siit on kohe näha, mida mudel ütleb: kõige väiksema poliitikahuviga inimeste seas käib valimas umbes 55%, kõige suurema huviga inimeste seas üle 90%.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>ennustus_vanus <span class="ot">&lt;-</span> <span class="fu">predict_response</span>(logit1, <span class="at">terms =</span> <span class="st">"vanus"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>vanus_tabel <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(ennustus_vanus)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vanus_tabel, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> predicted)) <span class="sc">+</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high), <span class="at">fill =</span> <span class="st">"grey80"</span>) <span class="sc">+</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"dodgerblue3"</span>) <span class="sc">+</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"vanus"</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"tõenäosus valimas käia"</span>,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Valimas käimise ennustatud tõenäosus"</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="11-logistiline-regressioon_files/figure-html/pred-vanus-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Pane tähele, et joon <strong>ei ole sirge</strong> — ta on otstest lamedam. Just see oligi logiti mõte.</p>
+</section>
+</section>
+<section id="mudeli-sobivus" class="level2">
+<h2 class="anchored" data-anchor-id="mudeli-sobivus">Mudeli sobivus</h2>
+<p>Logistilise regressiooni puhul ei saa arvutada tavalist R-ruutu. Selle asemel on <strong>pseudo R-ruut</strong> — arv, mis on tõlgendatav sarnaselt, kuid mitte päris samamoodi.</p>
+<p>Neid on mitu varianti ja nad on nimetatud oma väljamõtlejate järgi. Arvutab neid funktsioon <code>pR2()</code> paketist <code>pscl</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pR2() trükib arvutamise ajal teate null-mudeli sobitamise kohta.</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># suppressMessages() vaigistab selle -- tulemus ise ei muutu.</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">pR2</span>(logit1))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## fitting null model for pseudo-r2</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##          llh      llhNull           G2     McFadden         r2ML         r2CU 
+## -589.0625075 -665.3168512  152.5086874    0.1146136    0.1228008    0.1802743</code></pre>
+</div>
+</div>
+<p>Kolm viimast arvu on pseudo R-ruudud: <strong>McFadden</strong> oma nime all, <strong>Cox ja Snell</strong> nime all <code>r2ML</code> ning <strong>Nagelkerke</strong> nime all <code>r2CU</code>.</p>
+<blockquote class="blockquote">
+<p>Millist kasutada? Lõplikku konsensust ei ole. <strong>McFadden</strong> on kõige tavalisem ja jääb oma hinnangult tavaliselt keskele — piirdu temaga.</p>
+<p>NB! McFadden pseudo R-ruut on tavaliselt <strong>palju väiksem</strong> kui tavaline R-ruut oleks, kui tema arvutamine antud juhul võimalik oleks. See on selle tõlgendamine samaväärselt tavalise R-ruuduga natuke komplitseeritud. Väärtus 0,1 on logistilise mudeli puhul juba päris hea. Ära ehmata.</p>
+</blockquote>
+<section id="klassifitseerimistäpsus" class="level3">
+<h3 class="anchored" data-anchor-id="klassifitseerimistäpsus">Klassifitseerimistäpsus</h3>
+<p>Teine viis mudelit hinnata on küsida: <strong>kui hästi ta juhtumeid ära arvab?</strong></p>
+<p>Ennustatud tõenäosused saab funktsiooniga <code>fitted()</code>. Kui neid ümardada, saame ennustuse 0 või 1 — ümardamise piir on 0,5.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>toenaosused <span class="ot">&lt;-</span> <span class="fu">fitted</span>(logit1)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>ennustatud <span class="ot">&lt;-</span> <span class="fu">round</span>(toenaosused)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mudel jättis puuduvate väärtustega read välja, seega peame võtma</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># tegelikud väärtused mudeli enda andmetest, mitte algsest tabelist.</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>tegelik <span class="ot">&lt;-</span> logit1<span class="sc">$</span>model<span class="sc">$</span>valis</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>tabel <span class="ot">&lt;-</span> <span class="fu">table</span>(ennustatud, tegelik)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>tabel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##           tegelik
+## ennustatud   0   1
+##          0  62  28
+##          1 239 835</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Miks me võtame tegelikud väärtused mudeli seest?</strong> Sest <code>glm()</code> viskas puuduvate väärtustega read välja ja <code>fitted()</code> annab tulemused ainult alles jäänud ridade kohta. Kui võtta <code>data$valis</code>, oleksid vektorid eri pikkusega ja tabel tuleks vale.</p>
+<p>Juhtumite arvu mudelis annab <code>nobs()</code>.</p>
+</blockquote>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nobs</span>(logit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 1164</code></pre>
+</div>
+</div>
+<p>Sellest tabelist saab kaks olulist arvu.</p>
+<ul>
+<li><strong>Sensitiivsus</strong> — kui suure osa tegelikest valijatest mudel õigesti ära tundis.</li>
+<li><strong>Spetsiifilisus</strong> — kui suure osa tegelikest mittevalijatest mudel õigesti ära tundis.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>sensitiivsus <span class="ot">&lt;-</span> tabel[<span class="dv">2</span>, <span class="dv">2</span>] <span class="sc">/</span> <span class="fu">sum</span>(tabel[, <span class="dv">2</span>])</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>spetsiifilisus <span class="ot">&lt;-</span> tabel[<span class="dv">1</span>, <span class="dv">1</span>] <span class="sc">/</span> <span class="fu">sum</span>(tabel[, <span class="dv">1</span>])</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">c</span>(<span class="at">sensitiivsus =</span> sensitiivsus, <span class="at">spetsiifilisus =</span> spetsiifilisus), <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##   sensitiivsus spetsiifilisus 
+##          0.968          0.206</code></pre>
+</div>
+</div>
+<p>Sensitiivsus on väga kõrge, spetsiifilisus madal. Mudel tunneb valijad hästi ära, aga mittevalijaid peaaegu üldse mitte.</p>
+<p>Miks? Sest valijaid on meie andmetes palju rohkem (871 vastu 304). Mudelil on “turvaline” ennustada kõigi kohta, et nad käivad valimas.</p>
+<blockquote class="blockquote">
+<p><strong>Mõtle sellele koroonatesti näitel.</strong> Sensitiivsus on testi võime leida üles haiged inimesed. Spetsiifilisus on tema võime mitte anda valepositiivseid. Test, mis ütleb kõigi kohta “haige”, on 100% sensitiivne ja 0% spetsiifiline — ja täiesti kasutu.</p>
+<p><strong>Seetõttu tuleb neid alati koos vaadata.</strong> Üksik arv ei ütle midagi.</p>
+</blockquote>
+<p>Proovime paremat mudelit — lisame juurde muutujad, mis võiksid valimas käimist samuti seletada.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>logit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  valis <span class="sc">~</span> vanus <span class="sc">+</span> sugu <span class="sc">+</span> haridus <span class="sc">+</span> huvi_pol <span class="sc">+</span> usaldus_pol <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    rahulolu_dem <span class="sc">+</span> sissetulek,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+## Call:
+## glm(formula = valis ~ vanus + sugu + haridus + huvi_pol + usaldus_pol + 
+##     rahulolu_dem + sissetulek, family = "binomial", data = data)
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  -3.146103   0.444683  -7.075 1.50e-12 ***
+## vanus         0.021781   0.005199   4.190 2.79e-05 ***
+## sugunaine    -0.081661   0.166845  -0.489 0.624527    
+## haridus       0.284017   0.057734   4.919 8.68e-07 ***
+## huvi_pol      0.660853   0.173281   3.814 0.000137 ***
+## usaldus_pol   0.077645   0.043407   1.789 0.073653 .  
+## rahulolu_dem  0.114065   0.037725   3.024 0.002498 ** 
+## sissetulek    0.140361   0.035734   3.928 8.57e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1128.13  on 1034  degrees of freedom
+## Residual deviance:  963.92  on 1027  degrees of freedom
+##   (258 observations deleted due to missingness)
+## AIC: 979.92
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+</div>
+<p>Kas ta on parem? Vaatame kõiki kolme sobivusnäitajat korraga.</p>
+<p>Selle asemel et sama koodi kaks korda kirjutada, teeme <strong>oma funktsiooni</strong>. Funktsiooni loomine käib nii: nimi, <code>&lt;-</code>, sõna <code>function</code>, sulgudes sisendite nimed ja looksulgudes see, mida teha. Viimane rida funktsiooni sees on see, mille ta tagastab.</p>
+<p>Nimetame ta <code>sobivus()</code> — ta võtab sisendiks mudeli ja annab tagasi kolm sobivusnäitajat.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>sobivus <span class="ot">&lt;-</span> <span class="cf">function</span>(mudel) {</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  toenaosused <span class="ot">&lt;-</span> <span class="fu">fitted</span>(mudel)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  ennustatud <span class="ot">&lt;-</span> <span class="fu">round</span>(toenaosused)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  tegelik <span class="ot">&lt;-</span> mudel<span class="sc">$</span>model[[<span class="dv">1</span>]]</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  tabel <span class="ot">&lt;-</span> <span class="fu">table</span>(ennustatud, tegelik)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  sens <span class="ot">&lt;-</span> tabel[<span class="st">"1"</span>, <span class="st">"1"</span>] <span class="sc">/</span> <span class="fu">sum</span>(tabel[, <span class="st">"1"</span>])</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  spets <span class="ot">&lt;-</span> tabel[<span class="st">"0"</span>, <span class="st">"0"</span>] <span class="sc">/</span> <span class="fu">sum</span>(tabel[, <span class="st">"0"</span>])</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># pR2() trükib teate null-mudeli sobitamise kohta; suppressMessages() vaigistab ta</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  mcf <span class="ot">&lt;-</span> <span class="fu">suppressMessages</span>(<span class="fu">pR2</span>(mudel))[[<span class="st">"McFadden"</span>]]</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  tulemus <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">McFadden =</span> mcf,</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">sensitiivsus =</span> sens,</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">spetsiifilisus =</span> spets,</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">nobs</span>(mudel)</span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(tulemus, <span class="dv">3</span>)</span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Ja rakendame teda mõlemale mudelile.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sobivus</span>(logit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## fitting null model for pseudo-r2</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##       McFadden   sensitiivsus spetsiifilisus              n 
+##          0.115          0.968          0.206       1164.000</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sobivus</span>(logit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## fitting null model for pseudo-r2</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##       McFadden   sensitiivsus spetsiifilisus              n 
+##          0.146          0.961          0.267       1035.000</code></pre>
+</div>
+</div>
+<p>Pseudo R-ruut kasvas 0.115-lt 0.146-le ja spetsiifilisus 0.206-lt 0.267-le. Mudel tunneb mittevalijaid paremini ära kui enne, kuigi endiselt halvasti.</p>
+<div class="arutelu">
+<p><strong>Arutelu.</strong> Juhtumite arv langes 1164-lt 1035-le. <strong>Miks?</strong> Ja mida see tähendab nende kahe mudeli võrdlemise seisukohalt?</p>
+</div>
+</section>
+</section>
+<section id="tulemuste-esitamine" class="level2">
+<h2 class="anchored" data-anchor-id="tulemuste-esitamine">Tulemuste esitamine</h2>
+<p>Logistilise regressiooni tabel peab sisaldama rohkem kui tavaline regressioonitabel: lisaks koefitsientidele ka <strong>šansside suhted</strong> ja mudeli sobivuse näitajad.</p>
+<p>Pseudo R-ruutu, sensitiivsust ja spetsiifilisust <code>modelsummary()</code> ise ei tunne. Aga talle saab õpetada: kui defineerida funktsioon nimega <code>glance_custom.glm</code>, siis kutsub <code>modelsummary()</code> teda iga logistilise mudeli kohta ja lisab tulemused tabeli alaossa.</p>
+<p>Funktsioon <code>sprintf()</code> vormindab arvu tekstiks. Kirjapilt <code>"%.3f"</code> tähendab “arv kolme komakohaga”. Seda on vaja, et tabelis oleks igal pool ühepalju komakohti.</p>
+<p>Funktsioon <code>registerS3method()</code> ütleb R-ile, et see uus funktsioon tuleb kasutusele võtta alati, kui <code>modelsummary()</code> kohtab logistilist mudelit.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>glance_custom.glm <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">sobivus</span>(x)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">McFadden =</span> <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, n[[<span class="st">"McFadden"</span>]]),</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sensitiivsus =</span> <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, n[[<span class="st">"sensitiivsus"</span>]]),</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Spetsiifilisus =</span> <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, n[[<span class="st">"spetsiifilisus"</span>]])</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="fu">registerS3method</span>(<span class="st">"glance_custom"</span>, <span class="st">"glm"</span>, glance_custom.glm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Nüüd teeme tabeli. Kaks mudelit kõrvuti, koefitsiendid logiti skaalal.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>nimed <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"vanus"</span> <span class="ot">=</span> <span class="st">"Vanus (aastates)"</span>,</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sugunaine"</span> <span class="ot">=</span> <span class="st">"Sugu: naine (ref. mees)"</span>,</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"haridus"</span> <span class="ot">=</span> <span class="st">"Haridustase (1-7)"</span>,</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"huvi_pol"</span> <span class="ot">=</span> <span class="st">"Huvitatud poliitikast (ref. ei ole)"</span>,</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"usaldus_pol"</span> <span class="ot">=</span> <span class="st">"Usaldus poliitikute vastu (0-10)"</span>,</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"rahulolu_dem"</span> <span class="ot">=</span> <span class="st">"Rahulolu demokraatiaga (0-10)"</span>,</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sissetulek"</span> <span class="ot">=</span> <span class="st">"Sissetulekudetsiil (1-10)"</span>,</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"(Intercept)"</span> <span class="ot">=</span> <span class="st">"Vabaliige"</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">"Mudel 1"</span> <span class="ot">=</span> logit1, <span class="st">"Mudel 2"</span> <span class="ot">=</span> logit2),</span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">coef_map =</span> nimed,</span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"McFadden"</span>, <span class="st">"Sensitiivsus"</span>, <span class="st">"Spetsiifilisus"</span>),</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> <span class="fl">0.05</span>, <span class="st">"**"</span> <span class="ot">=</span> <span class="fl">0.01</span>, <span class="st">"***"</span> <span class="ot">=</span> <span class="fl">0.001</span>),</span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Valimas käimist ennustavad tegurid (logiti koefitsiendid)"</span></span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## fitting null model for pseudo-r2
+## fitting null model for pseudo-r2</code></pre>
+</div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_bzfookve3bxfe5qnuggj = TinyTable.createTableFunctions("tinytable_bzfookve3bxfe5qnuggj");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '20', j: 2 }, { i: '20', j: 3 } ], css_id: 'tinytable_css_rbklwm0l2vb7fve7vbnb',}, 
+          { positions: [ { i: '16', j: 2 }, { i: '16', j: 3 } ], css_id: 'tinytable_css_46ai2iqqbxw47vif4h07',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 } ], css_id: 'tinytable_css_291xfevu073vxcto6ro0',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_lvp7g2xrhphaxyhecwdw',}, 
+          { positions: [ { i: '20', j: 1 } ], css_id: 'tinytable_css_15dbsqzp2kl00uk79k7c',}, 
+          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_xevw2pyfr7yqqld3p57j',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 } ], css_id: 'tinytable_css_7mvglokda3n0seymnf86',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_mla0fwknct32y71lfjzz',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_bzfookve3bxfe5qnuggj.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_bzfookve3bxfe5qnuggj td.tinytable_css_rbklwm0l2vb7fve7vbnb, #tinytable_bzfookve3bxfe5qnuggj th.tinytable_css_rbklwm0l2vb7fve7vbnb {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_bzfookve3bxfe5qnuggj td.tinytable_css_46ai2iqqbxw47vif4h07, #tinytable_bzfookve3bxfe5qnuggj th.tinytable_css_46ai2iqqbxw47vif4h07 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_bzfookve3bxfe5qnuggj td.tinytable_css_291xfevu073vxcto6ro0, #tinytable_bzfookve3bxfe5qnuggj th.tinytable_css_291xfevu073vxcto6ro0 { text-align: center }
+    #tinytable_bzfookve3bxfe5qnuggj td.tinytable_css_lvp7g2xrhphaxyhecwdw, #tinytable_bzfookve3bxfe5qnuggj th.tinytable_css_lvp7g2xrhphaxyhecwdw {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_bzfookve3bxfe5qnuggj td.tinytable_css_15dbsqzp2kl00uk79k7c, #tinytable_bzfookve3bxfe5qnuggj th.tinytable_css_15dbsqzp2kl00uk79k7c {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_bzfookve3bxfe5qnuggj td.tinytable_css_xevw2pyfr7yqqld3p57j, #tinytable_bzfookve3bxfe5qnuggj th.tinytable_css_xevw2pyfr7yqqld3p57j {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_bzfookve3bxfe5qnuggj td.tinytable_css_7mvglokda3n0seymnf86, #tinytable_bzfookve3bxfe5qnuggj th.tinytable_css_7mvglokda3n0seymnf86 { text-align: left }
+    #tinytable_bzfookve3bxfe5qnuggj td.tinytable_css_mla0fwknct32y71lfjzz, #tinytable_bzfookve3bxfe5qnuggj th.tinytable_css_mla0fwknct32y71lfjzz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_bzfookve3bxfe5qnuggj" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <caption>Valimas käimist ennustavad tegurid (logiti koefitsiendid)</caption>
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Mudel 1</th>
+                <th scope="col" data-row="0" data-col="3">Mudel 2</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan="3">* p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Vanus (aastates)</td>
+                  <td data-row="1" data-col="2">0.012**</td>
+                  <td data-row="1" data-col="3">0.022***</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.004)</td>
+                  <td data-row="2" data-col="3">(0.005)</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Sugu: naine (ref. mees)</td>
+                  <td data-row="3" data-col="2">-0.110</td>
+                  <td data-row="3" data-col="3">-0.082</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.149)</td>
+                  <td data-row="4" data-col="3">(0.167)</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Haridustase (1-7)</td>
+                  <td data-row="5" data-col="2">0.403***</td>
+                  <td data-row="5" data-col="3">0.284***</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.049)</td>
+                  <td data-row="6" data-col="3">(0.058)</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">Huvitatud poliitikast (ref. ei ole)</td>
+                  <td data-row="7" data-col="2">0.899***</td>
+                  <td data-row="7" data-col="3">0.661***</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1"></td>
+                  <td data-row="8" data-col="2">(0.155)</td>
+                  <td data-row="8" data-col="3">(0.173)</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">Usaldus poliitikute vastu (0-10)</td>
+                  <td data-row="9" data-col="2"></td>
+                  <td data-row="9" data-col="3">0.078</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1"></td>
+                  <td data-row="10" data-col="2"></td>
+                  <td data-row="10" data-col="3">(0.043)</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">Rahulolu demokraatiaga (0-10)</td>
+                  <td data-row="11" data-col="2"></td>
+                  <td data-row="11" data-col="3">0.114**</td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1"></td>
+                  <td data-row="12" data-col="2"></td>
+                  <td data-row="12" data-col="3">(0.038)</td>
+                </tr>
+                <tr>
+                  <td data-row="13" data-col="1">Sissetulekudetsiil (1-10)</td>
+                  <td data-row="13" data-col="2"></td>
+                  <td data-row="13" data-col="3">0.140***</td>
+                </tr>
+                <tr>
+                  <td data-row="14" data-col="1"></td>
+                  <td data-row="14" data-col="2"></td>
+                  <td data-row="14" data-col="3">(0.036)</td>
+                </tr>
+                <tr>
+                  <td data-row="15" data-col="1">Vabaliige</td>
+                  <td data-row="15" data-col="2">-1.732***</td>
+                  <td data-row="15" data-col="3">-3.146***</td>
+                </tr>
+                <tr>
+                  <td data-row="16" data-col="1"></td>
+                  <td data-row="16" data-col="2">(0.301)</td>
+                  <td data-row="16" data-col="3">(0.445)</td>
+                </tr>
+                <tr>
+                  <td data-row="17" data-col="1">Num.Obs.</td>
+                  <td data-row="17" data-col="2">1164</td>
+                  <td data-row="17" data-col="3">1035</td>
+                </tr>
+                <tr>
+                  <td data-row="18" data-col="1">McFadden</td>
+                  <td data-row="18" data-col="2">0.115</td>
+                  <td data-row="18" data-col="3">0.146</td>
+                </tr>
+                <tr>
+                  <td data-row="19" data-col="1">Sensitiivsus</td>
+                  <td data-row="19" data-col="2">0.968</td>
+                  <td data-row="19" data-col="3">0.961</td>
+                </tr>
+                <tr>
+                  <td data-row="20" data-col="1">Spetsiifilisus</td>
+                  <td data-row="20" data-col="2">0.206</td>
+                  <td data-row="20" data-col="3">0.267</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>Kõik sobivusnäitajad on nüüd tabelis olemas ja iga mudeli kohta eraldi.</p>
+<p><strong>Ja šansside suhted?</strong> Nende jaoks teeme eraldi tabeli argumendiga <code>exponentiate = TRUE</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">"Mudel 1"</span> <span class="ot">=</span> logit1, <span class="st">"Mudel 2"</span> <span class="ot">=</span> logit2),</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">exponentiate =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">coef_map =</span> nimed[<span class="fu">names</span>(nimed) <span class="sc">!=</span> <span class="st">"(Intercept)"</span>],</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"McFadden"</span>),</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> <span class="fl">0.05</span>, <span class="st">"**"</span> <span class="ot">=</span> <span class="fl">0.01</span>, <span class="st">"***"</span> <span class="ot">=</span> <span class="fl">0.001</span>),</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Valimas käimist ennustavad tegurid (šansside suhted)"</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## fitting null model for pseudo-r2
+## fitting null model for pseudo-r2</code></pre>
+</div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_d8mslqhenvqdclo6s253 = TinyTable.createTableFunctions("tinytable_d8mslqhenvqdclo6s253");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '16', j: 2 }, { i: '16', j: 3 } ], css_id: 'tinytable_css_pp9leo4wmp7437f5hsxz',}, 
+          { positions: [ { i: '14', j: 2 }, { i: '14', j: 3 } ], css_id: 'tinytable_css_4m8ke2m0oobkacjk6e7a',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '15', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '15', j: 3 } ], css_id: 'tinytable_css_hholm9wfagszt3p9078g',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_6bwe0tyhw2zahj1fpjna',}, 
+          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_qtiyq2id725k7ooh5gcg',}, 
+          { positions: [ { i: '14', j: 1 } ], css_id: 'tinytable_css_v3lrygsl6ilsib0oml4x',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '15', j: 1 } ], css_id: 'tinytable_css_9ik9dphveckvi02wk7lg',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_y74vswpgv87wn3kadch1',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_d8mslqhenvqdclo6s253.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_d8mslqhenvqdclo6s253 td.tinytable_css_pp9leo4wmp7437f5hsxz, #tinytable_d8mslqhenvqdclo6s253 th.tinytable_css_pp9leo4wmp7437f5hsxz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_d8mslqhenvqdclo6s253 td.tinytable_css_4m8ke2m0oobkacjk6e7a, #tinytable_d8mslqhenvqdclo6s253 th.tinytable_css_4m8ke2m0oobkacjk6e7a {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_d8mslqhenvqdclo6s253 td.tinytable_css_hholm9wfagszt3p9078g, #tinytable_d8mslqhenvqdclo6s253 th.tinytable_css_hholm9wfagszt3p9078g { text-align: center }
+    #tinytable_d8mslqhenvqdclo6s253 td.tinytable_css_6bwe0tyhw2zahj1fpjna, #tinytable_d8mslqhenvqdclo6s253 th.tinytable_css_6bwe0tyhw2zahj1fpjna {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_d8mslqhenvqdclo6s253 td.tinytable_css_qtiyq2id725k7ooh5gcg, #tinytable_d8mslqhenvqdclo6s253 th.tinytable_css_qtiyq2id725k7ooh5gcg {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_d8mslqhenvqdclo6s253 td.tinytable_css_v3lrygsl6ilsib0oml4x, #tinytable_d8mslqhenvqdclo6s253 th.tinytable_css_v3lrygsl6ilsib0oml4x {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_d8mslqhenvqdclo6s253 td.tinytable_css_9ik9dphveckvi02wk7lg, #tinytable_d8mslqhenvqdclo6s253 th.tinytable_css_9ik9dphveckvi02wk7lg { text-align: left }
+    #tinytable_d8mslqhenvqdclo6s253 td.tinytable_css_y74vswpgv87wn3kadch1, #tinytable_d8mslqhenvqdclo6s253 th.tinytable_css_y74vswpgv87wn3kadch1 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_d8mslqhenvqdclo6s253" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <caption>Valimas käimist ennustavad tegurid (šansside suhted)</caption>
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Mudel 1</th>
+                <th scope="col" data-row="0" data-col="3">Mudel 2</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan="3">* p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Vanus (aastates)</td>
+                  <td data-row="1" data-col="2">1.012**</td>
+                  <td data-row="1" data-col="3">1.022***</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.004)</td>
+                  <td data-row="2" data-col="3">(0.005)</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Sugu: naine (ref. mees)</td>
+                  <td data-row="3" data-col="2">0.896</td>
+                  <td data-row="3" data-col="3">0.922</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.133)</td>
+                  <td data-row="4" data-col="3">(0.154)</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Haridustase (1-7)</td>
+                  <td data-row="5" data-col="2">1.497***</td>
+                  <td data-row="5" data-col="3">1.328***</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.074)</td>
+                  <td data-row="6" data-col="3">(0.077)</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">Huvitatud poliitikast (ref. ei ole)</td>
+                  <td data-row="7" data-col="2">2.457***</td>
+                  <td data-row="7" data-col="3">1.936***</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1"></td>
+                  <td data-row="8" data-col="2">(0.382)</td>
+                  <td data-row="8" data-col="3">(0.336)</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">Usaldus poliitikute vastu (0-10)</td>
+                  <td data-row="9" data-col="2"></td>
+                  <td data-row="9" data-col="3">1.081</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1"></td>
+                  <td data-row="10" data-col="2"></td>
+                  <td data-row="10" data-col="3">(0.047)</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">Rahulolu demokraatiaga (0-10)</td>
+                  <td data-row="11" data-col="2"></td>
+                  <td data-row="11" data-col="3">1.121**</td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1"></td>
+                  <td data-row="12" data-col="2"></td>
+                  <td data-row="12" data-col="3">(0.042)</td>
+                </tr>
+                <tr>
+                  <td data-row="13" data-col="1">Sissetulekudetsiil (1-10)</td>
+                  <td data-row="13" data-col="2"></td>
+                  <td data-row="13" data-col="3">1.151***</td>
+                </tr>
+                <tr>
+                  <td data-row="14" data-col="1"></td>
+                  <td data-row="14" data-col="2"></td>
+                  <td data-row="14" data-col="3">(0.041)</td>
+                </tr>
+                <tr>
+                  <td data-row="15" data-col="1">Num.Obs.</td>
+                  <td data-row="15" data-col="2">1164</td>
+                  <td data-row="15" data-col="3">1035</td>
+                </tr>
+                <tr>
+                  <td data-row="16" data-col="1">McFadden</td>
+                  <td data-row="16" data-col="2">0.115</td>
+                  <td data-row="16" data-col="3">0.146</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Miks kaks eraldi tabelit, mitte kaks veergu ühes?</strong> Kui panna sama mudel tabelisse kaks korda — üks kord koefitsientidena ja teine kord šansside suhetena — siis korratakse ka kõiki sobivusnäitajaid. Need on mõlemal veerul täpselt samad, sest tegemist on ühe ja sama mudeliga. Tabelisse tekib mõttetut kordust.</p>
+<p>Vabaliige on šansside suhete tabelist välja jäetud, sest tema eksponent ei ole sisuliselt tõlgendatav.</p>
+</blockquote>
+<p>Ja tabeli saab Wordi täpselt nii, nagu eelmises praktikumis.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">"Koefitsiendid (logit)"</span> <span class="ot">=</span> logit1, <span class="st">"Šansside suhted"</span> <span class="ot">=</span> logit1),</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">exponentiate =</span> <span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="cn">TRUE</span>),</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">coef_map =</span> nimed,</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"aic"</span>),</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> <span class="fl">0.05</span>, <span class="st">"**"</span> <span class="ot">=</span> <span class="fl">0.01</span>, <span class="st">"***"</span> <span class="ot">=</span> <span class="fl">0.001</span>),</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">output =</span> <span class="st">"logit_tabel.docx"</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="kuidas-seda-kirja-panna" class="level2">
+<h2 class="anchored" data-anchor-id="kuidas-seda-kirja-panna">Kuidas seda kirja panna</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Kuidas seda kirja panna">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nõuanne</span>Kuidas seda kirja panna
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Logistilise regressiooni esitamisel tuleb arvestada kolme asja, mida tavalise regressiooni puhul ei olnud: <strong>šansside suhted</strong>, <strong>pseudo R-ruut</strong> ja <strong>klassifitseerimistäpsus</strong>.</p>
+<p><strong>Valimas käimise ennustamiseks koostati logistiline regressioonimudel (tabel 2), kuhu kaasati 1170 vastajat. Kõige tugevam seos ilmnes poliitikahuviga: iga punkti võrra suurem huvi poliitika vastu suurendab valimas käimise šansse 2,1 korda (p &lt; 0,001). Statistiliselt oluline oli ka vanus — iga eluaasta suurendab šansse 1,03 korda (p &lt; 0,001) — ning haridustase (šansside suhe 1,14; p &lt; 0,01). Soo puhul olulist seost ei ilmnenud.</strong></p>
+<p><strong>Mudeli seletusvõime on tagasihoidlik (McFadden pseudo R² = 0,09). Mudel klassifitseerib valijad hästi (sensitiivsus 98%), kuid mittevalijaid praktiliselt ei tuvasta (spetsiifilisus 8%).</strong></p>
+<p>Neli asja, mille peale mõelda:</p>
+<ul>
+<li><strong>Ütle, mis on sõltuva muutuja puhul kodeeritud kui 1.</strong> Ilma selleta ei tea lugeja, kumba suunda koefitsient näitab.</li>
+<li><strong>Šansside suhe on “korda”, mitte “võrra”.</strong> Šansside suhe 2,1 tähendab kahekordistumist, mitte 2,1 protsendipunkti.</li>
+<li><strong>Ära aja segamini šansse ja tõenäosust.</strong> Šansside kahekordistumine ei tähenda tõenäosuse kahekordistumist.</li>
+<li><strong>Raporteeri sensitiivsus ja spetsiifilisus koos.</strong> Üksik arv on eksitav.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="kursuse-lõpp" class="level2">
+<h2 class="anchored" data-anchor-id="kursuse-lõpp">Kursuse lõpp</h2>
+<p>Sellega on käesolev kursus läbi.</p>
+<p>Sa oskad nüüd võtta päris andmestiku, teha temast analüüsivalmis andmestiku, kirjeldada oma muutujaid, hinnata ebakindlust, testida hüpoteese ning koostada ja esitada regressioonimudeleid nii pideva kui binaarse sõltuva muutuja jaoks.</p>
+<p>See on väga suur hulk teadmisi, sa võib auga enda üle uhke olla!</p>
+<blockquote class="blockquote">
+<p>Sellest piisab, et teha oma bakalaureusetöö jaoks kohane statistiline analüüs. Kuid laiemas pildis on see alles algus — statistilise analüüsi maailm on peaaegu piiritu ja pidevalt arenev. Selle valdkonna baasteadmised jäävad aga alati samaks ning nende põhjal on alati võimalik edasi liikuda.</p>
+</blockquote>
+</section>
+<section id="harjutused" class="level2">
+<h2 class="anchored" data-anchor-id="harjutused">Harjutused</h2>
+<div class="harjutus">
+<p><strong>1. Oma mudel.</strong> Sobita logistiline mudel, kus sõltuv muutuja on <code>valis</code> ja sõltumatud on sinu enda valitud kolm muutujat. Põhjenda valikut.</p>
+<p><strong>2. Šansside suhted.</strong> Arvuta oma mudeli šansside suhted ja tõlgenda neist kaks sõnadega.</p>
+<p><strong>3. Joonis.</strong> Tee ennustatud tõenäosuste joonis ühe sõltumatu muutuja kohta. Kui palju tõenäosus skaala ühest otsast teise muutub?</p>
+<p><strong>4. Mudeli sobivus.</strong> Arvuta oma mudeli pseudo R-ruut, sensitiivsus ja spetsiifilisus. Kumb neist kahest on kõrgem ja miks?</p>
+<p><strong>5. Kokkuvõte.</strong> Kirjuta oma mudeli tulemused välja nii, nagu nad võiksid olla bakalaureusetöös.</p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./10-tulemuste-esitamine.html" class="pagination-link" aria-label="10. Tulemuste esitamine">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">10. Tulemuste esitamine</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

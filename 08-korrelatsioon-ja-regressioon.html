@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="et" xml:lang="et"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>8. Korrelatsioon ja regressioon – Statistilise analüüsi alused</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./09-mitmene-regressioon.html" rel="next">
+<link href="./07-hupoteeside-testimine.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-bf8030b5a8b8f2de5bceddfb8bf38a1d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "Otsi",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistilise analüüsi alused</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sissejuhatus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Alustamine</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-r-alused.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1. R ja RStudio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-andmete-laadimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2. Andmete laadimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Andmete ettevalmistus</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Andmete ettevalmistus I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus II</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Andmete kirjeldamine</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Järeldav statistika</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-valim-ja-ebakindlus.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6. Valim ja ebakindlus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-hupoteeside-testimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Hüpoteeside testimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Seosed ja mudelid</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-korrelatsioon-ja-regressioon.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Mitmene regressioon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Tulemuste esitamine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-logistiline-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Logistiline regressioon</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Selle peatüki sisu</h2>
+   
+  <ul>
+  <li><a href="#hajuvusdiagramm" id="toc-hajuvusdiagramm" class="nav-link active" data-scroll-target="#hajuvusdiagramm">Hajuvusdiagramm</a></li>
+  <li><a href="#kovariatsioonist-korrelatsioonini" id="toc-kovariatsioonist-korrelatsioonini" class="nav-link" data-scroll-target="#kovariatsioonist-korrelatsioonini">Kovariatsioonist korrelatsioonini</a></li>
+  <li><a href="#pearsoni-korrelatsioon" id="toc-pearsoni-korrelatsioon" class="nav-link" data-scroll-target="#pearsoni-korrelatsioon">Pearsoni korrelatsioon</a>
+  <ul class="collapse">
+  <li><a href="#hüpoteesi-test" id="toc-hüpoteesi-test" class="nav-link" data-scroll-target="#hüpoteesi-test">Hüpoteesi test</a></li>
+  </ul></li>
+  <li><a href="#seose-tugevus-r-ruut" id="toc-seose-tugevus-r-ruut" class="nav-link" data-scroll-target="#seose-tugevus-r-ruut">Seose tugevus: R-ruut</a></li>
+  <li><a href="#joon-läbi-punktipilve" id="toc-joon-läbi-punktipilve" class="nav-link" data-scroll-target="#joon-läbi-punktipilve">Joon läbi punktipilve</a></li>
+  <li><a href="#regressioonivalem" id="toc-regressioonivalem" class="nav-link" data-scroll-target="#regressioonivalem">Regressioonivalem</a></li>
+  <li><a href="#mudeli-sobitamine-ja-tõlgendamine" id="toc-mudeli-sobitamine-ja-tõlgendamine" class="nav-link" data-scroll-target="#mudeli-sobitamine-ja-tõlgendamine">Mudeli sobitamine ja tõlgendamine</a>
+  <ul class="collapse">
+  <li><a href="#kuidas-seda-tabelit-lugeda" id="toc-kuidas-seda-tabelit-lugeda" class="nav-link" data-scroll-target="#kuidas-seda-tabelit-lugeda">Kuidas seda tabelit lugeda</a></li>
+  <li><a href="#kui-hea-mudel-on" id="toc-kui-hea-mudel-on" class="nav-link" data-scroll-target="#kui-hea-mudel-on">Kui hea mudel on?</a></li>
+  </ul></li>
+  <li><a href="#koefitsientide-standardiseerimine" id="toc-koefitsientide-standardiseerimine" class="nav-link" data-scroll-target="#koefitsientide-standardiseerimine">Koefitsientide standardiseerimine</a></li>
+  <li><a href="#kuidas-seda-kirja-panna" id="toc-kuidas-seda-kirja-panna" class="nav-link" data-scroll-target="#kuidas-seda-kirja-panna">Kuidas seda kirja panna</a></li>
+  <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/ess11_ee_clean.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Siiani oleme võrrelnud gruppe. Nüüd hakkame vaatama <strong>seost kahe pideva muutuja vahel.</strong></p>
+<p>Kaks tööriista, mis on omavahel tihedalt seotud:</p>
+<ul>
+<li><strong>korrelatsioon</strong> ütleb, kui tugev seos on ja mis suunas ta käib;</li>
+<li><strong>regressioon</strong> ütleb, milline seos <strong>täpselt</strong> on — kui palju üks muutuja muutub, kui teine muutub ühe ühiku võrra.</li>
+</ul>
+<section id="hajuvusdiagramm" class="level2">
+<h2 class="anchored" data-anchor-id="hajuvusdiagramm">Hajuvusdiagramm</h2>
+<p>Alusta alati pildist. Vaatame, kuidas on omavahel seotud usaldus poliitikute vastu ja rahulolu demokraatiaga.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> usaldus_pol, <span class="at">y =</span> rahulolu_dem)) <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"usaldus poliitikute vastu (0-10)"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"rahulolu demokraatiaga (0-10)"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Usaldus ja rahulolu"</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08-korrelatsioon-ja-regressioon_files/figure-html/scatter-esimene-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Punktid on ridades, sest mõlemad muutujad võtavad ainult täisarvulisi väärtusi. Väga palju vastajaid satub täpselt üksteise peale ja me ei näe, kui palju neid kuskil on.</p>
+<p>Selle vastu on kaks abinõu.</p>
+<ul>
+<li><code>geom_jitter()</code> nihutab iga punkti natuke juhuslikult paigast, nii et nad ei kata üksteist. Argumendid <code>width</code> ja <code>height</code> määravad, kui palju.</li>
+<li>Argument <code>alpha</code> teeb punktid läbipaistvaks.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> usaldus_pol, <span class="at">y =</span> rahulolu_dem)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"usaldus poliitikute vastu (0-10)"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"rahulolu demokraatiaga (0-10)"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Usaldus ja rahulolu"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08-korrelatsioon-ja-regressioon_files/figure-html/scatter-jitter-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Nüüd on näha, et seos on olemas ja ta on positiivne: mida rohkem usaldust, seda rohkem rahulolu.</p>
+<blockquote class="blockquote">
+<p><strong><code>geom_jitter()</code> muudab andmeid ainult joonisel, mitte andmestikus.</strong> Ta on ettenähtud just selleks, et jaotust paremini näidata. Aga ole ettevaatlik: kui nihe on liiga suur, hakkab joonis valetama.</p>
+</blockquote>
+</section>
+<section id="kovariatsioonist-korrelatsioonini" class="level2">
+<h2 class="anchored" data-anchor-id="kovariatsioonist-korrelatsioonini">Kovariatsioonist korrelatsioonini</h2>
+<p>Kuidas seda seost arvuliselt mõõta?</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Lihtsam seletus</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Täpsem seletus</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Idee on lihtne ja ta tuleb kahes sammus.</p>
+<p><strong>Esimene samm: kas hälbed käivad koos?</strong></p>
+<p>Iga inimese kohta saab küsida kaks asja: kas ta on usalduse poolest keskmisest <strong>üle või alla</strong>, ja kas ta on rahulolu poolest keskmisest <strong>üle või alla</strong>.</p>
+<p>Nüüd vaata, kuidas need kaks kokku langevad.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Usaldus</th>
+<th>Rahulolu</th>
+<th>Mida see näitab</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>üle keskmise</td>
+<td>üle keskmise</td>
+<td>käivad koos</td>
+</tr>
+<tr class="even">
+<td>alla keskmise</td>
+<td>alla keskmise</td>
+<td>käivad koos</td>
+</tr>
+<tr class="odd">
+<td>üle keskmise</td>
+<td>alla keskmise</td>
+<td>käivad vastu</td>
+</tr>
+<tr class="even">
+<td>alla keskmise</td>
+<td>üle keskmise</td>
+<td>käivad vastu</td>
+</tr>
+</tbody>
+</table>
+<p>Kui <strong>enamik</strong> inimesi on kahes esimeses reas, siis liiguvad muutujad samas suunas ja seos on <strong>positiivne</strong>. Kui enamik on kahes viimases, siis on seos <strong>negatiivne</strong>. Kui nad jagunevad umbes pooleks, siis seost ei ole.</p>
+<p>Selle kokkuvõtet nimetatakse <strong>kovariatsiooniks</strong>.</p>
+<p><strong>Teine samm: tee arv võrreldavaks.</strong></p>
+<p>Kovariatsioonil on üks tüütu omadus: <strong>tema suurus sõltub mõõtskaalast.</strong> Kui mõõta sissetulekut eurodes, tuleb üks arv; kui tuhandetes eurodes, tuleb tuhat korda väiksem arv. Seos ise on täpselt sama, aga number on erinev.</p>
+<p>See tähendab, et kovariatsiooni suurust ei saa millegagi võrrelda. Ta ütleb suuna, aga mitte tugevust.</p>
+<p><strong>Korrelatsioon lahendab selle.</strong> Ta on kovariatsioon, mis on <strong>taandatud mõlema muutuja hajuvusega</strong> — nii kaob mõõtühik ära ja alles jääb puhas seos.</p>
+<p>Tulemus jääb alati <strong>−1 ja +1 vahele</strong>, ükskõik mis skaalal muutujad on. Ja just see teebki temast kasutatava arvu: kahte korrelatsiooni saab omavahel võrrelda, kahte kovariatsiooni mitte.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Alustame sealt, kus praktikumis 6 pooleli jäime.</p>
+<p>Dispersioon mõõtis, kui kaugel on väärtused <strong>oma</strong> keskmisest. Kirjutame ta lahti nii, et hälve on korrutatud iseendaga:</p>
+<p><span class="math display">\[s^2 = \frac{\sum(x_i-\bar{x}) \times (x_i-\bar{x})}{n-1}\]</span></p>
+<p><strong>Kovariatsioon</strong> on ainult natuke teistmoodi. Iga juhtumi puhul korrutame ühe muutuja hälbe keskmisest <strong>teise muutuja</strong> hälbega keskmisest:</p>
+<p><span class="math display">\[cov(x,y) = \frac{\sum(x_i-\bar{x}) \times (y_i-\bar{y})}{n-1}\]</span></p>
+<p>Mõtle läbi, mis siin toimub.</p>
+<ul>
+<li>Kui mõlemad hälbed on <strong>positiivsed</strong> (mõlemad üle keskmise), on korrutis positiivne.</li>
+<li>Kui mõlemad on <strong>negatiivsed</strong> (mõlemad alla keskmise), on korrutis samuti positiivne.</li>
+<li>Kui nad on <strong>eri suundades</strong>, on korrutis negatiivne.</li>
+</ul>
+<p>Seega: kui hälbed on üldiselt samas suunas, tuleb kovariatsioon positiivne. Kui vastassuundades, siis negatiivne.</p>
+<p><strong>Korrelatsioon</strong> on standardiseeritud kovariatsioon — jagame ta mõlema muutuja standardhälbega:</p>
+<p><span class="math display">\[r = \frac{\sum(x_i-\bar{x}) \times (y_i-\bar{y})}{(n-1) \times \sigma_x \times \sigma_y}\]</span></p>
+<p>Nii saame arvu, mis jääb alati <strong>−1 ja +1 vahele</strong>, sõltumata mõõtskaalast.</p>
+<p>Arvutame ta käsitsi läbi. Kirjutame iga sammu eraldi reale, et oleks näha, mis toimub.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>alam <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data[, <span class="fu">c</span>(<span class="st">"usaldus_pol"</span>, <span class="st">"rahulolu_dem"</span>)])</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>halve_x <span class="ot">&lt;-</span> alam<span class="sc">$</span>usaldus_pol <span class="sc">-</span> <span class="fu">mean</span>(alam<span class="sc">$</span>usaldus_pol)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>halve_y <span class="ot">&lt;-</span> alam<span class="sc">$</span>rahulolu_dem <span class="sc">-</span> <span class="fu">mean</span>(alam<span class="sc">$</span>rahulolu_dem)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>korrutiste_summa <span class="ot">&lt;-</span> <span class="fu">sum</span>(halve_x <span class="sc">*</span> halve_y)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>nimetaja <span class="ot">&lt;-</span> (<span class="fu">nrow</span>(alam) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">sd</span>(alam<span class="sc">$</span>usaldus_pol) <span class="sc">*</span> <span class="fu">sd</span>(alam<span class="sc">$</span>rahulolu_dem)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>korrutiste_summa <span class="sc">/</span> nimetaja</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.59636</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="pearsoni-korrelatsioon" class="level2">
+<h2 class="anchored" data-anchor-id="pearsoni-korrelatsioon">Pearsoni korrelatsioon</h2>
+<p>Loomulikult on selleks R-is funktsioon — <code>cor()</code>, mida oleme juba praktikumis 4 kasutanud.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(alam<span class="sc">$</span>usaldus_pol, alam<span class="sc">$</span>rahulolu_dem)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.59636</code></pre>
+</div>
+</div>
+<p>Sama arv.</p>
+<p>Kuidas teda tõlgendada?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Väärtus</th>
+<th>Tähendus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>−1</td>
+<td>täiuslik negatiivne seos</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>seost ei ole</td>
+</tr>
+<tr class="odd">
+<td>+1</td>
+<td>täiuslik positiivne seos</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Positiivne seos</strong> tähendab, et kui ühe muutuja väärtused kasvavad, kasvavad ka teise omad. <strong>Negatiivne seos</strong> tähendab vastupidist.</p>
+<blockquote class="blockquote">
+<p>Reaalsuses täiuslikku seost kahe erineva nähtuse vahel ei eksisteeri. Muutuja korrelatsioon iseendaga on 1. <strong>Kui sa näed oma andmetes korrelatsiooni, mis on väga lähedal ühele, siis on peaaegu kindlasti midagi valesti</strong> — tõenäoliselt mõõdad sa kaks korda sama asja.</p>
+</blockquote>
+<section id="hüpoteesi-test" class="level3">
+<h3 class="anchored" data-anchor-id="hüpoteesi-test">Hüpoteesi test</h3>
+<p>Ka korrelatsiooni kohta saab teha hüpoteesi testi. Nullhüpotees on, et <strong>korrelatsioon populatsioonis on null.</strong> Funktsioon on <code>cor.test()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(alam<span class="sc">$</span>usaldus_pol, alam<span class="sc">$</span>rahulolu_dem)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+##  Pearson's product-moment correlation
+## 
+## data:  alam$usaldus_pol and alam$rahulolu_dem
+## t = 25.907, df = 1216, p-value &lt; 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.5589123 0.6313802
+## sample estimates:
+##     cor 
+## 0.59636</code></pre>
+</div>
+</div>
+<p>Väljund on väga sarnane t-testi omale — sest loogika ongi täpselt sama. Meil on t-väärtus, vabadusastmed, p-väärtus ja usaldusvahemik.</p>
+</section>
+</section>
+<section id="seose-tugevus-r-ruut" class="level2">
+<h2 class="anchored" data-anchor-id="seose-tugevus-r-ruut">Seose tugevus: R-ruut</h2>
+<p>Korrelatsioonikordaja ruutu nimetatakse <strong>determinatsioonikordajaks</strong> ehk <strong>R-ruuduks</strong>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(alam<span class="sc">$</span>usaldus_pol, alam<span class="sc">$</span>rahulolu_dem)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.3556452</code></pre>
+</div>
+</div>
+<p>R-ruut näitab, <strong>kui suur osa ühe muutuja varieeruvusest on seotud teise muutuja varieeruvusega.</strong> Antud juhul umbes 30% — usaldus poliitikute vastu aitab seletada ligikaudu kolmandiku rahulolust demokraatiaga.</p>
+<blockquote class="blockquote">
+<p><strong>R-ruut on tõlgendatav protsendina, korrelatsioonikordaja mitte.</strong></p>
+<p>Korrelatsioonikordaja on skaalal −1 kuni 1, aga see skaala <strong>ei ole ühtlane</strong>. Väärtus 0,5 ei tähenda “poole nõrgem seos kui 1,0” ega “pool maksimaalsest seosest”. Kaks korda suurem <em>r</em> ei tähenda kaks korda tugevamat seost.</p>
+<p>R-ruut on seevastu <strong>päris protsent</strong>: 0,30 tähendab tõesti “30% varieeruvusest”. Ja pane tähele, mis juhtub ruutu võttes — korrelatsioon 0,5 annab R-ruudu 0,25, seega seletab ta neljandiku, mitte poolt. Korrelatsioon 0,7 annab ligi poole.</p>
+<p><strong>Seetõttu räägi seose tugevusest R-ruudu kaudu, mitte korrelatsioonikordaja kaudu.</strong></p>
+</blockquote>
+</section>
+<section id="joon-läbi-punktipilve" class="level2">
+<h2 class="anchored" data-anchor-id="joon-läbi-punktipilve">Joon läbi punktipilve</h2>
+<p>Korrelatsioon ütles meile suuna ja tugevuse. Aga ta ei ütle, <strong>kui palju</strong> rahulolu muutub, kui usaldus kasvab ühe punkti võrra.</p>
+<p>Selleks tuleb tõmmata punktipilvest läbi joon. Joonisele lisab trendijoone funktsioon <code>stat_smooth()</code>. Argument <code>method = "lm"</code> ütleb, et joon peab olema sirge (<em>linear model</em>), ja <code>se = FALSE</code> peidab joone ümbert usaldusvahemiku.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(alam, <span class="fu">aes</span>(<span class="at">x =</span> usaldus_pol, <span class="at">y =</span> rahulolu_dem)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"firebrick3"</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"usaldus poliitikute vastu (0-10)"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"rahulolu demokraatiaga (0-10)"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Regressioonijoon"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08-korrelatsioon-ja-regressioon_files/figure-html/joon-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Võimalikke jooni läbi selle pilve oleks lõpmata palju. <strong>Kõige parem joon on see, mille ennustusviga on kõige väiksem</strong> — täpsemalt see, mille puhul punktide kauguste ruutude summa joonest on kõige väiksem.</p>
+</section>
+<section id="regressioonivalem" class="level2">
+<h2 class="anchored" data-anchor-id="regressioonivalem">Regressioonivalem</h2>
+<p>Sirge võrrand on koolimatemaatikast tuttav:</p>
+<p><span class="math display">\[Y = a \times X + b\]</span></p>
+<p>Regressioonis kirjutatakse ta tavaliselt nii:</p>
+<p><span class="math display">\[Y_i = \beta_0 + \beta_1 \times X_i + e_i\]</span></p>
+<p>kus</p>
+<ul>
+<li><span class="math inline">\(\beta_0\)</span> on <strong>vabaliige</strong> (<em>intercept</em>) — koht, kus joon läbib y-telge, ehk ennustatud väärtus siis, kui X on null;</li>
+<li><span class="math inline">\(\beta_1\)</span> on <strong>regressioonikordaja</strong> (<em>slope</em>) — kui palju Y muutub, kui X kasvab ühe ühiku võrra;</li>
+<li><span class="math inline">\(e_i\)</span> on <strong>jääk</strong> (<em>residual</em>) — see osa, mida mudel ei seleta.</li>
+</ul>
+</section>
+<section id="mudeli-sobitamine-ja-tõlgendamine" class="level2">
+<h2 class="anchored" data-anchor-id="mudeli-sobitamine-ja-tõlgendamine">Mudeli sobitamine ja tõlgendamine</h2>
+<p>Regressiooni tegemiseks on funktsioon <code>lm()</code>, mida nägime möödaminnes juba praktikumis 3. Nüüd vaatame teda korralikult.</p>
+<p>Valem kirjutatakse tildega: <strong>sõltuv muutuja ~ sõltumatu muutuja</strong>. Argument <code>data</code> ütleb, millisest andmetabelist muutujaid otsida.</p>
+<p>Tulemused tuleb panna objekti ja vaadata funktsiooniga <code>summary()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mudel <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus_pol, <span class="at">data =</span> data)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mudel)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+## Call:
+## lm(formula = rahulolu_dem ~ usaldus_pol, data = data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8.4891 -1.4682  0.1915  1.5318  7.2125 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.78754    0.10819   25.77   &lt;2e-16 ***
+## usaldus_pol  0.67015    0.02587   25.91   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.097 on 1216 degrees of freedom
+##   (75 observations deleted due to missingness)
+## Multiple R-squared:  0.3556, Adjusted R-squared:  0.3551 
+## F-statistic: 671.2 on 1 and 1216 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<section id="kuidas-seda-tabelit-lugeda" class="level3">
+<h3 class="anchored" data-anchor-id="kuidas-seda-tabelit-lugeda">Kuidas seda tabelit lugeda</h3>
+<p>Kõige tähtsam osa on <strong><code>Coefficients</code></strong>.</p>
+<ul>
+<li><strong><code>Estimate</code></strong> — koefitsiendi väärtus.</li>
+<li><strong><code>Std. Error</code></strong> — selle koefitsiendi standardviga, ehk kui kindlad me temas oleme.</li>
+<li><strong><code>t value</code></strong> — koefitsient jagatud standardveaga, ehk mitme standardvea kaugusel ta nullist on.</li>
+<li><strong><code>Pr(&gt;|t|)</code></strong> — p-väärtus. Nullhüpotees on, et koefitsient on <strong>null</strong> (seost ei ole).</li>
+<li><strong>Tärnid</strong> näitavad, millisesse vahemikku p-väärtus langeb.</li>
+</ul>
+<p><strong>Vabaliige</strong> (<code>(Intercept)</code>) on 2,54. See tähendab: kui usaldus poliitikute vastu on 0, siis on ennustatud rahulolu demokraatiaga 2,54.</p>
+<p><strong>Regressioonikordaja</strong> <code>usaldus_pol</code> juures on 0,55. See tähendab: <strong>iga punkt usalduse kasvu juures kasvab rahulolu demokraatiaga keskmiselt 0,55 punkti.</strong></p>
+<blockquote class="blockquote">
+<p><strong>Koefitsiendi arvuline väärtus sõltub mõõtskaalast.</strong> Kui muutuja ühik on väike, on koefitsient väike, ja vastupidi. Vanust saab mõõta päevades, aastates või aastakümnetes ning koefitsient oleks igal juhul erinev — kuigi seos on täpselt sama.</p>
+<p><strong>Seetõttu ei saa koefitsientide suurusi omavahel võrrelda</strong>, kui muutujad on erineval skaalal. Proovi järele: jaga vanus sajaga ja vaata, mis koefitsiendiga juhtub.</p>
+</blockquote>
+</section>
+<section id="kui-hea-mudel-on" class="level3">
+<h3 class="anchored" data-anchor-id="kui-hea-mudel-on">Kui hea mudel on?</h3>
+<p>Selleks on tabeli lõpus <strong><code>Multiple R-squared</code></strong> — sama R-ruut, mida korrelatsiooni juures vaatasime. Ta ütleb, kui suure osa sõltuva muutuja varieeruvusest mudel ära seletab.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(alam<span class="sc">$</span>usaldus_pol, alam<span class="sc">$</span>rahulolu_dem)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.3556452</code></pre>
+</div>
+</div>
+<p>Sama arv, mille me korrelatsioonist saime. <strong>Kahe muutujaga regressiooni R-ruut ongi korrelatsiooni ruut.</strong></p>
+<blockquote class="blockquote">
+<p><strong>Mis vahe on <code>Multiple R-squared</code> ja <code>Adjusted R-squared</code> vahel?</strong> R-ruut kasvab alati, kui mudelisse muutujaid juurde panna — isegi siis, kui need muutujad on täiesti mõttetud. Kohandatud R-ruut karistab mudelit iga lisatud muutuja eest. <strong>Tõlgendamiseks kasuta kohandatud R-ruutu.</strong></p>
+</blockquote>
+<p>Sotsiaalteadustes on R-ruut tavaliselt madal. Mudel, mis seletab 10–20% varieeruvusest, on täiesti tavaline ja võib olla väga kasulik. Inimeste käitumine ei ole füüsika.</p>
+</section>
+</section>
+<section id="koefitsientide-standardiseerimine" class="level2">
+<h2 class="anchored" data-anchor-id="koefitsientide-standardiseerimine">Koefitsientide standardiseerimine</h2>
+<p>Regressioonikoefitsiendi suurus sõltub muutuja mõõtskaalast. See tähendab, et <strong>kahe erineva muutuja koefitsiente ei saa omavahel võrrelda</strong>, kui nad on erineval skaalal.</p>
+<p>Meie mudelis on usaldus skaalal 0–10 ja vanus aastates. Kumb on tugevam seletaja? Koefitsientidest seda välja ei loe — nad on eri ühikutes.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mudel_kaks <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus_pol <span class="sc">+</span> vanus, <span class="at">data =</span> data)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coef</span>(mudel_kaks), <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## (Intercept) usaldus_pol       vanus 
+##      3.2321      0.6606     -0.0082</code></pre>
+</div>
+</div>
+<p>Vanuse koefitsient on peaaegu null ja usalduse oma palju suurem. Aga see ei tähenda, et vanus oleks ebaoluline — tähendab ainult, et üks eluaasta on väike samm, samal ajal kui üks usalduspunkt on suur samm.</p>
+<p><strong>Lahendus on muutujad enne mudelisse panekut standardiseerida.</strong> Standardiseerimine tähendab, et igast muutujast tehakse z-skoor — täpselt see tehe, mida nägime praktikumis 6. Pärast seda on iga muutuja keskmine 0 ja standardhälve 1, ehk <strong>kõik on samal skaalal</strong>.</p>
+<p>R-is teeb seda funktsioon <code>scale()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>usaldus_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>usaldus_pol)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>vanus_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>vanus)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>rahulolu_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>rahulolu_dem)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>mudel_std <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_z <span class="sc">~</span> usaldus_z <span class="sc">+</span> vanus_z, <span class="at">data =</span> data)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coef</span>(mudel_std), <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## (Intercept)   usaldus_z     vanus_z 
+##     -0.0043      0.5919     -0.0566</code></pre>
+</div>
+</div>
+<p>Nüüd on koefitsiendid võrreldavad. Neid nimetatakse <strong>standardiseeritud koefitsientideks</strong> ehk <strong>beeta-koefitsientideks</strong>.</p>
+<p><strong>Kuidas neid lugeda?</strong> Koefitsient ütleb, mitu <strong>standardhälvet</strong> muutub sõltuv muutuja, kui sõltumatu muutuja kasvab ühe standardhälbe võrra.</p>
+<p>Usalduse koefitsient on umbes kümme korda suurem kui vanuse oma. Ehk: usaldus on rahulolu seletamisel palju tugevam tegur.</p>
+<blockquote class="blockquote">
+<p><strong>Millal standardiseerida ja millal mitte?</strong></p>
+<p>Standardiseeri siis, kui sa tahad <strong>võrrelda erinevate muutujate suhtelist tugevust</strong> ühes mudelis.</p>
+<p>Ära standardiseeri siis, kui muutujal on <strong>sisuliselt tähendusrikas ühik</strong>. “Iga eluaasta kohta 0,01 punkti” on arusaadav lause. “Iga standardhälbe kohta 0,08 standardhälvet” ei ole.</p>
+<p>Ja binaarseid muutujaid ei ole üldse mõtet standardiseerida — “pool standardhälvet meheks olemist” ei tähenda midagi.</p>
+</blockquote>
+<div class="harjutus">
+<p><strong>Harjutus.</strong> Lisa standardiseeritud mudelisse ka haridus. Milline kolmest muutujast on kõige tugevam seletaja? Kontrolli, kas sama järjekord tuleb välja ka standardiseerimata mudelist — ja mõtle, miks see nii on või ei ole.</p>
+</div>
+</section>
+<section id="kuidas-seda-kirja-panna" class="level2">
+<h2 class="anchored" data-anchor-id="kuidas-seda-kirja-panna">Kuidas seda kirja panna</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Kuidas seda kirja panna">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nõuanne</span>Kuidas seda kirja panna
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Korrelatsiooni puhul</strong> tuleb esitada korrelatsioonikordaja, p-väärtus, usaldusvahemik, juhtumite arv ja seose sisuline tõlgendus:</p>
+<p><strong>Usaldus poliitikute vastu ja rahulolu demokraatiaga on omavahel tugevalt seotud (r = 0,55; p &lt; 0,001; 95% usaldusvahemik 0,51–0,58; n = 1220). Seos on positiivne: mida rohkem inimene poliitikuid usaldab, seda rahulolevam ta demokraatia toimimisega on. Determinatsioonikordaja (r² = 0,30) näitab, et need kaks nähtust jagavad ligikaudu kolmandiku oma varieeruvusest.</strong></p>
+<p><strong>Regressiooni puhul</strong> tuleb lisaks öelda, mida koefitsient <strong>sisuliselt</strong> tähendab — ühikutes, mitte ainult arvuna:</p>
+<p><strong>Lineaarne regressioon näitas, et usaldus poliitikute vastu ennustab rahulolu demokraatiaga statistiliselt olulisel määral (β = 0,55; SE = 0,02; p &lt; 0,001). Iga punkti võrra suurem usaldus poliitikute vastu vastab keskmiselt 0,55 punkti võrra suuremale rahulolule demokraatiaga (mõlemad skaalal 0–10). Mudel seletab 30% rahulolu varieeruvusest (kohandatud R² = 0,30).</strong></p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Ja kõige tähtsam hoiatus.</strong> Korrelatsioon ei ole põhjuslikkus. Meie mudel ei tõesta, et usaldus <strong>põhjustab</strong> rahulolu. Sama hästi võib rahulolu põhjustada usaldust, või võib mõlemat põhjustada midagi kolmandat. Regressioonivalemi kuju — üks muutuja vasakul, teine paremal — ei tähenda mitte midagi põhjuslikkuse kohta.</p>
+<p>Kirjuta “on seotud” ja “vastab”, mitte “põhjustab” ja “mõjutab”, kui sul ei ole põhjuslikkuse väitmiseks eraldi head argumenti.</p>
+</blockquote>
+</section>
+<section id="harjutused" class="level2">
+<h2 class="anchored" data-anchor-id="harjutused">Harjutused</h2>
+<div class="harjutus">
+<p><strong>1. Korrelatsioon.</strong> Arvuta korrelatsioon muutujate <code>usaldus</code> ja <code>rahulolu_dem</code> vahel. Tee ka hüpoteesi test. Kui tugev seos on ja kui suure osa varieeruvusest ta seletab?</p>
+<p><strong>2. Joonis.</strong> Tee nende kahe muutuja kohta hajuvusdiagramm koos regressioonijoonega.</p>
+<p><strong>3. Regressioon.</strong> Sobita mudel, kus <code>ranne</code> on sõltuv muutuja ja <code>haridus</code> sõltumatu. Kuidas tõlgendad koefitsienti? Kirjuta tulemus välja korrektses vormis.</p>
+<p><strong>4. Skaala mõju.</strong> Jaga muutuja <code>vanus</code> kümnega (nii mõõdad vanust aastakümnetes) ja sobita mudel <code>rahulolu_dem ~ vanus</code>. Võrdle koefitsienti algse mudeliga. Mis muutus ja mis jäi samaks?</p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./07-hupoteeside-testimine.html" class="pagination-link" aria-label="7. Hüpoteeside testimine">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">7. Hüpoteeside testimine</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./09-mitmene-regressioon.html" class="pagination-link" aria-label="9. Mitmene regressioon">
+        <span class="nav-page-text"><span class="chapter-title">9. Mitmene regressioon</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

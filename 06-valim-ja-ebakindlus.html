@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="et" xml:lang="et"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6. Valim ja ebakindlus – Statistilise analüüsi alused</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./07-hupoteeside-testimine.html" rel="next">
+<link href="./05-kirjeldamine-ja-visualiseerimine.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-bf8030b5a8b8f2de5bceddfb8bf38a1d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "Otsi",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-valim-ja-ebakindlus.html">Järeldav statistika</a></li><li class="breadcrumb-item"><a href="./06-valim-ja-ebakindlus.html"><span class="chapter-title">6. Valim ja ebakindlus</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistilise analüüsi alused</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sissejuhatus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Alustamine</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-r-alused.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1. R ja RStudio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-andmete-laadimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2. Andmete laadimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Andmete ettevalmistus</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Andmete ettevalmistus I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus II</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Andmete kirjeldamine</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Järeldav statistika</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-valim-ja-ebakindlus.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">6. Valim ja ebakindlus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-hupoteeside-testimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Hüpoteeside testimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Seosed ja mudelid</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-korrelatsioon-ja-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Mitmene regressioon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Tulemuste esitamine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-logistiline-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Logistiline regressioon</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Selle peatüki sisu</h2>
+   
+  <ul>
+  <li><a href="#valim-ja-populatsioon" id="toc-valim-ja-populatsioon" class="nav-link active" data-scroll-target="#valim-ja-populatsioon">Valim ja populatsioon</a></li>
+  <li><a href="#kust-tuleb-ebakindlus" id="toc-kust-tuleb-ebakindlus" class="nav-link" data-scroll-target="#kust-tuleb-ebakindlus">Kust tuleb ebakindlus</a></li>
+  <li><a href="#normaaljaotus-ja-tõenäosus" id="toc-normaaljaotus-ja-tõenäosus" class="nav-link" data-scroll-target="#normaaljaotus-ja-tõenäosus">Normaaljaotus ja tõenäosus</a>
+  <ul class="collapse">
+  <li><a href="#t-jaotus" id="toc-t-jaotus" class="nav-link" data-scroll-target="#t-jaotus">T-jaotus</a></li>
+  </ul></li>
+  <li><a href="#usaldusvahemikud" id="toc-usaldusvahemikud" class="nav-link" data-scroll-target="#usaldusvahemikud">Usaldusvahemikud</a></li>
+  <li><a href="#kuidas-seda-kirja-panna" id="toc-kuidas-seda-kirja-panna" class="nav-link" data-scroll-target="#kuidas-seda-kirja-panna">Kuidas seda kirja panna</a></li>
+  <li><a href="#järgmiseks" id="toc-järgmiseks" class="nav-link" data-scroll-target="#järgmiseks">Järgmiseks</a></li>
+  <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-valim-ja-ebakindlus.html">Järeldav statistika</a></li><li class="breadcrumb-item"><a href="./06-valim-ja-ebakindlus.html"><span class="chapter-title">6. Valim ja ebakindlus</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">6. Valim ja ebakindlus</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/ess11_ee_clean.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Siiani oleme kirjeldanud seda, mida me oma andmetes näeme. Nüüd hakkame küsima midagi palju julgemat: <strong>mida saame me nende 1293 inimese põhjal öelda kogu Eesti kohta?</strong></p>
+<p>See on kursuse kõige raskem osa. Ta on ka kõige olulisem — kõik ülejäänu, t-test, korrelatsioon, regressioon, logistiline regressioon, toetub täpselt sellele loogikale, mille me siin läbi käime. Kui see koht selgeks saab, siis on kõik ülejäänu variatsioon samal teemal.</p>
+<blockquote class="blockquote">
+<p>Seetõttu on siin peatükis kõige tähtsamad kohad esitatud <strong>kahel viisil</strong>. Sakid “Lihtsam seletus” ja “Täpsem seletus” räägivad samast asjast — üks pilte ja katseid kasutades, teine valemitega. Vali see, mis sulle sobib. Kui üks jääb segaseks, proovi teist.</p>
+</blockquote>
+<section id="valim-ja-populatsioon" class="level2">
+<h2 class="anchored" data-anchor-id="valim-ja-populatsioon">Valim ja populatsioon</h2>
+<p>Kaks mõistet, mis tuleb selgeks saada.</p>
+<p><strong>Populatsioon</strong> on kogu see hulk, kelle kohta me tahame midagi öelda. Meie puhul: kõik Eesti elanikud alates 15. eluaastast. Neid on umbes 1,2 miljonit.</p>
+<p><strong>Valim</strong> on see osa populatsioonist, kelle kohta meil päriselt andmed on. Meie puhul: 1293 inimest.</p>
+<p>Kõige olulisem asi valimi juures on see, et ta on <strong>juhuvalim</strong>. See tähendab, et igal populatsiooni liikmel oli sama tõenäosus valimisse sattuda. Mitte vabatahtlikud, mitte need, keda oli lihtne kätte saada — juhuslikult valitud.</p>
+<blockquote class="blockquote">
+<p><strong>Miks juhuslikkus on nii oluline?</strong> Sest ainult juhuvalimi puhul saame me matemaatiliselt hinnata, kui kaugel meie valimist arvutatud arv võib olla tõelisest arvust populatsioonis. Mittejuhusliku valimi puhul ei ole mingit võimalust seda teada. Selline valim ei ole “natuke halvem” — ta on üldistuste tegemiseks lihtsalt kasutu.</p>
+</blockquote>
+<p>Ja siit tuleb probleem. Juhuslikkus tähendab, et <strong>meie valim ei ole populatsiooni täpne koopia.</strong> Mõned inimesed sattusid valimisse, teised mitte. Kui me võtaksime uue valimi, oleks ta natuke teistsugune. Ja seega oleks ka iga arv, mille me valimist arvutame, natuke teistsugune.</p>
+<p>Meie valimi keskmine vanus on:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(data<span class="sc">$</span>vanus, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 50.07309</code></pre>
+</div>
+</div>
+<p>Aga Eesti tegelik keskmine vanus ei ole täpselt see. Küsimus on: <strong>kui kaugel ta olla võib?</strong></p>
+</section>
+<section id="kust-tuleb-ebakindlus" class="level2">
+<h2 class="anchored" data-anchor-id="kust-tuleb-ebakindlus">Kust tuleb ebakindlus</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Lihtsam seletus</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Täpsem seletus</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Teeme katse. Meil ei ole võimalik Eestist uut valimit võtta, aga me saame teha midagi sarnast: <strong>võtta oma 1293 inimesest korduvalt väiksemaid juhuvalimeid</strong> ja vaadata, kuidas keskmine iga kord muutub.</p>
+<p>Selleks on kaks funktsiooni:</p>
+<ul>
+<li><code>sample()</code> võtab juhusliku valimi. Esimene argument on see, millest valida, argument <code>size</code> ütleb, mitu juhtumit võtta, ja argument <code>replace = TRUE</code> ütleb, et sama inimene võib mitu korda valituks osutuda.</li>
+<li><code>set.seed()</code> fikseerib juhuslikkuse. Arvuti juhuarvud ei ole päriselt juhuslikud — nad arvutatakse mingist algväärtusest. Kui sa selle algväärtuse fikseerid, saad iga kord sama tulemuse.</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>Miks <code>replace = TRUE</code>?</strong> Sest me teeskleme, et võtame valimeid <strong>Eesti elanikkonnast</strong>, mitte oma 1286 vastajast. Elanikkond on meie andmestikust tuhat korda suurem, seega on tõenäosus sama inimene kaks korda saada praktiliselt olematu. Tagasipanekuga valimine jäljendab seda olukorda.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Kasuta alati <code>set.seed()</code></strong>, kui su koodis on juhuslikkust. Ilma selleta saad sa iga kord erineva tulemuse ja sa ei suuda oma enda analüüsi korrata. Number sulgudes võib olla ükskõik milline — oluline on ainult see, et ta oleks alati sama.</p>
+</blockquote>
+<p>Võtame ühe valimi, sada inimest:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>vanused <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data<span class="sc">$</span>vanus)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>valim1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(vanused, <span class="at">size =</span> <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(valim1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 49.46</code></pre>
+</div>
+</div>
+<p>Ja veel ühe:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>valim2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(vanused, <span class="at">size =</span> <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(valim2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 48.67</code></pre>
+</div>
+</div>
+<p>Erinev arv. Ja kolmas oleks jälle erinev.</p>
+<p>Teeme seda nüüd tuhat korda. Selleks on funktsioon <code>replicate()</code>, mis kordab sama tegevust nii mitu korda, kui palju sa ütled, ja kogub tulemused kokku. Esimene argument on korduste arv, teine on tegevus.</p>
+<p>Selleks et kood loetavaks jääks, teeme kõigepealt <strong>oma funktsiooni</strong>, mis võtab ühe valimi ja annab tagasi tema keskmise. Siis kordame teda tuhat korda.</p>
+<p>Funktsiooni loomine käib nii: nimi, <code>&lt;-</code>, sõna <code>function</code>, ümarsulgudes sisendi nimi ja looksulgudes see, mida teha. Viimane rida funktsiooni sees on see, mille ta tagastab. Nimetame ta <code>uhe_valimi_keskmine()</code> — ta võtab sisendiks valimi suuruse ja annab tagasi selle valimi keskmise.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>uhe_valimi_keskmine <span class="ot">&lt;-</span> <span class="cf">function</span>(valimi_suurus) {</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  valim <span class="ot">&lt;-</span> <span class="fu">sample</span>(vanused, <span class="at">size =</span> valimi_suurus, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(valim)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>keskmised <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">uhe_valimi_keskmine</span>(<span class="dv">100</span>))</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(keskmised)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 1000</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(keskmised)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 49.46 48.67 48.44 50.90 51.54 52.63</code></pre>
+</div>
+</div>
+<p>Meil on nüüd tuhat keskmist. Vaatame, kuidas nad jaotuvad.</p>
+<p>Joonisel kasutame ka funktsiooni <code>geom_vline()</code>, mis tõmbab püstise joone. Argument <code>xintercept</code> ütleb, millise x-telje väärtuse juurde ta tuleb. Argument <code>bins</code> funktsioonis <code>geom_histogram()</code> määrab, mitmeks kastiks skaala jagatakse.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(keskmised), <span class="fu">aes</span>(<span class="at">x =</span> keskmised)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(vanused), <span class="at">color =</span> <span class="st">"firebrick3"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"valimi keskmine vanus"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"kui mitu korda"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"1000 valimi keskmised, iga valim n = 100"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-valim-ja-ebakindlus_files/figure-html/sim-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Vaata seda joonist tähelepanelikult. Siin on peidus kogu järeldava statistika mõte.</strong></p>
+<p>Punane joon on kõigi 1293 inimese tegelik keskmine. Sinised tulbad on need tuhat keskmist, mille me juhuvalimitest saime.</p>
+<p>Kolm asja, mida tähele panna:</p>
+<ol type="1">
+<li><strong>Keskmised ei ole kõik ühesugused.</strong> Nad hajuvad. See ongi ebakindlus.</li>
+<li><strong>Nad on koondunud tõelise väärtuse ümber.</strong> Ükski üksik valim ei taba täpselt õigesti, aga nad ei eksi ka süstemaatiliselt ühes suunas.</li>
+<li><strong>Jaotus on kellukesekujuline.</strong> See ei ole juhus — see on <strong>normaaljaotus</strong> ja ta tekib alati, kui sa piisavalt palju juhuvalimeid võtad.</li>
+</ol>
+<p>Kui hajusad nad on? Selle saame välja arvutada.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(keskmised)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 1.801523</code></pre>
+</div>
+</div>
+<p><strong>See arv ongi see, mida me otsime.</strong> Ta ütleb, kui palju üks üksik valimi keskmine tüüpiliselt tõelisest väärtusest eksib.</p>
+<section id="mis-juhtub-kui-valim-on-suurem" class="level3">
+<h3 class="anchored" data-anchor-id="mis-juhtub-kui-valim-on-suurem">Mis juhtub, kui valim on suurem?</h3>
+<p>Teeme sama katse kolme erineva valimisuurusega.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>k_50 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">uhe_valimi_keskmine</span>(<span class="dv">50</span>))</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>k_200 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">uhe_valimi_keskmine</span>(<span class="dv">200</span>))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>k_800 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">uhe_valimi_keskmine</span>(<span class="dv">800</span>))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">n50 =</span> <span class="fu">sd</span>(k_50),</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">n200 =</span> <span class="fu">sd</span>(k_200),</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">n800 =</span> <span class="fu">sd</span>(k_800)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##       n50      n200      n800 
+## 2.5246819 1.2875353 0.6536432</code></pre>
+</div>
+</div>
+<p>Mida suurem valim, seda <strong>väiksem</strong> hajuvus. Vaatame ka pilti.</p>
+<p>Joonise jaoks paneme kolm tulemust ühte andmetabelisse. Funktsioon <code>rep()</code> kordab väärtusi; argument <code>each</code> ütleb, mitu korda igaüht järjest korrata.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sim <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">keskmine =</span> <span class="fu">c</span>(k_50, k_200, k_800),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">valim =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"n = 50"</span>, <span class="st">"n = 200"</span>, <span class="st">"n = 800"</span>), <span class="at">each =</span> <span class="dv">1000</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>sim<span class="sc">$</span>valim <span class="ot">&lt;-</span> <span class="fu">factor</span>(sim<span class="sc">$</span>valim, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"n = 50"</span>, <span class="st">"n = 200"</span>, <span class="st">"n = 800"</span>))</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sim, <span class="fu">aes</span>(<span class="at">x =</span> keskmine, <span class="at">fill =</span> valim)) <span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(vanused), <span class="at">color =</span> <span class="st">"firebrick3"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"valimi keskmine vanus"</span>,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"tihedus"</span>,</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Mida suurem valim, seda vähem ebakindlust"</span>,</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="cn">NULL</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-valim-ja-ebakindlus_files/figure-html/sim-suurused-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>See on kogu asja tuum.</strong> Rohkem andmeid tähendab vähem ebakindlust. Mitte seetõttu, et suur valim oleks kuidagi “õigem”, vaid seetõttu, et suure valimi keskmised hajuvad tõelise väärtuse ümber vähem.</p>
+</blockquote>
+<p>Sama loogika kehtib ka hajuvuse kohta andmetes endas: mida hajusamad on väärtused valimis, seda hajusamad on ka valimite keskmised, ja seda ebakindlamad me oleme.</p>
+<p>Nüüd on sul olemas kogu intuitsioon, mida vaja. Järgmises sakis on sama asi valemitega — ja seal selgub, et <strong>seda hajuvust ei olegi vaja simuleerida.</strong> Selle saab välja arvutada ühest ainsast valimist.</p>
+</section>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Vaatame sama asja arvutuskäiguna. Alustame keskmisest.</p>
+<p><strong>Aritmeetiline keskmine</strong> on väärtuste summa jagatud väärtuste arvuga:</p>
+<p><span class="math display">\[\bar{X} = \frac{\sum_{i=1}^n{x_i}}{n}\]</span></p>
+<p>Arvutame ta kõigepealt “käsitsi” ja siis funktsiooniga, et näha, et tulemus on sama.</p>
+<blockquote class="blockquote">
+<p>Funktsioon <code>as.vector()</code> teeb objektist tavalise vektori. Seda on siin vaja sellepärast, et <code>na.omit()</code> jätab objekti külge lisainfo selle kohta, millised read ta eemaldas, ja see segaks hilisemaid arvutusi.</p>
+</blockquote>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>vanus <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data<span class="sc">$</span>vanus)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>vanus <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(vanus)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(vanus) <span class="sc">/</span> <span class="fu">length</span>(vanus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 50.07309</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(vanus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 50.07309</code></pre>
+</div>
+</div>
+<p>Nüüd hajuvus. Meid huvitab, kui kaugel keskmisest väärtused tüüpiliselt on. Esimene mõte oleks arvutada keskmine kaugus keskmisest — aga see ei tööta.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>kaugus <span class="ot">&lt;-</span> vanus <span class="sc">-</span> <span class="fu">mean</span>(vanus)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(kaugus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 7.470092e-15</code></pre>
+</div>
+</div>
+<p>Vastus on praktiliselt null, sest positiivsed ja negatiivsed kõrvalekalded tühistavad üksteist. Keskmine kaugus keskmisest <strong>on alati null</strong> — see on keskmise definitsioon.</p>
+<blockquote class="blockquote">
+<p><strong>Mis on see <code>e-15</code>?</strong> See on <strong>teaduslik notatsioon</strong>. Väga suuri või väga väikeseid arve kuvab R niimoodi, et nad ekraanile ära mahuksid. <code>2.7e-15</code> tähendab <span class="math inline">\(2{,}7 \times 10^{-15}\)</span> ehk üliväikest arvu. Praktiliselt null.</p>
+<p>Kui sa ei taha teaduslikku notatsiooni näha, jooksuta käsk <code>options(scipen = 5)</code>.</p>
+<p><strong>Jäta see meelde.</strong> Sa kohtad seda regressioonitabelites pidevalt ja siis on hilja imestada.</p>
+</blockquote>
+<p>Lahendus on võtta kaugused <strong>ruutu</strong>, mis teeb kõik positiivseks. Nii saame <strong>dispersiooni</strong> (<em>variance</em>):</p>
+<p><span class="math display">\[var = \frac{\sum(x_i-\bar{x})^2}{n}\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ruutkaugus <span class="ot">&lt;-</span> kaugus<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(ruutkaugus) <span class="sc">/</span> <span class="fu">length</span>(ruutkaugus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 324.9356</code></pre>
+</div>
+</div>
+<p>Ruutu võtmine ajas aga mõõtühiku sassi — nüüd on tulemus ruutaastates. Võtame ruutjuure tagasi ja saame <strong>standardhälbe</strong>:</p>
+<p><span class="math display">\[sd = \sqrt{\frac{\sum(x_i-\bar{x})^2}{n}}\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">sum</span>(ruutkaugus) <span class="sc">/</span> <span class="fu">length</span>(ruutkaugus))<span class="sc">^</span><span class="fl">0.5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 18.02597</code></pre>
+</div>
+</div>
+<section id="parandus-mis-on-vajalik" class="level3">
+<h3 class="anchored" data-anchor-id="parandus-mis-on-vajalik">Parandus, mis on vajalik</h3>
+<p>Siin on üks konks. Meie valimis ei ole populatsiooni kõige haruldasemaid, kõige äärmuslikumaid väärtusi — nad on haruldased just sellepärast, et nad valimisse tõenäoliselt ei satu. Seetõttu <strong>alahindab valimi hajuvus alati populatsiooni hajuvust.</strong></p>
+<p>Selle parandamiseks jagatakse mitte <span class="math inline">\(n\)</span>-iga, vaid <span class="math inline">\(n-1\)</span>-ga:</p>
+<p><span class="math display">\[sd = \sqrt{\frac{\sum(x_i-\bar{x})^2}{n-1}}\]</span></p>
+<p>Just seda teevad R-i funktsioonid <code>var()</code> ja <code>sd()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(vanus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 325.1884</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(vanus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 18.03298</code></pre>
+</div>
+</div>
+<p>Seda <span class="math inline">\(n-1\)</span> nimetatakse <strong>vabadusastmeteks</strong> (<em>degrees of freedom</em>).</p>
+<blockquote class="blockquote">
+<p><strong>Mida vabadusastmed tähendavad?</strong> Kõige lihtsam on mõelda neist kui <strong>vabast infost</strong> andmetes.</p>
+<p>Oletame, et sul on viis arvu ja sa juba tead nende keskmist. Kui nüüd neli arvu ette anda, siis viies <strong>ei ole enam vaba</strong> — ta on üheselt määratud, sest keskmine peab kokku tulema. Viiest arvust on vaba ainult neli.</p>
+<p>Üldiselt: iga suurus, mille sa <strong>oma andmetest välja arvutad</strong> ja hiljem kasutad, võtab ühe vabadusastme ära. Standardhälbe arvutamiseks oli meil vaja keskmist — see maksis ühe vabadusastme, seega jäi järele <span class="math inline">\(n-1\)</span>.</p>
+<p>Sellepärast sõltub vabadusastmete arv kahest asjast: <strong>kui palju juhtumeid on</strong> ja <strong>kui palju suurusi on andmetest juba välja arvutatud</strong>. Regressioonis, kus arvutatakse mitu koefitsienti, kaob vabadusastmeid rohkem.</p>
+</blockquote>
+</section>
+<section id="standardviga" class="level3">
+<h3 class="anchored" data-anchor-id="standardviga">Standardviga</h3>
+<p>Nüüd kõige tähtsam samm. Meid ei huvita tegelikult mitte vanuse hajuvus, vaid <strong>keskmiste hajuvus</strong> — täpselt see, mida eelmises sakis simuleerisime.</p>
+<p>Juhuvalimi puhul kehtib matemaatiline seaduspära, mis lubab selle <strong>ühest ainsast valimist välja arvutada.</strong> Seda suurust nimetatakse <strong>standardveaks</strong>:</p>
+<p><span class="math display">\[se_{\bar{x}} = \frac{sd}{\sqrt{n}}\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(vanus) <span class="sc">/</span> <span class="fu">length</span>(vanus)<span class="sc">^</span><span class="fl">0.5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.50286</code></pre>
+</div>
+</div>
+<p>Kontrollime, kas see klapib simulatsiooniga. Simulatsioonis kasutasime valimeid suurusega 100:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(vanus) <span class="sc">/</span> <span class="dv">100</span><span class="sc">^</span><span class="fl">0.5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 1.803298</code></pre>
+</div>
+</div>
+<p>Ja simulatsioonist saime:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>uhe_valimi_keskmine <span class="ot">&lt;-</span> <span class="cf">function</span>(valimi_suurus) {</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  valim <span class="ot">&lt;-</span> <span class="fu">sample</span>(vanus, <span class="at">size =</span> valimi_suurus, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(valim)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(<span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">uhe_valimi_keskmine</span>(<span class="dv">100</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 1.801523</code></pre>
+</div>
+</div>
+<p><strong>Praktiliselt sama arv.</strong> Valem ennustas täpselt ära selle, mida simulatsioon näitas — ilma et oleks olnud vaja tuhat valimit võtta.</p>
+<blockquote class="blockquote">
+<p><strong>Vaata valemit ja mõtle, mida ta ütleb.</strong> Standardviga on murd, kus lugejas on hajuvus ja nimetajas ruutjuur valimi suurusest.</p>
+<ul>
+<li>Suurem hajuvus → suurem standardviga → rohkem ebakindlust.</li>
+<li>Suurem valim → suurem nimetaja → väiksem standardviga → vähem ebakindlust.</li>
+</ul>
+<p>Täpselt see, mida simulatsioon näitas. Ainult et nüüd me ka teame, <strong>miks</strong>.</p>
+<p>Pane tähele ka ruutjuurt: valimi kahekordistamine ei poolita ebakindlust, vaid vähendab teda ainult umbes 30% võrra. Täpsuse ostmine läheb aina kallimaks.</p>
+</blockquote>
+</section>
+</div>
+</div>
+</div>
+</section>
+<section id="normaaljaotus-ja-tõenäosus" class="level2">
+<h2 class="anchored" data-anchor-id="normaaljaotus-ja-tõenäosus">Normaaljaotus ja tõenäosus</h2>
+<p>Miks on oluline, et need keskmised jaotuvad normaaljaotuse järgi? Sest normaaljaotusel on üks väga kasulik omadus: <strong>me teame täpselt, kui suur osa väärtustest asub kui kaugel keskmisest.</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-valim-ja-ebakindlus_files/figure-html/normaaljaotus-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Umbes 68% väärtustest jääb ühe standardhälbe kaugusele keskmisest, umbes 95% kahe standardhälbe kaugusele ja umbes 99,7% kolme kaugusele.</p>
+<p>Kaugust keskmisest standardhälvetes nimetatakse <strong>z-skooriks</strong>. Kui z-skoor on 1, siis on väärtus ühe standardhälbe kaugusel keskmisest.</p>
+<p>Funktsioon <code>pnorm()</code> ütleb, kui suur osa normaaljaotusest jääb antud z-skoorist allapoole (vasakule).</p>
+<p>Argument <code>lower.tail</code> määrab, kummalt poolt vaadata: vaikimisi <code>TRUE</code> annab osakaalu allpool antud väärtust, <code>FALSE</code> annab ülalpool.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="fl">1.96</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.9750021</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="fl">1.96</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.0249979</code></pre>
+</div>
+</div>
+<p>Esimene arv ütleb, et 97,5% väärtustest on väiksemad kui 1,96 standardhälvet üle keskmise. Teine pöörab küsimuse ümber: 2,5% väärtustest on sellest suuremad.</p>
+<p>Funktsioon <code>qnorm()</code> teeb vastupidist — annab z-skoori, millele vastab teatud osakaal.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.025</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] -1.959964</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.975</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 1.959964</code></pre>
+</div>
+</div>
+<p>Sama arv, ainult märk on erinev, sest normaaljaotus on sümmeetriline. <strong>Arv 1,96 on selle kursuse üks olulisemaid arve.</strong> Tema vahele jääb 95% normaaljaotusest.</p>
+<section id="t-jaotus" class="level3">
+<h3 class="anchored" data-anchor-id="t-jaotus">T-jaotus</h3>
+<p>Väikese valimi puhul kasutatakse normaaljaotuse asemel <strong>t-jaotust</strong>. Ta näeb normaaljaotusega väga sarnane välja, kuid on servadest natuke laiemaks venitatud — sest väikese valimi puhul on rohkem ebakindlust.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-valim-ja-ebakindlus_files/figure-html/t-jaotus-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Mida vähem vabadusastmeid, seda lamedam on jaotus ja seda paksemad on tema sabad — ehk seda tõenäolisem on näha keskmisest kaugel olevat väärtust. Kümne vabadusastme juures on vahe normaaljaotusest juba väike.</p>
+<p>T-jaotuse kuju sõltub vabadusastmete arvust. Funktsioon <code>qt()</code> töötab nagu <code>qnorm()</code>, kuid vajab lisaks argumenti <code>df</code> (<em>degrees of freedom</em>).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 2.228139</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 1.983972</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">1000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 1.962339</code></pre>
+</div>
+</div>
+<p>Mida rohkem juhtumeid, seda lähemale jõuab t-jaotus normaaljaotusele ja seda lähemale jõuab piirväärtus arvule 1,96.</p>
+<blockquote class="blockquote">
+<p><strong>Rusikareegel:</strong> kui juhtumeid on paarsada või rohkem, on piirväärtus umbes 2. Meie andmestikuga ei ole vahet, kas kasutada normaaljaotust või t-jaotust.</p>
+</blockquote>
+</section>
+</section>
+<section id="usaldusvahemikud" class="level2">
+<h2 class="anchored" data-anchor-id="usaldusvahemikud">Usaldusvahemikud</h2>
+<p>Nüüd saame kokku panna kõik, mida vaja.</p>
+<p><strong>Usaldusvahemik</strong> näitab vahemikku, kuhu tõenäoliselt jääb tõeline väärtus populatsioonis. 95% usaldusvahemik ulatub 1,96 standardviga keskmisest mõlemale poole.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>k_vanus <span class="ot">&lt;-</span> <span class="fu">mean</span>(vanus)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>sviga <span class="ot">&lt;-</span> <span class="fu">sd</span>(vanus) <span class="sc">/</span> <span class="fu">length</span>(vanus)<span class="sc">^</span><span class="fl">0.5</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">alumine =</span> k_vanus <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> sviga,</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">keskmine =</span> k_vanus,</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylemine =</span> k_vanus <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> sviga</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##  alumine keskmine  ylemine 
+## 49.08749 50.07309 51.05870</code></pre>
+</div>
+</div>
+<p>Kui tahame olla väga täpsed, kasutame t-jaotust:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">alumine =</span> k_vanus <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df =</span> <span class="fu">length</span>(vanus) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> sviga,</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylemine =</span> k_vanus <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="fu">length</span>(vanus) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> sviga</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##  alumine  ylemine 
+## 49.08658 51.05961</code></pre>
+</div>
+</div>
+<p>Vahe on tühine, nagu ennustatud.</p>
+<blockquote class="blockquote">
+<p><strong>Mida usaldusvahemik täpselt tähendab?</strong> Kui me võtaksime Eestist lõpmata palju kordi sama suure juhuvalimi ja arvutaksime iga kord usaldusvahemiku, siis 95% nendest vahemikest sisaldaks tõelist keskmist.</p>
+<p>Igapäevases kasutuses tõlgendatakse teda lihtsamalt: see on vahemik, kus tõeline väärtus <strong>tõenäoliselt</strong> asub. Rangelt võttes ei ole see päris täpne, aga praktilise töö jaoks piisab.</p>
+</blockquote>
+</section>
+<section id="kuidas-seda-kirja-panna" class="level2">
+<h2 class="anchored" data-anchor-id="kuidas-seda-kirja-panna">Kuidas seda kirja panna</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Kuidas seda kirja panna">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nõuanne</span>Kuidas seda kirja panna
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Keskmist ei tohi kunagi esitada ilma ebakindluse hinnanguta. Miinimum on standardhälve; parem on lisada ka usaldusvahemik.</p>
+<p><strong>Vastajate keskmine vanus oli 50,1 aastat (standardhälve 18,3; 95% usaldusvahemik 49,1–51,1; n = 1286). Valimi suurust arvestades saab keskmist vanust hinnata küllaltki täpselt.</strong></p>
+<p>Pane tähele:</p>
+<ul>
+<li><strong>standardhälve</strong> kirjeldab, kui hajusad on inimesed;</li>
+<li><strong>standardviga ja usaldusvahemik</strong> kirjeldavad, kui kindlad me keskmises oleme.</li>
+</ul>
+<p>Need kaks aetakse pidevalt segamini. Standardhälve on andmete omadus ja ta ei kahane, kui sa rohkem andmeid kogud. Standardviga on <strong>sinu teadmise</strong> omadus ja ta kahaneb.</p>
+</div>
+</div>
+</section>
+<section id="järgmiseks" class="level2">
+<h2 class="anchored" data-anchor-id="järgmiseks">Järgmiseks</h2>
+<p>Nüüd on meil olemas kõik, mida vaja hüpoteeside testimiseks. Sest hüpoteesi testimine on lõppkokkuvõttes lihtsalt küsimus: <strong>kas mingi huvipakkuv väärtus jääb meie usaldusvahemiku sisse või mitte?</strong></p>
+</section>
+<section id="harjutused" class="level2">
+<h2 class="anchored" data-anchor-id="harjutused">Harjutused</h2>
+<div class="harjutus">
+<p><strong>1. Simulatsioon.</strong> Korda praktikumis tehtud simulatsiooni muutujaga <code>usaldus_pol</code>. Võta 1000 valimit suurusega 100 ja vaata nende keskmiste jaotust. Mis on selle jaotuse standardhälve?</p>
+<p><strong>2. Valimi suurus.</strong> Tee sama simulatsioon valimi suurusega 25 ja 400. Kui palju hajuvus muutub? Kontrolli valemiga, kas tulemus vastab ootusele.</p>
+<p><strong>3. Usaldusvahemik.</strong> Arvuta 95% usaldusvahemik muutuja <code>rahulolu_dem</code> keskmise ümber. Arvuta seejärel ka 99% usaldusvahemik — mis muutub ja miks?</p>
+<p><strong>4. Standardviga käsitsi.</strong> Arvuta muutuja <code>haridus</code> standardviga käsitsi (standardhälve jagatud ruutjuurega juhtumite arvust) ja kontrolli tulemust funktsiooniga <code>t.test()</code>.</p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="pagination-link" aria-label="5. Kirjeldamine ja visualiseerimine">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./07-hupoteeside-testimine.html" class="pagination-link" aria-label="7. Hüpoteeside testimine">
+        <span class="nav-page-text"><span class="chapter-title">7. Hüpoteeside testimine</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

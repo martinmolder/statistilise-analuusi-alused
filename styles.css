@@ -1,0 +1,160 @@
+/* ---------------------------------------------------------------------------
+   Statistilise analüüsi alused, 2026 sügis
+   --------------------------------------------------------------------------- */
+
+body {
+  font-size: 15px;
+  text-align: justify;
+}
+
+code {
+  font-size: 13px;
+}
+
+pre {
+  font-size: 13px;
+}
+
+/* Väljundiplokid (koodi tulemus) hallil taustal, et nad koodist eristuksid */
+pre:not([class]) {
+  background-color: #ececec;
+  color: black;
+}
+
+h1 { text-align: left; font-weight: bold; }
+h2 { text-align: left; }
+h3 { text-align: left; }
+h4 { text-align: left; }
+
+/* ---------------------------------------------------------------------------
+   Tsitaadiplokid -- kursuse "pane tähele" märkused.
+   NB! Tekst peab olema PUHASMUST. Hall tekst värvilisel taustal ei ole loetav.
+   --------------------------------------------------------------------------- */
+
+blockquote,
+.quarto-container blockquote,
+div.quarto-layout-panel blockquote {
+  text-align: justify;
+  color: #000000 !important;
+  background-color: #d6ecff;
+  border-left: 5px solid #0083ff;
+  padding: 0.6em 1em;
+  margin: 1em 0;
+}
+
+/* Bootstrapi teema (cosmo) määrab tsitaadiplokis halli teksti. Hall tekst
+   sinisel taustal ei ole loetav, seega kirjutame ta üle. */
+blockquote *,
+blockquote p,
+blockquote li,
+blockquote strong,
+blockquote em {
+  color: #000000 !important;
+}
+
+/* Kood tsitaadiplokis jääb eristuvaks, aga tumedaks */
+blockquote code {
+  color: #7d1a1a !important;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* Sama kehtib Quarto callout-plokkide kohta */
+.callout,
+.callout-body,
+.callout-body p,
+.callout-body li,
+.callout-title,
+.callout-title-container {
+  color: #000000 !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Kaks rada: "Lihtsam seletus" / "Täpsem seletus"
+   --------------------------------------------------------------------------- */
+
+.panel-tabset {
+  border: 1px solid #b8d8f0;
+  border-radius: 6px;
+  padding: 0.5em 1em 1em 1em;
+  margin: 1.5em 0;
+  background-color: #fafcff;
+}
+
+.panel-tabset .nav-tabs .nav-link.active {
+  font-weight: bold;
+  background-color: #d6ecff;
+  color: #000000;
+}
+
+.panel-tabset .nav-tabs .nav-link {
+  color: #000000;
+}
+
+/* ---------------------------------------------------------------------------
+   Harjutused ja arutelu küsimused
+   --------------------------------------------------------------------------- */
+
+.harjutus {
+  border-left: 5px solid #2e8b57;
+  background-color: #eef7f1;
+  color: #000000;
+  padding: 0.6em 1em;
+  margin: 1.5em 0;
+  border-radius: 4px;
+}
+
+.arutelu {
+  border-left: 5px solid #d98200;
+  background-color: #fdf3e3;
+  color: #000000;
+  padding: 0.6em 1em;
+  margin: 1.5em 0;
+  border-radius: 4px;
+}
+
+.harjutus p, .arutelu p { color: #000000; }
+.harjutus p:last-child, .arutelu p:last-child { margin-bottom: 0; }
+
+/* ---------------------------------------------------------------------------
+   Tabelid. Vaikimisi on ridade vahe liiga suur ja tabelis on palju tühja
+   ruumi -- surume ta kokku tavalise teksti reavahele lähemale.
+   --------------------------------------------------------------------------- */
+
+table {
+  font-size: 14px;
+}
+
+table td,
+table th {
+  padding-top: 0.15em !important;
+  padding-bottom: 0.15em !important;
+  line-height: 1.3 !important;
+}
+
+/* modelsummary kasutab tinytable-i */
+.tinytable td,
+.tinytable th {
+  padding-top: 0.1em !important;
+  padding-bottom: 0.1em !important;
+  line-height: 1.25 !important;
+}
+
+.tinytable {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Pikad tabelid ja koodiread ei tohi lehte laiaks venitada */
+.cell-output, .table-responsive {
+  overflow-x: auto;
+}
+
+/* ---------------------------------------------------------------------------
+   Külgriba: peatükkide nimed peavad olema loetavad
+   --------------------------------------------------------------------------- */
+
+.sidebar-item-text {
+  font-size: 14px;
+  line-height: 1.35;
+}

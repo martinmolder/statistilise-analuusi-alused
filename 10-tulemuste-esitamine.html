@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="et" xml:lang="et"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>10. Tulemuste esitamine – Statistilise analüüsi alused</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./11-logistiline-regressioon.html" rel="next">
+<link href="./09-mitmene-regressioon.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-bf8030b5a8b8f2de5bceddfb8bf38a1d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "Otsi",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./10-tulemuste-esitamine.html"><span class="chapter-title">10. Tulemuste esitamine</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistilise analüüsi alused</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sissejuhatus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Alustamine</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-r-alused.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1. R ja RStudio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-andmete-laadimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2. Andmete laadimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Andmete ettevalmistus</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Andmete ettevalmistus I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus II</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Andmete kirjeldamine</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Järeldav statistika</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-valim-ja-ebakindlus.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6. Valim ja ebakindlus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-hupoteeside-testimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Hüpoteeside testimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Seosed ja mudelid</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-korrelatsioon-ja-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Mitmene regressioon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">10. Tulemuste esitamine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-logistiline-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Logistiline regressioon</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Selle peatüki sisu</h2>
+   
+  <ul>
+  <li><a href="#tabelid" id="toc-tabelid" class="nav-link active" data-scroll-target="#tabelid">Tabelid</a>
+  <ul class="collapse">
+  <li><a href="#tabeli-korrastamine" id="toc-tabeli-korrastamine" class="nav-link" data-scroll-target="#tabeli-korrastamine">Tabeli korrastamine</a></li>
+  </ul></li>
+  <li><a href="#mitu-mudelit-kõrvuti" id="toc-mitu-mudelit-kõrvuti" class="nav-link" data-scroll-target="#mitu-mudelit-kõrvuti">Mitu mudelit kõrvuti</a></li>
+  <li><a href="#tabeli-eksportimine-wordi" id="toc-tabeli-eksportimine-wordi" class="nav-link" data-scroll-target="#tabeli-eksportimine-wordi">Tabeli eksportimine Wordi</a></li>
+  <li><a href="#joonised" id="toc-joonised" class="nav-link" data-scroll-target="#joonised">Joonised</a>
+  <ul class="collapse">
+  <li><a href="#kategooriline-muutuja" id="toc-kategooriline-muutuja" class="nav-link" data-scroll-target="#kategooriline-muutuja">Kategooriline muutuja</a></li>
+  </ul></li>
+  <li><a href="#kuidas-seda-kirja-panna" id="toc-kuidas-seda-kirja-panna" class="nav-link" data-scroll-target="#kuidas-seda-kirja-panna">Kuidas seda kirja panna</a></li>
+  <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./10-tulemuste-esitamine.html"><span class="chapter-title">10. Tulemuste esitamine</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">10. Tulemuste esitamine</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/ess11_ee_clean.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Mudel on tehtud. Nüüd tuleb ta esitada nii, et keegi teine saaks aru.</p>
+<p><code>summary()</code> väljund konsoolis on <strong>sinu jaoks</strong>, mitte lugeja jaoks. Ta on täis tehnilist infot, muutujate nimed on koodis ja midagi ei ole vormistatud. Tööl on vaja kahte asja: <strong>tabelit</strong> ja <strong>joonist</strong>.</p>
+<p>Teeme kõigepealt paar mudelit, mida esitada.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus_pol, <span class="at">data =</span> data)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus_pol <span class="sc">+</span> vanus <span class="sc">+</span> haridus, <span class="at">data =</span> data)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  rahulolu_dem <span class="sc">~</span> usaldus_pol <span class="sc">+</span> vanus <span class="sc">+</span> haridus <span class="sc">+</span> sugu <span class="sc">+</span> elukoht,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="tabelid" class="level2">
+<h2 class="anchored" data-anchor-id="tabelid">Tabelid</h2>
+<p>Tabeli tegemiseks kasutame paketti <strong>modelsummary</strong>. Ta on tänapäeval kõige mugavam lahendus: oskab peaaegu kõiki mudelitüüpe ja kirjutab tulemuse otse sellisesse formaati, mida vaja.</p>
+<p>Kõige lihtsam kasutus: anna funktsioonile <code>modelsummary()</code> mudel ja ta teeb tabeli.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_4vh473shk1lne4gk61t9 = TinyTable.createTableFunctions("tinytable_4vh473shk1lne4gk61t9");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '15', j: 2 } ], css_id: 'tinytable_css_gjfv7bj5gcxk7mt7a1up',}, 
+          { positions: [ { i: '8', j: 2 } ], css_id: 'tinytable_css_nr8jl1zsbr3xv6vzphxx',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 } ], css_id: 'tinytable_css_hk5ionw0lix264kodfes',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_uc7yp5eor6u9i517k1y0',}, 
+          { positions: [ { i: '15', j: 1 } ], css_id: 'tinytable_css_w2v35lsb15b0x0w7let2',}, 
+          { positions: [ { i: '8', j: 1 } ], css_id: 'tinytable_css_1papaf0r551vej5atqrv',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 } ], css_id: 'tinytable_css_kh1cmyoqsl1h2oihidor',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_yeuro1gfixjjxtdtpnxp',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_4vh473shk1lne4gk61t9.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_4vh473shk1lne4gk61t9 td.tinytable_css_gjfv7bj5gcxk7mt7a1up, #tinytable_4vh473shk1lne4gk61t9 th.tinytable_css_gjfv7bj5gcxk7mt7a1up {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_4vh473shk1lne4gk61t9 td.tinytable_css_nr8jl1zsbr3xv6vzphxx, #tinytable_4vh473shk1lne4gk61t9 th.tinytable_css_nr8jl1zsbr3xv6vzphxx {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_4vh473shk1lne4gk61t9 td.tinytable_css_hk5ionw0lix264kodfes, #tinytable_4vh473shk1lne4gk61t9 th.tinytable_css_hk5ionw0lix264kodfes { text-align: center }
+    #tinytable_4vh473shk1lne4gk61t9 td.tinytable_css_uc7yp5eor6u9i517k1y0, #tinytable_4vh473shk1lne4gk61t9 th.tinytable_css_uc7yp5eor6u9i517k1y0 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_4vh473shk1lne4gk61t9 td.tinytable_css_w2v35lsb15b0x0w7let2, #tinytable_4vh473shk1lne4gk61t9 th.tinytable_css_w2v35lsb15b0x0w7let2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_4vh473shk1lne4gk61t9 td.tinytable_css_1papaf0r551vej5atqrv, #tinytable_4vh473shk1lne4gk61t9 th.tinytable_css_1papaf0r551vej5atqrv {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_4vh473shk1lne4gk61t9 td.tinytable_css_kh1cmyoqsl1h2oihidor, #tinytable_4vh473shk1lne4gk61t9 th.tinytable_css_kh1cmyoqsl1h2oihidor { text-align: left }
+    #tinytable_4vh473shk1lne4gk61t9 td.tinytable_css_yeuro1gfixjjxtdtpnxp, #tinytable_4vh473shk1lne4gk61t9 th.tinytable_css_yeuro1gfixjjxtdtpnxp {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_4vh473shk1lne4gk61t9" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">(1)</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">(Intercept)</td>
+                  <td data-row="1" data-col="2">2.847</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.244)</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">usaldus_pol</td>
+                  <td data-row="3" data-col="2">0.645</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.026)</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">vanus</td>
+                  <td data-row="5" data-col="2">-0.011</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.004)</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">haridus</td>
+                  <td data-row="7" data-col="2">0.118</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1"></td>
+                  <td data-row="8" data-col="2">(0.038)</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">Num.Obs.</td>
+                  <td data-row="9" data-col="2">1212</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1">R2</td>
+                  <td data-row="10" data-col="2">0.363</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">R2 Adj.</td>
+                  <td data-row="11" data-col="2">0.362</td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1">AIC</td>
+                  <td data-row="12" data-col="2">5224.6</td>
+                </tr>
+                <tr>
+                  <td data-row="13" data-col="1">BIC</td>
+                  <td data-row="13" data-col="2">5250.1</td>
+                </tr>
+                <tr>
+                  <td data-row="14" data-col="1">Log.Lik.</td>
+                  <td data-row="14" data-col="2">-2607.309</td>
+                </tr>
+                <tr>
+                  <td data-row="15" data-col="1">RMSE</td>
+                  <td data-row="15" data-col="2">2.08</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>Juba päris korralik, aga veel mitte esitatav. Muutujate nimed on koodinimed ja statistikat on rohkem, kui vaja.</p>
+<blockquote class="blockquote">
+<p><strong>Varasemates materjalides kasutati paketti <code>stargazer</code>.</strong> Ta töötab endiselt, kuid teda ei arendata enam ning ta ei oska uuemate mudelitüüpidega hakkama saada. Kui sa kohtad vanemas koodis <code>stargazer()</code>, siis tea, mis see on — ise kasuta <code>modelsummary()</code>.</p>
+</blockquote>
+<section id="tabeli-korrastamine" class="level3">
+<h3 class="anchored" data-anchor-id="tabeli-korrastamine">Tabeli korrastamine</h3>
+<p>Kolm argumenti, millega saab peaaegu kõik ära teha.</p>
+<ul>
+<li><strong><code>coef_map</code></strong> — nimede muutmine. Anna talle nimekiri kujul <code>"koodinimi" = "ilus   nimi"</code>. Muutujad, mida siin ei ole, jäetakse tabelist <strong>välja</strong>, ja järjekord tuleb selline, nagu siin kirjas.</li>
+<li><strong><code>gof_map</code></strong> — millist mudeli sobivuse statistikat näidata.</li>
+<li><strong><code>stars</code></strong> — tärnid statistilise olulisuse tähistamiseks.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nimed <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"usaldus_pol"</span> <span class="ot">=</span> <span class="st">"Usaldus poliitikute vastu (0-10)"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"vanus"</span> <span class="ot">=</span> <span class="st">"Vanus (aastates)"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"haridus"</span> <span class="ot">=</span> <span class="st">"Haridustase (1-7)"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sugunaine"</span> <span class="ot">=</span> <span class="st">"Sugu: naine (ref. mees)"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"(Intercept)"</span> <span class="ot">=</span> <span class="st">"Vabaliige"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  m2,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">coef_map =</span> nimed,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"adj.r.squared"</span>),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> <span class="fl">0.05</span>, <span class="st">"**"</span> <span class="ot">=</span> <span class="fl">0.01</span>, <span class="st">"***"</span> <span class="ot">=</span> <span class="fl">0.001</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_sq3qy9miopv4oz6mnkbf = TinyTable.createTableFunctions("tinytable_sq3qy9miopv4oz6mnkbf");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '10', j: 2 } ], css_id: 'tinytable_css_3dbweqycntbr0jttmp78',}, 
+          { positions: [ { i: '8', j: 2 } ], css_id: 'tinytable_css_s0yrolfq3hw5b7pghwqr',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '9', j: 2 } ], css_id: 'tinytable_css_43d7hjey33znb1u85baa',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_avzhurh9nd6uhxa1t62l',}, 
+          { positions: [ { i: '10', j: 1 } ], css_id: 'tinytable_css_tb1zd4w80gj77p97w31i',}, 
+          { positions: [ { i: '8', j: 1 } ], css_id: 'tinytable_css_1y3hlujimwq3b0n950xz',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '9', j: 1 } ], css_id: 'tinytable_css_q9ft4jq9l5kt5kxjyj0q',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_y9z7k9efcbg8iy8olshh',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_sq3qy9miopv4oz6mnkbf.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_sq3qy9miopv4oz6mnkbf td.tinytable_css_3dbweqycntbr0jttmp78, #tinytable_sq3qy9miopv4oz6mnkbf th.tinytable_css_3dbweqycntbr0jttmp78 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_sq3qy9miopv4oz6mnkbf td.tinytable_css_s0yrolfq3hw5b7pghwqr, #tinytable_sq3qy9miopv4oz6mnkbf th.tinytable_css_s0yrolfq3hw5b7pghwqr {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_sq3qy9miopv4oz6mnkbf td.tinytable_css_43d7hjey33znb1u85baa, #tinytable_sq3qy9miopv4oz6mnkbf th.tinytable_css_43d7hjey33znb1u85baa { text-align: center }
+    #tinytable_sq3qy9miopv4oz6mnkbf td.tinytable_css_avzhurh9nd6uhxa1t62l, #tinytable_sq3qy9miopv4oz6mnkbf th.tinytable_css_avzhurh9nd6uhxa1t62l {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_sq3qy9miopv4oz6mnkbf td.tinytable_css_tb1zd4w80gj77p97w31i, #tinytable_sq3qy9miopv4oz6mnkbf th.tinytable_css_tb1zd4w80gj77p97w31i {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_sq3qy9miopv4oz6mnkbf td.tinytable_css_1y3hlujimwq3b0n950xz, #tinytable_sq3qy9miopv4oz6mnkbf th.tinytable_css_1y3hlujimwq3b0n950xz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_sq3qy9miopv4oz6mnkbf td.tinytable_css_q9ft4jq9l5kt5kxjyj0q, #tinytable_sq3qy9miopv4oz6mnkbf th.tinytable_css_q9ft4jq9l5kt5kxjyj0q { text-align: left }
+    #tinytable_sq3qy9miopv4oz6mnkbf td.tinytable_css_y9z7k9efcbg8iy8olshh, #tinytable_sq3qy9miopv4oz6mnkbf th.tinytable_css_y9z7k9efcbg8iy8olshh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_sq3qy9miopv4oz6mnkbf" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">(1)</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan="2">* p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Usaldus poliitikute vastu (0-10)</td>
+                  <td data-row="1" data-col="2">0.645***</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.026)</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Vanus (aastates)</td>
+                  <td data-row="3" data-col="2">-0.011**</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.004)</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Haridustase (1-7)</td>
+                  <td data-row="5" data-col="2">0.118**</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.038)</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">Vabaliige</td>
+                  <td data-row="7" data-col="2">2.847***</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1"></td>
+                  <td data-row="8" data-col="2">(0.244)</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">Num.Obs.</td>
+                  <td data-row="9" data-col="2">1212</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1">R2 Adj.</td>
+                  <td data-row="10" data-col="2">0.362</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Tärnide piirid.</strong> Vaikimisi kasutab <code>modelsummary</code> ka piiri 0,1, mida praktikas keegi ei kasuta. Määra nad ise, nagu ülal.</p>
+</blockquote>
+</section>
+</section>
+<section id="mitu-mudelit-kõrvuti" class="level2">
+<h2 class="anchored" data-anchor-id="mitu-mudelit-kõrvuti">Mitu mudelit kõrvuti</h2>
+<p>See on regressioonitabeli kõige kasulikum omadus. Kui panna mitu mudelit kõrvuti, näeb lugeja <strong>kuidas koefitsiendid muutuvad</strong>, kui mudelisse muutujaid juurde tuleb.</p>
+<p>Selleks anna <code>modelsummary()</code>-le nimekiri mudelitest. Nimekirja elementide nimed saavad tabelis veergude pealkirjadeks.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nimed_koik <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"usaldus_pol"</span> <span class="ot">=</span> <span class="st">"Usaldus poliitikute vastu (0-10)"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"vanus"</span> <span class="ot">=</span> <span class="st">"Vanus (aastates)"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"haridus"</span> <span class="ot">=</span> <span class="st">"Haridustase (1-7)"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sugunaine"</span> <span class="ot">=</span> <span class="st">"Sugu: naine (ref. mees)"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"elukohtsuurlinna äärelinn"</span> <span class="ot">=</span> <span class="st">"Elukoht: äärelinn (ref. suurlinn)"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"elukohtväiksem linn"</span> <span class="ot">=</span> <span class="st">"Elukoht: väiksem linn (ref. suurlinn)"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"elukohtmaa-asula"</span> <span class="ot">=</span> <span class="st">"Elukoht: maa-asula (ref. suurlinn)"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"elukohttalu või maakodu"</span> <span class="ot">=</span> <span class="st">"Elukoht: talu (ref. suurlinn)"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"(Intercept)"</span> <span class="ot">=</span> <span class="st">"Vabaliige"</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">"Mudel 1"</span> <span class="ot">=</span> m1, <span class="st">"Mudel 2"</span> <span class="ot">=</span> m2, <span class="st">"Mudel 3"</span> <span class="ot">=</span> m3),</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">coef_map =</span> nimed_koik,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"adj.r.squared"</span>),</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> <span class="fl">0.05</span>, <span class="st">"**"</span> <span class="ot">=</span> <span class="fl">0.01</span>, <span class="st">"***"</span> <span class="ot">=</span> <span class="fl">0.001</span>),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Rahulolu demokraatiaga seletavad tegurid"</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_048tomkvzaqjdxks5jl6 = TinyTable.createTableFunctions("tinytable_048tomkvzaqjdxks5jl6");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '14', j: 2 }, { i: '14', j: 3 }, { i: '14', j: 4 } ], css_id: 'tinytable_css_ejod9vlukgmmwq0pse45',}, 
+          { positions: [ { i: '12', j: 2 }, { i: '12', j: 3 }, { i: '12', j: 4 } ], css_id: 'tinytable_css_7cfmd0fgh7iib2mul1k4',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '13', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '13', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 }, { i: '7', j: 4 }, { i: '8', j: 4 }, { i: '9', j: 4 }, { i: '10', j: 4 }, { i: '11', j: 4 }, { i: '13', j: 4 } ], css_id: 'tinytable_css_by2tcbjy6uax29gy18jo',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 } ], css_id: 'tinytable_css_nh9vv7zyv1a3d75agbfe',}, 
+          { positions: [ { i: '14', j: 1 } ], css_id: 'tinytable_css_gbiv0qlhpm05gdlyfhaq',}, 
+          { positions: [ { i: '12', j: 1 } ], css_id: 'tinytable_css_k48se3kj28ogs1e3xqbd',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '13', j: 1 } ], css_id: 'tinytable_css_7k3jijs0sqo5tx80k93y',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_ytsjc5i6kx74qe7kexcq',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_048tomkvzaqjdxks5jl6.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_048tomkvzaqjdxks5jl6 td.tinytable_css_ejod9vlukgmmwq0pse45, #tinytable_048tomkvzaqjdxks5jl6 th.tinytable_css_ejod9vlukgmmwq0pse45 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_048tomkvzaqjdxks5jl6 td.tinytable_css_7cfmd0fgh7iib2mul1k4, #tinytable_048tomkvzaqjdxks5jl6 th.tinytable_css_7cfmd0fgh7iib2mul1k4 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_048tomkvzaqjdxks5jl6 td.tinytable_css_by2tcbjy6uax29gy18jo, #tinytable_048tomkvzaqjdxks5jl6 th.tinytable_css_by2tcbjy6uax29gy18jo { text-align: center }
+    #tinytable_048tomkvzaqjdxks5jl6 td.tinytable_css_nh9vv7zyv1a3d75agbfe, #tinytable_048tomkvzaqjdxks5jl6 th.tinytable_css_nh9vv7zyv1a3d75agbfe {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_048tomkvzaqjdxks5jl6 td.tinytable_css_gbiv0qlhpm05gdlyfhaq, #tinytable_048tomkvzaqjdxks5jl6 th.tinytable_css_gbiv0qlhpm05gdlyfhaq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_048tomkvzaqjdxks5jl6 td.tinytable_css_k48se3kj28ogs1e3xqbd, #tinytable_048tomkvzaqjdxks5jl6 th.tinytable_css_k48se3kj28ogs1e3xqbd {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_048tomkvzaqjdxks5jl6 td.tinytable_css_7k3jijs0sqo5tx80k93y, #tinytable_048tomkvzaqjdxks5jl6 th.tinytable_css_7k3jijs0sqo5tx80k93y { text-align: left }
+    #tinytable_048tomkvzaqjdxks5jl6 td.tinytable_css_ytsjc5i6kx74qe7kexcq, #tinytable_048tomkvzaqjdxks5jl6 th.tinytable_css_ytsjc5i6kx74qe7kexcq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_048tomkvzaqjdxks5jl6" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        <caption>Rahulolu demokraatiaga seletavad tegurid</caption>
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Mudel 1</th>
+                <th scope="col" data-row="0" data-col="3">Mudel 2</th>
+                <th scope="col" data-row="0" data-col="4">Mudel 3</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan="4">* p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Usaldus poliitikute vastu (0-10)</td>
+                  <td data-row="1" data-col="2">0.670***</td>
+                  <td data-row="1" data-col="3">0.645***</td>
+                  <td data-row="1" data-col="4">0.645***</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.026)</td>
+                  <td data-row="2" data-col="3">(0.026)</td>
+                  <td data-row="2" data-col="4">(0.027)</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Vanus (aastates)</td>
+                  <td data-row="3" data-col="2"></td>
+                  <td data-row="3" data-col="3">-0.011**</td>
+                  <td data-row="3" data-col="4">-0.011**</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2"></td>
+                  <td data-row="4" data-col="3">(0.004)</td>
+                  <td data-row="4" data-col="4">(0.004)</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Haridustase (1-7)</td>
+                  <td data-row="5" data-col="2"></td>
+                  <td data-row="5" data-col="3">0.118**</td>
+                  <td data-row="5" data-col="4">0.137***</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2"></td>
+                  <td data-row="6" data-col="3">(0.038)</td>
+                  <td data-row="6" data-col="4">(0.040)</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">Sugu: naine (ref. mees)</td>
+                  <td data-row="7" data-col="2"></td>
+                  <td data-row="7" data-col="3"></td>
+                  <td data-row="7" data-col="4">-0.239</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1"></td>
+                  <td data-row="8" data-col="2"></td>
+                  <td data-row="8" data-col="3"></td>
+                  <td data-row="8" data-col="4">(0.122)</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">Elukoht: maa-asula (ref. suurlinn)</td>
+                  <td data-row="9" data-col="2"></td>
+                  <td data-row="9" data-col="3"></td>
+                  <td data-row="9" data-col="4">0.242</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1"></td>
+                  <td data-row="10" data-col="2"></td>
+                  <td data-row="10" data-col="3"></td>
+                  <td data-row="10" data-col="4">(0.173)</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">Vabaliige</td>
+                  <td data-row="11" data-col="2">2.788***</td>
+                  <td data-row="11" data-col="3">2.847***</td>
+                  <td data-row="11" data-col="4">2.820***</td>
+                </tr>
+                <tr>
+                  <td data-row="12" data-col="1"></td>
+                  <td data-row="12" data-col="2">(0.108)</td>
+                  <td data-row="12" data-col="3">(0.244)</td>
+                  <td data-row="12" data-col="4">(0.266)</td>
+                </tr>
+                <tr>
+                  <td data-row="13" data-col="1">Num.Obs.</td>
+                  <td data-row="13" data-col="2">1218</td>
+                  <td data-row="13" data-col="3">1212</td>
+                  <td data-row="13" data-col="4">1211</td>
+                </tr>
+                <tr>
+                  <td data-row="14" data-col="1">R2 Adj.</td>
+                  <td data-row="14" data-col="2">0.355</td>
+                  <td data-row="14" data-col="3">0.362</td>
+                  <td data-row="14" data-col="4">0.366</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+<p>Nüüd on näha, et usalduse koefitsient jääb kõigis kolmes mudelis praktiliselt samaks. See on hea märk — seos on <strong>robustne</strong>, ta ei kao ära, kui teisi muutujaid juurde panna.</p>
+<blockquote class="blockquote">
+<p><strong>Nii esitatakse regressiooni tulemused korralikus teadustöös.</strong> Mitte üks mudel, vaid mitu, kõige lihtsamast kõige täielikumani. Lugeja näeb, kust koefitsiendid tulevad ja kui tundlikud nad mudeli koosseisu suhtes on.</p>
+<p>Pane tähele ka rida <code>Num.Obs.</code> — juhtumite arv väheneb, kui mudelisse muutujaid juurde tuleb, sest iga muutuja toob kaasa oma puuduvad väärtused.</p>
+</blockquote>
+</section>
+<section id="tabeli-eksportimine-wordi" class="level2">
+<h2 class="anchored" data-anchor-id="tabeli-eksportimine-wordi">Tabeli eksportimine Wordi</h2>
+<p>Ja nüüd kõige praktilisem osa. Argument <code>output</code> ütleb, millisesse faili tabel salvestada. Laiendi järgi otsustab <code>modelsummary</code> ise, mis formaadis.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">"Mudel 1"</span> <span class="ot">=</span> m1, <span class="st">"Mudel 2"</span> <span class="ot">=</span> m2, <span class="st">"Mudel 3"</span> <span class="ot">=</span> m3),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">coef_map =</span> nimed_koik,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">"nobs"</span>, <span class="st">"adj.r.squared"</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">"*"</span> <span class="ot">=</span> <span class="fl">0.05</span>, <span class="st">"**"</span> <span class="ot">=</span> <span class="fl">0.01</span>, <span class="st">"***"</span> <span class="ot">=</span> <span class="fl">0.001</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Rahulolu demokraatiaga seletavad tegurid"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">output =</span> <span class="st">"tabel1.docx"</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Fail tekib sinu projekti kausta ja teda saab Wordis avada ning edasi kujundada.</p>
+<p>Sama moodi saab teha ka teisi formaate:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><code>output</code></th>
+<th>Tulemus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>"tabel.docx"</code></td>
+<td>Wordi dokument</td>
+</tr>
+<tr class="even">
+<td><code>"tabel.html"</code></td>
+<td>veebileht</td>
+</tr>
+<tr class="odd">
+<td><code>"tabel.tex"</code></td>
+<td>LaTeX</td>
+</tr>
+<tr class="even">
+<td><code>"tabel.md"</code></td>
+<td>Markdown</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>Pane tähele: <strong>vaata tabel enne esitamist üle.</strong> Kontrolli, et nimed on õiged, et komakohti on mõistlik arv ja et referentskategooriad on välja toodud.</p>
+</blockquote>
+</section>
+<section id="joonised" class="level2">
+<h2 class="anchored" data-anchor-id="joonised">Joonised</h2>
+<p>Tabel näitab arve. Joonis näitab, mida need arvud tähendavad.</p>
+<p>Kõige kasulikum joonisetüüp on <strong>ennustatud väärtuste joonis</strong>: kuidas muutub sõltuva muutuja ennustatud väärtus, kui üks sõltumatu muutuja muutub ja kõik teised on konstantsed oma tüüpilistel väärtustel.</p>
+<p>Selleks kasutame paketti <strong>ggeffects</strong> ja funktsiooni <code>predict_response()</code>. Esimene argument on mudel. Argument <code>terms</code> ütleb, <strong>millise muutuja kohta</strong> me ennustusi tahame — kõik ülejäänud mudelis olevad muutujad hoitakse konstantsena nende tüüpilistel väärtustel.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ennustus <span class="ot">&lt;-</span> <span class="fu">predict_response</span>(m3, <span class="at">terms =</span> <span class="st">"usaldus_pol"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ennustus</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## # Predicted values of rahulolu_dem
+## 
+## usaldus_pol | Predicted |     95% CI
+## ------------------------------------
+##           0 |      2.95 | 2.63, 3.26
+##           1 |      3.59 | 3.31, 3.87
+##           3 |      4.88 | 4.63, 5.13
+##           4 |      5.53 | 5.28, 5.77
+##           5 |      6.17 | 5.92, 6.42
+##           6 |      6.82 | 6.54, 7.09
+##           7 |      7.46 | 7.16, 7.76
+##          10 |      9.40 | 8.98, 9.81
+## 
+## Adjusted for:
+## *   vanus =    49.61
+## * haridus =     4.91
+## *    sugu =     mees
+## * elukoht = suurlinn</code></pre>
+</div>
+</div>
+<p>Väljundis on iga usalduse väärtuse kohta ennustatud rahulolu ja usaldusvahemik.</p>
+<p><strong>Nüüd teeme sellest joonise ise.</strong> <code>ggeffects</code> oskaks joonise ka ise teha, aga siis jääks nägemata, mis seal tegelikult toimub. Teeme ta tavalise ggplot-iga — nii on näha, et tegemist on lihtsalt andmetabeliga, millest joonistatakse joon ja tema ümber ala.</p>
+<p>Kõigepealt teeme väljundist tavalise andmetabeli ja vaatame, mis veerud seal on.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ennustus_tabel <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(ennustus)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ennustus_tabel)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##   x predicted std.error conf.low conf.high group
+## 1 0  2.945256 0.1585531 2.634184  3.256327     1
+## 2 1  3.590251 0.1437352 3.308252  3.872251     1
+## 3 2  4.235247 0.1326349 3.975026  4.495469     1
+## 4 3  4.880243 0.1262370 4.632574  5.127912     1
+## 5 4  5.525239 0.1252639 5.279479  5.770999     1
+## 6 5  6.170235 0.1298378 5.915501  6.424969     1</code></pre>
+</div>
+</div>
+<p>Veerud on alati samade nimedega:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Veerg</th>
+<th>Mis seal on</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>x</code></td>
+<td>sõltumatu muutuja väärtus</td>
+</tr>
+<tr class="even">
+<td><code>predicted</code></td>
+<td>ennustatud väärtus</td>
+</tr>
+<tr class="odd">
+<td><code>conf.low</code></td>
+<td>usaldusvahemiku alumine ots</td>
+</tr>
+<tr class="even">
+<td><code>conf.high</code></td>
+<td>usaldusvahemiku ülemine ots</td>
+</tr>
+</tbody>
+</table>
+<p>Nüüd on joonise tegemine tavaline ggplot-i töö. Kaks uut kihti:</p>
+<ul>
+<li><code>geom_line()</code> joonistab ennustatud väärtuste joone;</li>
+<li><code>geom_ribbon()</code> joonistab joone ümber ala. Argumendid <code>ymin</code> ja <code>ymax</code> ütlevad, kus ala alumine ja ülemine serv on.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ennustus_tabel, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> predicted)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high), <span class="at">fill =</span> <span class="st">"grey80"</span>) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"dodgerblue3"</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"usaldus poliitikute vastu (0-10)"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"rahulolu demokraatiaga (0-10)"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Rahulolu demokraatiaga ennustatud väärtused"</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="10-tulemuste-esitamine_files/figure-html/ggeffects-ggplot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Kihtide järjekord on oluline.</strong> <code>geom_ribbon()</code> tuleb enne <code>geom_line()</code>, sest ggplot joonistab kihid selles järjekorras, nagu nad kirja on pandud. Vastupidises järjekorras kataks hall ala joone ära.</p>
+</blockquote>
+<p>Hall ala on <strong>usaldusvahemik</strong>. Ta on keskel kitsam ja servades laiem — sest andmeid on kõige rohkem keskel ja mudel on seal kõige kindlam.</p>
+<div class="arutelu">
+<p><strong>Arutelu.</strong> Vaata usaldusvahemiku laiust joone eri kohtades. <strong>Mida see sulle ütleb selle kohta, kui kindel sa võid olla mudeli ennustustes skaala servades?</strong></p>
+</div>
+<section id="kategooriline-muutuja" class="level3">
+<h3 class="anchored" data-anchor-id="kategooriline-muutuja">Kategooriline muutuja</h3>
+<p>Sama loogika, aga joone asemel punktid ja vearibad. Funktsioon <code>geom_errorbar()</code> joonistab püstise joone igast punktist üles-alla; argument <code>width</code> määrab tema otste laiuse.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ennustus_elukoht <span class="ot">&lt;-</span> <span class="fu">predict_response</span>(m3, <span class="at">terms =</span> <span class="st">"elukoht"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>elukoht_tabel <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(ennustus_elukoht)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(elukoht_tabel, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> predicted)) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> conf.low, <span class="at">ymax =</span> conf.high),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.2</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"grey40"</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"dodgerblue3"</span>) <span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"rahulolu demokraatiaga (0-10)"</span>,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Rahulolu demokraatiaga elukoha lõikes"</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="10-tulemuste-esitamine_files/figure-html/ggeffects-kategooria-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Siin on hästi näha, miks joonis on tabelist parem: <strong>usaldusvahemikud kattuvad omavahel</strong>, mis tähendab, et elukohtade vahel ei ole usaldusväärset erinevust. Tabelist oleks selle välja lugemiseks pidanud p-väärtusi ühekaupa uurima.</p>
+<div class="harjutus">
+<p><strong>Harjutus.</strong> Tee samasugune joonis hariduse kohta. Kas seos on tõusev või langev? Kui lai on usaldusvahemik skaala otstes võrreldes keskosaga ja miks?</p>
+</div>
+<p>Joonise salvestamine käib nagu ikka.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"joonis1.pdf"</span>, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="kuidas-seda-kirja-panna" class="level2">
+<h2 class="anchored" data-anchor-id="kuidas-seda-kirja-panna">Kuidas seda kirja panna</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Kuidas seda kirja panna">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nõuanne</span>Kuidas seda kirja panna
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Tabel ja tekst ei korda üksteist.</strong> Tabelis on kõik arvud; tekstis räägid sa sellest, mis on oluline.</p>
+<p>Tekst peab tegema kolm asja:</p>
+<ol type="1">
+<li><strong>viitama tabelile</strong> (“tabel 1”);</li>
+<li><strong>tooma välja kõige olulisema tulemuse</strong> koos sisulise tõlgendusega;</li>
+<li><strong>hindama mudelit tervikuna</strong>.</li>
+</ol>
+<p><strong>Tabelis 1 on esitatud kolm mudelit rahulolu kohta demokraatiaga. Usalduse ja rahulolu vaheline seos on tugev ja püsib kõigis mudelites praktiliselt muutumatuna (β = 0,54; p &lt; 0,001) — see viitab, et seos ei tulene demograafilistest erinevustest. Iga punkti võrra suurem usaldus poliitikute vastu vastab keskmiselt 0,54 punkti võrra suuremale rahulolule demokraatiaga. Vanus, haridus, sugu ega elukoht statistiliselt olulist seost ei näidanud. Kolmas mudel seletab 30% rahulolu varieeruvusest (kohandatud R² = 0,30; n = 1211).</strong></p>
+<p><strong>Tabeli ja joonise vormistus:</strong></p>
+<ul>
+<li>tabelil ja joonisel on <strong>number ja pealkiri</strong>;</li>
+<li>tabeli all on <strong>märkus</strong>, kus on kirjas, mida tärnid tähendavad ja mis on sulgudes (standardvead);</li>
+<li>muutujate nimed on <strong>inimkeeles</strong>, koos skaala ulatusega;</li>
+<li><strong>referentskategooria</strong> on kategooriliste muutujate juures välja toodud;</li>
+<li>joonise telgedel on <strong>sildid</strong>, mitte muutujate koodinimed.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="harjutused" class="level2">
+<h2 class="anchored" data-anchor-id="harjutused">Harjutused</h2>
+<div class="harjutus">
+<p><strong>1. Tabel.</strong> Tee kolm mudelit, kus <code>ranne</code> on sõltuv muutuja ja sõltumatuid muutujaid tuleb järjest juurde. Pane nad <code>modelsummary()</code> abil ühte tabelisse, eestikeelsete nimedega.</p>
+<p><strong>2. Wordi.</strong> Salvesta see tabel <code>.docx</code> failina ja ava ta Wordis. Mida oleks veel vaja käsitsi korrastada?</p>
+<p><strong>3. Joonis.</strong> Tee ennustatud väärtuste joonis hariduse kohta. Ehita ta ise ggplot-iga, mitte valmisfunktsiooniga.</p>
+<p><strong>4. Kriitiline pilk.</strong> Otsi mõnest teadusartiklist regressioonitabel. Kas seal on olemas kõik see, mida me selles praktikumis nõudsime? Mis on puudu?</p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./09-mitmene-regressioon.html" class="pagination-link" aria-label="9. Mitmene regressioon">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">9. Mitmene regressioon</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./11-logistiline-regressioon.html" class="pagination-link" aria-label="11. Logistiline regressioon">
+        <span class="nav-page-text"><span class="chapter-title">11. Logistiline regressioon</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="et" xml:lang="et"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7. Hüpoteeside testimine – Statistilise analüüsi alused</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./08-korrelatsioon-ja-regressioon.html" rel="next">
+<link href="./06-valim-ja-ebakindlus.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-bf8030b5a8b8f2de5bceddfb8bf38a1d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "Otsi",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-valim-ja-ebakindlus.html">Järeldav statistika</a></li><li class="breadcrumb-item"><a href="./07-hupoteeside-testimine.html"><span class="chapter-title">7. Hüpoteeside testimine</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistilise analüüsi alused</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sissejuhatus</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Alustamine</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-r-alused.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1. R ja RStudio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-andmete-laadimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2. Andmete laadimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Andmete ettevalmistus</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Andmete ettevalmistus I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus II</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Andmete kirjeldamine</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Järeldav statistika</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-valim-ja-ebakindlus.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6. Valim ja ebakindlus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-hupoteeside-testimine.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">7. Hüpoteeside testimine</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Seosed ja mudelid</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-korrelatsioon-ja-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Mitmene regressioon</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Tulemuste esitamine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-logistiline-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Logistiline regressioon</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Selle peatüki sisu</h2>
+   
+  <ul>
+  <li><a href="#null--ja-alternatiivhüpotees" id="toc-null--ja-alternatiivhüpotees" class="nav-link active" data-scroll-target="#null--ja-alternatiivhüpotees">Null- ja alternatiivhüpotees</a></li>
+  <li><a href="#mis-on-p-väärtus" id="toc-mis-on-p-väärtus" class="nav-link" data-scroll-target="#mis-on-p-väärtus">Mis on p-väärtus?</a></li>
+  <li><a href="#ühe-grupi-t-test" id="toc-ühe-grupi-t-test" class="nav-link" data-scroll-target="#ühe-grupi-t-test">Ühe grupi t-test</a></li>
+  <li><a href="#kahe-grupi-t-test" id="toc-kahe-grupi-t-test" class="nav-link" data-scroll-target="#kahe-grupi-t-test">Kahe grupi t-test</a></li>
+  <li><a href="#statistiline-ja-sisuline-olulisus" id="toc-statistiline-ja-sisuline-olulisus" class="nav-link" data-scroll-target="#statistiline-ja-sisuline-olulisus">Statistiline ja sisuline olulisus</a></li>
+  <li><a href="#kuidas-seda-kirja-panna" id="toc-kuidas-seda-kirja-panna" class="nav-link" data-scroll-target="#kuidas-seda-kirja-panna">Kuidas seda kirja panna</a></li>
+  <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-valim-ja-ebakindlus.html">Järeldav statistika</a></li><li class="breadcrumb-item"><a href="./07-hupoteeside-testimine.html"><span class="chapter-title">7. Hüpoteeside testimine</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">7. Hüpoteeside testimine</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/ess11_ee_clean.rdata"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>vanus <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">na.omit</span>(data<span class="sc">$</span>vanus))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Eelmises praktikumis saime teada, kuidas hinnata ebakindlust ühe arvu ümber. Nüüd kasutame seda millegi konkreetse jaoks: <strong>otsustamiseks.</strong></p>
+<section id="null--ja-alternatiivhüpotees" class="level2">
+<h2 class="anchored" data-anchor-id="null--ja-alternatiivhüpotees">Null- ja alternatiivhüpotees</h2>
+<p>Peaaegu iga statistiline test on üles ehitatud ühtemoodi. Meil on kaks väidet.</p>
+<ul>
+<li><strong>Nullhüpotees.</strong> See väärtus, mida me andmetes näeme, ei erine mingist kindlast hüpoteetilisest väärtusest. Enamasti on see hüpoteetiline väärtus <strong>null</strong>. Lühidalt: <strong>seost ei ole.</strong></li>
+<li><strong>Alternatiivne hüpotees.</strong> Erinevus on olemas. Lühidalt: <strong>seos on olemas.</strong></li>
+</ul>
+<p>Test ei tõesta kumbagi. Ta ütleb ainult: <strong>kui nullhüpotees oleks realsuses tõsi, kui tõenäoline oleks siis näha andmetes seda, mida me näeme?</strong> Kui see tõenäosus on väga väike, siis järeldame, et nullhüpotees ilmselt ei kehti. Ehk siis kui see tõenäosus, et me näeme oma andmetes seda, mida me näeme olukorras, kus pärielt on tõene null-hüpotees, on väga väike, siis me järeldame, et null-hüpotees ei ole tõene. Meie andmed ei ole väga suure tõenäosusega tulnud populatsioonist, kus null hüpotees on tõene.</p>
+</section>
+<section id="mis-on-p-väärtus" class="level2">
+<h2 class="anchored" data-anchor-id="mis-on-p-väärtus">Mis on p-väärtus?</h2>
+<p>Enne kui ühtegi testi teeme, tuleb selgeks saada see arv, mille järgi me kõik oma otsused teeme.</p>
+<p><strong>P-väärtus on tõenäosus näha oma andmetes sellist tulemust (või veel ekstreemsemat), kui nullhüpotees oleks tõsi.</strong></p>
+<p>Loe see lause veel kord läbi. Ta on tinglik: “kui nullhüpotees oleks tõsi”. P-väärtus ei ütle sulle, kas nullhüpotees on tõsi — ta ütleb, kui hästi sinu andmed sellega kokku sobiksid.</p>
+<p>Mõtle sellest nii. Sa oletad korraks, et seost ei ole. Siis vaatad oma andmeid ja küsid: <strong>kui ebatavalised need andmed sellise oletuse juures oleksid?</strong></p>
+<ul>
+<li>Kui p-väärtus on <strong>suur</strong> (näiteks 0,60), siis on sinu andmed sellise oletusega täiesti kooskõlas. Midagi kummalist ei ole.</li>
+<li>Kui p-väärtus on <strong>väike</strong> (näiteks 0,002), siis oleksid sinu andmed sellise oletuse juures väga ebatavalised. Järelikult on oletus ilmselt vale ja seos on olemas.</li>
+</ul>
+<p>Praktilises kasutuses tõlgendatakse teda lühemalt: <strong>tõenäosus eksida, kui me väidame, et seos on päriselt olemas.</strong></p>
+<blockquote class="blockquote">
+<p><strong>Statistiline tava on 95%.</strong> Kui p-väärtus on väiksem kui 0,05, siis ütleme, et erinevus on <strong>statistiliselt oluline</strong>. See piir ei ole loodusseadus — ta on kokkulepe. Mõnes valdkonnas kasutatakse rangemaid piire (0,01 või 0,001).</p>
+</blockquote>
+<p><strong>Mida p-väärtus EI ole.</strong> Kolm väärarusaama, mis on nii levinud, et neid tasub eraldi välja tuua.</p>
+<ul>
+<li>Ta <strong>ei ole</strong> tõenäosus, et nullhüpotees on tõsi.</li>
+<li>Ta <strong>ei ütle midagi selle kohta, kui suur</strong> seos on. Väga väike p-väärtus võib käia täiesti tühise erinevuse kohta — vaata allpool osa statistilise ja sisulise olulisuse kohta.</li>
+<li>Ta <strong>ei ole</strong> tõenäosus, et sinu tulemus kordub, kui uuringut korrata.</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>P-väärtus on kogu järgneva kursuse võti.</strong> Ta näeb täpselt samasugune välja ja teda tõlgendatakse täpselt sama moodi t-testi, korrelatsiooni, regressiooni ja logistilise regressiooni juures. Kui ta siin selgeks saab, siis on kõik ülejäänu variatsioon samal teemal.</p>
+</blockquote>
+</section>
+<section id="ühe-grupi-t-test" class="level2">
+<h2 class="anchored" data-anchor-id="ühe-grupi-t-test">Ühe grupi t-test</h2>
+<p>Alustame kõige lihtsamast juhtumist. Meie valimi keskmine vanus on 50,1. <strong>Kas Eesti elanike keskmine vanus võiks tegelikult olla 52?</strong></p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Lihtsam seletus</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Täpsem seletus</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Eelmises praktikumis arvutasime usaldusvahemiku. Ta ütles meile, kuhu tõeline keskmine tõenäoliselt jääb.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>k_vanus <span class="ot">&lt;-</span> <span class="fu">mean</span>(vanus)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sviga <span class="ot">&lt;-</span> <span class="fu">sd</span>(vanus) <span class="sc">/</span> <span class="fu">length</span>(vanus)<span class="sc">^</span><span class="fl">0.5</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">alumine =</span> k_vanus <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> sviga,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">keskmine =</span> k_vanus,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylemine =</span> k_vanus <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> sviga</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##  alumine keskmine  ylemine 
+## 49.08749 50.07309 51.05870</code></pre>
+</div>
+</div>
+<p>Tõeline keskmine vanus jääb 95% tõenäosusega vahemikku 49,1 kuni 51,1.</p>
+<p><strong>Kas 52 jääb sellesse vahemikku?</strong> Ei jää. Ta on üleval pool.</p>
+<p>Ja see ongi hüpoteesi test. Kogu ülejäänu on selle sama küsimuse täpsem sõnastus.</p>
+<ul>
+<li>Kui võrreldav väärtus jääb <strong>usaldusvahemikku sisse</strong>, siis ei saa me välistada, et ta ongi tõeline väärtus. Erinevus ei ole statistiliselt oluline.</li>
+<li>Kui ta jääb <strong>väljapoole</strong>, siis on ta meie andmetega raskesti ühildatav. Erinevus on statistiliselt oluline.</li>
+</ul>
+<p>Proovime nüüd väärtust 50:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">alumine =</span> k_vanus <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> sviga, <span class="at">ylemine =</span> k_vanus <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> sviga)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##  alumine  ylemine 
+## 49.08749 51.05870</code></pre>
+</div>
+</div>
+<p>Arv 50 jääb vahemikku sisse. Seega ei saa me öelda, et Eesti keskmine vanus erineks 50-st.</p>
+<blockquote class="blockquote">
+<p><strong>Pane tähele, mida me ei öelnud.</strong> Me ei öelnud, et keskmine vanus <strong>on</strong> 50. Me ütlesime, et me ei suuda välistada, et ta on 50. Statistiline test ei tõesta kunagi nullhüpoteesi — ta ainult ei suuda teda ümber lükata.</p>
+</blockquote>
+<p>R teeb selle kõik ühe funktsiooniga ära. Funktsioon <code>t.test()</code> võtab esimeseks argumendiks muutuja ja argumendiga <code>mu</code> öeldakse, millise väärtusega võrrelda.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(vanus, <span class="at">mu =</span> <span class="dv">52</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  vanus
+## t = -3.8319, df = 1285, p-value = 0.0001333
+## alternative hypothesis: true mean is not equal to 52
+## 95 percent confidence interval:
+##  49.08658 51.05961
+## sample estimates:
+## mean of x 
+##  50.07309</code></pre>
+</div>
+</div>
+<p>Väljundis on kõik, mida vaja:</p>
+<ul>
+<li><strong><code>mean of x</code></strong> — meie valimi keskmine;</li>
+<li><strong><code>95 percent confidence interval</code></strong> — usaldusvahemik, sama, mille me ise arvutasime;</li>
+<li><strong><code>p-value</code></strong> — tõenäosus eksida, kui väidame, et erinevus on olemas;</li>
+<li><strong><code>t</code></strong> — mitme standardvea kaugusel võrreldav väärtus keskmisest on.</li>
+</ul>
+<p>P-väärtus on siin väga väike, seega erinevus on statistiliselt oluline.</p>
+<p>Ja võrdlusena, väärtusega 50:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(vanus, <span class="at">mu =</span> <span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  vanus
+## t = 0.14536, df = 1285, p-value = 0.8845
+## alternative hypothesis: true mean is not equal to 50
+## 95 percent confidence interval:
+##  49.08658 51.05961
+## sample estimates:
+## mean of x 
+##  50.07309</code></pre>
+</div>
+</div>
+<p>P-väärtus on 0,89 — palju suurem kui 0,05. Erinevus ei ole statistiliselt oluline. Ja usaldusvahemik on täpselt sama, mis enne, sest ta ei sõltu sellest, millega me võrdleme.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Vaatame, kust p-väärtus tuleb.</p>
+<p>Esmalt: <strong>kui kaugel on 52 meie keskmisest?</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>erinevus <span class="ot">&lt;-</span> <span class="dv">52</span> <span class="sc">-</span> <span class="fu">mean</span>(vanus)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>erinevus</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 1.926905</code></pre>
+</div>
+</div>
+<p>See arv üksi ei ütle midagi. Kaks aastat on palju või vähe sõltuvalt sellest, kui täpne meie hinnang üldse on. Seega teisendame ta <strong>standardvigadeks</strong> — sama moodi, nagu eelmises praktikumis tegime z-skoori.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sviga <span class="ot">&lt;-</span> <span class="fu">sd</span>(vanus) <span class="sc">/</span> <span class="fu">length</span>(vanus)<span class="sc">^</span><span class="fl">0.5</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>tskoor <span class="ot">&lt;-</span> erinevus <span class="sc">/</span> sviga</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>tskoor</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 3.831892</code></pre>
+</div>
+</div>
+<p><strong>See ongi t-väärtus.</strong> Ta ütleb: võrreldav väärtus on 3,7 standardviga meie keskmisest eemal.</p>
+<p>Nüüd küsime: kui tõeline keskmine oleks tõesti 52, kui tõenäoline oleks siis näha valimi keskmist, mis on nii kaugel? Selleks on funktsioon <code>pt()</code>, mis töötab nagu <code>pnorm()</code>, kuid t-jaotuse jaoks. Lisaks vajab ta argumenti <code>df</code> — vabadusastmete arvu, millest praktikumis 6 juttu oli.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>vabadusastmed <span class="ot">&lt;-</span> <span class="fu">length</span>(vanus) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(tskoor, <span class="at">df =</span> vabadusastmed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.9999333</code></pre>
+</div>
+</div>
+<p>Vaata seda arvu tähelepanelikult. Ta on peaaegu üks. Miks?</p>
+<p>Sest <code>pt()</code> ütleb, kui suur osa jaotusest jääb antud väärtusest <strong>allapoole</strong>. Meie t-väärtus on positiivne ja suur, seega jääb temast allapoole peaaegu kogu jaotus. See ei ole see, mida me tahame teada.</p>
+<p>Meid huvitab <strong>jaotuse ots</strong> — kui palju on veel ekstreemsemaid väärtusi. Selleks tuleb see arv ühest lahutada.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ylemine_ots <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>(tskoor, <span class="at">df =</span> vabadusastmed)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ylemine_ots</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 6.665277e-05</code></pre>
+</div>
+</div>
+<p>Ja kuna me ei tea ette, kas tõeline väärtus on meie omast suurem või väiksem, huvitavad meid <strong>mõlemad otsad</strong>. Jaotus on sümmeetriline, seega korrutame selle otsa kahega.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>p_vaartus <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> ylemine_ots</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>p_vaartus</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.0001333055</code></pre>
+</div>
+</div>
+<p><strong>See ongi p-väärtus.</strong> Ja ta on täpselt sama, mille <code>t.test()</code> meile andis.</p>
+<blockquote class="blockquote">
+<p><strong>Pane see samm tähele, siin eksitakse pidevalt.</strong> Kaks tehet käivad koos ja kumbagi ei tohi ära unustada:</p>
+<ol type="1">
+<li><strong>lahuta ühest</strong> — et saada jaotuse ots, mitte kogu ülejäänud jaotus;</li>
+<li><strong>korruta kahega</strong> — et arvestada mõlemat otsa.</li>
+</ol>
+<p>Kui sa ainult korrutad kahega, saad tulemuseks arvu, mis on suurem kui üks. <strong>Tõenäosus ei saa kunagi olla suurem kui üks.</strong> See on kõige lihtsam kontroll, mille sa oma arvutusele teha saad — kui p-väärtus tuleb üle ühe või alla nulli, siis on valemis viga.</p>
+<p>Sama tulemuse saab ka lühemalt, kui anda <code>pt()</code>-le negatiivne t-väärtus: <code>2 * pt(-abs(tskoor), df = vabadusastmed)</code>.</p>
+</blockquote>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(vanus, <span class="at">mu =</span> <span class="dv">52</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  vanus
+## t = -3.8319, df = 1285, p-value = 0.0001333
+## alternative hypothesis: true mean is not equal to 52
+## 95 percent confidence interval:
+##  49.08658 51.05961
+## sample estimates:
+## mean of x 
+##  50.07309</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Mida p-väärtus tähendab?</strong> Ta on tõenäosus näha oma andmetes sellist erinevust (või veel suuremat), <strong>kui nullhüpotees oleks tõsi</strong>.</p>
+<p>Tinglikult ja praktilises kasutuses: <strong>tõenäosus eksida, kui me väidame, et erinevus on päriselt olemas.</strong></p>
+<p>Mida ta <strong>ei</strong> tähenda: p-väärtus ei ole tõenäosus, et nullhüpotees on tõsi. Ja ta ei ütle midagi selle kohta, kui <strong>suur</strong> erinevus on. Väga väike p-väärtus võib käia täiesti tühise erinevuse kohta.</p>
+</blockquote>
+<p>Tee siinkohal mõttepaus. Selles lõigus on peidus kogu ülejäänud kursuse võti — sama loogika kordub korrelatsiooni, regressiooni ja logistilise regressiooni juures täpselt ühtemoodi.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="kahe-grupi-t-test" class="level2">
+<h2 class="anchored" data-anchor-id="kahe-grupi-t-test">Kahe grupi t-test</h2>
+<p>Praktikas huvitab meid harva üksiku keskmise võrdlemine mingi arvuga. Palju sagedamini tahame teada, <strong>kas kaks gruppi erinevad.</strong></p>
+<p>Küsime: kas mehed ja naised paigutavad end vasak-parem skaalal erinevalt?</p>
+<p>Vaatame kõigepealt keskmisi.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sugu) <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(vasak_parem)),</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">keskmine =</span> <span class="fu">mean</span>(vasak_parem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(vasak_parem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## # A tibble: 2 × 4
+##   sugu      n keskmine    sd
+##   &lt;fct&gt; &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt;
+## 1 mees    523     5.86  1.99
+## 2 naine   585     5.51  1.76</code></pre>
+</div>
+</div>
+<p>Erinevus on olemas, aga väike. Kas ta on piisavalt suur?</p>
+<p>Nullhüpotees on, et <strong>kahe grupi keskmiste erinevus populatsioonis on null.</strong></p>
+<p>Kahe grupi võrdlemiseks kirjutatakse <code>t.test()</code> teistmoodi — mudeli valemina, tildega, millega tegime tutvust praktikumis 3. Vasakule poole käib pidev muutuja, mille keskmist võrreldakse, ja paremale poole grupeeriv muutuja.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>test_lr <span class="ot">&lt;-</span> <span class="fu">t.test</span>(vasak_parem <span class="sc">~</span> sugu, <span class="at">data =</span> data)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>test_lr</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  vasak_parem by sugu
+## t = 3.0745, df = 1049.6, p-value = 0.002163
+## alternative hypothesis: true difference in means between group mees and group naine is not equal to 0
+## 95 percent confidence interval:
+##  0.1262213 0.5715872
+## sample estimates:
+##  mean in group mees mean in group naine 
+##            5.856597            5.507692</code></pre>
+</div>
+</div>
+<p>Väljund on sarnane, aga nüüd on näha <strong>mõlema grupi keskmine</strong> ja usaldusvahemik käib <strong>nende erinevuse</strong> kohta.</p>
+<p>Järgnevas plokis võtame testi väljundist arvud eraldi objektidesse, et neid tekstis kasutada. Funktsioon <code>signif()</code> ümardab tähendusrikaste numbrikohtade arvuni — erinevalt funktsioonist <code>round()</code>, mis ümardab komakohtade arvuni. Väga väikeste arvude puhul on <code>signif()</code> mugavam.</p>
+<p>Kuidas seda lugeda?</p>
+<ul>
+<li>Meeste keskmine on 5.86 ja naiste oma 5.51, erinevus seega 0.35 punkti.</li>
+<li>95% usaldusvahemik erinevuse ümber on 0.13 kuni 0.57.</li>
+<li><strong>See vahemik ei sisalda nulli.</strong></li>
+<li>P-väärtus on 0.0022 — väiksem kui 0,05.</li>
+</ul>
+<p><strong>Järeldus: erinevus on statistiliselt oluline.</strong> Eesti mehed paigutavad end vasak-parem skaalal keskmiselt veidi parempoolsemalt kui naised.</p>
+<div class="arutelu">
+<p><strong>Arutelu.</strong> Erinevus on 0.35 punkti üheteistpunktisel skaalal. Statistiliselt on ta oluline. <strong>Kas ta on ka sisuliselt oluline?</strong> Mille põhjal sa seda otsustad?</p>
+</div>
+<p>Proovime nüüd midagi, kus tulemus on teistsugune. Vaatame suhtumist sisserändesse.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>test_ranne <span class="ot">&lt;-</span> <span class="fu">t.test</span>(ranne <span class="sc">~</span> sugu, <span class="at">data =</span> data)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>test_ranne</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  ranne by sugu
+## t = 0.17629, df = 1111.1, p-value = 0.8601
+## alternative hypothesis: true difference in means between group mees and group naine is not equal to 0
+## 95 percent confidence interval:
+##  -0.09618253  0.11517234
+## sample estimates:
+##  mean in group mees mean in group naine 
+##         0.005171894        -0.004323012</code></pre>
+</div>
+</div>
+<p>Siin on pilt vastupidine. Usaldusvahemik ulatub -0.096 kuni 0.115 ja <strong>sisaldab nulli</strong>. P-väärtus on 0.86 — palju suurem kui 0,05.</p>
+<p><strong>Järeldus: erinevus ei ole statistiliselt oluline.</strong> Meie andmed ei anna alust väita, et Eesti meeste ja naiste suhtumine sisserändesse erineks.</p>
+<blockquote class="blockquote">
+<p><strong>Pane tähele, kuidas need kaks järeldust sõnastatud on.</strong> Esimesel juhul ütlesime “erinevus on olemas”. Teisel juhul <strong>ei öelnud me, et erinevust ei ole</strong> — ütlesime, et andmed ei anna alust väita, et ta oleks. See ei ole sõnamäng. Erinevus võib populatsioonis olemas olla, aga meie valim on liiga väike, et teda tuvastada.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Väike tehniline märkus.</strong> R teeb vaikimisi testi, mis ei eelda, et hajuvus on mõlemas grupis võrdne (nn Welchi test). See on peaaegu alati õige valik. Kui sa tahad võrdset hajuvust eeldavat testi, on selleks argument <code>var.equal = TRUE</code> — aga tavaliselt ei ole seda vaja.</p>
+</blockquote>
+</section>
+<section id="statistiline-ja-sisuline-olulisus" class="level2">
+<h2 class="anchored" data-anchor-id="statistiline-ja-sisuline-olulisus">Statistiline ja sisuline olulisus</h2>
+<p>Nüüd kõige tähtsam hoiatus terves kursuses.</p>
+<p>Tuleta meelde standardvea valemit: <span class="math inline">\(se = sd / \sqrt{n}\)</span>. Nimetajas on valimi suurus. See tähendab, et <strong>mida rohkem andmeid, seda väiksem standardviga</strong> — ja seda väiksem p-väärtus, ilma et andmetes midagi muud muutuks.</p>
+<p>Vaatame, mis juhtub, kui me sama erinevust suuremas valimis vaataksime. Teeme selleks kunstlikud andmed funktsiooniga <code>rnorm()</code>, mis genereerib juhuslikke arve normaaljaotusest. Argument <code>mean</code> määrab keskmise ja esimene argument ütleb, mitu arvu teha. Funktsioon <code>rep()</code> kordab väärtusi; argument <code>each</code> ütleb, mitu korda igaüht järjest korrata.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Sama erinevus, aga kunstlikult suurendatud valim</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>suur <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="fl">5.0</span>), <span class="fu">rnorm</span>(<span class="dv">10000</span>, <span class="at">mean =</span> <span class="fl">5.1</span>)),</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">grupp =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>), <span class="at">each =</span> <span class="dv">10000</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x <span class="sc">~</span> grupp, <span class="at">data =</span> suur)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  x by grupp
+## t = -8.0168, df = 19998, p-value = 1.144e-15
+## alternative hypothesis: true difference in means between group a and group b is not equal to 0
+## 95 percent confidence interval:
+##  -0.14161147 -0.08596895
+## sample estimates:
+## mean in group a mean in group b 
+##        5.003674        5.117465</code></pre>
+</div>
+</div>
+<p>Erinevus on 0,1 punkti — sisuliselt olematu. Aga p-väärtus on väga väike, sest juhtumeid on 20 000.</p>
+<blockquote class="blockquote">
+<p><strong>Piisavalt suure valimi puhul on kõik statistiliselt oluline.</strong> Statistiline olulisus ütleb ainult, et erinevus ei ole ilmselt null. Ta ei ütle <strong>mitte midagi</strong> selle kohta, kas erinevus on piisavalt suur, et tema üle tasuks üldse rääkida.</p>
+<p>Seetõttu tuleb alati vaadata <strong>ka erinevuse suurust</strong> ja küsida, kas ta on sisuliselt oluline. Kas kaks aastat keskmises vanuses on palju? Kas 0,1 punkti üheteistpunktisel skaalal on midagi väärt?</p>
+<p><strong>Sellele küsimusele ei vasta statistika. Sellele vastad sina, oma valdkonna teadmiste põhjal.</strong></p>
+</blockquote>
+</section>
+<section id="kuidas-seda-kirja-panna" class="level2">
+<h2 class="anchored" data-anchor-id="kuidas-seda-kirja-panna">Kuidas seda kirja panna</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Kuidas seda kirja panna">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nõuanne</span>Kuidas seda kirja panna
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>T-testi tulemuste esitamisel peab kirjas olema: mõlema grupi keskmine, nende erinevus, usaldusvahemik, t-väärtus, vabadusastmed, p-väärtus ja <strong>sisuline järeldus</strong>.</p>
+<p>Kui erinevus <strong>on</strong> statistiliselt oluline:</p>
+<p><strong>Meeste keskmine vasak-parem enesepaigutus oli 5.86 ja naiste oma 5.51, erinevus seega 0.35 punkti skaalal 0–10. Kahe grupi keskmiste võrdlemiseks läbi viidud t-test näitas, et erinevus on statistiliselt oluline (t = 3.07, df = 1049.6, p = 0.0022; 95% usaldusvahemik 0.13 kuni 0.57). Eesti mehed paigutavad end seega keskmiselt veidi parempoolsemalt kui naised, kuigi erinevus on sisuliselt väike.</strong></p>
+<p>Kui erinevus <strong>ei ole</strong> statistiliselt oluline:</p>
+<p><strong>Meeste keskmine suhtumine sisserändesse oli 0.005 ja naiste oma -0.004 faktorskoori skaalal. T-test ei näidanud statistiliselt olulist erinevust (t = 0.18, df = 1111.1, p = 0.86; 95% usaldusvahemik -0.096 kuni 0.115). Andmed ei anna alust väita, et Eesti meeste ja naiste suhtumine sisserändesse erineks.</strong></p>
+<p>Kaks asja, mida <strong>mitte</strong> kirjutada:</p>
+<ul>
+<li><strong>“erinevust ei ole”</strong> — õige on “andmed ei anna alust väita, et erinevus oleks”. Erinevus võib olla olemas, aga meie valim on liiga väike, et teda tuvastada.</li>
+<li><strong>“p = 0,000”</strong> — kirjuta <code>p &lt; 0,001</code>. Tõenäosus ei ole kunagi täpselt null.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="harjutused" class="level2">
+<h2 class="anchored" data-anchor-id="harjutused">Harjutused</h2>
+<div class="harjutus">
+<p><strong>1. Ühe grupi test.</strong> Testi, kas Eesti elanike keskmine rahulolu demokraatiaga erineb skaala keskpunktist 5. Sõnasta null- ja alternatiivhüpotees enne testi tegemist.</p>
+<p><strong>2. Kahe grupi test.</strong> Kas poliitikast huvitatud ja mittehuvitatud inimeste usaldus poliitikute vastu erineb? Tee t-test ja kirjuta tulemus välja korrektses vormis.</p>
+<p><strong>3. Veel üks võrdlus.</strong> Kas kõrgharidusega ja ilma kõrghariduseta inimeste suhtumine sisserändesse erineb? (Kasuta harjutuses 4.1 tehtud binaarset muutujat.)</p>
+<p><strong>4. Sisuline olulisus.</strong> Vali üks eelmistest testidest, kus tulemus oli statistiliselt oluline. Kui suur erinevus tegelikult oli? Kas sa peaksid teda sisuliselt oluliseks? Põhjenda.</p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./06-valim-ja-ebakindlus.html" class="pagination-link" aria-label="6. Valim ja ebakindlus">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">6. Valim ja ebakindlus</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./08-korrelatsioon-ja-regressioon.html" class="pagination-link" aria-label="8. Korrelatsioon ja regressioon">
+        <span class="nav-page-text"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
