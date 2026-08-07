@@ -310,6 +310,55 @@ korrelatsiooni ruut.**
 Sotsiaalteadustes on R-ruut tavaliselt madal. Mudel, mis seletab 10–20% varieeruvusest,
 on täiesti tavaline ja võib olla väga kasulik. Inimeste käitumine ei ole füüsika.
 
+## Kas mõõtmise kvaliteet loeb?
+
+Siin tasub korraks tagasi minna praktikumi 4 juurde.
+
+Seal me väitsime, et **üksik küsitlusküsimus on jäme ja mürane mõõdik** ning et mitmest küsimusest kokku pandud indeks mõõdab sama asja täpsemalt. Just sellepärast ehitasime faktoranalüüsiga muutuja `usaldus`, mis võtab kokku seitse usaldust puudutavat küsimust.
+
+Aga senini oleme selles peatükis kasutanud `usaldus_pol`-i — **üht üksikut küsimust** poliitikute usaldamise kohta.
+
+Kas sellel on vahet? Vaatame. Teeme sama mudeli kaks korda, ainult sõltumatu muutuja on erinev.
+
+```{r}
+#| label: moot-vordlus
+mudel_uksik <- lm(rahulolu_dem ~ usaldus_pol, data = data)
+mudel_indeks <- lm(rahulolu_dem ~ usaldus, data = data)
+
+c(
+  uksik_kysimus = summary(mudel_uksik)$r.squared,
+  faktorskoor = summary(mudel_indeks)$r.squared
+)
+```
+
+```{r}
+#| label: moot-arvud
+#| include: false
+r2_uksik <- round(summary(mudel_uksik)$r.squared, 3)
+r2_indeks <- round(summary(mudel_indeks)$r.squared, 3)
+n_uksik <- nobs(mudel_uksik)
+n_indeks <- nobs(mudel_indeks)
+```
+
+Üksiku küsimusega seletab mudel `r round(r2_uksik * 100)`% rahulolu varieeruvusest. Faktorskooriga **`r round(r2_indeks * 100)`%**.
+
+**Andmed on samad. Inimesed on samad. Nähtus on sama.** Ainus, mis muutus, on see, kui hoolikalt me seda nähtust mõõtsime — ja mudeli seletusvõime kasvas ligi poole võrra.
+
+> **See on kogu praktikumi 4 mõte ühe arvuna.** Mõõtmine ei ole tüütu eeltöö, mis tuleb enne "päris analüüsi" ära teha. Mõõtmise kvaliteet **on** tulemus. Halb mõõdik ei anna lihtsalt segasemat vastust — ta annab nõrgema seose, mis võib jääda leidmata.
+>
+> Kui sinu töös tuleb seos välja nõrgemana, kui kirjandus lubaks, siis on üks esimesi küsimusi: **kas ma mõõdan seda asja piisavalt hästi?**
+
+Miks me siis edaspidi ikkagi üksikküsimusi kasutame? Kahel praktilisel põhjusel.
+
+* **Tõlgendatavus.** Koefitsient `r round(coef(mudel_uksik)[2], 2)` tähendab "üks punkt usaldust juurde skaalal 0–10". Faktorskoori koefitsient `r round(coef(mudel_indeks)[2], 2)` tähendab "üks standardhälve usaldust juurde" — see nõuab iga kord lisaseletust.
+* **Juhtumite arv.** Indeksi jaoks peab vastaja olema vastanud **kõigile seitsmele** küsimusele. Seetõttu on mudelis `r n_indeks` juhtumit `r n_uksik` asemel.
+
+Nii et valik ei ole "üks on õige, teine vale". Faktorskoor mõõdab paremini, üksikküsimus on lihtsamini tõlgendatav — ja **sina pead selle valiku teadlikult tegema ja oma töös välja ütlema.**
+
+::: {.arutelu}
+**Arutelu.** Kumba sa oma bakalaureusetöös kasutaksid? Mille põhjal sa otsustaksid? Ja kas on olukordi, kus nõrgem, aga arusaadavam mõõdik on parem valik kui tugevam, aga raskesti seletatav?
+:::
+
 ## Koefitsientide standardiseerimine
 
 Regressioonikoefitsiendi suurus sõltub muutuja mõõtskaalast. See tähendab, et **kahe erineva muutuja koefitsiente ei saa omavahel võrrelda**, kui nad on erineval skaalal.

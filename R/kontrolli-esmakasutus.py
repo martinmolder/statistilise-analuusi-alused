@@ -86,9 +86,9 @@ def eralda_kood(tekst, on_qmd):
             tulem.append((i, r, False))
             continue
         if tykis:
-            # Ploki valikud: kui echo on false, siis tudeng seda koodi ei näe
-            # ning esmakasutuse reegel tema kohta ei kehti.
-            if re.match(r"^\s*#\|\s*echo:\s*false", r):
+            # Ploki valikud: kui echo või include on false, siis tudeng seda
+            # koodi ei näe ning esmakasutuse reegel tema kohta ei kehti.
+            if re.match(r"^\s*#\|\s*(echo|include):\s*false", r):
                 peidetud = True
             on_kood = (not r.strip().startswith("#")) and not peidetud
             tulem.append((i, r, on_kood))
