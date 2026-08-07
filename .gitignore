@@ -18,8 +18,8 @@
 .Rproj.user/
 .Rapp.history
 
-# Vanade materjalide genereeritud HTML (8 MB) -- lähtefail .rmd jääb alles
-previous/Praktikumimaterjalid-R.html
+# Vanad materjalid (2025) -- jäävad kettale, aga mitte hoidlasse
+/previous/
 
 # Töökäigu märkmed ja sisemised juhised -- jäävad kohalikuks
 PLAAN.md
