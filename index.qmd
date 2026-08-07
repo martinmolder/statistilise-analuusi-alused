@@ -80,16 +80,7 @@ ESS ei ole ainus võimalus. Allpool on loetelu suurematest küsitlusuuringutest,
 * [International Social Survey Programme (ISSP)](https://issp.org) — igal aastal üks teema (religioon, perekond, ebavõrdsus, keskkond), ligi 45 riiki, alates 1985.
 * [World Values Survey](https://www.worldvaluessurvey.org) ja [European Values Study](https://europeanvaluesstudy.eu) — väärtused ja hoiakud maailma ulatuses, pikad aegread alates 1981.
 * [Eurobaromeeter](https://europa.eu/eurobarometer) — Euroopa Komisjoni regulaarsed küsitlused, väga sage ja päevakajaline, kõik EL-i riigid.
-
-**Poliitika ja valimised**
-
 * [Comparative Study of Electoral Systems (CSES)](https://cses.org) — valimisjärgsed küsitlused, valimiskäitumine ja hoiakud, ühtlustatud üle riikide.
-* [Eesti Rahvusliku Valimisuuringu andmed](https://www.tlu.ee) ja Eesti valimiste järgsed küsitlused — vaata ka Eesti Sotsiaalteaduslikku Andmearhiivi.
-
-**Eesti andmed**
-
-* [Eesti Sotsiaalteaduslik Andmearhiiv (ESTA)](https://esta.ut.ee) — Tartu Ülikooli juures asuv arhiiv, kus on Eestis läbi viidud küsitlusuuringute andmed. Esimene koht, kust Eesti-spetsiifilisi andmeid otsida.
-* [Statistikaamet](https://www.stat.ee) — ametlik statistika, mitte küsitlusandmed, aga sageli vajalik taustainfo.
 
 > **Enne kui mõne andmestiku kasuks otsustad, kontrolli kolme asja:** kas seal on need muutujad, mida sa vajad; kui palju on juhtumeid sinu huvipakkuvas riigis või grupis; ja kas valim on juhuvalim. Viimane on kõige olulisem — ilma selleta ei saa sa üldistusi teha.
 
