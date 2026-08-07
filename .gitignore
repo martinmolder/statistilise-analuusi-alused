@@ -30,7 +30,7 @@ JUHISED-materjalide-koostamiseks.md
 /.claude/
 
 # Süsteem
-.DS_Store
+**/.DS_Store
 .idea/
 Thumbs.db
 
