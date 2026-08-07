@@ -21,10 +21,10 @@
 # Vanade materjalide genereeritud HTML (8 MB) -- lähtefail .rmd jääb alles
 previous/Praktikumimaterjalid-R.html
 
-# Töökäigu märkmed -- jäävad kohalikuks.
-# (JUHISED-materjalide-koostamiseks.md on avalik, see on korduvkasutatav.)
+# Töökäigu märkmed ja sisemised juhised -- jäävad kohalikuks
 PLAAN.md
 PLAAN-2.md
+JUHISED-materjalide-koostamiseks.md
 
 # Tööriistade kohalikud seaded
 /.claude/
