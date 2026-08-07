@@ -927,6 +927,17 @@
     ]
   },
   {
+    "objectID": "08-korrelatsioon-ja-regressioon.html#kas-mõõtmise-kvaliteet-loeb",
+    "href": "08-korrelatsioon-ja-regressioon.html#kas-mõõtmise-kvaliteet-loeb",
+    "title": "8. Korrelatsioon ja regressioon",
+    "section": "Kas mõõtmise kvaliteet loeb?",
+    "text": "Kas mõõtmise kvaliteet loeb?\nSiin tasub korraks tagasi minna praktikumi 4 juurde.\nSeal me väitsime, et üksik küsitlusküsimus on jäme ja mürane mõõdik ning et mitmest küsimusest kokku pandud indeks mõõdab sama asja täpsemalt. Just sellepärast ehitasime faktoranalüüsiga muutuja usaldus, mis võtab kokku seitse usaldust puudutavat küsimust.\nAga senini oleme selles peatükis kasutanud usaldus_pol-i — üht üksikut küsimust poliitikute usaldamise kohta.\nKas sellel on vahet? Vaatame. Teeme sama mudeli kaks korda, ainult sõltumatu muutuja on erinev.\n\nmudel_uksik &lt;- lm(rahulolu_dem ~ usaldus_pol, data = data)\nmudel_indeks &lt;- lm(rahulolu_dem ~ usaldus, data = data)\n\nc(\n  uksik_kysimus = summary(mudel_uksik)$r.squared,\n  faktorskoor = summary(mudel_indeks)$r.squared\n)\n\n## uksik_kysimus   faktorskoor \n##     0.3556452     0.4983659\n\n\nÜksiku küsimusega seletab mudel 36% rahulolu varieeruvusest. Faktorskooriga 50%.\nAndmed on samad. Inimesed on samad. Nähtus on sama. Ainus, mis muutus, on see, kui hoolikalt me seda nähtust mõõtsime — ja mudeli seletusvõime kasvas ligi poole võrra.\n\nSee on kogu praktikumi 4 mõte ühe arvuna. Mõõtmine ei ole tüütu eeltöö, mis tuleb enne “päris analüüsi” ära teha. Mõõtmise kvaliteet on tulemus. Halb mõõdik ei anna lihtsalt segasemat vastust — ta annab nõrgema seose, mis võib jääda leidmata.\nKui sinu töös tuleb seos välja nõrgemana, kui kirjandus lubaks, siis on üks esimesi küsimusi: kas ma mõõdan seda asja piisavalt hästi?\n\nMiks me siis edaspidi ikkagi üksikküsimusi kasutame? Kahel praktilisel põhjusel.\n\nTõlgendatavus. Koefitsient 0.67 tähendab “üks punkt usaldust juurde skaalal 0–10”. Faktorskoori koefitsient 1.9 tähendab “üks standardhälve usaldust juurde” — see nõuab iga kord lisaseletust.\nJuhtumite arv. Indeksi jaoks peab vastaja olema vastanud kõigile seitsmele küsimusele. Seetõttu on mudelis 1087 juhtumit 1218 asemel.\n\nNii et valik ei ole “üks on õige, teine vale”. Faktorskoor mõõdab paremini, üksikküsimus on lihtsamini tõlgendatav — ja sina pead selle valiku teadlikult tegema ja oma töös välja ütlema.\n\nArutelu. Kumba sa oma bakalaureusetöös kasutaksid? Mille põhjal sa otsustaksid? Ja kas on olukordi, kus nõrgem, aga arusaadavam mõõdik on parem valik kui tugevam, aga raskesti seletatav?",
+    "crumbs": [
+      "Seosed ja mudelid",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>8. Korrelatsioon ja regressioon</span>"
+    ]
+  },
+  {
     "objectID": "08-korrelatsioon-ja-regressioon.html#koefitsientide-standardiseerimine",
     "href": "08-korrelatsioon-ja-regressioon.html#koefitsientide-standardiseerimine",
     "title": "8. Korrelatsioon ja regressioon",

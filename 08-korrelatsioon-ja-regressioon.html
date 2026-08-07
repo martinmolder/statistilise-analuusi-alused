@@ -313,6 +313,7 @@ window.Quarto = {
   <li><a href="#kuidas-seda-tabelit-lugeda" id="toc-kuidas-seda-tabelit-lugeda" class="nav-link" data-scroll-target="#kuidas-seda-tabelit-lugeda">Kuidas seda tabelit lugeda</a></li>
   <li><a href="#kui-hea-mudel-on" id="toc-kui-hea-mudel-on" class="nav-link" data-scroll-target="#kui-hea-mudel-on">Kui hea mudel on?</a></li>
   </ul></li>
+  <li><a href="#kas-mõõtmise-kvaliteet-loeb" id="toc-kas-mõõtmise-kvaliteet-loeb" class="nav-link" data-scroll-target="#kas-mõõtmise-kvaliteet-loeb">Kas mõõtmise kvaliteet loeb?</a></li>
   <li><a href="#koefitsientide-standardiseerimine" id="toc-koefitsientide-standardiseerimine" class="nav-link" data-scroll-target="#koefitsientide-standardiseerimine">Koefitsientide standardiseerimine</a></li>
   <li><a href="#kuidas-seda-kirja-panna" id="toc-kuidas-seda-kirja-panna" class="nav-link" data-scroll-target="#kuidas-seda-kirja-panna">Kuidas seda kirja panna</a></li>
   <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
@@ -662,14 +663,49 @@ window.Quarto = {
 <p>Sotsiaalteadustes on R-ruut tavaliselt madal. Mudel, mis seletab 10–20% varieeruvusest, on täiesti tavaline ja võib olla väga kasulik. Inimeste käitumine ei ole füüsika.</p>
 </section>
 </section>
+<section id="kas-mõõtmise-kvaliteet-loeb" class="level2">
+<h2 class="anchored" data-anchor-id="kas-mõõtmise-kvaliteet-loeb">Kas mõõtmise kvaliteet loeb?</h2>
+<p>Siin tasub korraks tagasi minna praktikumi 4 juurde.</p>
+<p>Seal me väitsime, et <strong>üksik küsitlusküsimus on jäme ja mürane mõõdik</strong> ning et mitmest küsimusest kokku pandud indeks mõõdab sama asja täpsemalt. Just sellepärast ehitasime faktoranalüüsiga muutuja <code>usaldus</code>, mis võtab kokku seitse usaldust puudutavat küsimust.</p>
+<p>Aga senini oleme selles peatükis kasutanud <code>usaldus_pol</code>-i — <strong>üht üksikut küsimust</strong> poliitikute usaldamise kohta.</p>
+<p>Kas sellel on vahet? Vaatame. Teeme sama mudeli kaks korda, ainult sõltumatu muutuja on erinev.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mudel_uksik <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus_pol, <span class="at">data =</span> data)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>mudel_indeks <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus, <span class="at">data =</span> data)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">uksik_kysimus =</span> <span class="fu">summary</span>(mudel_uksik)<span class="sc">$</span>r.squared,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">faktorskoor =</span> <span class="fu">summary</span>(mudel_indeks)<span class="sc">$</span>r.squared</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## uksik_kysimus   faktorskoor 
+##     0.3556452     0.4983659</code></pre>
+</div>
+</div>
+<p>Üksiku küsimusega seletab mudel 36% rahulolu varieeruvusest. Faktorskooriga <strong>50%</strong>.</p>
+<p><strong>Andmed on samad. Inimesed on samad. Nähtus on sama.</strong> Ainus, mis muutus, on see, kui hoolikalt me seda nähtust mõõtsime — ja mudeli seletusvõime kasvas ligi poole võrra.</p>
+<blockquote class="blockquote">
+<p><strong>See on kogu praktikumi 4 mõte ühe arvuna.</strong> Mõõtmine ei ole tüütu eeltöö, mis tuleb enne “päris analüüsi” ära teha. Mõõtmise kvaliteet <strong>on</strong> tulemus. Halb mõõdik ei anna lihtsalt segasemat vastust — ta annab nõrgema seose, mis võib jääda leidmata.</p>
+<p>Kui sinu töös tuleb seos välja nõrgemana, kui kirjandus lubaks, siis on üks esimesi küsimusi: <strong>kas ma mõõdan seda asja piisavalt hästi?</strong></p>
+</blockquote>
+<p>Miks me siis edaspidi ikkagi üksikküsimusi kasutame? Kahel praktilisel põhjusel.</p>
+<ul>
+<li><strong>Tõlgendatavus.</strong> Koefitsient 0.67 tähendab “üks punkt usaldust juurde skaalal 0–10”. Faktorskoori koefitsient 1.9 tähendab “üks standardhälve usaldust juurde” — see nõuab iga kord lisaseletust.</li>
+<li><strong>Juhtumite arv.</strong> Indeksi jaoks peab vastaja olema vastanud <strong>kõigile seitsmele</strong> küsimusele. Seetõttu on mudelis 1087 juhtumit 1218 asemel.</li>
+</ul>
+<p>Nii et valik ei ole “üks on õige, teine vale”. Faktorskoor mõõdab paremini, üksikküsimus on lihtsamini tõlgendatav — ja <strong>sina pead selle valiku teadlikult tegema ja oma töös välja ütlema.</strong></p>
+<div class="arutelu">
+<p><strong>Arutelu.</strong> Kumba sa oma bakalaureusetöös kasutaksid? Mille põhjal sa otsustaksid? Ja kas on olukordi, kus nõrgem, aga arusaadavam mõõdik on parem valik kui tugevam, aga raskesti seletatav?</p>
+</div>
+</section>
 <section id="koefitsientide-standardiseerimine" class="level2">
 <h2 class="anchored" data-anchor-id="koefitsientide-standardiseerimine">Koefitsientide standardiseerimine</h2>
 <p>Regressioonikoefitsiendi suurus sõltub muutuja mõõtskaalast. See tähendab, et <strong>kahe erineva muutuja koefitsiente ei saa omavahel võrrelda</strong>, kui nad on erineval skaalal.</p>
 <p>Meie mudelis on usaldus skaalal 0–10 ja vanus aastates. Kumb on tugevam seletaja? Koefitsientidest seda välja ei loe — nad on eri ühikutes.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mudel_kaks <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus_pol <span class="sc">+</span> vanus, <span class="at">data =</span> data)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coef</span>(mudel_kaks), <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mudel_kaks <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus_pol <span class="sc">+</span> vanus, <span class="at">data =</span> data)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coef</span>(mudel_kaks), <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## (Intercept) usaldus_pol       vanus 
 ##      3.2321      0.6606     -0.0082</code></pre>
@@ -679,13 +715,13 @@ window.Quarto = {
 <p><strong>Lahendus on muutujad enne mudelisse panekut standardiseerida.</strong> Standardiseerimine tähendab, et igast muutujast tehakse z-skoor — täpselt see tehe, mida nägime praktikumis 6. Pärast seda on iga muutuja keskmine 0 ja standardhälve 1, ehk <strong>kõik on samal skaalal</strong>.</p>
 <p>R-is teeb seda funktsioon <code>scale()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>usaldus_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>usaldus_pol)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>vanus_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>vanus)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>rahulolu_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>rahulolu_dem)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>mudel_std <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_z <span class="sc">~</span> usaldus_z <span class="sc">+</span> vanus_z, <span class="at">data =</span> data)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coef</span>(mudel_std), <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>usaldus_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>usaldus_pol)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>vanus_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>vanus)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>rahulolu_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>rahulolu_dem)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>mudel_std <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_z <span class="sc">~</span> usaldus_z <span class="sc">+</span> vanus_z, <span class="at">data =</span> data)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coef</span>(mudel_std), <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## (Intercept)   usaldus_z     vanus_z 
 ##     -0.0043      0.5919     -0.0566</code></pre>
