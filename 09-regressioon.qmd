@@ -170,6 +170,58 @@ Nii et valik ei ole "üks on õige, teine vale". Faktorskoor mõõdab paremini, 
 **Arutelu.** Kumba sa oma bakalaureusetöös kasutaksid? Mille põhjal sa otsustaksid? Ja kas on olukordi, kus nõrgem, aga arusaadavam mõõdik on parem valik kui tugevam, aga raskesti seletatav?
 :::
 
+## Koefitsientide standardiseerimine
+
+Regressioonikoefitsiendi suurus sõltub muutuja mõõtskaalast. See tähendab, et **kahe erineva muutuja koefitsiente ei saa omavahel võrrelda**, kui nad on erineval skaalal.
+
+Meie mudelis on usaldus skaalal 0–10 ja vanus aastates. Kumb on tugevam seletaja? Koefitsientidest seda välja ei loe — nad on eri ühikutes.
+
+Koefitsiendid saab mudelist eraldi välja võtta funktsiooniga `coef()`. See on mugavam kui terve `summary()` väljundi lugemine, kui sind huvitavad ainult koefitsiendid.
+
+```{r}
+#| label: erinevad-skaalad
+mudel_kaks <- lm(rahulolu_dem ~ usaldus_pol + vanus, data = data)
+
+round(coef(mudel_kaks), 4)
+```
+
+Vanuse koefitsient on peaaegu null ja usalduse oma palju suurem. Aga see ei tähenda, et vanus oleks ebaoluline — tähendab ainult, et üks eluaasta on väike samm, samal ajal kui üks usalduspunkt on suur samm.
+
+**Lahendus on muutujad enne mudelisse panekut standardiseerida.** Standardiseerimine tähendab, et igast muutujast tehakse z-skoor — täpselt see tehe, mida nägime praktikumis 6. Pärast seda on iga muutuja keskmine 0 ja standardhälve 1, ehk **kõik on samal skaalal**.
+
+R-is teeb seda funktsioon `scale()`.
+
+```{r}
+#| label: standardiseeritud
+data$usaldus_z <- scale(data$usaldus_pol)
+data$vanus_z <- scale(data$vanus)
+data$rahulolu_z <- scale(data$rahulolu_dem)
+
+mudel_std <- lm(rahulolu_z ~ usaldus_z + vanus_z, data = data)
+
+round(coef(mudel_std), 4)
+```
+
+Nüüd on koefitsiendid võrreldavad. Neid nimetatakse **standardiseeritud koefitsientideks** ehk **beeta-koefitsientideks**.
+
+**Kuidas neid lugeda?** Koefitsient ütleb, mitu **standardhälvet** muutub sõltuv muutuja, kui sõltumatu muutuja kasvab ühe standardhälbe võrra.
+
+Usalduse koefitsient on umbes kümme korda suurem kui vanuse oma. Ehk: usaldus on rahulolu seletamisel palju tugevam tegur.
+
+> **Millal standardiseerida ja millal mitte?**
+>
+> Standardiseeri siis, kui sa tahad **võrrelda erinevate muutujate suhtelist tugevust** ühes mudelis.
+>
+> Ära standardiseeri siis, kui muutujal on **sisuliselt tähendusrikas ühik**. "Iga eluaasta kohta 0,01 punkti" on arusaadav lause. "Iga standardhälbe kohta 0,08 standardhälvet" ei ole.
+>
+> Ja binaarseid muutujaid ei ole üldse mõtet standardiseerida — "pool standardhälvet meheks olemist" ei tähenda midagi.
+
+> **Üks hoiatus.** Standardiseeritud koefitsient ütleb, kui tugev muutuja on **selles konkreetses mudelis nende konkreetsete andmete peal.** Ta ei ole muutuja "üldine tähtsus". Kui sa lisad mudelisse uue muutuja või vahetad valimit, võib järjekord muutuda.
+
+::: {.harjutus}
+**Harjutus.** Lisa standardiseeritud mudelisse ka haridus. Milline kolmest muutujast on kõige tugevam seletaja? Kontrolli, kas sama järjekord tuleb välja ka standardiseerimata mudelist — ja mõtle, miks see nii on või ei ole.
+:::
+
 ## Kuidas seda kirja panna
 
 ::: {.callout-tip title="Kuidas seda kirja panna"}

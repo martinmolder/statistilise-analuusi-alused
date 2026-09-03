@@ -203,6 +203,150 @@ ligikaudu kolmandiku rahulolust demokraatiaga.
 >
 > **Seetõttu räägi seose tugevusest R-ruudu kaudu, mitte korrelatsioonikordaja kaudu.**
 
+## Mitu korrelatsiooni korraga
+
+Seni vaatasime kahte muutujat. Praktikas tahad sa tavaliselt näha korraga kõiki paare — see annab kiire ülevaate sellest, mis su andmetes üldse omavahel seotud on.
+
+Kui anda funktsioonile `cor()` mitme veeruga andmetabel, siis annabki ta **korrelatsioonimaatriksi**: iga muutuja iga teisega.
+
+```{r}
+#| label: kor-maatriks
+huvipakkuvad <- data[, c(
+  "vanus", "haridus", "sissetulek", "usaldus_pol", "rahulolu_dem"
+)]
+
+korrelatsioonid <- cor(huvipakkuvad, use = "complete.obs")
+
+round(korrelatsioonid, 2)
+```
+
+Kuidas seda lugeda?
+
+* **Diagonaalil on ühed** — iga muutuja korrelatsioon iseendaga.
+* **Maatriks on sümmeetriline** — ülemine ja alumine pool on peegelpildid. Piisab ühe poole vaatamisest.
+* Iga arv on ühe **paari** korrelatsioon.
+
+Tugevaim seos on usalduse ja rahulolu vahel (0,59) — see, mida me eespool juba vaatasime. Tugevaim **negatiivne** seos on vanuse ja sissetuleku vahel (−0,35): vanemad inimesed on Eestis madalama sissetulekuga.
+
+> **Argument `use = "complete.obs"`** ütleb, et arvutada ainult nende vastajate põhjal, kellel **kõik** need muutujad on olemas. Alternatiiv `use = "pairwise.complete.obs"` arvutab iga paari eraldi, kasutades kõiki, kellel just see paar olemas on.
+>
+> Vahe on oluline: teine variant kasutab rohkem andmeid, aga siis põhineb iga arv **eri inimeste hulgal**, mis teeb võrdlemise petlikuks. Kahtluse korral kasuta `"complete.obs"` ja ütle juhtumite arv välja.
+
+::: {.arutelu}
+**Arutelu.** Vaata hariduse rida. Haridus on positiivselt seotud sissetulekuga (0,27), usaldusega (0,22) ja rahuloluga (0,19). **Kas see tähendab, et haridus neid kolme põhjustab?** Mis muu seletus võiks olla?
+:::
+
+## Erindid: üks juhtum võib kõik ära rikkuda
+
+Nüüd üks hoiatus, mis on kõige olulisem asi, mida korrelatsiooni kohta teada.
+
+**Pearsoni korrelatsioon on erakordselt tundlik üksikute ekstreemsete väärtuste suhtes.** Erind (*outlier*) on juhtum, mis on ülejäänutest väga kaugel — ja üksainus selline juhtum võib korrelatsiooni tundmatuseni muuta.
+
+Teeme katse. Meie tegelik korrelatsioon usalduse ja rahulolu vahel on:
+
+```{r}
+#| label: erind-enne
+usaldus_ok <- usaldus_rahulolu$usaldus_pol
+rahulolu_ok <- usaldus_rahulolu$rahulolu_dem
+
+cor(usaldus_ok, rahulolu_ok)
+```
+
+Nüüd lisame **ühe ainsa** vale väärtuse. Kujutame ette, et üks vastaja jäi puhastamata: tema usalduse väärtuseks on jäänud kood **99**, mis tähendas tegelikult "ei oska öelda".
+
+```{r}
+#| label: erind-parast
+usaldus_katki <- c(usaldus_ok, 99)
+rahulolu_katki <- c(rahulolu_ok, 5)
+
+cor(usaldus_katki, rahulolu_katki)
+```
+
+```{r}
+#| label: erind-arvud
+#| include: false
+r_ok <- round(cor(usaldus_ok, rahulolu_ok), 3)
+r_katki <- round(cor(usaldus_katki, rahulolu_katki), 3)
+kadu <- round(100 * (1 - r_katki / r_ok))
+```
+
+**Korrelatsioon kukkus `r r_ok`-lt `r r_katki`-le** — ta kaotas umbes `r kadu`% oma väärtusest. Ja seda tegi **üks juhtum 1219-st.**
+
+Vaatame, mis joonisel toimub.
+
+```{r}
+#| label: erind-joonis
+erindi_andmed <- data.frame(
+  usaldus = usaldus_katki,
+  rahulolu = rahulolu_katki
+)
+
+ggplot(erindi_andmed, aes(x = usaldus, y = rahulolu)) +
+  geom_jitter(width = 0.25, height = 0.25, alpha = 0.3) +
+  labs(
+    x = "usaldus poliitikute vastu (üks väärtus on 99)",
+    y = "rahulolu demokraatiaga (0-10)",
+    title = "Üks puhastamata väärtus tõmbab kogu pildi laiali"
+  ) +
+  theme_bw()
+```
+
+Kogu tegelik andmepilv on surutud vasakusse serva ja üks punkt istub kaugel paremal. Just see punkt otsustabki nüüd suure osa korrelatsioonist.
+
+> **Siin läheb praktikumis 4 tehtud töö arvesse.** Me nägime siis, et puhastamata koodid nagu 999 või 99 ei anna veateadet — nad on lihtsalt arvud teiste seas. Nüüd näed, mida nad tulemusega teevad.
+>
+> **Vaata alati oma muutuja miinimumi ja maksimumi enne korrelatsiooni arvutamist.** Funktsioon `summary()` teeb selle kolme sekundiga. Kui maksimum on 99 ja skaala peaks olema 0–10, siis on midagi puhastamata.
+
+## Spearmani korrelatsioon
+
+Erindite probleemile on olemas ka teine lahendus — **Spearmani korrelatsioon**.
+
+Idee on lihtne. Pearsoni korrelatsioon kasutab **väärtusi endid**. Spearmani korrelatsioon kasutab ainult **järjestust**: ta asendab iga väärtuse tema järjekorranumbriga ja arvutab korrelatsiooni nende põhjal.
+
+Sellest järeldub kohe kaks asja:
+
+* **erindi suurus ei loe** — kui väärtus on kõige suurem, siis ta on kõige suurem, olgu ta 11 või 99;
+* **seos ei pea olema sirgjooneline** — piisab sellest, et ta on ühesuunaline (kui üks kasvab, teine kasvab).
+
+R-is saab teda argumendiga `method = "spearman"`.
+
+```{r}
+#| label: spearman
+c(
+  pearson = cor(usaldus_ok, rahulolu_ok),
+  spearman = cor(usaldus_ok, rahulolu_ok, method = "spearman")
+)
+```
+
+Meie korrastatud andmetes on nad **praktiliselt samad**. See ei ole ebaõnnestunud näide — see on hea uudis: kui kaks korrelatsiooni langevad kokku, siis tähendab see, et seos on ühtlane ja ekstreemseid väärtusi ei ole.
+
+Aga vaata nüüd, mis juhtub sellesama puhastamata 99-ga:
+
+```{r}
+#| label: spearman-erind
+c(
+  pearson = cor(usaldus_katki, rahulolu_katki),
+  spearman = cor(usaldus_katki, rahulolu_katki, method = "spearman")
+)
+```
+
+**Pearson kukkus kolmandiku võrra. Spearman ei liikunud praktiliselt üldse.** Talle on ükskõik, kas kõige suurem väärtus on 10 või 99 — ta on ikka kõige suurem.
+
+### Kumba kasutada?
+
+| Kasuta **Pearsonit**, kui | Kasuta **Spearmanit**, kui |
+|---|---|
+| mõlemad muutujad on pidevad | muutujad on ordinaalsed |
+| seos näeb jooniselt sirgjooneline välja | seos on ühesuunaline, aga kõver |
+| ekstreemseid väärtusi ei ole | andmetes on erindeid |
+| tahad hiljem regressiooni teha | tahad lihtsalt seost kirjeldada |
+
+> **Praktiline soovitus: arvuta mõlemad.** See on üks lisarida koodi.
+>
+> Kui nad on **sarnased**, siis on kõik hästi ja raporteeri Pearson (ta on tavapärasem ja seotud regressiooniga).
+>
+> Kui nad on **märgatavalt erinevad**, siis on see märk, et midagi tasub uurida: kas on erindeid, kas seos on kõver, kas mõni väärtus on puhastamata. **Erinevus ise on informatsioon.**
+
 ## Kuidas seda kirja panna
 
 ::: {.callout-tip title="Kuidas seda kirja panna"}
@@ -228,7 +372,9 @@ Kolm asja, mida vältida:
 
 **2. Joonis.** Tee nende kahe muutuja kohta hajuvusdiagramm. Kas seos on jooniselt näha?
 
-**3. Mitu korrelatsiooni korraga.** Arvuta korrelatsioonimaatriks muutujate `vanus`, `haridus`, `sissetulek` ja `rahulolu_dem` vahel. Milline paar on kõige tugevamalt seotud?
+**3. Korrelatsioonimaatriks.** Tee korrelatsioonimaatriks, kus on sees `ranne`, `usaldus`, `haridus` ja `vanus`. Milline paar on kõige tugevamalt seotud? Kas mõni seos üllatab?
 
-**4. Negatiivne seos.** Otsi andmestikust kaks muutujat, mille vaheline korrelatsioon on negatiivne. Kas see seos on sisuliselt mõistetav?
+**4. Spearman.** Arvuta kõikide nende paaride kohta ka Spearmani korrelatsioon. Kas mõne paari puhul on vahe märgatav? Kui jah, siis vaata seda paari joonisel — mis seal toimub?
+
+**5. Erind.** Vali üks muutujapaar ja lisa sinna ise üks ekstreemne väärtus. Kui palju korrelatsioon muutub? Proovi ka, kui palju on vaja väärtust suurendada, et Spearman lõpuks liikuma hakkaks.
 :::
