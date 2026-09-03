@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>9. Mitmene regressioon – Statistilise analüüsi alused</title>
+<title>10. Mitmene regressioon – Statistilise analüüsi alused</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./10-tulemuste-esitamine.html" rel="next">
-<link href="./08-korrelatsioon-ja-regressioon.html" rel="prev">
+<link href="./11-tulemuste-esitamine.html" rel="next">
+<link href="./09-regressioon.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -162,7 +162,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./09-mitmene-regressioon.html"><span class="chapter-title">9. Mitmene regressioon</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./10-mitmene-regressioon.html"><span class="chapter-title">10. Mitmene regressioon</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -196,7 +196,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Alustamine</span></a>
+ <span class="menu-text">Andmetega alustamine</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -212,6 +212,11 @@ window.Quarto = {
   <a href="./02-andmete-laadimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2. Andmete laadimine</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Kirjeldamine ja visualiseerimine</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -225,12 +230,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Andmete ettevalmistus I</span></a>
+  <a href="./04-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus I</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus II</span></a>
+  <a href="./05-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Andmete ettevalmistus II</span></a>
   </div>
 </li>
       </ul>
@@ -238,7 +243,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Andmete kirjeldamine</span></a>
+ <span class="menu-text">Järeldav statistika</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -246,7 +251,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></a>
+  <a href="./06-valim-ja-hupoteesid.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6. Valim, ebakindlus ja hüpoteeside testimine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-keskmiste-vordlemine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Keskmiste võrdlemine</span></a>
   </div>
 </li>
       </ul>
@@ -254,7 +264,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Järeldav statistika</span></a>
+ <span class="menu-text">Seosed ja mudelid</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -262,43 +272,27 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-valim-ja-ebakindlus.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6. Valim ja ebakindlus</span></a>
+  <a href="./08-korrelatsioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8. Korrelatsioon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-hupoteeside-testimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Hüpoteeside testimine</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Seosed ja mudelid</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./08-korrelatsioon-ja-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a>
+  <a href="./09-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Regressioon: baasmudel</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-mitmene-regressioon.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">9. Mitmene regressioon</span></a>
+  <a href="./10-mitmene-regressioon.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">10. Mitmene regressioon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Tulemuste esitamine</span></a>
+  <a href="./11-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Tulemuste esitamine</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-logistiline-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Logistiline regressioon</span></a>
+  <a href="./12-logistiline-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">12. Logistiline regressioon</span></a>
   </div>
 </li>
       </ul>
@@ -330,9 +324,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./09-mitmene-regressioon.html"><span class="chapter-title">9. Mitmene regressioon</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./10-mitmene-regressioon.html"><span class="chapter-title">10. Mitmene regressioon</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">9. Mitmene regressioon</span></h1>
+<h1 class="title"><span class="chapter-title">10. Mitmene regressioon</span></h1>
 </div>
 
 
@@ -464,7 +458,7 @@ window.Quarto = {
 <p>R võttis faktori <code>sugu</code>, mille kategooriad on “mees” ja “naine”, ning tegi temast binaarse muutuja. <strong>Esimene kategooria jäi referentskategooriaks</strong> ja koefitsient näitab, kui palju <strong>teine</strong> kategooria referentskategooriast erineb.</p>
 <p>Meil on “mees” esimene, seega näitab koefitsient, kui palju naiste rahulolu erineb meeste omast, kui kõik muu on sama.</p>
 <blockquote class="blockquote">
-<p><strong>Siin läheb praktikumis 4 tehtud töö arvesse.</strong> Me määrasime seal faktorite kategooriate järjekorra. Just see järjekord määrab, milline kategooria on referentskategooria — ja seega ka selle, kuidas tabelit lugeda tuleb.</p>
+<p><strong>Siin läheb praktikumis 5 tehtud töö arvesse.</strong> Me määrasime seal faktorite kategooriate järjekorra. Just see järjekord määrab, milline kategooria on referentskategooria — ja seega ka selle, kuidas tabelit lugeda tuleb.</p>
 </blockquote>
 <p>Kui muutuja on arvuline, mitte faktor, siis <strong>peab</strong> ta olema kodeeritud 0 ja 1. Meie muutuja <code>valis</code> on just selline.</p>
 <div class="cell">
@@ -558,7 +552,7 @@ window.Quarto = {
 </div>
 <p>Referentskategooria on Reformierakond. Iga koefitsient näitab, kui palju selle erakonna valijate rahulolu erineb Reformierakonna valijate omast, kui usaldus ja vanus on samad.</p>
 <blockquote class="blockquote">
-<p><strong>Referentskategooria valik ei muuda mudelit, aga muudab tabeli lugemist.</strong> Kui sa tahad teist referentskategooriat, muuda faktori tasemete järjekorda funktsiooniga <code>factor()</code> — nii nagu tegime praktikumis 4.</p>
+<p><strong>Referentskategooria valik ei muuda mudelit, aga muudab tabeli lugemist.</strong> Kui sa tahad teist referentskategooriat, muuda faktori tasemete järjekorda funktsiooniga <code>factor()</code> — nii nagu tegime praktikumis 5.</p>
 </blockquote>
 <section id="käsitsi-et-näha-mis-toimub" class="level3">
 <h3 class="anchored" data-anchor-id="käsitsi-et-näha-mis-toimub">Käsitsi, et näha, mis toimub</h3>
@@ -614,7 +608,7 @@ window.Quarto = {
 </div>
 <blockquote class="blockquote">
 <p><strong>Vaata neid kahte arvu.</strong> Andmestikus on 1293 rida, aga mudelis on juhtumeid vähem. Vahe on need inimesed, kellel oli mõni mudelis olev muutuja puudu — R viskas nad automaatselt välja.</p>
-<p>Praktikumis 3 nägime, et need inimesed ei ole juhuslik valik. <strong>Kontrolli see arv iga mudeli puhul üle ja raporteeri ta.</strong></p>
+<p>Praktikumis 4 nägime, et need inimesed ei ole juhuslik valik. <strong>Kontrolli see arv iga mudeli puhul üle ja raporteeri ta.</strong></p>
 </blockquote>
 <p>Usaldusvahemikud koefitsientide ümber annab funktsioon <code>confint()</code>.</p>
 <div class="cell">
@@ -724,7 +718,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Mitmese regressiooni puhul ei kirjutata iga koefitsienti eraldi lahti — selleks on tabel (praktikum 6). Tekstis tuuakse välja <strong>kõige olulisemad tulemused</strong> ja mudel tervikuna.</p>
+<p>Mitmese regressiooni puhul ei kirjutata iga koefitsienti eraldi lahti — selleks on tabel (praktikum 11). Tekstis tuuakse välja <strong>kõige olulisemad tulemused</strong> ja mudel tervikuna.</p>
 <p><strong>Rahulolu demokraatiaga ennustamiseks koostati lineaarne regressioonimudel, kus sõltumatute muutujatena olid usaldus poliitikute vastu, vanus, sugu ja elukoht (tabel 1). Mudelisse kaasati 1211 vastajat; ülejäänud jäid välja puuduvate väärtuste tõttu.</strong></p>
 <p><strong>Tugevaim seos ilmnes usalduse ja rahulolu vahel: iga punkti võrra suurem usaldus poliitikute vastu vastab keskmiselt 0,54 punkti võrra suuremale rahulolule demokraatiaga, kui vanus, sugu ja elukoht on konstantsed (β = 0,54; SE = 0,02; p &lt; 0,001). Elukoha ja soo seosed ei osutunud statistiliselt oluliseks. Mudel seletab 30% rahulolu varieeruvusest (kohandatud R² = 0,30).</strong></p>
 <p>Neli asja, mis peavad kindlasti kirjas olema:</p>
@@ -1152,13 +1146,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./08-korrelatsioon-ja-regressioon.html" class="pagination-link" aria-label="8. Korrelatsioon ja regressioon">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></span>
+      <a href="./09-regressioon.html" class="pagination-link" aria-label="9. Regressioon: baasmudel">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">9. Regressioon: baasmudel</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./10-tulemuste-esitamine.html" class="pagination-link" aria-label="10. Tulemuste esitamine">
-        <span class="nav-page-text"><span class="chapter-title">10. Tulemuste esitamine</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./11-tulemuste-esitamine.html" class="pagination-link" aria-label="11. Tulemuste esitamine">
+        <span class="nav-page-text"><span class="chapter-title">11. Tulemuste esitamine</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

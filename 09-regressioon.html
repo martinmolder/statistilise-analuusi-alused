@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Martin Mölder">
 
-<title>Statistilise analüüsi alused</title>
+<title>9. Regressioon: baasmudel – Statistilise analüüsi alused</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -31,7 +65,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01-r-alused.html" rel="next">
+<link href="./10-mitmene-regressioon.html" rel="next">
+<link href="./08-korrelatsioon.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -71,6 +106,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -84,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Sissejuhatus</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./09-regressioon.html"><span class="chapter-title">9. Regressioon: baasmudel</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -111,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Sissejuhatus</span></a>
   </div>
 </li>
@@ -199,7 +277,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Regressioon: baasmudel</span></a>
+  <a href="./09-regressioon.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">9. Regressioon: baasmudel</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -229,48 +307,32 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Selle peatüki sisu</h2>
    
   <ul>
-  <li><a href="#sissejuhatus" id="toc-sissejuhatus" class="nav-link active" data-scroll-target="#sissejuhatus">Sissejuhatus</a>
+  <li><a href="#joon-läbi-punktipilve" id="toc-joon-läbi-punktipilve" class="nav-link active" data-scroll-target="#joon-läbi-punktipilve">Joon läbi punktipilve</a></li>
+  <li><a href="#regressioonivalem" id="toc-regressioonivalem" class="nav-link" data-scroll-target="#regressioonivalem">Regressioonivalem</a></li>
+  <li><a href="#mudeli-sobitamine-ja-tõlgendamine" id="toc-mudeli-sobitamine-ja-tõlgendamine" class="nav-link" data-scroll-target="#mudeli-sobitamine-ja-tõlgendamine">Mudeli sobitamine ja tõlgendamine</a>
   <ul class="collapse">
-  <li><a href="#kuidas-kursus-üles-on-ehitatud" id="toc-kuidas-kursus-üles-on-ehitatud" class="nav-link" data-scroll-target="#kuidas-kursus-üles-on-ehitatud">Kuidas kursus üles on ehitatud</a>
-  <ul class="collapse">
-  <li><a href="#kaks-rada-raskemate-teemade-juures" id="toc-kaks-rada-raskemate-teemade-juures" class="nav-link" data-scroll-target="#kaks-rada-raskemate-teemade-juures">Kaks rada raskemate teemade juures</a></li>
+  <li><a href="#kuidas-seda-tabelit-lugeda" id="toc-kuidas-seda-tabelit-lugeda" class="nav-link" data-scroll-target="#kuidas-seda-tabelit-lugeda">Kuidas seda tabelit lugeda</a></li>
+  <li><a href="#kui-hea-mudel-on" id="toc-kui-hea-mudel-on" class="nav-link" data-scroll-target="#kui-hea-mudel-on">Kui hea mudel on?</a></li>
   </ul></li>
-  <li><a href="#andmed" id="toc-andmed" class="nav-link" data-scroll-target="#andmed">Andmed</a></li>
-  <li><a href="#kust-sotsiaalteadlane-andmeid-saab" id="toc-kust-sotsiaalteadlane-andmeid-saab" class="nav-link" data-scroll-target="#kust-sotsiaalteadlane-andmeid-saab">Kust sotsiaalteadlane andmeid saab</a></li>
-  <li><a href="#kuidas-neid-materjale-kasutada" id="toc-kuidas-neid-materjale-kasutada" class="nav-link" data-scroll-target="#kuidas-neid-materjale-kasutada">Kuidas neid materjale kasutada</a></li>
-  <li><a href="#täiendavad-materjalid" id="toc-täiendavad-materjalid" class="nav-link" data-scroll-target="#täiendavad-materjalid">Täiendavad materjalid</a></li>
-  <li><a href="#materjalide-koostamisest" id="toc-materjalide-koostamisest" class="nav-link" data-scroll-target="#materjalide-koostamisest">Materjalide koostamisest</a></li>
-  <li><a href="#materjalide-kasutamine" id="toc-materjalide-kasutamine" class="nav-link" data-scroll-target="#materjalide-kasutamine">Materjalide kasutamine</a></li>
-  </ul></li>
+  <li><a href="#kas-mõõtmise-kvaliteet-loeb" id="toc-kas-mõõtmise-kvaliteet-loeb" class="nav-link" data-scroll-target="#kas-mõõtmise-kvaliteet-loeb">Kas mõõtmise kvaliteet loeb?</a></li>
+  <li><a href="#kuidas-seda-kirja-panna" id="toc-kuidas-seda-kirja-panna" class="nav-link" data-scroll-target="#kuidas-seda-kirja-panna">Kuidas seda kirja panna</a></li>
+  <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./09-regressioon.html"><span class="chapter-title">9. Regressioon: baasmudel</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Statistilise analüüsi alused</h1>
-<p class="subtitle lead">Praktikumimaterjalid, 2026 sügis</p>
+<h1 class="title"><span class="chapter-title">9. Regressioon: baasmudel</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Autor</div>
-    <div class="quarto-title-meta-contents">
-             <p>Martin Mölder </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Avaldatud</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">03.09.2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -280,202 +342,185 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="sissejuhatus" class="level1 unnumbered">
-<h1 class="unnumbered">Sissejuhatus</h1>
-<p>Käesolevad materjalid on mõeldud kasutamiseks ainekursuse “Statistilise analüüsi alused” raames.</p>
-<p>Kursusel on kaks üldist eesmärki. Esiteks anda ülevaade kõige esmasematest statistilistest meetoditest ja lihtsamatest mudelitest. Teiseks näidata, kuidas neid rakendada, kasutades R-i.</p>
-<p>Suur osa sotsiaalteadustest ja ka laiemalt ühiskondi ning inimeste käitumist puudutavatest analüüsidest on statistilised analüüsid. Teatud statistilised baasoskused on seega lahutamatu osa pädeva sotsiaalteadlase tööriistakomplektist. R on statistiliseks analüüsiks mõeldud tarkvara, mis on praegusel hetkel enamikes teadusvaldkondades kõige laialdasemalt kasutatav.</p>
-<p>See kursus ei eelda erilisi eelteadmisi. Me alustame päris algusest, puhtalt lehelt. Kasuks tulevad üldised arvutikasutamise oskused ning kuskil mälusopis loodetavasti ikka veel pesitsevad teadmised keskkoolimatemaatikast. Me ei lähe sügavale siin tutvustatavate meetodite matemaatikasse — pigem keskendume meetodite üldisele loogikale, nende rakendamistingimustele ja R-is kasutamisele.</p>
-<section id="kuidas-kursus-üles-on-ehitatud" class="level2">
-<h2 class="anchored" data-anchor-id="kuidas-kursus-üles-on-ehitatud">Kuidas kursus üles on ehitatud</h2>
-<p>Kursus koosneb loengutest ja praktikumidest. Loengus käsitleme meetodi üldist loogikat, praktikumis teeme ta R-is läbi. <strong>Loeng tuleb alati enne vastavat praktikumi.</strong></p>
-<p>Praktikumide järjekord on selline:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Nädal</th>
-<th>Praktikum</th>
-<th>Teema</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>2</td>
-<td>1</td>
-<td>R ja RStudio</td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>2</td>
-<td>Andmete laadimine</td>
-</tr>
-<tr class="odd">
-<td>4</td>
-<td>3</td>
-<td>Kirjeldamine ja visualiseerimine</td>
-</tr>
-<tr class="even">
-<td>5</td>
-<td>4</td>
-<td>Andmete ettevalmistus I</td>
-</tr>
-<tr class="odd">
-<td>6</td>
-<td>5</td>
-<td>Andmete ettevalmistus II</td>
-</tr>
-<tr class="even">
-<td>7</td>
-<td>6</td>
-<td>Valim, ebakindlus ja hüpoteeside testimine</td>
-</tr>
-<tr class="odd">
-<td>8</td>
-<td>—</td>
-<td><strong>Test I</strong></td>
-</tr>
-<tr class="even">
-<td>9</td>
-<td>7</td>
-<td>Keskmiste võrdlemine</td>
-</tr>
-<tr class="odd">
-<td>10</td>
-<td>8</td>
-<td>Korrelatsioon</td>
-</tr>
-<tr class="even">
-<td>11</td>
-<td>9</td>
-<td>Regressioon: baasmudel</td>
-</tr>
-<tr class="odd">
-<td>12</td>
-<td>10</td>
-<td>Mitmene regressioon</td>
-</tr>
-<tr class="even">
-<td>13</td>
-<td>11</td>
-<td>Tulemuste esitamine</td>
-</tr>
-<tr class="odd">
-<td>14</td>
-<td>12</td>
-<td>Logistiline regressioon</td>
-</tr>
-<tr class="even">
-<td>15</td>
-<td>—</td>
-<td>Kordamine</td>
-</tr>
-<tr class="odd">
-<td>16</td>
-<td>—</td>
-<td><strong>Test II</strong></td>
-</tr>
-</tbody>
-</table>
-<p>Me alustame sellest, kuidas R oma arvutis tööle saada, ja liigume sealt edasi andmete laadimise juurde. Kolmandas praktikumis teeme esimese päris analüüsi: kirjeldame andmeid ja teeme jooniseid.</p>
-<p>Seejärel tuleb <strong>andmete ettevalmistus</strong> — kaks praktikumi, mis on pühendatud sellele, kuidas võtta päris andmestik sellisel kujul, nagu ta uuringu läbiviijalt tuleb, ja teha temast analüüsikõlblik andmestik.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/ess11_ee_clean.rdata"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>usaldus_rahulolu <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data[, <span class="fu">c</span>(<span class="st">"usaldus_pol"</span>, <span class="st">"rahulolu_dem"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Eelmises praktikumis mõõtsime seose <strong>tugevust ja suunda</strong>. Korrelatsioon ütles, et usaldus ja rahulolu käivad tugevalt koos ning seos on positiivne.</p>
+<p>Aga ta ei ütle üht olulist asja: <strong>kui palju</strong> rahulolu muutub, kui usaldus kasvab ühe punkti võrra. Selleks on vaja regressiooni.</p>
 <blockquote class="blockquote">
-<p><strong>Miks kirjeldamine tuleb enne ettevalmistust?</strong> Sellepärast, et andmete kirjeldamist on lihtsam õppida siis, kui andmed on juba korras. Kolmandas praktikumis kasutame valmis tehtud andmestikku ja saame kohe midagi ära teha.</p>
-<p>Aga see tähendab, et <strong>kolmandas praktikumis kasutad sa muutujaid, mille päritolu sa veel ei tea.</strong> Nii see päris töös tavaliselt ei käi ja seetõttu tuleb ettevalmistus kohe järgmisena — praktikumid 4 ja 5 näitavad täpselt, kust iga muutuja tuli.</p>
+<p><strong>Regressioon on vaid üks samm korrelatsioonist edasi.</strong> Pilt, millest alustame, on täpselt seesama hajuvusdiagramm.</p>
 </blockquote>
-<blockquote class="blockquote">
-<p><strong>Miks nii palju aega andmete ettevalmistusele?</strong> Sest see on see osa tööst, mis päriselt aega võtab, ja see on koht, kus tehakse enamik vigu. Analüüsi enda tegemine on tavaliselt üks või kaks koodirida. Kõik ülejäänu on ettevalmistus.</p>
-</blockquote>
-<p>Sealt edasi liigume <strong>järeldava statistika</strong> juurde: kuidas hinnata ebakindlust ja kuidas testida hüpoteese. Viimane kolmandik kursusest on pühendatud <strong>seostele ja mudelitele</strong> — korrelatsioon, regressioon ja lõpuks logistiline regressioon, mis võimaldab modelleerida kahe kategooriaga tunnuseid nagu valimisosalus.</p>
-<section id="kaks-rada-raskemate-teemade-juures" class="level3">
-<h3 class="anchored" data-anchor-id="kaks-rada-raskemate-teemade-juures">Kaks rada raskemate teemade juures</h3>
-<p>Osa selle kursuse materjalist on raskem kui ülejäänu. Kõige raskem koht on praktikum 6, kus me vaatame, kust tuleb ebakindlus ja kuidas teda mõõta.</p>
-<p>Nendes kohtades on materjal esitatud <strong>kahel viisil</strong>, sakkide “Lihtsam seletus” ja “Täpsem seletus” all. Nad räägivad täpselt samast asjast: üks katsete ja piltide abil, teine võrdlemisi lihtsate valemitega, mis võimaldavad täpsemalt mõista, mis toimub.</p>
-<blockquote class="blockquote">
-<p><strong>Vali see, mis sulle sobib.</strong> Kui üks jääb segaseks, proovi teist. Kui aru saad mõlemast, siis veel parem — need kaks toetavad teineteist.</p>
-<p>Kumbki rada ei ole “õige” ega “lihtsustatud”. Lihtsam rada ei jäta midagi olulist välja; ta lihtsalt jõuab samale arusaamale teist teed pidi.</p>
-</blockquote>
+<section id="joon-läbi-punktipilve" class="level2">
+<h2 class="anchored" data-anchor-id="joon-läbi-punktipilve">Joon läbi punktipilve</h2>
+<p>Korrelatsioon ütles meile suuna ja tugevuse. Aga ta ei ütle, <strong>kui palju</strong> rahulolu muutub, kui usaldus kasvab ühe punkti võrra.</p>
+<p>Selleks tuleb tõmmata punktipilvest läbi joon. Joonisele lisab trendijoone funktsioon <code>stat_smooth()</code>. Argument <code>method = "lm"</code> ütleb, et joon peab olema sirge (<em>linear model</em>), ja <code>se = FALSE</code> peidab joone ümbert usaldusvahemiku.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(usaldus_rahulolu, <span class="fu">aes</span>(<span class="at">x =</span> usaldus_pol, <span class="at">y =</span> rahulolu_dem)) <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"firebrick3"</span>) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"usaldus poliitikute vastu (0-10)"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"rahulolu demokraatiaga (0-10)"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Regressioonijoon"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="09-regressioon_files/figure-html/joon-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Võimalikke jooni läbi selle pilve oleks lõpmata palju. <strong>Kõige parem joon on see, mille ennustusviga on kõige väiksem</strong> — täpsemalt see, mille puhul punktide kauguste ruutude summa joonest on kõige väiksem.</p>
 </section>
-</section>
-<section id="andmed" class="level2">
-<h2 class="anchored" data-anchor-id="andmed">Andmed</h2>
-<p>Kogu kursuse vältel kasutame <strong>Euroopa Sotsiaaluuringu</strong> (<em>European Social Survey</em>, ESS) 11. vooru <strong>Eesti</strong> andmeid. Andmed koguti aastatel 2023–2024 ja vastajaid on 1293.</p>
-<p>ESS on suur rahvusvaheline küsitlusuuring, mille valim on juhuvalim ja mille andmed on kõigile tasuta kättesaadavad. Seetõttu on ta üks kõige laialdasemalt kasutatavaid andmestikke Euroopa sotsiaalteadustes — ja täiesti mõeldav valik ka sinu enda bakalaureusetöö jaoks.</p>
-<blockquote class="blockquote">
-<p><strong>Viitamine.</strong> Kui sa kasutad neid andmeid, pead neile viitama:</p>
-<p>European Social Survey European Research Infrastructure (ESS ERIC) (2026). <em>ESS11 — integrated file, edition 4.2.</em> Sikt — Norwegian Agency for Shared Services in Education and Research. doi:10.21338/ess11e04_2</p>
-</blockquote>
-<p>ESS-i andmed on avaldatud litsentsi <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.et" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a> all. See tähendab, et neid tohib vabalt kasutada ja edasi jagada, kuid <strong>viitamise kohustusega</strong>, <strong>ainult mittetulunduslikul eesmärgil</strong> ning nii, et tuletatud andmestikud jäävad sama litsentsi alla. Üliõpilastöö puhul on kõik need tingimused täidetud — pead lihtsalt korrektselt viitama.</p>
-</section>
-<section id="kust-sotsiaalteadlane-andmeid-saab" class="level2">
-<h2 class="anchored" data-anchor-id="kust-sotsiaalteadlane-andmeid-saab">Kust sotsiaalteadlane andmeid saab</h2>
-<p>ESS ei ole ainus võimalus. Allpool on loetelu suurematest küsitlusuuringutest, mille andmed on <strong>tasuta kättesaadavad</strong> ja mida saab kasutada ka oma lõputöös. Enamik neist nõuab tasuta konto loomist.</p>
-<p><strong>Rahvusvahelised küsitlusuuringud</strong></p>
+<section id="regressioonivalem" class="level2">
+<h2 class="anchored" data-anchor-id="regressioonivalem">Regressioonivalem</h2>
+<p>Sirge võrrand on koolimatemaatikast tuttav:</p>
+<p><span class="math display">Y = a \times X + b</span></p>
+<p>Regressioonis kirjutatakse ta tavaliselt nii:</p>
+<p><span class="math display">Y_i = \beta_0 + \beta_1 \times X_i + e_i</span></p>
+<p>kus</p>
 <ul>
-<li><a href="https://www.europeansocialsurvey.org" target="_blank" rel="noopener noreferrer">European Social Survey (ESS)</a> — hoiakud, väärtused, käitumine, ~30 Euroopa riiki, alates 2001. Meie kursuse andmestik.</li>
-<li><a href="https://issp.org" target="_blank" rel="noopener noreferrer">International Social Survey Programme (ISSP)</a> — igal aastal üks teema (religioon, perekond, ebavõrdsus, keskkond), ligi 45 riiki, alates 1985.</li>
-<li><a href="https://www.worldvaluessurvey.org" target="_blank" rel="noopener noreferrer">World Values Survey</a> ja <a href="https://europeanvaluesstudy.eu" target="_blank" rel="noopener noreferrer">European Values Study</a> — väärtused ja hoiakud maailma ulatuses, pikad aegread alates 1981.</li>
-<li><a href="https://europa.eu/eurobarometer" target="_blank" rel="noopener noreferrer">Eurobaromeeter</a> — Euroopa Komisjoni regulaarsed küsitlused, väga sage ja päevakajaline, kõik EL-i riigid.</li>
-<li><a href="https://cses.org" target="_blank" rel="noopener noreferrer">Comparative Study of Electoral Systems (CSES)</a> — valimisjärgsed küsitlused, valimiskäitumine ja hoiakud, ühtlustatud üle riikide.</li>
+<li><span class="math inline">\beta_0</span> on <strong>vabaliige</strong> (<em>intercept</em>) — koht, kus joon läbib y-telge, ehk ennustatud väärtus siis, kui X on null;</li>
+<li><span class="math inline">\beta_1</span> on <strong>regressioonikordaja</strong> (<em>slope</em>) — kui palju Y muutub, kui X kasvab ühe ühiku võrra;</li>
+<li><span class="math inline">e_i</span> on <strong>jääk</strong> (<em>residual</em>) — see osa, mida mudel ei seleta.</li>
 </ul>
+</section>
+<section id="mudeli-sobitamine-ja-tõlgendamine" class="level2">
+<h2 class="anchored" data-anchor-id="mudeli-sobitamine-ja-tõlgendamine">Mudeli sobitamine ja tõlgendamine</h2>
+<p>Regressiooni tegemiseks on funktsioon <code>lm()</code>, mida nägime möödaminnes juba praktikumis 3. Nüüd vaatame teda korralikult.</p>
+<p>Valem kirjutatakse tildega: <strong>sõltuv muutuja ~ sõltumatu muutuja</strong>. Argument <code>data</code> ütleb, millisest andmetabelist muutujaid otsida.</p>
+<p>Tulemused tuleb panna objekti ja vaadata funktsiooniga <code>summary()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mudel <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus_pol, <span class="at">data =</span> data)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mudel)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+## Call:
+## lm(formula = rahulolu_dem ~ usaldus_pol, data = data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8.4891 -1.4682  0.1915  1.5318  7.2125 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.78754    0.10819   25.77   &lt;2e-16 ***
+## usaldus_pol  0.67015    0.02587   25.91   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.097 on 1216 degrees of freedom
+##   (75 observations deleted due to missingness)
+## Multiple R-squared:  0.3556, Adjusted R-squared:  0.3551 
+## F-statistic: 671.2 on 1 and 1216 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<section id="kuidas-seda-tabelit-lugeda" class="level3">
+<h3 class="anchored" data-anchor-id="kuidas-seda-tabelit-lugeda">Kuidas seda tabelit lugeda</h3>
+<p>Kõige tähtsam osa on <strong><code>Coefficients</code></strong>.</p>
+<ul>
+<li><strong><code>Estimate</code></strong> — koefitsiendi väärtus.</li>
+<li><strong><code>Std. Error</code></strong> — selle koefitsiendi standardviga, ehk kui kindlad me temas oleme.</li>
+<li><strong><code>t value</code></strong> — koefitsient jagatud standardveaga, ehk mitme standardvea kaugusel ta nullist on.</li>
+<li><strong><code>Pr(&gt;|t|)</code></strong> — p-väärtus. Nullhüpotees on, et koefitsient on <strong>null</strong> (seost ei ole).</li>
+<li><strong>Tärnid</strong> näitavad, millisesse vahemikku p-väärtus langeb.</li>
+</ul>
+<p><strong>Vabaliige</strong> (<code>(Intercept)</code>) on 2,54. See tähendab: kui usaldus poliitikute vastu on 0, siis on ennustatud rahulolu demokraatiaga 2,54.</p>
+<p><strong>Regressioonikordaja</strong> <code>usaldus_pol</code> juures on 0,55. See tähendab: <strong>iga punkt usalduse kasvu juures kasvab rahulolu demokraatiaga keskmiselt 0,55 punkti.</strong></p>
 <blockquote class="blockquote">
-<p><strong>Enne kui mõne andmestiku kasuks otsustad, kontrolli kolme asja:</strong> kas seal on need muutujad, mida sa vajad; kui palju on juhtumeid sinu huvipakkuvas riigis või grupis; ja kas valim on juhuvalim. Viimane on kõige olulisem — ilma selleta ei saa sa üldistusi teha.</p>
+<p><strong>Koefitsiendi arvuline väärtus sõltub mõõtskaalast.</strong> Kui muutuja ühik on väike, on koefitsient väike, ja vastupidi. Vanust saab mõõta päevades, aastates või aastakümnetes ning koefitsient oleks igal juhul erinev — kuigi seos on täpselt sama.</p>
+<p><strong>Seetõttu ei saa koefitsientide suurusi omavahel võrrelda</strong>, kui muutujad on erineval skaalal. Proovi järele: jaga vanus sajaga ja vaata, mis koefitsiendiga juhtub.</p>
 </blockquote>
 </section>
-<section id="kuidas-neid-materjale-kasutada" class="level2">
-<h2 class="anchored" data-anchor-id="kuidas-neid-materjale-kasutada">Kuidas neid materjale kasutada</h2>
-<p>Need materjalid on mõeldud <strong>koos läbi tegemiseks</strong>, mitte lugemiseks. Iga koodinäide on mõeldud selleks, et sa ta ise oma arvutis läbi jooksutaksid.</p>
-<p>Mõned praktilised soovitused.</p>
-<ul>
-<li><strong>Tee endale RStudio projekt</strong> ja hoia kogu kursuse töö seal (vt praktikum 1).</li>
-<li><strong>Kasuta ühte koodifaili</strong> kogu kursuse jooksul. Järgmine praktikum jätkab sealt, kus eelmine pooleli jäi.</li>
-<li><strong>Kommenteeri oma koodi.</strong> Sa kirjutad neid kommentaare iseendale kolme kuu pärast.</li>
-<li><strong>Ära kopeeri koodi pimesi.</strong> Kirjuta ta ise ümber ja muuda midagi ära — see on ainus viis, kuidas ta päriselt selgeks saab.</li>
-</ul>
-<p>Lisaks praktikumidele sisaldab kursus ka loenguid, kus me R-ga otseselt ei tegele, vaid räägime õpitavate meetodite üldisest loogikast, rakendamisest ja tõlgendamisest.</p>
-</section>
-<section id="täiendavad-materjalid" class="level2">
-<h2 class="anchored" data-anchor-id="täiendavad-materjalid">Täiendavad materjalid</h2>
-<p>Loengud ja need materjalid on üldiselt piisavad selle aine õpieesmärkide saavutamiseks. Siiski on alati mõistlik mujalt juurde lugeda. Kõik alljärgnevad on Moodle’is olemas.</p>
-<ul>
-<li><p><strong>Gravetter, F. J. ja Wallnau, L. B. (2016). <em>Statistics for the behavioral sciences.</em></strong> Väga lihtne ja arusaadav sissejuhatus statistikasse, mis on mõeldud tudengitele, kellel on vähe eelnevat kokkupuudet numbritega.</p></li>
-<li><p><strong>Agresti, A. ja Finlay, B. (2008). <em>Statistical Methods for the Social Sciences.</em></strong> Oluliselt laiem sissejuhatus, mis on mõeldud nõudlikumale lugejale ja viib teadmised suhteliselt kaugele.</p></li>
-<li><p><strong>Field, A., Miles, J. ja Field, Z. (2012). <em>Discovering statistics using R.</em></strong> Keerukuselt kuskil nende kahe vahel. Käsitleb kõiki neid teemasid, mida me sellel kursusel vaatame, ja palju muud — esmalt lihtsalt, kuid jõuab ka väga keerukate nüanssideni. Kõik peatükid on loetavad kihtidena, kuni vajaliku raskusastmeni.</p></li>
-</ul>
-<p><strong>Vabalt veebis kättesaadavad ja ajakohased</strong></p>
-<ul>
-<li><p><strong>Wickham, H., Çetinkaya-Rundel, M. ja Grolemund, G. <em>R for Data Science</em> (2. trükk).</strong> <a href="https://r4ds.hadley.nz" target="_blank" rel="noopener noreferrer">r4ds.hadley.nz</a>. Standardviide tänapäevase R-i kohta — just selle stiili järgi on kirjutatud ka meie andmetöötluse osad. Ei ole statistikaõpik, vaid R-i õpik.</p></li>
-<li><p><strong>Navarro, D. <em>Learning Statistics with R</em>.</strong> <a href="https://learningstatisticswithr.com" target="_blank" rel="noopener noreferrer">learningstatisticswithr.com</a>. Tasemelt ja toonilt lähedane Gravetteri ja Wallnau raamatule, aga R-põhine ja tasuta. Hea valik, kui tahad sama asja lugeda teise inimese sõnadega.</p></li>
-</ul>
+<section id="kui-hea-mudel-on" class="level3">
+<h3 class="anchored" data-anchor-id="kui-hea-mudel-on">Kui hea mudel on?</h3>
+<p>Selleks on tabeli lõpus <strong><code>Multiple R-squared</code></strong> — sama R-ruut, mida korrelatsiooni juures vaatasime. Ta ütleb, kui suure osa sõltuva muutuja varieeruvusest mudel ära seletab.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(usaldus_rahulolu<span class="sc">$</span>usaldus_pol, usaldus_rahulolu<span class="sc">$</span>rahulolu_dem)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.3556452</code></pre>
+</div>
+</div>
+<p>Sama arv, mille me korrelatsioonist saime. <strong>Kahe muutujaga regressiooni R-ruut ongi korrelatsiooni ruut.</strong></p>
 <blockquote class="blockquote">
-<p>Selle kursuse lõpus peaks igal osalejal olema baasteadmised selleks, et teha oma bakalaureusetöö jaoks kohane statistiline analüüs. Kuid laiemas pildis on see kõik alles algus — statistilise analüüsi maailm on peaaegu piiritu ja pidevalt arenev. Selle valdkonna baasteadmised jäävad aga alati samaks ning nende põhjal on alati võimalik oma valitud suundades edasi liikuda.</p>
+<p><strong>Mis vahe on <code>Multiple R-squared</code> ja <code>Adjusted R-squared</code> vahel?</strong> R-ruut kasvab alati, kui mudelisse muutujaid juurde panna — isegi siis, kui need muutujad on täiesti mõttetud. Kohandatud R-ruut karistab mudelit iga lisatud muutuja eest. <strong>Tõlgendamiseks kasuta kohandatud R-ruutu.</strong></p>
+</blockquote>
+<p>Sotsiaalteadustes on R-ruut tavaliselt madal. Mudel, mis seletab 10–20% varieeruvusest, on täiesti tavaline ja võib olla väga kasulik. Inimeste käitumine ei ole füüsika.</p>
+</section>
+</section>
+<section id="kas-mõõtmise-kvaliteet-loeb" class="level2">
+<h2 class="anchored" data-anchor-id="kas-mõõtmise-kvaliteet-loeb">Kas mõõtmise kvaliteet loeb?</h2>
+<p>Siin tasub korraks tagasi minna praktikumi 5 juurde.</p>
+<p>Seal me väitsime, et <strong>üksik küsitlusküsimus on jäme ja mürane mõõdik</strong> ning et mitmest küsimusest kokku pandud indeks mõõdab sama asja täpsemalt. Just sellepärast ehitasime faktoranalüüsiga muutuja <code>usaldus</code>, mis võtab kokku seitse usaldust puudutavat küsimust.</p>
+<p>Aga senini oleme selles peatükis kasutanud <code>usaldus_pol</code>-i — <strong>üht üksikut küsimust</strong> poliitikute usaldamise kohta.</p>
+<p>Kas sellel on vahet? Vaatame. Teeme sama mudeli kaks korda, ainult sõltumatu muutuja on erinev.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mudel_uksik <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus_pol, <span class="at">data =</span> data)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mudel_indeks <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus, <span class="at">data =</span> data)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">uksik_kysimus =</span> <span class="fu">summary</span>(mudel_uksik)<span class="sc">$</span>r.squared,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">faktorskoor =</span> <span class="fu">summary</span>(mudel_indeks)<span class="sc">$</span>r.squared</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## uksik_kysimus   faktorskoor 
+##     0.3556452     0.4983659</code></pre>
+</div>
+</div>
+<p>Üksiku küsimusega seletab mudel 36% rahulolu varieeruvusest. Faktorskooriga <strong>50%</strong>.</p>
+<p><strong>Andmed on samad. Inimesed on samad. Nähtus on sama.</strong> Ainus, mis muutus, on see, kui hoolikalt me seda nähtust mõõtsime — ja mudeli seletusvõime kasvas ligi poole võrra.</p>
+<blockquote class="blockquote">
+<p><strong>See on kogu praktikumi 5 mõte ühe arvuna.</strong> Mõõtmine ei ole tüütu eeltöö, mis tuleb enne “päris analüüsi” ära teha. Mõõtmise kvaliteet <strong>on</strong> tulemus. Halb mõõdik ei anna lihtsalt segasemat vastust — ta annab nõrgema seose, mis võib jääda leidmata.</p>
+<p>Kui sinu töös tuleb seos välja nõrgemana, kui kirjandus lubaks, siis on üks esimesi küsimusi: <strong>kas ma mõõdan seda asja piisavalt hästi?</strong></p>
+</blockquote>
+<p>Miks me siis edaspidi ikkagi üksikküsimusi kasutame? Kahel praktilisel põhjusel.</p>
+<ul>
+<li><strong>Tõlgendatavus.</strong> Koefitsient 0.67 tähendab “üks punkt usaldust juurde skaalal 0–10”. Faktorskoori koefitsient 1.9 tähendab “üks standardhälve usaldust juurde” — see nõuab iga kord lisaseletust.</li>
+<li><strong>Juhtumite arv.</strong> Indeksi jaoks peab vastaja olema vastanud <strong>kõigile seitsmele</strong> küsimusele. Seetõttu on mudelis 1087 juhtumit 1218 asemel.</li>
+</ul>
+<p>Nii et valik ei ole “üks on õige, teine vale”. Faktorskoor mõõdab paremini, üksikküsimus on lihtsamini tõlgendatav — ja <strong>sina pead selle valiku teadlikult tegema ja oma töös välja ütlema.</strong></p>
+<div class="arutelu">
+<p><strong>Arutelu.</strong> Kumba sa oma bakalaureusetöös kasutaksid? Mille põhjal sa otsustaksid? Ja kas on olukordi, kus nõrgem, aga arusaadavam mõõdik on parem valik kui tugevam, aga raskesti seletatav?</p>
+</div>
+</section>
+<section id="kuidas-seda-kirja-panna" class="level2">
+<h2 class="anchored" data-anchor-id="kuidas-seda-kirja-panna">Kuidas seda kirja panna</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Kuidas seda kirja panna">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nõuanne</span>Kuidas seda kirja panna
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Regressiooni puhul tuleb lisaks statistilistele näitajatele öelda, mida koefitsient <strong>sisuliselt</strong> tähendab — ühikutes, mitte ainult arvuna:</p>
+<p><strong>Lineaarne regressioon näitas, et usaldus poliitikute vastu ennustab rahulolu demokraatiaga statistiliselt olulisel määral (β = 0,55; SE = 0,02; p &lt; 0,001). Iga punkti võrra suurem usaldus poliitikute vastu vastab keskmiselt 0,55 punkti võrra suuremale rahulolule demokraatiaga (mõlemad skaalal 0–10). Mudel seletab 30% rahulolu varieeruvusest (kohandatud R² = 0,30).</strong></p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Ja kõige tähtsam hoiatus.</strong> Korrelatsioon ei ole põhjuslikkus. Meie mudel ei tõesta, et usaldus <strong>põhjustab</strong> rahulolu. Sama hästi võib rahulolu põhjustada usaldust, või võib mõlemat põhjustada midagi kolmandat. Regressioonivalemi kuju — üks muutuja vasakul, teine paremal — ei tähenda mitte midagi põhjuslikkuse kohta.</p>
+<p>Kirjuta “on seotud” ja “vastab”, mitte “põhjustab” ja “mõjutab”, kui sul ei ole põhjuslikkuse väitmiseks eraldi head argumenti.</p>
 </blockquote>
 </section>
-<section id="materjalide-koostamisest" class="level2">
-<h2 class="anchored" data-anchor-id="materjalide-koostamisest">Materjalide koostamisest</h2>
-<p>Nende materjalide 2026. aasta versiooni koostamisel on kasutatud tehisintellekti abi — konkreetselt Anthropicu keelemudelit Claude.</p>
-<p>Mudel aitas järgmiste ülesannetega:</p>
-<ul>
-<li>varasemate materjalide läbivaatamine ja probleemide leidmine;</li>
-<li>materjalide ümberstruktureerimine ja teksti mustandite kirjutamine;</li>
-<li>R-koodi kirjutamine ja kontrollimine uue andmestiku peal;</li>
-<li>näidete arvutuslik kontrollimine ning eelmise versiooni vigade tuvastamine.</li>
-</ul>
-<p>Kogu sisu on autori poolt üle vaadatud, kontrollitud ja toimetatud ning vastutus materjalide eest on autoril.</p>
-<blockquote class="blockquote">
-<p>Miks seda siin mainitakse? Sellepärast, et sama läbipaistvust ootame ka teilt. Tehisintellekti kasutamine ei ole keelatud, kuid ta tuleb ära märkida — vaata täpsemalt praktikumist 1 ja Tartu Ülikooli <a href="https://ut.ee/en/content/guidelines-using-ai-applications-teaching-and-studies" target="_blank" rel="noopener noreferrer">suunist tehisintellekti kasutamise kohta</a>.</p>
-</blockquote>
-</section>
-<section id="materjalide-kasutamine" class="level2">
-<h2 class="anchored" data-anchor-id="materjalide-kasutamine">Materjalide kasutamine</h2>
-<p>Need materjalid on avaldatud litsentsi <a href="https://creativecommons.org/licenses/by/4.0/deed.et" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> all.</p>
-<p>Neid tohib vabalt kasutada, kopeerida, jagada ja kohandada — nii õppetöös kui mujal — <strong>tingimusel, et viidatakse autorile</strong>:</p>
-<blockquote class="blockquote">
-<p>Mölder, M. (2026). <em>Statistilise analüüsi alused: praktikumimaterjalid.</em> Tartu Ülikool.</p>
-</blockquote>
-<p>See kehtib materjalide enda kohta: teksti, koodinäidete ja jooniste kohta. <strong>Andmetel on oma litsents</strong> (CC BY-NC-SA 4.0, vt eespool jaotist “Andmed”) ning see kehtib edasi ka siis, kui andmeid koos nende materjalidega kasutatakse.</p>
+<section id="harjutused" class="level2">
+<h2 class="anchored" data-anchor-id="harjutused">Harjutused</h2>
+<div class="harjutus">
+<p><strong>1. Oma mudel.</strong> Sobita mudel, kus <code>ranne</code> on sõltuv muutuja ja <code>haridus</code> sõltumatu. Kuidas tõlgendad koefitsienti? Kirjuta tulemus välja korrektses vormis.</p>
+<p><strong>2. Skaala mõju.</strong> Jaga muutuja <code>vanus</code> kümnega (nii mõõdad vanust aastakümnetes) ja sobita mudel <code>rahulolu_dem ~ vanus</code>. Võrdle koefitsienti algse mudeliga. Mis muutus ja mis jäi samaks?</p>
+<p><strong>3. Vabaliige.</strong> Vaata mudeli <code>rahulolu_dem ~ vanus</code> vabaliiget. Mida ta sisuliselt tähendab? Kas see on mõistlik arv?</p>
+<p><strong>4. Mõõtmise kvaliteet.</strong> Korda praktikumis tehtud võrdlust, aga kasuta sõltuva muutujana <code>ranne</code>. Kas ka siin annab faktorskoor tugevama seose kui üksik küsimus?</p>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -881,10 +926,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./08-korrelatsioon.html" class="pagination-link" aria-label="8. Korrelatsioon">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">8. Korrelatsioon</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01-r-alused.html" class="pagination-link" aria-label="1. R ja RStudio">
-        <span class="nav-page-text"><span class="chapter-title">1. R ja RStudio</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./10-mitmene-regressioon.html" class="pagination-link" aria-label="10. Mitmene regressioon">
+        <span class="nav-page-text"><span class="chapter-title">10. Mitmene regressioon</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

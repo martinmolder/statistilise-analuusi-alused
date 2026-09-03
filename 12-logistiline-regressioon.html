@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>11. Logistiline regressioon – Statistilise analüüsi alused</title>
+<title>12. Logistiline regressioon – Statistilise analüüsi alused</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./10-tulemuste-esitamine.html" rel="prev">
+<link href="./11-tulemuste-esitamine.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -161,7 +161,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./11-logistiline-regressioon.html"><span class="chapter-title">11. Logistiline regressioon</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./12-logistiline-regressioon.html"><span class="chapter-title">12. Logistiline regressioon</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -195,7 +195,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Alustamine</span></a>
+ <span class="menu-text">Andmetega alustamine</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -211,6 +211,11 @@ window.Quarto = {
   <a href="./02-andmete-laadimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2. Andmete laadimine</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Kirjeldamine ja visualiseerimine</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -224,12 +229,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Andmete ettevalmistus I</span></a>
+  <a href="./04-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus I</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus II</span></a>
+  <a href="./05-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Andmete ettevalmistus II</span></a>
   </div>
 </li>
       </ul>
@@ -237,7 +242,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Andmete kirjeldamine</span></a>
+ <span class="menu-text">Järeldav statistika</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -245,7 +250,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></a>
+  <a href="./06-valim-ja-hupoteesid.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6. Valim, ebakindlus ja hüpoteeside testimine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-keskmiste-vordlemine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Keskmiste võrdlemine</span></a>
   </div>
 </li>
       </ul>
@@ -253,7 +263,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Järeldav statistika</span></a>
+ <span class="menu-text">Seosed ja mudelid</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -261,43 +271,27 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-valim-ja-ebakindlus.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6. Valim ja ebakindlus</span></a>
+  <a href="./08-korrelatsioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8. Korrelatsioon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-hupoteeside-testimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Hüpoteeside testimine</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Seosed ja mudelid</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./08-korrelatsioon-ja-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a>
+  <a href="./09-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Regressioon: baasmudel</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Mitmene regressioon</span></a>
+  <a href="./10-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Mitmene regressioon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Tulemuste esitamine</span></a>
+  <a href="./11-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Tulemuste esitamine</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-logistiline-regressioon.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">11. Logistiline regressioon</span></a>
+  <a href="./12-logistiline-regressioon.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">12. Logistiline regressioon</span></a>
   </div>
 </li>
       </ul>
@@ -337,9 +331,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./11-logistiline-regressioon.html"><span class="chapter-title">11. Logistiline regressioon</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./12-logistiline-regressioon.html"><span class="chapter-title">12. Logistiline regressioon</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">11. Logistiline regressioon</span></h1>
+<h1 class="title"><span class="chapter-title">12. Logistiline regressioon</span></h1>
 </div>
 
 
@@ -368,7 +362,7 @@ window.Quarto = {
 <p>Selliste sõltuvate muutujate jaoks on <strong>logistiline regressioon</strong>.</p>
 <section id="miks-tavaline-regressioon-ei-sobi" class="level2">
 <h2 class="anchored" data-anchor-id="miks-tavaline-regressioon-ei-sobi">Miks tavaline regressioon ei sobi</h2>
-<p>Meie muutuja <code>valis</code> on kodeeritud 0 ja 1 — täpselt nii, nagu me ta praktikumis 4 ette valmistasime.</p>
+<p>Meie muutuja <code>valis</code> on kodeeritud 0 ja 1 — täpselt nii, nagu me ta praktikumis 5 ette valmistasime.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>valis, <span class="at">useNA =</span> <span class="st">"ifany"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -413,7 +407,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="11-logistiline-regressioon_files/figure-html/halb-mudel-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="12-logistiline-regressioon_files/figure-html/halb-mudel-joonis-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -503,7 +497,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="11-logistiline-regressioon_files/figure-html/sansid-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="12-logistiline-regressioon_files/figure-html/sansid-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -539,7 +533,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="11-logistiline-regressioon_files/figure-html/logit-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="12-logistiline-regressioon_files/figure-html/logit-joonis-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -669,7 +663,7 @@ window.Quarto = {
 </section>
 <section id="ennustatud-tõenäosused" class="level3">
 <h3 class="anchored" data-anchor-id="ennustatud-tõenäosused">Ennustatud tõenäosused</h3>
-<p>Kõige arusaadavam viis on ikkagi joonis. Sama funktsioon, mida praktikumis 10 kasutasime, töötab ka siin — ja ta teeb tagasiteisenduse tõenäosusteks ise ära, nii et y-teljel on tavaline tõenäosus, mitte logit.</p>
+<p>Kõige arusaadavam viis on ikkagi joonis. Sama funktsioon, mida praktikumis 11 kasutasime, töötab ka siin — ja ta teeb tagasiteisenduse tõenäosusteks ise ära, nii et y-teljel on tavaline tõenäosus, mitte logit.</p>
 <p>Joonisel kasutame ka funktsiooni <code>ylim()</code>, mis fikseerib y-telje ulatuse. Paneme ta 0-st 1-ni, sest tõenäosus saabki ainult selles vahemikus olla — nii on kohe näha, kui suur osa võimalikust skaalast tegelikult kasutuses on.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ennustus_huvi <span class="ot">&lt;-</span> <span class="fu">predict_response</span>(logit1, <span class="at">terms =</span> <span class="st">"huvi_pol"</span>)</span>
@@ -694,7 +688,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="11-logistiline-regressioon_files/figure-html/pred-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="12-logistiline-regressioon_files/figure-html/pred-joonis-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -717,7 +711,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="11-logistiline-regressioon_files/figure-html/pred-vanus-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="12-logistiline-regressioon_files/figure-html/pred-vanus-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -937,25 +931,25 @@ window.Quarto = {
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_8ba18ydy8lsxb84c3fze = TinyTable.createTableFunctions("tinytable_8ba18ydy8lsxb84c3fze");
+      const tableFns_ehoqcutboicfnpjgb575 = TinyTable.createTableFunctions("tinytable_ehoqcutboicfnpjgb575");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '20', j: 2 }, { i: '20', j: 3 } ], css_id: 'tinytable_css_unbgsfi0tsi9am9vlakc',}, 
-          { positions: [ { i: '16', j: 2 }, { i: '16', j: 3 } ], css_id: 'tinytable_css_cr3nkc96huqisabkd0aq',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 } ], css_id: 'tinytable_css_i4zl990zstj1780z3kx1',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_yogi51886o4sot6smwbe',}, 
-          { positions: [ { i: '20', j: 1 } ], css_id: 'tinytable_css_9jiw7h4m29w5ii6ujbln',}, 
-          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_pjvj0wdcz82zwej91n48',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 } ], css_id: 'tinytable_css_hsangua8fxfjj5dmm9wv',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_a4g57qb55dsdl51d9ufh',}, 
+          { positions: [ { i: '20', j: 2 }, { i: '20', j: 3 } ], css_id: 'tinytable_css_0lyzj8bq9zvfwxzw8q1o',}, 
+          { positions: [ { i: '16', j: 2 }, { i: '16', j: 3 } ], css_id: 'tinytable_css_2wrh7p3s8r2oa5nc9zdz',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 } ], css_id: 'tinytable_css_d7ej68w782t8zhfqcdnk',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_pi17rnq7vh3sur31cedf',}, 
+          { positions: [ { i: '20', j: 1 } ], css_id: 'tinytable_css_zzz6rhx0t3ia7irxx7hg',}, 
+          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_vzy04b1cy8s3bdo6w5wa',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 } ], css_id: 'tinytable_css_4xas78g61qgrwz89fhqa',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_xrcobnstuhwunlqsskxi',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_8ba18ydy8lsxb84c3fze.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_ehoqcutboicfnpjgb575.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -964,17 +958,17 @@ window.Quarto = {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_8ba18ydy8lsxb84c3fze td.tinytable_css_unbgsfi0tsi9am9vlakc, #tinytable_8ba18ydy8lsxb84c3fze th.tinytable_css_unbgsfi0tsi9am9vlakc {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_8ba18ydy8lsxb84c3fze td.tinytable_css_cr3nkc96huqisabkd0aq, #tinytable_8ba18ydy8lsxb84c3fze th.tinytable_css_cr3nkc96huqisabkd0aq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_8ba18ydy8lsxb84c3fze td.tinytable_css_i4zl990zstj1780z3kx1, #tinytable_8ba18ydy8lsxb84c3fze th.tinytable_css_i4zl990zstj1780z3kx1 { text-align: center }
-    #tinytable_8ba18ydy8lsxb84c3fze td.tinytable_css_yogi51886o4sot6smwbe, #tinytable_8ba18ydy8lsxb84c3fze th.tinytable_css_yogi51886o4sot6smwbe {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_8ba18ydy8lsxb84c3fze td.tinytable_css_9jiw7h4m29w5ii6ujbln, #tinytable_8ba18ydy8lsxb84c3fze th.tinytable_css_9jiw7h4m29w5ii6ujbln {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_8ba18ydy8lsxb84c3fze td.tinytable_css_pjvj0wdcz82zwej91n48, #tinytable_8ba18ydy8lsxb84c3fze th.tinytable_css_pjvj0wdcz82zwej91n48 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_8ba18ydy8lsxb84c3fze td.tinytable_css_hsangua8fxfjj5dmm9wv, #tinytable_8ba18ydy8lsxb84c3fze th.tinytable_css_hsangua8fxfjj5dmm9wv { text-align: left }
-    #tinytable_8ba18ydy8lsxb84c3fze td.tinytable_css_a4g57qb55dsdl51d9ufh, #tinytable_8ba18ydy8lsxb84c3fze th.tinytable_css_a4g57qb55dsdl51d9ufh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_ehoqcutboicfnpjgb575 td.tinytable_css_0lyzj8bq9zvfwxzw8q1o, #tinytable_ehoqcutboicfnpjgb575 th.tinytable_css_0lyzj8bq9zvfwxzw8q1o {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ehoqcutboicfnpjgb575 td.tinytable_css_2wrh7p3s8r2oa5nc9zdz, #tinytable_ehoqcutboicfnpjgb575 th.tinytable_css_2wrh7p3s8r2oa5nc9zdz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ehoqcutboicfnpjgb575 td.tinytable_css_d7ej68w782t8zhfqcdnk, #tinytable_ehoqcutboicfnpjgb575 th.tinytable_css_d7ej68w782t8zhfqcdnk { text-align: center }
+    #tinytable_ehoqcutboicfnpjgb575 td.tinytable_css_pi17rnq7vh3sur31cedf, #tinytable_ehoqcutboicfnpjgb575 th.tinytable_css_pi17rnq7vh3sur31cedf {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_ehoqcutboicfnpjgb575 td.tinytable_css_zzz6rhx0t3ia7irxx7hg, #tinytable_ehoqcutboicfnpjgb575 th.tinytable_css_zzz6rhx0t3ia7irxx7hg {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_ehoqcutboicfnpjgb575 td.tinytable_css_vzy04b1cy8s3bdo6w5wa, #tinytable_ehoqcutboicfnpjgb575 th.tinytable_css_vzy04b1cy8s3bdo6w5wa {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_ehoqcutboicfnpjgb575 td.tinytable_css_4xas78g61qgrwz89fhqa, #tinytable_ehoqcutboicfnpjgb575 th.tinytable_css_4xas78g61qgrwz89fhqa { text-align: left }
+    #tinytable_ehoqcutboicfnpjgb575 td.tinytable_css_xrcobnstuhwunlqsskxi, #tinytable_ehoqcutboicfnpjgb575 th.tinytable_css_xrcobnstuhwunlqsskxi {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_8ba18ydy8lsxb84c3fze" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_ehoqcutboicfnpjgb575" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <caption>Valimas käimist ennustavad tegurid (logiti koefitsiendid)</caption>
         <thead>
               <tr>
@@ -1119,25 +1113,25 @@ window.Quarto = {
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_7qpjhk5br2corqvzytxf = TinyTable.createTableFunctions("tinytable_7qpjhk5br2corqvzytxf");
+      const tableFns_0nltqpqjysfiz5qnlppr = TinyTable.createTableFunctions("tinytable_0nltqpqjysfiz5qnlppr");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '20', j: 2 }, { i: '20', j: 3 } ], css_id: 'tinytable_css_2grhyxsq04qzpxlefzwq',}, 
-          { positions: [ { i: '16', j: 2 }, { i: '16', j: 3 } ], css_id: 'tinytable_css_6sjtw88y21ske0y4xiy5',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 } ], css_id: 'tinytable_css_11l0pb1vj123tgzfm9ee',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_q2ltctp3bqrfwww2rujj',}, 
-          { positions: [ { i: '20', j: 1 } ], css_id: 'tinytable_css_dy0phvv1vi6yyik966vz',}, 
-          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_y0snh1ph9niw55jzhh80',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 } ], css_id: 'tinytable_css_0tmknc4rb56w0kfgyyzq',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_8z8zocl1byxkystfglmv',}, 
+          { positions: [ { i: '20', j: 2 }, { i: '20', j: 3 } ], css_id: 'tinytable_css_k63vj0yjugu270jtp955',}, 
+          { positions: [ { i: '16', j: 2 }, { i: '16', j: 3 } ], css_id: 'tinytable_css_5dh169mmh3gwu4qkhj15',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 } ], css_id: 'tinytable_css_fqc73s0tl58ks378q3k3',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_n6qznlibqonsmjnxw7tx',}, 
+          { positions: [ { i: '20', j: 1 } ], css_id: 'tinytable_css_jqsuc0wbhsn8ciidxyyf',}, 
+          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_nd7h1b4hyx0we8t98vmd',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 } ], css_id: 'tinytable_css_bq23zbc2yme4mhz8987h',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_vdbyxol0d8toxve8tks9',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_7qpjhk5br2corqvzytxf.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_0nltqpqjysfiz5qnlppr.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1146,17 +1140,17 @@ window.Quarto = {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_7qpjhk5br2corqvzytxf td.tinytable_css_2grhyxsq04qzpxlefzwq, #tinytable_7qpjhk5br2corqvzytxf th.tinytable_css_2grhyxsq04qzpxlefzwq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_7qpjhk5br2corqvzytxf td.tinytable_css_6sjtw88y21ske0y4xiy5, #tinytable_7qpjhk5br2corqvzytxf th.tinytable_css_6sjtw88y21ske0y4xiy5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_7qpjhk5br2corqvzytxf td.tinytable_css_11l0pb1vj123tgzfm9ee, #tinytable_7qpjhk5br2corqvzytxf th.tinytable_css_11l0pb1vj123tgzfm9ee { text-align: center }
-    #tinytable_7qpjhk5br2corqvzytxf td.tinytable_css_q2ltctp3bqrfwww2rujj, #tinytable_7qpjhk5br2corqvzytxf th.tinytable_css_q2ltctp3bqrfwww2rujj {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_7qpjhk5br2corqvzytxf td.tinytable_css_dy0phvv1vi6yyik966vz, #tinytable_7qpjhk5br2corqvzytxf th.tinytable_css_dy0phvv1vi6yyik966vz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_7qpjhk5br2corqvzytxf td.tinytable_css_y0snh1ph9niw55jzhh80, #tinytable_7qpjhk5br2corqvzytxf th.tinytable_css_y0snh1ph9niw55jzhh80 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_7qpjhk5br2corqvzytxf td.tinytable_css_0tmknc4rb56w0kfgyyzq, #tinytable_7qpjhk5br2corqvzytxf th.tinytable_css_0tmknc4rb56w0kfgyyzq { text-align: left }
-    #tinytable_7qpjhk5br2corqvzytxf td.tinytable_css_8z8zocl1byxkystfglmv, #tinytable_7qpjhk5br2corqvzytxf th.tinytable_css_8z8zocl1byxkystfglmv {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_0nltqpqjysfiz5qnlppr td.tinytable_css_k63vj0yjugu270jtp955, #tinytable_0nltqpqjysfiz5qnlppr th.tinytable_css_k63vj0yjugu270jtp955 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_0nltqpqjysfiz5qnlppr td.tinytable_css_5dh169mmh3gwu4qkhj15, #tinytable_0nltqpqjysfiz5qnlppr th.tinytable_css_5dh169mmh3gwu4qkhj15 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_0nltqpqjysfiz5qnlppr td.tinytable_css_fqc73s0tl58ks378q3k3, #tinytable_0nltqpqjysfiz5qnlppr th.tinytable_css_fqc73s0tl58ks378q3k3 { text-align: center }
+    #tinytable_0nltqpqjysfiz5qnlppr td.tinytable_css_n6qznlibqonsmjnxw7tx, #tinytable_0nltqpqjysfiz5qnlppr th.tinytable_css_n6qznlibqonsmjnxw7tx {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_0nltqpqjysfiz5qnlppr td.tinytable_css_jqsuc0wbhsn8ciidxyyf, #tinytable_0nltqpqjysfiz5qnlppr th.tinytable_css_jqsuc0wbhsn8ciidxyyf {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_0nltqpqjysfiz5qnlppr td.tinytable_css_nd7h1b4hyx0we8t98vmd, #tinytable_0nltqpqjysfiz5qnlppr th.tinytable_css_nd7h1b4hyx0we8t98vmd {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_0nltqpqjysfiz5qnlppr td.tinytable_css_bq23zbc2yme4mhz8987h, #tinytable_0nltqpqjysfiz5qnlppr th.tinytable_css_bq23zbc2yme4mhz8987h { text-align: left }
+    #tinytable_0nltqpqjysfiz5qnlppr td.tinytable_css_vdbyxol0d8toxve8tks9, #tinytable_0nltqpqjysfiz5qnlppr th.tinytable_css_vdbyxol0d8toxve8tks9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_7qpjhk5br2corqvzytxf" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_0nltqpqjysfiz5qnlppr" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <caption>Valimas käimist ennustavad tegurid</caption>
         <thead>
               <tr>
@@ -1303,25 +1297,25 @@ window.Quarto = {
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_n2knd3cov9u3iz3478sn = TinyTable.createTableFunctions("tinytable_n2knd3cov9u3iz3478sn");
+      const tableFns_1vpt5f8uws94uvuz46qa = TinyTable.createTableFunctions("tinytable_1vpt5f8uws94uvuz46qa");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '16', j: 2 } ], css_id: 'tinytable_css_4focxxlh9b1zd2qoe545',}, 
-          { positions: [ { i: '14', j: 2 } ], css_id: 'tinytable_css_uddns9cqh95g6i54m3hd',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '15', j: 2 } ], css_id: 'tinytable_css_ftx2fl1n8buqzzct7ohp',}, 
-          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_3i8jz8ul413xiihlyw1x',}, 
-          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_caeh8nebdkq6raa3ntn3',}, 
-          { positions: [ { i: '14', j: 1 } ], css_id: 'tinytable_css_70wudgtmj0bfbg2lpvmk',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '15', j: 1 } ], css_id: 'tinytable_css_97qb91q5ljs6yf7ph6z3',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_wtc721cqwwetnvhv87b0',}, 
+          { positions: [ { i: '16', j: 2 } ], css_id: 'tinytable_css_bmmwct6fvkdqaxsd6aea',}, 
+          { positions: [ { i: '14', j: 2 } ], css_id: 'tinytable_css_sc8f8o4lxa7pl8zmpdjp',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '15', j: 2 } ], css_id: 'tinytable_css_3rebs8vvdgllejz3fuii',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_1v8fwrznrafo2h1pzbmv',}, 
+          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_azp7tx3jd2qwe8a2zbbg',}, 
+          { positions: [ { i: '14', j: 1 } ], css_id: 'tinytable_css_tkvtg4erarnrmj5xcjbl',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '15', j: 1 } ], css_id: 'tinytable_css_20gqm4e0e58xmkijytrw',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_dd7e8ywhlx727ds8glut',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_n2knd3cov9u3iz3478sn.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_1vpt5f8uws94uvuz46qa.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1330,17 +1324,17 @@ window.Quarto = {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_n2knd3cov9u3iz3478sn td.tinytable_css_4focxxlh9b1zd2qoe545, #tinytable_n2knd3cov9u3iz3478sn th.tinytable_css_4focxxlh9b1zd2qoe545 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_n2knd3cov9u3iz3478sn td.tinytable_css_uddns9cqh95g6i54m3hd, #tinytable_n2knd3cov9u3iz3478sn th.tinytable_css_uddns9cqh95g6i54m3hd {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_n2knd3cov9u3iz3478sn td.tinytable_css_ftx2fl1n8buqzzct7ohp, #tinytable_n2knd3cov9u3iz3478sn th.tinytable_css_ftx2fl1n8buqzzct7ohp { text-align: center }
-    #tinytable_n2knd3cov9u3iz3478sn td.tinytable_css_3i8jz8ul413xiihlyw1x, #tinytable_n2knd3cov9u3iz3478sn th.tinytable_css_3i8jz8ul413xiihlyw1x {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_n2knd3cov9u3iz3478sn td.tinytable_css_caeh8nebdkq6raa3ntn3, #tinytable_n2knd3cov9u3iz3478sn th.tinytable_css_caeh8nebdkq6raa3ntn3 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_n2knd3cov9u3iz3478sn td.tinytable_css_70wudgtmj0bfbg2lpvmk, #tinytable_n2knd3cov9u3iz3478sn th.tinytable_css_70wudgtmj0bfbg2lpvmk {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_n2knd3cov9u3iz3478sn td.tinytable_css_97qb91q5ljs6yf7ph6z3, #tinytable_n2knd3cov9u3iz3478sn th.tinytable_css_97qb91q5ljs6yf7ph6z3 { text-align: left }
-    #tinytable_n2knd3cov9u3iz3478sn td.tinytable_css_wtc721cqwwetnvhv87b0, #tinytable_n2knd3cov9u3iz3478sn th.tinytable_css_wtc721cqwwetnvhv87b0 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_1vpt5f8uws94uvuz46qa td.tinytable_css_bmmwct6fvkdqaxsd6aea, #tinytable_1vpt5f8uws94uvuz46qa th.tinytable_css_bmmwct6fvkdqaxsd6aea {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_1vpt5f8uws94uvuz46qa td.tinytable_css_sc8f8o4lxa7pl8zmpdjp, #tinytable_1vpt5f8uws94uvuz46qa th.tinytable_css_sc8f8o4lxa7pl8zmpdjp {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_1vpt5f8uws94uvuz46qa td.tinytable_css_3rebs8vvdgllejz3fuii, #tinytable_1vpt5f8uws94uvuz46qa th.tinytable_css_3rebs8vvdgllejz3fuii { text-align: center }
+    #tinytable_1vpt5f8uws94uvuz46qa td.tinytable_css_1v8fwrznrafo2h1pzbmv, #tinytable_1vpt5f8uws94uvuz46qa th.tinytable_css_1v8fwrznrafo2h1pzbmv {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_1vpt5f8uws94uvuz46qa td.tinytable_css_azp7tx3jd2qwe8a2zbbg, #tinytable_1vpt5f8uws94uvuz46qa th.tinytable_css_azp7tx3jd2qwe8a2zbbg {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_1vpt5f8uws94uvuz46qa td.tinytable_css_tkvtg4erarnrmj5xcjbl, #tinytable_1vpt5f8uws94uvuz46qa th.tinytable_css_tkvtg4erarnrmj5xcjbl {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_1vpt5f8uws94uvuz46qa td.tinytable_css_20gqm4e0e58xmkijytrw, #tinytable_1vpt5f8uws94uvuz46qa th.tinytable_css_20gqm4e0e58xmkijytrw { text-align: left }
+    #tinytable_1vpt5f8uws94uvuz46qa td.tinytable_css_dd7e8ywhlx727ds8glut, #tinytable_1vpt5f8uws94uvuz46qa th.tinytable_css_dd7e8ywhlx727ds8glut {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_n2knd3cov9u3iz3478sn" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_1vpt5f8uws94uvuz46qa" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <caption>Valimas käimist ennustavad tegurid (šansside suhted)</caption>
         <thead>
               <tr>
@@ -1883,8 +1877,8 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./10-tulemuste-esitamine.html" class="pagination-link" aria-label="10. Tulemuste esitamine">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">10. Tulemuste esitamine</span></span>
+      <a href="./11-tulemuste-esitamine.html" class="pagination-link" aria-label="11. Tulemuste esitamine">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">11. Tulemuste esitamine</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

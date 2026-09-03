@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5. Kirjeldamine ja visualiseerimine – Statistilise analüüsi alused</title>
+<title>3. Kirjeldamine ja visualiseerimine – Statistilise analüüsi alused</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./06-valim-ja-ebakindlus.html" rel="next">
-<link href="./04-andmete-ettevalmistus-2.html" rel="prev">
+<link href="./04-andmete-ettevalmistus-1.html" rel="next">
+<link href="./02-andmete-laadimine.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-kirjeldamine-ja-visualiseerimine.html">Andmete kirjeldamine</a></li><li class="breadcrumb-item"><a href="./05-kirjeldamine-ja-visualiseerimine.html"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-r-alused.html">Andmetega alustamine</a></li><li class="breadcrumb-item"><a href="./03-kirjeldamine-ja-visualiseerimine.html"><span class="chapter-title">3. Kirjeldamine ja visualiseerimine</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -153,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Alustamine</span></a>
+ <span class="menu-text">Andmetega alustamine</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -169,6 +169,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <a href="./02-andmete-laadimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2. Andmete laadimine</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">3. Kirjeldamine ja visualiseerimine</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -182,12 +187,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Andmete ettevalmistus I</span></a>
+  <a href="./04-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus I</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus II</span></a>
+  <a href="./05-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Andmete ettevalmistus II</span></a>
   </div>
 </li>
       </ul>
@@ -195,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Andmete kirjeldamine</span></a>
+ <span class="menu-text">Järeldav statistika</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -203,7 +208,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></a>
+  <a href="./06-valim-ja-hupoteesid.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6. Valim, ebakindlus ja hüpoteeside testimine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-keskmiste-vordlemine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Keskmiste võrdlemine</span></a>
   </div>
 </li>
       </ul>
@@ -211,7 +221,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Järeldav statistika</span></a>
+ <span class="menu-text">Seosed ja mudelid</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -219,43 +229,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-valim-ja-ebakindlus.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6. Valim ja ebakindlus</span></a>
+  <a href="./08-korrelatsioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8. Korrelatsioon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-hupoteeside-testimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Hüpoteeside testimine</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Seosed ja mudelid</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./08-korrelatsioon-ja-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a>
+  <a href="./09-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Regressioon: baasmudel</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Mitmene regressioon</span></a>
+  <a href="./10-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Mitmene regressioon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Tulemuste esitamine</span></a>
+  <a href="./11-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Tulemuste esitamine</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-logistiline-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Logistiline regressioon</span></a>
+  <a href="./12-logistiline-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">12. Logistiline regressioon</span></a>
   </div>
 </li>
       </ul>
@@ -275,11 +269,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#kaks-muutujat-korraga" id="toc-kaks-muutujat-korraga" class="nav-link" data-scroll-target="#kaks-muutujat-korraga">Kaks muutujat korraga</a></li>
   </ul></li>
+  <li><a href="#toru" id="toc-toru" class="nav-link" data-scroll-target="#toru">Toru</a></li>
   <li><a href="#pidevad-muutujad" id="toc-pidevad-muutujad" class="nav-link" data-scroll-target="#pidevad-muutujad">Pidevad muutujad</a>
   <ul class="collapse">
   <li><a href="#gruppide-kaupa" id="toc-gruppide-kaupa" class="nav-link" data-scroll-target="#gruppide-kaupa">Gruppide kaupa</a></li>
   </ul></li>
-  <li><a href="#kaalutud-ja-kaalumata-kirjeldav-statistika" id="toc-kaalutud-ja-kaalumata-kirjeldav-statistika" class="nav-link" data-scroll-target="#kaalutud-ja-kaalumata-kirjeldav-statistika">Kaalutud ja kaalumata kirjeldav statistika</a></li>
+  <li><a href="#kaalud" id="toc-kaalud" class="nav-link" data-scroll-target="#kaalud">Kaalud</a>
+  <ul class="collapse">
+  <li><a href="#miks-kaalud-olemas-on" id="toc-miks-kaalud-olemas-on" class="nav-link" data-scroll-target="#miks-kaalud-olemas-on">Miks kaalud olemas on</a></li>
+  <li><a href="#millal-kaalud-loevad" id="toc-millal-kaalud-loevad" class="nav-link" data-scroll-target="#millal-kaalud-loevad">Millal kaalud loevad?</a></li>
+  <li><a href="#mida-sellest-järeldada" id="toc-mida-sellest-järeldada" class="nav-link" data-scroll-target="#mida-sellest-järeldada">Mida sellest järeldada</a></li>
+  </ul></li>
   <li><a href="#kirjeldava-statistika-tabel" id="toc-kirjeldava-statistika-tabel" class="nav-link" data-scroll-target="#kirjeldava-statistika-tabel">Kirjeldava statistika tabel</a></li>
   <li><a href="#kuidas-seda-kirja-panna" id="toc-kuidas-seda-kirja-panna" class="nav-link" data-scroll-target="#kuidas-seda-kirja-panna">Kuidas seda kirja panna</a></li>
   <li><a href="#visualiseerimine" id="toc-visualiseerimine" class="nav-link" data-scroll-target="#visualiseerimine">Visualiseerimine</a>
@@ -307,9 +307,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-kirjeldamine-ja-visualiseerimine.html">Andmete kirjeldamine</a></li><li class="breadcrumb-item"><a href="./05-kirjeldamine-ja-visualiseerimine.html"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-r-alused.html">Andmetega alustamine</a></li><li class="breadcrumb-item"><a href="./03-kirjeldamine-ja-visualiseerimine.html"><span class="chapter-title">3. Kirjeldamine ja visualiseerimine</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></h1>
+<h1 class="title"><span class="chapter-title">3. Kirjeldamine ja visualiseerimine</span></h1>
 </div>
 
 
@@ -326,12 +326,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>Eelmises praktikumis saime andmed R-i sisse. Nüüd hakkame neist midagi teada saama.</p>
+<p>Kasutame <strong>analüüsivalmis andmestikku</strong> — faili <code>ess11_ee_clean.rdata</code>, mille sa laadisid Moodle’ist alla koos ülejäänutega.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/ess11_ee_clean.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/ess11_ee_clean.rdata"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##  [1] "idno"         "pspwght"      "anweight"     "vanus"        "sugu"        
+##  [6] "haridus"      "sissetulek"   "elukoht"      "vasak_parem"  "huvi_pol"    
+## [11] "valis"        "erakond"      "usaldus_pol"  "usaldus_rii"  "usaldus_inim"
+## [16] "rahulolu_dem" "ranne"        "usaldus"      "tervis"</code></pre>
 </div>
-<p>Andmestik on korras. Nüüd hakkame temast midagi teada saama.</p>
+</div>
+<blockquote class="blockquote">
+<p><strong>Kust see fail tuleb?</strong> See ei ole ESS-i originaalfail. Keegi — antud juhul mina — on ta juba korda teinud: valinud välja vajalikud muutujad, andnud neile eestikeelsed nimed ja sildid, kodeerinud osad ümber ja ehitanud mõnest küsimusest uued muutujad.</p>
+<p><strong>Just seda tööd me teeme ise järgmises kahes praktikumis.</strong> Praegu läheme otse asja juurde, sest andmete kirjeldamist on lihtsam õppida siis, kui andmed on juba korras.</p>
+<p>Kaks muutujat vajavad kohe lühikest seletust, sest nad ei näe välja nagu küsitluse vastused:</p>
+<ul>
+<li><strong><code>ranne</code></strong> — suhtumine sisserändesse, kokku pandud kolmest küsimusest;</li>
+<li><strong><code>usaldus</code></strong> — usaldus riigi institutsioonide vastu, kokku pandud seitsmest küsimusest.</li>
+</ul>
+<p>Mõlemad on <strong>standardiseeritud</strong>: keskmine on 0 ja enamik väärtusi jääb −2 ja +2 vahele. Väärtus 0 tähendab keskmist eestimaalast, +1 tähendab ühe standardhälbe võrra positiivsemat. Kuidas neid tehakse ja miks just nii — see selgub praktikumis 5.</p>
+</blockquote>
 <section id="kirjeldav-ja-järeldav-statistika" class="level2">
 <h2 class="anchored" data-anchor-id="kirjeldav-ja-järeldav-statistika">Kirjeldav ja järeldav statistika</h2>
 <p>Oma andmete põhjal järelduste tegemine jaguneb kaheks.</p>
@@ -345,15 +364,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="kategoorilised-muutujad">Kategoorilised muutujad</h2>
 <p>Kategoorilise muutuja puhul huvitab meid, <strong>kui palju on igas kategoorias juhtumeid</strong>. Selleks on <code>table()</code>, ja osakaaludeks teisendab <code>prop.table()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sagedused <span class="ot">&lt;-</span> <span class="fu">table</span>(data<span class="sc">$</span>elukoht)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sagedused</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sagedused <span class="ot">&lt;-</span> <span class="fu">table</span>(data<span class="sc">$</span>elukoht)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sagedused</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## 
 ##  suurlinn  äärelinn väikelinn maa-asula   maakodu 
 ##       435       133       385       249        89</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>osakaalud <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(sagedused)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(osakaalud, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>osakaalud <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(sagedused)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(osakaalud, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## 
 ##  suurlinn  äärelinn väikelinn maa-asula   maakodu 
@@ -363,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Ligi kolmandik vastajatest elab suurlinnas.</p>
 <p><strong>Keskväärtus.</strong> Nominaalse muutuja puhul saab välja tuua ainult <strong>moodi</strong> — kõige sagedasema kategooria, mille loeb tabelist välja. Ordinaalse muutuja puhul saab ka <strong>mediaani</strong>, väärtuse, millest suuremaid ja väiksemaid juhtumeid on võrdselt. Mediaani arvutab funktsioon <code>median()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(data<span class="sc">$</span>haridus, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(data<span class="sc">$</span>haridus, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## [1] 5</code></pre>
 </div>
@@ -373,8 +392,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="kaks-muutujat-korraga">Kaks muutujat korraga</h3>
 <p>Sagedustabeli saab teha ka kahe muutuja kohta. Argument <code>margin</code> ütleb, mille suhtes protsendid arvutada: <code>1</code> annab ridade osakaalud, <code>2</code> veergude omad.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tabel <span class="ot">&lt;-</span> <span class="fu">table</span>(data<span class="sc">$</span>elukoht, data<span class="sc">$</span>sugu)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>tabel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tabel <span class="ot">&lt;-</span> <span class="fu">table</span>(data<span class="sc">$</span>elukoht, data<span class="sc">$</span>sugu)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tabel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>##            
 ##             mees naine
@@ -384,7 +403,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ##   maa-asula  116   133
 ##   maakodu     44    45</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">prop.table</span>(tabel, <span class="at">margin =</span> <span class="dv">2</span>), <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">prop.table</span>(tabel, <span class="at">margin =</span> <span class="dv">2</span>), <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>##            
 ##              mees naine
@@ -401,19 +420,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 </section>
 </section>
+<section id="toru" class="level2">
+<h2 class="anchored" data-anchor-id="toru">Toru</h2>
+<p>Enne kui edasi läheme, on vaja üht märki, mis teeb koodi oluliselt loetavamaks.</p>
+<p>Kui tahad teha mitu toimingut järjest, siis saab neid kirjutada üksteise sisse: <code>round(prop.table(table(data$elukoht)), 3)</code>. Kahe sammu puhul on see veel loetav, kolme puhul enam mitte — lugema peab seestpoolt väljapoole, vastupidi sellele, mis järjekorras asjad toimuvad.</p>
+<p>Selle probleemi lahendab <strong>toru</strong> (inglise keeles <em>pipe</em>), mille märk on <code>|&gt;</code>. Toru võtab vasakul oleva tulemuse ja annab selle paremal olevale funktsioonile <strong>esimeseks argumendiks</strong>.</p>
+<p>Loe teda alati sõnadega <strong>“ja siis”</strong>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>elukoht <span class="sc">|&gt;</span>      <span class="co"># võta elukoha muutuja</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table</span>() <span class="sc">|&gt;</span>         <span class="co"># JA SIIS tee sellest sagedustabel</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop.table</span>() <span class="sc">|&gt;</span>    <span class="co"># JA SIIS tee osakaaludeks</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">3</span>)           <span class="co"># JA SIIS ümarda</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+##  suurlinn  äärelinn väikelinn maa-asula   maakodu 
+##     0.337     0.103     0.298     0.193     0.069</code></pre>
+</div>
+</div>
+<p>Sama tulemus, aga nüüd loeb kood ülalt alla samas järjekorras, nagu asjad toimuvad.</p>
+<blockquote class="blockquote">
+<p>RStudios on toru jaoks klahvikombinatsioon <strong>Ctrl+Shift+M</strong> (Macil <strong>Cmd+Shift+M</strong>). Tasub ära õppida — sa hakkad seda märki kirjutama sadu kordi.</p>
+</blockquote>
+</section>
 <section id="pidevad-muutujad" class="level2">
 <h2 class="anchored" data-anchor-id="pidevad-muutujad">Pidevad muutujad</h2>
 <p>Pideva muutuja keskväärtuseks on kas <strong>keskmine</strong> või <strong>mediaan</strong>, hajuvuseks <strong>standardhälve</strong> (<code>sd()</code>). Standardhälbe ruutu nimetatakse <strong>dispersiooniks</strong> (<code>var()</code>).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(data<span class="sc">$</span>vanus, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(data<span class="sc">$</span>vanus, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## [1] 50.07309</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(data<span class="sc">$</span>vanus, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(data<span class="sc">$</span>vanus, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## [1] 50</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(data<span class="sc">$</span>vanus, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(data<span class="sc">$</span>vanus, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## [1] 18.03298</code></pre>
 </div>
@@ -427,7 +468,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 <p>Funktsioon <code>quantile()</code> näitab, millised väärtused jagavad jaotuse neljaks võrdseks osaks, ja <code>summary()</code> annab kogu selle info korraga.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data<span class="sc">$</span>vanus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data<span class="sc">$</span>vanus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs 
 ##   15.00   37.00   50.00   50.07   64.00   90.00       7</code></pre>
@@ -436,15 +477,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Veerand vastajatest on alla 37-aastased, pooled alla 50 ja veerand üle 64.</p>
 <section id="gruppide-kaupa" class="level3">
 <h3 class="anchored" data-anchor-id="gruppide-kaupa">Gruppide kaupa</h3>
-<p>Kui tahame kokkuvõtet gruppide lõikes, aitavad <code>group_by()</code> ja <code>summarise()</code>, millega tegime tutvust praktikumis 3.</p>
+<p>Kui tahame kokkuvõtet gruppide lõikes, on vaja kahte uut funktsiooni.</p>
+<ul>
+<li><strong><code>group_by()</code></strong> jagab andmed gruppideks. Kõik järgnevad arvutused tehakse iga grupi kohta eraldi.</li>
+<li><strong><code>summarise()</code></strong> arvutab igast grupist kokkuvõtte. Iga rida väljundis on üks grupp.</li>
+</ul>
+<p>Juhtumite loendamiseks läheb vaja veel kaht asja. Funktsioon <strong><code>is.na()</code></strong> annab iga väärtuse kohta <code>TRUE</code>, kui see on puuduv. Hüüumärk <strong><code>!</code></strong> tähendab R-is “mitte”, seega <code>!is.na(x)</code> tähendab “on olemas”. Kuna <code>TRUE</code> loetakse arvutustes üheks, annab <code>sum(!is.na(x))</code> olemasolevate väärtuste arvu.</p>
+<blockquote class="blockquote">
+<p>Miks mitte lihtsalt <code>n()</code>, mis loendab kõik grupi read? Sellepärast, et osa neist ridadest ei ole selle muutuja kohta andmeid. <strong>Meid huvitab, mitme inimese põhjal keskmine tegelikult arvutati</strong> — mitte see, mitu inimest grupis on.</p>
+</blockquote>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sugu) <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(vasak_parem)),</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">keskmine =</span> <span class="fu">mean</span>(vasak_parem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(vasak_parem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sugu) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(vasak_parem)),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">keskmine =</span> <span class="fu">mean</span>(vasak_parem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(vasak_parem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## # A tibble: 2 × 4
 ##   sugu      n keskmine    sd
@@ -458,34 +507,91 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="kaalutud-ja-kaalumata-kirjeldav-statistika" class="level2">
-<h2 class="anchored" data-anchor-id="kaalutud-ja-kaalumata-kirjeldav-statistika">Kaalutud ja kaalumata kirjeldav statistika</h2>
-<p>Praktikumis 3 nägime, et kaalud on olulised just siis, kui tahame öelda midagi <strong>rahvastiku</strong> kohta. Kirjeldav statistika on täpselt see koht.</p>
+<section id="kaalud" class="level2">
+<h2 class="anchored" data-anchor-id="kaalud">Kaalud</h2>
+<p>Siin tuleb üks asi, mis on kirjeldava statistika juures möödapääsmatu.</p>
+<p>ESS-i failis on mitu muutujat, mille nimes on “weight” — meie andmestikus <code>pspwght</code> ja <code>anweight</code>. Mis need on ja miks neid vaja on?</p>
+<section id="miks-kaalud-olemas-on" class="level3">
+<h3 class="anchored" data-anchor-id="miks-kaalud-olemas-on">Miks kaalud olemas on</h3>
+<p><strong>ESS-i valim ei ole Eesti rahvastiku täpne väikemudel.</strong> Osa inimesi vastab küsitlustele meelsamini kui teised — noored, mehed ja suurlinnaelanikud on küsitlustes süstemaatiliselt alaesindatud, sest neid on raskem kätte saada ja nad keelduvad sagedamini.</p>
+<p>Selle parandamiseks on <strong>kaalud</strong>. Mõte on lihtne: me teame rahvastikuregistrist ja statistikaametist üsna täpselt, milline on Eesti elanikkonna tegelik koosseis — kui palju on mehi ja naisi, millised on vanuserühmad, milline on haridusjaotus.</p>
+<p>Kui mingi grupp on valimis alaesindatud, siis antakse tema liikmetele <strong>ühest suurem kaal</strong> — nende vastus loeb arvutustes rohkem kui üks inimene. Üleesindatud gruppide liikmed saavad ühest väiksema kaalu.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">kaalumata =</span> <span class="fu">mean</span>(data<span class="sc">$</span>vanus, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">kaalutud =</span> <span class="fu">weighted.mean</span>(data<span class="sc">$</span>vanus, data<span class="sc">$</span>pspwght, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data<span class="sc">$</span>pspwght)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.7718  0.7784  0.9030  1.0000  1.1380  2.1313</code></pre>
+</div>
+</div>
+<p>Keskmine on 1 ja väärtused jäävad umbes 0,8 ja 2,1 vahele. Kõige halvemini esindatud gruppide liikmed loevad veidi üle kahe inimese eest.</p>
+<blockquote class="blockquote">
+<p>Meie andmestikus on kaks kaalu. <strong><code>pspwght</code></strong> on see, mida ühe riigi analüüsimisel kasutada; <code>anweight</code> on mõeldud riikide võrdlemiseks. Miks valim üldse rahvastikust erineb ja mida see järelduste tegemiseks tähendab — selle juurde tuleme põhjalikult <strong>praktikumis 6</strong>.</p>
+</blockquote>
+</section>
+<section id="millal-kaalud-loevad" class="level3">
+<h3 class="anchored" data-anchor-id="millal-kaalud-loevad">Millal kaalud loevad?</h3>
+<p>Kaalutud keskmise arvutamiseks on funktsioon <code>weighted.mean()</code>. Esimene argument on muutuja, teine on kaalud.</p>
+<p><strong>Kui kirjeldame rahvastikku — kaalud loevad.</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">kaalumata =</span> <span class="fu">mean</span>(data<span class="sc">$</span>vanus, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">kaalutud =</span> <span class="fu">weighted.mean</span>(data<span class="sc">$</span>vanus, data<span class="sc">$</span>pspwght, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## kaalumata  kaalutud 
 ##  50.07309  48.46894</code></pre>
 </div>
 </div>
+<p>Poolteist aastat vahet. Ja veel selgem näide — valimisaktiivsus. Muutuja <code>valis</code> on kodeeritud 1 (käis valimas) ja 0 (ei käinud), seega tema keskmine <strong>on</strong> valimas käinute osakaal.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">kaalumata =</span> <span class="fu">mean</span>(data<span class="sc">$</span>valis, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">kaalutud =</span> <span class="fu">weighted.mean</span>(data<span class="sc">$</span>valis, data<span class="sc">$</span>pspwght, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## kaalumata  kaalutud 
+## 0.7412766 0.7180010</code></pre>
+</div>
+</div>
+<p>74,1% versus 71,8%. <strong>Kaalumata andmed ülehindavad valimisaktiivsust rohkem kui kahe protsendipunkti võrra.</strong> See on küsitlusuuringute klassikaline probleem: valimas käinud inimesed vastavad küsitlustele meelsamini kui need, kes ei käinud.</p>
+<p><strong>Kui arvutame hoiakute keskmisi — kaalud loevad vähe.</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">kaalumata =</span> <span class="fu">mean</span>(data<span class="sc">$</span>vasak_parem, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">kaalutud =</span> <span class="fu">weighted.mean</span>(data<span class="sc">$</span>vasak_parem, data<span class="sc">$</span>pspwght, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## kaalumata  kaalutud 
+##  5.672383  5.648299</code></pre>
+</div>
+</div>
+<p>Vahe on kolmandas komakohas.</p>
+</section>
+<section id="mida-sellest-järeldada" class="level3">
+<h3 class="anchored" data-anchor-id="mida-sellest-järeldada">Mida sellest järeldada</h3>
 <blockquote class="blockquote">
-<p><strong>Meeldetuletus.</strong> Kui sa kirjutad oma töösse lause “Eesti elanike keskmine vanus on X”, siis pead kasutama kaale. Kui sa uurid seost kahe nähtuse vahel, on nende mõju väike. Sellel kursusel arvutame kaalumata, aga ütleme selle valiku välja.</p>
+<p><strong>Kaalud on olulised siis, kui sa tahad öelda midagi rahvastiku kohta</strong> — “nii mitu protsenti Eesti elanikest…”. Just seda kirjeldav statistika enamasti teebki, seega <strong>siin nad loevad.</strong></p>
+<p>Nad on <strong>palju vähem olulised siis, kui sa uurid, kuidas kaks nähtust on omavahel seotud.</strong> Seda kontrollime päriselt praktikumis 10, kui oleme regressioonimudeliteni jõudnud.</p>
 </blockquote>
+<p>Sellel kursusel analüüsime edaspidi kaalumata andmeid, sest see hoiab koodi lihtsamana ja meie põhihuvi on seosed. Aga <strong>me ütleme selle valiku välja</strong> — ja sina pead oma töös sama tegema.</p>
+<div class="arutelu">
+<p><strong>Arutelu.</strong> Kaalumata valimisaktiivsus oli 74,1%, kaalutud 71,8%. Tegelik osalus 2023. aasta Riigikogu valimistel oli umbes 63%. <strong>Miks on ka kaalutud arv ikka veel tublisti suurem?</strong> Mida kaalud parandada ei suuda?</p>
+</div>
+</section>
 </section>
 <section id="kirjeldava-statistika-tabel" class="level2">
 <h2 class="anchored" data-anchor-id="kirjeldava-statistika-tabel">Kirjeldava statistika tabel</h2>
 <p>Käsitsi ühekaupa arvutamine on hea selleks, et aru saada, mida arvud tähendavad. Aga töösse käib <strong>tabel</strong>, kus on kõik korraga.</p>
 <p>Selleks on paketis <code>modelsummary</code> funktsioon <code>datasummary_skim()</code>. Ta oskab hakkama saada nii pidevate kui kategooriliste muutujatega, aga vaatab neid eraldi — argument <code>type</code> ütleb, kumbi sa tahad.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>pidevad <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(vanus, haridus, sissetulek, vasak_parem, usaldus_pol, rahulolu_dem)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_skim</span>(pidevad, <span class="at">type =</span> <span class="st">"numeric"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>pidevad <span class="ot">&lt;-</span> data[, <span class="fu">c</span>(</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"vanus"</span>, <span class="st">"haridus"</span>, <span class="st">"sissetulek"</span>,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"vasak_parem"</span>, <span class="st">"usaldus_pol"</span>, <span class="st">"rahulolu_dem"</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>)]</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_skim</span>(pidevad, <span class="at">type =</span> <span class="st">"numeric"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <!-- preamble start -->
 
@@ -493,20 +599,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_cn6o95uj6453exqbvgtx = TinyTable.createTableFunctions("tinytable_cn6o95uj6453exqbvgtx");
+      const tableFns_6tyf3aosia4ab0hmcbzn = TinyTable.createTableFunctions("tinytable_6tyf3aosia4ab0hmcbzn");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '6', j: 1 }, { i: '6', j: 2 }, { i: '6', j: 3 }, { i: '6', j: 4 }, { i: '6', j: 5 }, { i: '6', j: 6 }, { i: '6', j: 7 }, { i: '6', j: 8 }, { i: '6', j: 9 } ], css_id: 'tinytable_css_k5e49w5m5lneuzyvlnre',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '1', j: 8 }, { i: '2', j: 8 }, { i: '3', j: 8 }, { i: '4', j: 8 }, { i: '5', j: 8 }, { i: '1', j: 9 }, { i: '2', j: 9 }, { i: '3', j: 9 }, { i: '4', j: 9 }, { i: '5', j: 9 } ], css_id: 'tinytable_css_e2pmxiiauotvkmb2jmy7',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 }, { i: '0', j: 8 }, { i: '0', j: 9 } ], css_id: 'tinytable_css_abggnkjylvfxk82b2zak',}, 
+          { positions: [ { i: '6', j: 1 }, { i: '6', j: 2 }, { i: '6', j: 3 }, { i: '6', j: 4 }, { i: '6', j: 5 }, { i: '6', j: 6 }, { i: '6', j: 7 }, { i: '6', j: 8 }, { i: '6', j: 9 } ], css_id: 'tinytable_css_42rgv9t6gq7ltuo56as2',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 }, { i: '3', j: 5 }, { i: '4', j: 5 }, { i: '5', j: 5 }, { i: '1', j: 6 }, { i: '2', j: 6 }, { i: '3', j: 6 }, { i: '4', j: 6 }, { i: '5', j: 6 }, { i: '1', j: 7 }, { i: '2', j: 7 }, { i: '3', j: 7 }, { i: '4', j: 7 }, { i: '5', j: 7 }, { i: '1', j: 8 }, { i: '2', j: 8 }, { i: '3', j: 8 }, { i: '4', j: 8 }, { i: '5', j: 8 }, { i: '1', j: 9 }, { i: '2', j: 9 }, { i: '3', j: 9 }, { i: '4', j: 9 }, { i: '5', j: 9 } ], css_id: 'tinytable_css_kzgjcothjvd6vrx3ueij',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 }, { i: '0', j: 8 }, { i: '0', j: 9 } ], css_id: 'tinytable_css_jnvv4hfgvrmr46f5fqtb',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_cn6o95uj6453exqbvgtx.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_6tyf3aosia4ab0hmcbzn.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -515,12 +621,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_cn6o95uj6453exqbvgtx td.tinytable_css_k5e49w5m5lneuzyvlnre, #tinytable_cn6o95uj6453exqbvgtx th.tinytable_css_k5e49w5m5lneuzyvlnre {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_cn6o95uj6453exqbvgtx td.tinytable_css_e2pmxiiauotvkmb2jmy7, #tinytable_cn6o95uj6453exqbvgtx th.tinytable_css_e2pmxiiauotvkmb2jmy7 { text-align: left }
-    #tinytable_cn6o95uj6453exqbvgtx td.tinytable_css_abggnkjylvfxk82b2zak, #tinytable_cn6o95uj6453exqbvgtx th.tinytable_css_abggnkjylvfxk82b2zak {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_6tyf3aosia4ab0hmcbzn td.tinytable_css_42rgv9t6gq7ltuo56as2, #tinytable_6tyf3aosia4ab0hmcbzn th.tinytable_css_42rgv9t6gq7ltuo56as2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_6tyf3aosia4ab0hmcbzn td.tinytable_css_kzgjcothjvd6vrx3ueij, #tinytable_6tyf3aosia4ab0hmcbzn th.tinytable_css_kzgjcothjvd6vrx3ueij { text-align: left }
+    #tinytable_6tyf3aosia4ab0hmcbzn td.tinytable_css_jnvv4hfgvrmr46f5fqtb, #tinytable_6tyf3aosia4ab0hmcbzn th.tinytable_css_jnvv4hfgvrmr46f5fqtb {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_cn6o95uj6453exqbvgtx" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_6tyf3aosia4ab0hmcbzn" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
               <tr>
@@ -612,10 +718,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Ühe käsuga on olemas keskmine, standardhälve, mediaan, miinimum, maksimum ja puuduvate väärtuste arv. Viimane veerg on väike histogramm, mis näitab jaotuse kuju.</p>
 <p>Ja kategooriliste muutujate kohta:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>kategoorilised <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sugu, elukoht, tervis)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_skim</span>(kategoorilised, <span class="at">type =</span> <span class="st">"categorical"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>kategoorilised <span class="ot">&lt;-</span> data[, <span class="fu">c</span>(<span class="st">"sugu"</span>, <span class="st">"elukoht"</span>, <span class="st">"tervis"</span>)]</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_skim</span>(kategoorilised, <span class="at">type =</span> <span class="st">"categorical"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <!-- preamble start -->
 
@@ -623,23 +728,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_g1gyi52esh3r3xzmrk9a = TinyTable.createTableFunctions("tinytable_g1gyi52esh3r3xzmrk9a");
+      const tableFns_0whb0olz4b95jwmsl1bq = TinyTable.createTableFunctions("tinytable_0whb0olz4b95jwmsl1bq");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '7', j: 3 }, { i: '7', j: 4 } ], css_id: 'tinytable_css_itk1l7ejwotg2kodpgv1',}, 
-          { positions: [ { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 } ], css_id: 'tinytable_css_ci4nx7tse8s5tyky4ugf',}, 
-          { positions: [ { i: '0', j: 3 }, { i: '0', j: 4 } ], css_id: 'tinytable_css_kz45ajt47r542iwxq3ck',}, 
-          { positions: [ { i: '7', j: 1 }, { i: '7', j: 2 } ], css_id: 'tinytable_css_iiooglx390l0jq4zf8jh',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 } ], css_id: 'tinytable_css_083at5mvh3poqmh98kuu',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 } ], css_id: 'tinytable_css_rc1l728gmzbkgcwkf617',}, 
+          { positions: [ { i: '7', j: 3 }, { i: '7', j: 4 } ], css_id: 'tinytable_css_nee4lswqjkms9h0k3i3e',}, 
+          { positions: [ { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '3', j: 4 }, { i: '4', j: 4 }, { i: '5', j: 4 }, { i: '6', j: 4 } ], css_id: 'tinytable_css_8k4oe1m8uxzq8e07tbtb',}, 
+          { positions: [ { i: '0', j: 3 }, { i: '0', j: 4 } ], css_id: 'tinytable_css_i6fpne3igmzmx960ogxq',}, 
+          { positions: [ { i: '7', j: 1 }, { i: '7', j: 2 } ], css_id: 'tinytable_css_pa2t1li07qfb5jp38mmz',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 } ], css_id: 'tinytable_css_zcngtx20q1dxl3iy7f6f',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 } ], css_id: 'tinytable_css_mp2evlx907v40g75oxru',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_g1gyi52esh3r3xzmrk9a.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_0whb0olz4b95jwmsl1bq.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -648,15 +753,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_g1gyi52esh3r3xzmrk9a td.tinytable_css_itk1l7ejwotg2kodpgv1, #tinytable_g1gyi52esh3r3xzmrk9a th.tinytable_css_itk1l7ejwotg2kodpgv1 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
-    #tinytable_g1gyi52esh3r3xzmrk9a td.tinytable_css_ci4nx7tse8s5tyky4ugf, #tinytable_g1gyi52esh3r3xzmrk9a th.tinytable_css_ci4nx7tse8s5tyky4ugf { text-align: right }
-    #tinytable_g1gyi52esh3r3xzmrk9a td.tinytable_css_kz45ajt47r542iwxq3ck, #tinytable_g1gyi52esh3r3xzmrk9a th.tinytable_css_kz45ajt47r542iwxq3ck {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
-    #tinytable_g1gyi52esh3r3xzmrk9a td.tinytable_css_iiooglx390l0jq4zf8jh, #tinytable_g1gyi52esh3r3xzmrk9a th.tinytable_css_iiooglx390l0jq4zf8jh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_g1gyi52esh3r3xzmrk9a td.tinytable_css_083at5mvh3poqmh98kuu, #tinytable_g1gyi52esh3r3xzmrk9a th.tinytable_css_083at5mvh3poqmh98kuu { text-align: left }
-    #tinytable_g1gyi52esh3r3xzmrk9a td.tinytable_css_rc1l728gmzbkgcwkf617, #tinytable_g1gyi52esh3r3xzmrk9a th.tinytable_css_rc1l728gmzbkgcwkf617 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_0whb0olz4b95jwmsl1bq td.tinytable_css_nee4lswqjkms9h0k3i3e, #tinytable_0whb0olz4b95jwmsl1bq th.tinytable_css_nee4lswqjkms9h0k3i3e {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_0whb0olz4b95jwmsl1bq td.tinytable_css_8k4oe1m8uxzq8e07tbtb, #tinytable_0whb0olz4b95jwmsl1bq th.tinytable_css_8k4oe1m8uxzq8e07tbtb { text-align: right }
+    #tinytable_0whb0olz4b95jwmsl1bq td.tinytable_css_i6fpne3igmzmx960ogxq, #tinytable_0whb0olz4b95jwmsl1bq th.tinytable_css_i6fpne3igmzmx960ogxq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: right }
+    #tinytable_0whb0olz4b95jwmsl1bq td.tinytable_css_pa2t1li07qfb5jp38mmz, #tinytable_0whb0olz4b95jwmsl1bq th.tinytable_css_pa2t1li07qfb5jp38mmz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_0whb0olz4b95jwmsl1bq td.tinytable_css_zcngtx20q1dxl3iy7f6f, #tinytable_0whb0olz4b95jwmsl1bq th.tinytable_css_zcngtx20q1dxl3iy7f6f { text-align: left }
+    #tinytable_0whb0olz4b95jwmsl1bq td.tinytable_css_mp2evlx907v40g75oxru, #tinytable_0whb0olz4b95jwmsl1bq th.tinytable_css_mp2evlx907v40g75oxru {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_g1gyi52esh3r3xzmrk9a" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="tinytable" id="tinytable_0whb0olz4b95jwmsl1bq" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         
         <thead>
               <tr>
@@ -716,9 +821,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
-<p>Tabeli saab Wordi täpselt samamoodi nagu regressioonitabeli (vt praktikum 10). Argument <code>output</code> ütleb, millisesse faili tabel salvestada — laiendi järgi otsustab funktsioon ise, mis formaadis:</p>
+<p>Tabeli saab Wordi täpselt samamoodi nagu regressioonitabeli (vt praktikum 11). Argument <code>output</code> ütleb, millisesse faili tabel salvestada — laiendi järgi otsustab funktsioon ise, mis formaadis:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_skim</span>(pidevad, <span class="at">type =</span> <span class="st">"numeric"</span>, <span class="at">output =</span> <span class="st">"kirjeldav.docx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_skim</span>(pidevad, <span class="at">type =</span> <span class="st">"numeric"</span>, <span class="at">output =</span> <span class="st">"kirjeldav.docx"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="arutelu">
 <p><strong>Arutelu.</strong> Vaata pidevate muutujate tabelist veergu <code>Missing (%)</code>. <strong>Millise muutuja puhul on kadu kõige suurem ja mida see tähendab, kui sa selle muutuja mudelisse paned?</strong></p>
@@ -763,8 +868,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Ütle, millised muutujad joonisele lähevad.</strong> Selleks on funktsioon <code>aes()</code> (<em>aesthetics</em> ehk esteetika). Ta paneb paika, milline muutuja läheb millisele teljele või millisesse joonise omadusse. Kõige tähtsamad argumendid on <code>x</code> ja <code>y</code> — joonise teljed.</li>
 <li><strong>Lisa plussmärgiga joonise tüüp.</strong> Neid funktsioone nimetatakse <code>geom_</code>-iga algavateks: <code>geom_bar()</code>, <code>geom_histogram()</code>, <code>geom_point()</code> ja nii edasi.</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(andmetabel, <span class="fu">aes</span>(<span class="at">x =</span> muutuja1, <span class="at">y =</span> muutuja2)) <span class="sc">+</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  geom_JOONISETÜÜP()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(andmetabel, <span class="fu">aes</span>(<span class="at">x =</span> muutuja1, <span class="at">y =</span> muutuja2)) <span class="sc">+</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  geom_JOONISETÜÜP()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
 <p><strong>Plussmärk ggplotis</strong> ei ole liitmine. Ta tähendab “lisa joonisele veel üks kiht”. Joonis ehitatakse kihtidena üksteise peale ja iga kiht lisatakse plussmärgiga. Pane tähele, et plussmärk käib <strong>rea lõppu</strong>, mitte järgmise rea algusesse.</p>
 </blockquote>
@@ -773,12 +878,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="tulpdiagramm">Tulpdiagramm</h2>
 <p>Tulpdiagramm sobib kategoorilise muutuja jaotuse näitamiseks. Funktsioon on <code>geom_bar()</code>, mis loendab ise juhtumid igas kategoorias.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> elukoht)) <span class="sc">+</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> elukoht)) <span class="sc">+</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-kirjeldamine-ja-visualiseerimine_files/figure-html/tulp-lihtne-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="03-kirjeldamine-ja-visualiseerimine_files/figure-html/tulp-lihtne-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -790,34 +895,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Funktsiooni <code>geom_bar()</code> argumendid <code>fill</code> (täitevärv) ja <code>color</code> (piirjoone värv) muudavad tulpade välimust.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> elukoht)) <span class="sc">+</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"vastajate arv"</span>,</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Vastajate elukoht"</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> elukoht)) <span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"vastajate arv"</span>,</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Vastajate elukoht"</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-kirjeldamine-ja-visualiseerimine_files/figure-html/tulp-korras-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="03-kirjeldamine-ja-visualiseerimine_files/figure-html/tulp-korras-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Sildid mahuvad ära, sest me tõlkisime nad praktikumis 4 juba andmestikus ära ja hoidsime lühikesed. Kui nad ei mahuks, saaks neid kallutada funktsiooniga <code>theme()</code>, mis muudab joonise üksikdetaile.</p>
+<p>Sildid mahuvad ära, sest andmestikus on nad juba eestikeelsed ja lühikesed — selle töö teeme ise ära praktikumis 5. Kui nad ei mahuks, saaks neid kallutada funktsiooniga <code>theme()</code>, mis muudab joonise üksikdetaile.</p>
 <p>Argument <code>axis.text.x</code> puudutab x-telje teksti. Tema väärtuseks tuleb anda omakorda funktsioon <code>element_text()</code>, mis kirjeldab, milline tekst välja peaks nägema. Selle argument <code>angle</code> määrab nurga kraadides ja argument <code>hjust</code> (“horizontal justification”) joondab kallutatud teksti nii, et ta lõpp jääks telje juurde.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> elukoht)) <span class="sc">+</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"vastajate arv"</span>, <span class="at">title =</span> <span class="st">"Vastajate elukoht"</span>) <span class="sc">+</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> elukoht)) <span class="sc">+</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"vastajate arv"</span>, <span class="at">title =</span> <span class="st">"Vastajate elukoht"</span>) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-kirjeldamine-ja-visualiseerimine_files/figure-html/tulp-nurk-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="03-kirjeldamine-ja-visualiseerimine_files/figure-html/tulp-nurk-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -827,15 +932,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Joonisele saab lisada informatsiooni, sidudes mõne teise muutuja näiteks tulpade värviga. Seda tuleb teha <strong>funktsiooni <code>aes()</code> sees</strong>, sest tegemist on muutujaga, mitte kindla värviga.</p>
 <p>Argument <code>position = "dodge"</code> funktsioonis <code>geom_bar()</code> paneb tulbad kõrvuti.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> elukoht, <span class="at">fill =</span> sugu)) <span class="sc">+</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"vastajate arv"</span>, <span class="at">title =</span> <span class="st">"Elukoht soo lõikes"</span>, <span class="at">fill =</span> <span class="st">"sugu"</span>) <span class="sc">+</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> elukoht, <span class="at">fill =</span> sugu)) <span class="sc">+</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"vastajate arv"</span>, <span class="at">title =</span> <span class="st">"Elukoht soo lõikes"</span>, <span class="at">fill =</span> <span class="st">"sugu"</span>) <span class="sc">+</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-kirjeldamine-ja-visualiseerimine_files/figure-html/tulp-sugu-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="03-kirjeldamine-ja-visualiseerimine_files/figure-html/tulp-sugu-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -846,16 +951,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 <p>Värve saab käsitsi valida funktsiooniga <code>scale_fill_manual()</code>. Tema argument <code>values</code> võtab vektori värvinimedest — nii mitu, kui palju kategooriaid on, ja samas järjekorras.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> elukoht, <span class="at">fill =</span> sugu)) <span class="sc">+</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick3"</span>, <span class="st">"dodgerblue3"</span>)) <span class="sc">+</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"vastajate arv"</span>, <span class="at">title =</span> <span class="st">"Elukoht soo lõikes"</span>, <span class="at">fill =</span> <span class="st">"sugu"</span>) <span class="sc">+</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> elukoht, <span class="at">fill =</span> sugu)) <span class="sc">+</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick3"</span>, <span class="st">"dodgerblue3"</span>)) <span class="sc">+</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"vastajate arv"</span>, <span class="at">title =</span> <span class="st">"Elukoht soo lõikes"</span>, <span class="at">fill =</span> <span class="st">"sugu"</span>) <span class="sc">+</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-kirjeldamine-ja-visualiseerimine_files/figure-html/tulp-varvid-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="03-kirjeldamine-ja-visualiseerimine_files/figure-html/tulp-varvid-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -867,26 +972,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="histogramm">Histogramm</h2>
 <p>Histogramm näitab <strong>pideva</strong> muutuja jaotust. Funktsioon on <code>geom_histogram()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> vanus)) <span class="sc">+</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> vanus)) <span class="sc">+</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-kirjeldamine-ja-visualiseerimine_files/figure-html/hist-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="03-kirjeldamine-ja-visualiseerimine_files/figure-html/hist-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>R annab teate, et ta valis kastide arvu ise, ja soovitab selle üle mõelda. Kastide arvu saab määrata argumendiga <code>bins</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> vanus)) <span class="sc">+</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"vanus aastates"</span>, <span class="at">y =</span> <span class="st">"vastajate arv"</span>, <span class="at">title =</span> <span class="st">"Vastajate vanus"</span>) <span class="sc">+</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> vanus)) <span class="sc">+</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"vanus aastates"</span>, <span class="at">y =</span> <span class="st">"vastajate arv"</span>, <span class="at">title =</span> <span class="st">"Vastajate vanus"</span>) <span class="sc">+</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-kirjeldamine-ja-visualiseerimine_files/figure-html/hist-bins-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="03-kirjeldamine-ja-visualiseerimine_files/figure-html/hist-bins-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -894,20 +999,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <blockquote class="blockquote">
 <p><strong>Mis vahe on tulpdiagrammil ja histogrammil?</strong> Tulpdiagrammi tulbad on eraldi kategooriad ja nende vahel on tühik. Histogrammi kastid on ühe pideva skaala lõigud ja nende vahel ei ole tühikut, sest skaala on katkematu.</p>
 </blockquote>
-<p>Vaatame ka üht faktorskoori, mille me praktikumis 4 ise tegime.</p>
+<p>Vaatame ka üht faktorskoori — muutujat, mille me ise praktikumis 5 valmis teeme.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> ranne)) <span class="sc">+</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>, <span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"suhtumine sisserändesse (faktorskoor)"</span>,</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"vastajate arv"</span>,</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Suhtumine sisserändesse"</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> ranne)) <span class="sc">+</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>, <span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"suhtumine sisserändesse (faktorskoor)"</span>,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"vastajate arv"</span>,</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Suhtumine sisserändesse"</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-kirjeldamine-ja-visualiseerimine_files/figure-html/hist-ranne-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="03-kirjeldamine-ja-visualiseerimine_files/figure-html/hist-ranne-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -917,14 +1022,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="tihedusdiagramm">Tihedusdiagramm</h2>
 <p>Tihedusdiagramm (<em>density plot</em>) on histogrammile väga sarnane, kuid annab sujuva joone kastide asemel. Funktsioon on <code>geom_density()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> vanus)) <span class="sc">+</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"vanus aastates"</span>, <span class="at">y =</span> <span class="st">"tihedus"</span>, <span class="at">title =</span> <span class="st">"Vastajate vanus"</span>) <span class="sc">+</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> vanus)) <span class="sc">+</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"vanus aastates"</span>, <span class="at">y =</span> <span class="st">"tihedus"</span>, <span class="at">title =</span> <span class="st">"Vastajate vanus"</span>) <span class="sc">+</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-kirjeldamine-ja-visualiseerimine_files/figure-html/density-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="03-kirjeldamine-ja-visualiseerimine_files/figure-html/density-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -938,19 +1043,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="kastdiagramm">Kastdiagramm</h2>
 <p>Kastdiagramm (<em>box plot</em>) näitab, kuidas pideva muutuja jaotus sõltub kategoorilise muutuja kategooriatest. Funktsioon on <code>geom_boxplot()</code>. Nüüd on vaja joonisel määrata mõlemad teljed (siduda nad muutujatega).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> erakond, <span class="at">y =</span> ranne)) <span class="sc">+</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"grey85"</span>) <span class="sc">+</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"suhtumine sisserändesse"</span>,</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Suhtumine sisserändesse erakondliku eelistuse lõikes"</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> erakond, <span class="at">y =</span> ranne)) <span class="sc">+</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"grey85"</span>) <span class="sc">+</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"suhtumine sisserändesse"</span>,</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Suhtumine sisserändesse erakondliku eelistuse lõikes"</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-kirjeldamine-ja-visualiseerimine_files/figure-html/boxplot-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="03-kirjeldamine-ja-visualiseerimine_files/figure-html/boxplot-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -967,19 +1072,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="viiulidiagramm">Viiulidiagramm</h2>
 <p>Viiulidiagramm (<em>violin plot</em>) täidab sama eesmärki, kuid näitab kogu jaotuse kuju, mitte ainult kvartiile. Sisuliselt on see tihedusdiagramm iga kategooria kohta eraldi. Funktsioon on <code>geom_violin()</code> ja teda kasutatakse täpselt nagu <code>geom_boxplot()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> erakond, <span class="at">y =</span> ranne)) <span class="sc">+</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">fill =</span> <span class="st">"grey85"</span>) <span class="sc">+</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"suhtumine sisserändesse"</span>,</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Suhtumine sisserändesse erakondliku eelistuse lõikes"</span></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> erakond, <span class="at">y =</span> ranne)) <span class="sc">+</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">fill =</span> <span class="st">"grey85"</span>) <span class="sc">+</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"suhtumine sisserändesse"</span>,</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Suhtumine sisserändesse erakondliku eelistuse lõikes"</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-kirjeldamine-ja-visualiseerimine_files/figure-html/violin-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="03-kirjeldamine-ja-visualiseerimine_files/figure-html/violin-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -989,18 +1094,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="hajuvusdiagramm">Hajuvusdiagramm</h2>
 <p>Hajuvusdiagramm (<em>scatterplot</em>) näitab <strong>kahe pideva muutuja</strong> seost. Iga punkt on üks juhtum ja tema asukoht määratakse kahe muutuja väärtustega. Funktsioon on <code>geom_point()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> ranne, <span class="at">y =</span> usaldus)) <span class="sc">+</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"suhtumine sisserändesse"</span>,</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"institutsionaalne usaldus"</span>,</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Kaks faktorskoori"</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> ranne, <span class="at">y =</span> usaldus)) <span class="sc">+</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"suhtumine sisserändesse"</span>,</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"institutsionaalne usaldus"</span>,</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Kaks faktorskoori"</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-kirjeldamine-ja-visualiseerimine_files/figure-html/scatter-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="03-kirjeldamine-ja-visualiseerimine_files/figure-html/scatter-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1010,35 +1115,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Kui palju punkte satub täpselt üksteise peale — mis juhtub sageli, kui muutujal on vähe erinevaid väärtusi — siis ei näe me enam, kui palju neid kuskil tegelikult on. Selle vastu on kaks abinõu ja neid kasutatakse sageli koos.</p>
 <p><strong>Esimene: läbipaistvus.</strong> Argument <code>alpha</code> funktsioonis <code>geom_point()</code> teeb punktid poolläbipaistvaks, nii et üksteise peal olevad punktid tulevad tumedamad.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> vanus, <span class="at">y =</span> usaldus_pol)) <span class="sc">+</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"vanus"</span>,</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"usaldus poliitikute vastu (0-10)"</span>,</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Vanus ja usaldus poliitikute vastu"</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> vanus, <span class="at">y =</span> usaldus_pol)) <span class="sc">+</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"vanus"</span>,</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"usaldus poliitikute vastu (0-10)"</span>,</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Vanus ja usaldus poliitikute vastu"</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05-kirjeldamine-ja-visualiseerimine_files/figure-html/scatter-alpha-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="03-kirjeldamine-ja-visualiseerimine_files/figure-html/scatter-alpha-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Siin on näha üks tüüpiline probleem: <code>usaldus_pol</code> on skaalal 0–10 ja võtab ainult täisarvulisi väärtusi, seega paiknevad punktid ridadena. Praktikumis 10 vaatame, kuidas seda lahendada.</p>
+<p>Siin on näha üks tüüpiline probleem: <code>usaldus_pol</code> on skaalal 0–10 ja võtab ainult täisarvulisi väärtusi, seega paiknevad punktid korrapärastesse ridadesse. Selle lahendust vaatasime just eespool — <code>geom_jitter()</code>.</p>
 </section>
 </section>
 <section id="jooniste-salvestamine" class="level2">
 <h2 class="anchored" data-anchor-id="jooniste-salvestamine">Jooniste salvestamine</h2>
 <p>Joonist saab RStudios salvestada ka käsitsi, kuid kiirem ja korratavam on kasutada funktsiooni <code>ggsave()</code>. Ta salvestab <strong>viimasena tehtud joonise</strong>, seega tuleb teda kasutada kohe pärast joonise tegemist.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> vanus)) <span class="sc">+</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"vanus"</span>, <span class="at">y =</span> <span class="st">"vastajate arv"</span>) <span class="sc">+</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"joonis_vanus.pdf"</span>, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> vanus)) <span class="sc">+</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">"dodgerblue3"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"vanus"</span>, <span class="at">y =</span> <span class="st">"vastajate arv"</span>) <span class="sc">+</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"joonis_vanus.pdf"</span>, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Faili nimi tuleb kirjutada koos laiendiga. Soovitatav on PDF, sest see on vektorformaat — ta ei lähe suurendamisel uduseks. Laius ja kõrgus on tollides; proovi erinevaid ja vali see, millega joonis välja näeb nii, nagu vaja.</p>
 </section>
@@ -1499,13 +1604,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./04-andmete-ettevalmistus-2.html" class="pagination-link" aria-label="4. Andmete ettevalmistus II">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">4. Andmete ettevalmistus II</span></span>
+      <a href="./02-andmete-laadimine.html" class="pagination-link" aria-label="2. Andmete laadimine">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">2. Andmete laadimine</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./06-valim-ja-ebakindlus.html" class="pagination-link" aria-label="6. Valim ja ebakindlus">
-        <span class="nav-page-text"><span class="chapter-title">6. Valim ja ebakindlus</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./04-andmete-ettevalmistus-1.html" class="pagination-link" aria-label="4. Andmete ettevalmistus I">
+        <span class="nav-page-text"><span class="chapter-title">4. Andmete ettevalmistus I</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

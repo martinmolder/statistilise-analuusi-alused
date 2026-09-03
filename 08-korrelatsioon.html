@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8. Korrelatsioon ja regressioon – Statistilise analüüsi alused</title>
+<title>8. Korrelatsioon – Statistilise analüüsi alused</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./09-mitmene-regressioon.html" rel="next">
-<link href="./07-hupoteeside-testimine.html" rel="prev">
+<link href="./09-regressioon.html" rel="next">
+<link href="./07-keskmiste-vordlemine.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -162,7 +162,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./08-korrelatsioon.html"><span class="chapter-title">8. Korrelatsioon</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -196,7 +196,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Alustamine</span></a>
+ <span class="menu-text">Andmetega alustamine</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -212,6 +212,11 @@ window.Quarto = {
   <a href="./02-andmete-laadimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2. Andmete laadimine</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Kirjeldamine ja visualiseerimine</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -225,12 +230,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Andmete ettevalmistus I</span></a>
+  <a href="./04-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus I</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus II</span></a>
+  <a href="./05-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Andmete ettevalmistus II</span></a>
   </div>
 </li>
       </ul>
@@ -238,7 +243,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Andmete kirjeldamine</span></a>
+ <span class="menu-text">Järeldav statistika</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -246,7 +251,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></a>
+  <a href="./06-valim-ja-hupoteesid.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6. Valim, ebakindlus ja hüpoteeside testimine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-keskmiste-vordlemine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Keskmiste võrdlemine</span></a>
   </div>
 </li>
       </ul>
@@ -254,7 +264,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Järeldav statistika</span></a>
+ <span class="menu-text">Seosed ja mudelid</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -262,43 +272,27 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-valim-ja-ebakindlus.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6. Valim ja ebakindlus</span></a>
+  <a href="./08-korrelatsioon.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">8. Korrelatsioon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-hupoteeside-testimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Hüpoteeside testimine</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Seosed ja mudelid</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./08-korrelatsioon-ja-regressioon.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a>
+  <a href="./09-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Regressioon: baasmudel</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Mitmene regressioon</span></a>
+  <a href="./10-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Mitmene regressioon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Tulemuste esitamine</span></a>
+  <a href="./11-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Tulemuste esitamine</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-logistiline-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Logistiline regressioon</span></a>
+  <a href="./12-logistiline-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">12. Logistiline regressioon</span></a>
   </div>
 </li>
       </ul>
@@ -320,14 +314,6 @@ window.Quarto = {
   <li><a href="#hüpoteesi-test" id="toc-hüpoteesi-test" class="nav-link" data-scroll-target="#hüpoteesi-test">Hüpoteesi test</a></li>
   </ul></li>
   <li><a href="#seose-tugevus-r-ruut" id="toc-seose-tugevus-r-ruut" class="nav-link" data-scroll-target="#seose-tugevus-r-ruut">Seose tugevus: R-ruut</a></li>
-  <li><a href="#joon-läbi-punktipilve" id="toc-joon-läbi-punktipilve" class="nav-link" data-scroll-target="#joon-läbi-punktipilve">Joon läbi punktipilve</a></li>
-  <li><a href="#regressioonivalem" id="toc-regressioonivalem" class="nav-link" data-scroll-target="#regressioonivalem">Regressioonivalem</a></li>
-  <li><a href="#mudeli-sobitamine-ja-tõlgendamine" id="toc-mudeli-sobitamine-ja-tõlgendamine" class="nav-link" data-scroll-target="#mudeli-sobitamine-ja-tõlgendamine">Mudeli sobitamine ja tõlgendamine</a>
-  <ul class="collapse">
-  <li><a href="#kuidas-seda-tabelit-lugeda" id="toc-kuidas-seda-tabelit-lugeda" class="nav-link" data-scroll-target="#kuidas-seda-tabelit-lugeda">Kuidas seda tabelit lugeda</a></li>
-  <li><a href="#kui-hea-mudel-on" id="toc-kui-hea-mudel-on" class="nav-link" data-scroll-target="#kui-hea-mudel-on">Kui hea mudel on?</a></li>
-  </ul></li>
-  <li><a href="#kas-mõõtmise-kvaliteet-loeb" id="toc-kas-mõõtmise-kvaliteet-loeb" class="nav-link" data-scroll-target="#kas-mõõtmise-kvaliteet-loeb">Kas mõõtmise kvaliteet loeb?</a></li>
   <li><a href="#kuidas-seda-kirja-panna" id="toc-kuidas-seda-kirja-panna" class="nav-link" data-scroll-target="#kuidas-seda-kirja-panna">Kuidas seda kirja panna</a></li>
   <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
   </ul>
@@ -336,9 +322,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./08-korrelatsioon-ja-regressioon.html"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-korrelatsioon.html">Seosed ja mudelid</a></li><li class="breadcrumb-item"><a href="./08-korrelatsioon.html"><span class="chapter-title">8. Korrelatsioon</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></h1>
+<h1 class="title"><span class="chapter-title">8. Korrelatsioon</span></h1>
 </div>
 
 
@@ -360,12 +346,13 @@ window.Quarto = {
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/ess11_ee_clean.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Siiani oleme võrrelnud gruppe. Nüüd hakkame vaatama <strong>seost kahe pideva muutuja vahel.</strong></p>
-<p>Kaks tööriista, mis on omavahel tihedalt seotud:</p>
+<p>Eelmises praktikumis võrdlesime kahe grupi keskmisi — seos ühe kategoorilise ja ühe pideva muutuja vahel. Nüüd astume sammu edasi ja vaatame <strong>seost kahe pideva muutuja vahel.</strong></p>
+<p>Selleks on kaks tööriista, mis on omavahel tihedalt seotud:</p>
 <ul>
-<li><strong>korrelatsioon</strong> ütleb, kui tugev seos on ja mis suunas ta käib;</li>
-<li><strong>regressioon</strong> ütleb, milline seos <strong>täpselt</strong> on — kui palju üks muutuja muutub, kui teine muutub ühe ühiku võrra.</li>
+<li><strong>korrelatsioon</strong> ütleb, <strong>kui tugev</strong> seos on ja <strong>mis suunas</strong> ta käib;</li>
+<li><strong>regressioon</strong> ütleb, <strong>milline seos täpselt on</strong> — kui palju üks muutuja muutub, kui teine muutub ühe ühiku võrra.</li>
 </ul>
+<p>Selles praktikumis tegeleme esimesega. Regressioon on järgmise praktikumi teema.</p>
 <section id="hajuvusdiagramm" class="level2">
 <h2 class="anchored" data-anchor-id="hajuvusdiagramm">Hajuvusdiagramm</h2>
 <p>Alusta alati pildist. Vaatame, kuidas on omavahel seotud usaldus poliitikute vastu ja rahulolu demokraatiaga.</p>
@@ -381,7 +368,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="08-korrelatsioon-ja-regressioon_files/figure-html/scatter-esimene-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-korrelatsioon_files/figure-html/scatter-esimene-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -404,7 +391,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="08-korrelatsioon-ja-regressioon_files/figure-html/scatter-jitter-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-korrelatsioon_files/figure-html/scatter-jitter-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -501,7 +488,7 @@ window.Quarto = {
 </section>
 <section id="pearsoni-korrelatsioon" class="level2">
 <h2 class="anchored" data-anchor-id="pearsoni-korrelatsioon">Pearsoni korrelatsioon</h2>
-<p>Loomulikult on selleks R-is funktsioon — <code>cor()</code>, mida oleme juba praktikumis 4 kasutanud.</p>
+<p>Loomulikult on selleks R-is funktsioon — <code>cor()</code>, mida oleme juba praktikumis 5 kasutanud.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(usaldus_rahulolu<span class="sc">$</span>usaldus_pol, usaldus_rahulolu<span class="sc">$</span>rahulolu_dem)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -575,142 +562,6 @@ window.Quarto = {
 <p><strong>Seetõttu räägi seose tugevusest R-ruudu kaudu, mitte korrelatsioonikordaja kaudu.</strong></p>
 </blockquote>
 </section>
-<section id="joon-läbi-punktipilve" class="level2">
-<h2 class="anchored" data-anchor-id="joon-läbi-punktipilve">Joon läbi punktipilve</h2>
-<p>Korrelatsioon ütles meile suuna ja tugevuse. Aga ta ei ütle, <strong>kui palju</strong> rahulolu muutub, kui usaldus kasvab ühe punkti võrra.</p>
-<p>Selleks tuleb tõmmata punktipilvest läbi joon. Joonisele lisab trendijoone funktsioon <code>stat_smooth()</code>. Argument <code>method = "lm"</code> ütleb, et joon peab olema sirge (<em>linear model</em>), ja <code>se = FALSE</code> peidab joone ümbert usaldusvahemiku.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(usaldus_rahulolu, <span class="fu">aes</span>(<span class="at">x =</span> usaldus_pol, <span class="at">y =</span> rahulolu_dem)) <span class="sc">+</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"firebrick3"</span>) <span class="sc">+</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"usaldus poliitikute vastu (0-10)"</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"rahulolu demokraatiaga (0-10)"</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Regressioonijoon"</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="08-korrelatsioon-ja-regressioon_files/figure-html/joon-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Võimalikke jooni läbi selle pilve oleks lõpmata palju. <strong>Kõige parem joon on see, mille ennustusviga on kõige väiksem</strong> — täpsemalt see, mille puhul punktide kauguste ruutude summa joonest on kõige väiksem.</p>
-</section>
-<section id="regressioonivalem" class="level2">
-<h2 class="anchored" data-anchor-id="regressioonivalem">Regressioonivalem</h2>
-<p>Sirge võrrand on koolimatemaatikast tuttav:</p>
-<p><span class="math display">Y = a \times X + b</span></p>
-<p>Regressioonis kirjutatakse ta tavaliselt nii:</p>
-<p><span class="math display">Y_i = \beta_0 + \beta_1 \times X_i + e_i</span></p>
-<p>kus</p>
-<ul>
-<li><span class="math inline">\beta_0</span> on <strong>vabaliige</strong> (<em>intercept</em>) — koht, kus joon läbib y-telge, ehk ennustatud väärtus siis, kui X on null;</li>
-<li><span class="math inline">\beta_1</span> on <strong>regressioonikordaja</strong> (<em>slope</em>) — kui palju Y muutub, kui X kasvab ühe ühiku võrra;</li>
-<li><span class="math inline">e_i</span> on <strong>jääk</strong> (<em>residual</em>) — see osa, mida mudel ei seleta.</li>
-</ul>
-</section>
-<section id="mudeli-sobitamine-ja-tõlgendamine" class="level2">
-<h2 class="anchored" data-anchor-id="mudeli-sobitamine-ja-tõlgendamine">Mudeli sobitamine ja tõlgendamine</h2>
-<p>Regressiooni tegemiseks on funktsioon <code>lm()</code>, mida nägime möödaminnes juba praktikumis 3. Nüüd vaatame teda korralikult.</p>
-<p>Valem kirjutatakse tildega: <strong>sõltuv muutuja ~ sõltumatu muutuja</strong>. Argument <code>data</code> ütleb, millisest andmetabelist muutujaid otsida.</p>
-<p>Tulemused tuleb panna objekti ja vaadata funktsiooniga <code>summary()</code>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mudel <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus_pol, <span class="at">data =</span> data)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mudel)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>## 
-## Call:
-## lm(formula = rahulolu_dem ~ usaldus_pol, data = data)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -8.4891 -1.4682  0.1915  1.5318  7.2125 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  2.78754    0.10819   25.77   &lt;2e-16 ***
-## usaldus_pol  0.67015    0.02587   25.91   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 2.097 on 1216 degrees of freedom
-##   (75 observations deleted due to missingness)
-## Multiple R-squared:  0.3556, Adjusted R-squared:  0.3551 
-## F-statistic: 671.2 on 1 and 1216 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<section id="kuidas-seda-tabelit-lugeda" class="level3">
-<h3 class="anchored" data-anchor-id="kuidas-seda-tabelit-lugeda">Kuidas seda tabelit lugeda</h3>
-<p>Kõige tähtsam osa on <strong><code>Coefficients</code></strong>.</p>
-<ul>
-<li><strong><code>Estimate</code></strong> — koefitsiendi väärtus.</li>
-<li><strong><code>Std. Error</code></strong> — selle koefitsiendi standardviga, ehk kui kindlad me temas oleme.</li>
-<li><strong><code>t value</code></strong> — koefitsient jagatud standardveaga, ehk mitme standardvea kaugusel ta nullist on.</li>
-<li><strong><code>Pr(&gt;|t|)</code></strong> — p-väärtus. Nullhüpotees on, et koefitsient on <strong>null</strong> (seost ei ole).</li>
-<li><strong>Tärnid</strong> näitavad, millisesse vahemikku p-väärtus langeb.</li>
-</ul>
-<p><strong>Vabaliige</strong> (<code>(Intercept)</code>) on 2,54. See tähendab: kui usaldus poliitikute vastu on 0, siis on ennustatud rahulolu demokraatiaga 2,54.</p>
-<p><strong>Regressioonikordaja</strong> <code>usaldus_pol</code> juures on 0,55. See tähendab: <strong>iga punkt usalduse kasvu juures kasvab rahulolu demokraatiaga keskmiselt 0,55 punkti.</strong></p>
-<blockquote class="blockquote">
-<p><strong>Koefitsiendi arvuline väärtus sõltub mõõtskaalast.</strong> Kui muutuja ühik on väike, on koefitsient väike, ja vastupidi. Vanust saab mõõta päevades, aastates või aastakümnetes ning koefitsient oleks igal juhul erinev — kuigi seos on täpselt sama.</p>
-<p><strong>Seetõttu ei saa koefitsientide suurusi omavahel võrrelda</strong>, kui muutujad on erineval skaalal. Proovi järele: jaga vanus sajaga ja vaata, mis koefitsiendiga juhtub.</p>
-</blockquote>
-</section>
-<section id="kui-hea-mudel-on" class="level3">
-<h3 class="anchored" data-anchor-id="kui-hea-mudel-on">Kui hea mudel on?</h3>
-<p>Selleks on tabeli lõpus <strong><code>Multiple R-squared</code></strong> — sama R-ruut, mida korrelatsiooni juures vaatasime. Ta ütleb, kui suure osa sõltuva muutuja varieeruvusest mudel ära seletab.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(usaldus_rahulolu<span class="sc">$</span>usaldus_pol, usaldus_rahulolu<span class="sc">$</span>rahulolu_dem)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>## [1] 0.3556452</code></pre>
-</div>
-</div>
-<p>Sama arv, mille me korrelatsioonist saime. <strong>Kahe muutujaga regressiooni R-ruut ongi korrelatsiooni ruut.</strong></p>
-<blockquote class="blockquote">
-<p><strong>Mis vahe on <code>Multiple R-squared</code> ja <code>Adjusted R-squared</code> vahel?</strong> R-ruut kasvab alati, kui mudelisse muutujaid juurde panna — isegi siis, kui need muutujad on täiesti mõttetud. Kohandatud R-ruut karistab mudelit iga lisatud muutuja eest. <strong>Tõlgendamiseks kasuta kohandatud R-ruutu.</strong></p>
-</blockquote>
-<p>Sotsiaalteadustes on R-ruut tavaliselt madal. Mudel, mis seletab 10–20% varieeruvusest, on täiesti tavaline ja võib olla väga kasulik. Inimeste käitumine ei ole füüsika.</p>
-</section>
-</section>
-<section id="kas-mõõtmise-kvaliteet-loeb" class="level2">
-<h2 class="anchored" data-anchor-id="kas-mõõtmise-kvaliteet-loeb">Kas mõõtmise kvaliteet loeb?</h2>
-<p>Siin tasub korraks tagasi minna praktikumi 4 juurde.</p>
-<p>Seal me väitsime, et <strong>üksik küsitlusküsimus on jäme ja mürane mõõdik</strong> ning et mitmest küsimusest kokku pandud indeks mõõdab sama asja täpsemalt. Just sellepärast ehitasime faktoranalüüsiga muutuja <code>usaldus</code>, mis võtab kokku seitse usaldust puudutavat küsimust.</p>
-<p>Aga senini oleme selles peatükis kasutanud <code>usaldus_pol</code>-i — <strong>üht üksikut küsimust</strong> poliitikute usaldamise kohta.</p>
-<p>Kas sellel on vahet? Vaatame. Teeme sama mudeli kaks korda, ainult sõltumatu muutuja on erinev.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mudel_uksik <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus_pol, <span class="at">data =</span> data)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>mudel_indeks <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus, <span class="at">data =</span> data)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">uksik_kysimus =</span> <span class="fu">summary</span>(mudel_uksik)<span class="sc">$</span>r.squared,</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">faktorskoor =</span> <span class="fu">summary</span>(mudel_indeks)<span class="sc">$</span>r.squared</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>## uksik_kysimus   faktorskoor 
-##     0.3556452     0.4983659</code></pre>
-</div>
-</div>
-<p>Üksiku küsimusega seletab mudel 36% rahulolu varieeruvusest. Faktorskooriga <strong>50%</strong>.</p>
-<p><strong>Andmed on samad. Inimesed on samad. Nähtus on sama.</strong> Ainus, mis muutus, on see, kui hoolikalt me seda nähtust mõõtsime — ja mudeli seletusvõime kasvas ligi poole võrra.</p>
-<blockquote class="blockquote">
-<p><strong>See on kogu praktikumi 4 mõte ühe arvuna.</strong> Mõõtmine ei ole tüütu eeltöö, mis tuleb enne “päris analüüsi” ära teha. Mõõtmise kvaliteet <strong>on</strong> tulemus. Halb mõõdik ei anna lihtsalt segasemat vastust — ta annab nõrgema seose, mis võib jääda leidmata.</p>
-<p>Kui sinu töös tuleb seos välja nõrgemana, kui kirjandus lubaks, siis on üks esimesi küsimusi: <strong>kas ma mõõdan seda asja piisavalt hästi?</strong></p>
-</blockquote>
-<p>Miks me siis edaspidi ikkagi üksikküsimusi kasutame? Kahel praktilisel põhjusel.</p>
-<ul>
-<li><strong>Tõlgendatavus.</strong> Koefitsient 0.67 tähendab “üks punkt usaldust juurde skaalal 0–10”. Faktorskoori koefitsient 1.9 tähendab “üks standardhälve usaldust juurde” — see nõuab iga kord lisaseletust.</li>
-<li><strong>Juhtumite arv.</strong> Indeksi jaoks peab vastaja olema vastanud <strong>kõigile seitsmele</strong> küsimusele. Seetõttu on mudelis 1087 juhtumit 1218 asemel.</li>
-</ul>
-<p>Nii et valik ei ole “üks on õige, teine vale”. Faktorskoor mõõdab paremini, üksikküsimus on lihtsamini tõlgendatav — ja <strong>sina pead selle valiku teadlikult tegema ja oma töös välja ütlema.</strong></p>
-<div class="arutelu">
-<p><strong>Arutelu.</strong> Kumba sa oma bakalaureusetöös kasutaksid? Mille põhjal sa otsustaksid? Ja kas on olukordi, kus nõrgem, aga arusaadavam mõõdik on parem valik kui tugevam, aga raskesti seletatav?</p>
-</div>
-</section>
 <section id="kuidas-seda-kirja-panna" class="level2">
 <h2 class="anchored" data-anchor-id="kuidas-seda-kirja-panna">Kuidas seda kirja panna</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Kuidas seda kirja panna">
@@ -723,24 +574,28 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Korrelatsiooni puhul</strong> tuleb esitada korrelatsioonikordaja, p-väärtus, usaldusvahemik, juhtumite arv ja seose sisuline tõlgendus:</p>
-<p><strong>Usaldus poliitikute vastu ja rahulolu demokraatiaga on omavahel tugevalt seotud (r = 0,55; p &lt; 0,001; 95% usaldusvahemik 0,51–0,58; n = 1220). Seos on positiivne: mida rohkem inimene poliitikuid usaldab, seda rahulolevam ta demokraatia toimimisega on. Determinatsioonikordaja (r² = 0,30) näitab, et need kaks nähtust jagavad ligikaudu kolmandiku oma varieeruvusest.</strong></p>
-<p><strong>Regressiooni puhul</strong> tuleb lisaks öelda, mida koefitsient <strong>sisuliselt</strong> tähendab — ühikutes, mitte ainult arvuna:</p>
-<p><strong>Lineaarne regressioon näitas, et usaldus poliitikute vastu ennustab rahulolu demokraatiaga statistiliselt olulisel määral (β = 0,55; SE = 0,02; p &lt; 0,001). Iga punkti võrra suurem usaldus poliitikute vastu vastab keskmiselt 0,55 punkti võrra suuremale rahulolule demokraatiaga (mõlemad skaalal 0–10). Mudel seletab 30% rahulolu varieeruvusest (kohandatud R² = 0,30).</strong></p>
-</div>
-</div>
+<p>Korrelatsiooni esitamisel peab kirjas olema korrelatsioonikordaja, p-väärtus, usaldusvahemik, juhtumite arv ja <strong>seose sisuline tõlgendus</strong>.</p>
+<p><strong>Usaldus poliitikute vastu ja rahulolu demokraatiaga on omavahel tugevalt seotud (r = 0,60; p &lt; 0,001; 95% usaldusvahemik 0,56–0,63; n = 1218). Seos on positiivne: mida rohkem inimene poliitikuid usaldab, seda rahulolevam ta demokraatia toimimisega on. Determinatsioonikordaja (r² = 0,36) näitab, et need kaks nähtust jagavad ligikaudu kolmandiku oma varieeruvusest.</strong></p>
+<p>Kolm asja, mida vältida:</p>
+<ul>
+<li><strong>korrelatsioon ilma juhtumite arvuta</strong> — sama <em>r</em> tähendab väikeses ja suures valimis väga erinevat kindlust;</li>
+<li><strong>seose tugevuse hindamine korrelatsioonikordaja järgi</strong> — kasuta selleks R-ruutu (vt ülal);</li>
+<li><strong>“põhjustab”</strong> — vt hoiatust allpool.</li>
+</ul>
 <blockquote class="blockquote">
-<p><strong>Ja kõige tähtsam hoiatus.</strong> Korrelatsioon ei ole põhjuslikkus. Meie mudel ei tõesta, et usaldus <strong>põhjustab</strong> rahulolu. Sama hästi võib rahulolu põhjustada usaldust, või võib mõlemat põhjustada midagi kolmandat. Regressioonivalemi kuju — üks muutuja vasakul, teine paremal — ei tähenda mitte midagi põhjuslikkuse kohta.</p>
-<p>Kirjuta “on seotud” ja “vastab”, mitte “põhjustab” ja “mõjutab”, kui sul ei ole põhjuslikkuse väitmiseks eraldi head argumenti.</p>
+<p><strong>Ja kõige tähtsam hoiatus. Korrelatsioon ei ole põhjuslikkus.</strong> See, et kaks nähtust käivad koos, ei ütle midagi selle kohta, kumb kumba mõjutab — ega sellegi kohta, kas nad üksteist üldse mõjutavad. Sama hästi võib mõlemat põhjustada midagi kolmandat.</p>
+<p>Kirjuta <strong>“on seotud”</strong> ja <strong>“käib koos”</strong>, mitte “põhjustab” ja “mõjutab”, kui sul ei ole põhjuslikkuse väitmiseks eraldi head argumenti.</p>
 </blockquote>
+</div>
+</div>
 </section>
 <section id="harjutused" class="level2">
 <h2 class="anchored" data-anchor-id="harjutused">Harjutused</h2>
 <div class="harjutus">
 <p><strong>1. Korrelatsioon.</strong> Arvuta korrelatsioon muutujate <code>usaldus</code> ja <code>rahulolu_dem</code> vahel. Tee ka hüpoteesi test. Kui tugev seos on ja kui suure osa varieeruvusest ta seletab?</p>
-<p><strong>2. Joonis.</strong> Tee nende kahe muutuja kohta hajuvusdiagramm koos regressioonijoonega.</p>
-<p><strong>3. Regressioon.</strong> Sobita mudel, kus <code>ranne</code> on sõltuv muutuja ja <code>haridus</code> sõltumatu. Kuidas tõlgendad koefitsienti? Kirjuta tulemus välja korrektses vormis.</p>
-<p><strong>4. Skaala mõju.</strong> Jaga muutuja <code>vanus</code> kümnega (nii mõõdad vanust aastakümnetes) ja sobita mudel <code>rahulolu_dem ~ vanus</code>. Võrdle koefitsienti algse mudeliga. Mis muutus ja mis jäi samaks?</p>
+<p><strong>2. Joonis.</strong> Tee nende kahe muutuja kohta hajuvusdiagramm. Kas seos on jooniselt näha?</p>
+<p><strong>3. Mitu korrelatsiooni korraga.</strong> Arvuta korrelatsioonimaatriks muutujate <code>vanus</code>, <code>haridus</code>, <code>sissetulek</code> ja <code>rahulolu_dem</code> vahel. Milline paar on kõige tugevamalt seotud?</p>
+<p><strong>4. Negatiivne seos.</strong> Otsi andmestikust kaks muutujat, mille vaheline korrelatsioon on negatiivne. Kas see seos on sisuliselt mõistetav?</p>
 </div>
 
 
@@ -1149,13 +1004,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./07-hupoteeside-testimine.html" class="pagination-link" aria-label="7. Hüpoteeside testimine">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">7. Hüpoteeside testimine</span></span>
+      <a href="./07-keskmiste-vordlemine.html" class="pagination-link" aria-label="7. Keskmiste võrdlemine">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">7. Keskmiste võrdlemine</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./09-mitmene-regressioon.html" class="pagination-link" aria-label="9. Mitmene regressioon">
-        <span class="nav-page-text"><span class="chapter-title">9. Mitmene regressioon</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./09-regressioon.html" class="pagination-link" aria-label="9. Regressioon: baasmudel">
+        <span class="nav-page-text"><span class="chapter-title">9. Regressioon: baasmudel</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

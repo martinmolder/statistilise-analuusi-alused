@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6. Valim ja ebakindlus – Statistilise analüüsi alused</title>
+<title>6. Valim, ebakindlus ja hüpoteeside testimine – Statistilise analüüsi alused</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./07-hupoteeside-testimine.html" rel="next">
-<link href="./05-kirjeldamine-ja-visualiseerimine.html" rel="prev">
+<link href="./07-keskmiste-vordlemine.html" rel="next">
+<link href="./05-andmete-ettevalmistus-2.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -162,7 +162,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-valim-ja-ebakindlus.html">Järeldav statistika</a></li><li class="breadcrumb-item"><a href="./06-valim-ja-ebakindlus.html"><span class="chapter-title">6. Valim ja ebakindlus</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-valim-ja-hupoteesid.html">Järeldav statistika</a></li><li class="breadcrumb-item"><a href="./06-valim-ja-hupoteesid.html"><span class="chapter-title">6. Valim, ebakindlus ja hüpoteeside testimine</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -196,7 +196,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Alustamine</span></a>
+ <span class="menu-text">Andmetega alustamine</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -212,6 +212,11 @@ window.Quarto = {
   <a href="./02-andmete-laadimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2. Andmete laadimine</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Kirjeldamine ja visualiseerimine</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -225,12 +230,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3. Andmete ettevalmistus I</span></a>
+  <a href="./04-andmete-ettevalmistus-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus I</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4. Andmete ettevalmistus II</span></a>
+  <a href="./05-andmete-ettevalmistus-2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Andmete ettevalmistus II</span></a>
   </div>
 </li>
       </ul>
@@ -238,7 +243,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Andmete kirjeldamine</span></a>
+ <span class="menu-text">Järeldav statistika</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -246,7 +251,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></a>
+  <a href="./06-valim-ja-hupoteesid.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">6. Valim, ebakindlus ja hüpoteeside testimine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-keskmiste-vordlemine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Keskmiste võrdlemine</span></a>
   </div>
 </li>
       </ul>
@@ -254,7 +264,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Järeldav statistika</span></a>
+ <span class="menu-text">Seosed ja mudelid</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -262,43 +272,27 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-valim-ja-ebakindlus.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">6. Valim ja ebakindlus</span></a>
+  <a href="./08-korrelatsioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8. Korrelatsioon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-hupoteeside-testimine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7. Hüpoteeside testimine</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Seosed ja mudelid</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./08-korrelatsioon-ja-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8. Korrelatsioon ja regressioon</span></a>
+  <a href="./09-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Regressioon: baasmudel</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9. Mitmene regressioon</span></a>
+  <a href="./10-mitmene-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Mitmene regressioon</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./10-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10. Tulemuste esitamine</span></a>
+  <a href="./11-tulemuste-esitamine.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Tulemuste esitamine</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-logistiline-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11. Logistiline regressioon</span></a>
+  <a href="./12-logistiline-regressioon.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">12. Logistiline regressioon</span></a>
   </div>
 </li>
       </ul>
@@ -321,7 +315,10 @@ window.Quarto = {
   </ul></li>
   <li><a href="#usaldusvahemikud" id="toc-usaldusvahemikud" class="nav-link" data-scroll-target="#usaldusvahemikud">Usaldusvahemikud</a></li>
   <li><a href="#kuidas-seda-kirja-panna" id="toc-kuidas-seda-kirja-panna" class="nav-link" data-scroll-target="#kuidas-seda-kirja-panna">Kuidas seda kirja panna</a></li>
-  <li><a href="#järgmiseks" id="toc-järgmiseks" class="nav-link" data-scroll-target="#järgmiseks">Järgmiseks</a></li>
+  <li><a href="#null--ja-alternatiivhüpotees" id="toc-null--ja-alternatiivhüpotees" class="nav-link" data-scroll-target="#null--ja-alternatiivhüpotees">Null- ja alternatiivhüpotees</a></li>
+  <li><a href="#mis-on-p-väärtus" id="toc-mis-on-p-väärtus" class="nav-link" data-scroll-target="#mis-on-p-väärtus">Mis on p-väärtus?</a></li>
+  <li><a href="#otsustamine-usaldusvahemiku-abil" id="toc-otsustamine-usaldusvahemiku-abil" class="nav-link" data-scroll-target="#otsustamine-usaldusvahemiku-abil">Otsustamine usaldusvahemiku abil</a></li>
+  <li><a href="#kokkuvõte" id="toc-kokkuvõte" class="nav-link" data-scroll-target="#kokkuvõte">Kokkuvõte</a></li>
   <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
   </ul>
 </nav>
@@ -329,9 +326,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-valim-ja-ebakindlus.html">Järeldav statistika</a></li><li class="breadcrumb-item"><a href="./06-valim-ja-ebakindlus.html"><span class="chapter-title">6. Valim ja ebakindlus</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-valim-ja-hupoteesid.html">Järeldav statistika</a></li><li class="breadcrumb-item"><a href="./06-valim-ja-hupoteesid.html"><span class="chapter-title">6. Valim, ebakindlus ja hüpoteeside testimine</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-title">6. Valim ja ebakindlus</span></h1>
+<h1 class="title"><span class="chapter-title">6. Valim, ebakindlus ja hüpoteeside testimine</span></h1>
 </div>
 
 
@@ -353,7 +350,8 @@ window.Quarto = {
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/ess11_ee_clean.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Siiani oleme kirjeldanud seda, mida me oma andmetes näeme. Nüüd hakkame küsima midagi palju julgemat: <strong>mida saame me nende 1293 inimese põhjal öelda kogu Eesti kohta?</strong></p>
+<p>Siiani oleme kirjeldanud seda, mida me oma andmetes näeme, ja teinud andmed selleks korda. Nüüd hakkame küsima midagi palju julgemat: <strong>mida saame me nende 1293 inimese põhjal öelda kogu Eesti kohta?</strong></p>
+<p>See praktikum käib läbi terve teekonna: kust tuleb ebakindlus, kuidas seda mõõta ja kuidas selle põhjal <strong>otsuseid teha</strong>.</p>
 <p>See on kursuse kõige raskem osa. Ta on ka kõige olulisem — kõik ülejäänu, t-test, korrelatsioon, regressioon, logistiline regressioon, toetub täpselt sellele loogikale, mille me siin läbi käime. Kui see koht selgeks saab, siis on kõik ülejäänu variatsioon samal teemal.</p>
 <blockquote class="blockquote">
 <p>Seetõttu on siin peatükis kõige tähtsamad kohad esitatud <strong>kahel viisil</strong>. Sakid “Lihtsam seletus” ja “Täpsem seletus” räägivad samast asjast — üks pilte ja katseid kasutades, teine valemitega. Vali see, mis sulle sobib. Kui üks jääb segaseks, proovi teist.</p>
@@ -453,7 +451,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06-valim-ja-ebakindlus_files/figure-html/sim-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="06-valim-ja-hupoteesid_files/figure-html/sim-joonis-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -517,7 +515,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06-valim-ja-ebakindlus_files/figure-html/sim-suurused-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="06-valim-ja-hupoteesid_files/figure-html/sim-suurused-joonis-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -659,7 +657,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06-valim-ja-ebakindlus_files/figure-html/normaaljaotus-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="06-valim-ja-hupoteesid_files/figure-html/normaaljaotus-joonis-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -698,7 +696,7 @@ window.Quarto = {
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06-valim-ja-ebakindlus_files/figure-html/t-jaotus-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="06-valim-ja-hupoteesid_files/figure-html/t-jaotus-joonis-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -784,9 +782,70 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="järgmiseks" class="level2">
-<h2 class="anchored" data-anchor-id="järgmiseks">Järgmiseks</h2>
-<p>Nüüd on meil olemas kõik, mida vaja hüpoteeside testimiseks. Sest hüpoteesi testimine on lõppkokkuvõttes lihtsalt küsimus: <strong>kas mingi huvipakkuv väärtus jääb meie usaldusvahemiku sisse või mitte?</strong></p>
+<section id="null--ja-alternatiivhüpotees" class="level2">
+<h2 class="anchored" data-anchor-id="null--ja-alternatiivhüpotees">Null- ja alternatiivhüpotees</h2>
+<p>Peaaegu iga statistiline test on üles ehitatud ühtemoodi. Meil on kaks väidet.</p>
+<ul>
+<li><strong>Nullhüpotees.</strong> See väärtus, mida me andmetes näeme, ei erine mingist kindlast hüpoteetilisest väärtusest. Enamasti on see hüpoteetiline väärtus <strong>null</strong>. Lühidalt: <strong>seost ei ole.</strong></li>
+<li><strong>Alternatiivne hüpotees.</strong> Erinevus on olemas. Lühidalt: <strong>seos on olemas.</strong></li>
+</ul>
+<p>Test ei tõesta kumbagi. Ta ütleb ainult: <strong>kui nullhüpotees oleks realsuses tõsi, kui tõenäoline oleks siis näha andmetes seda, mida me näeme?</strong> Kui see tõenäosus on väga väike, siis järeldame, et nullhüpotees ilmselt ei kehti. Ehk siis kui see tõenäosus, et me näeme oma andmetes seda, mida me näeme olukorras, kus pärielt on tõene null-hüpotees, on väga väike, siis me järeldame, et null-hüpotees ei ole tõene. Meie andmed ei ole väga suure tõenäosusega tulnud populatsioonist, kus null hüpotees on tõene.</p>
+</section>
+<section id="mis-on-p-väärtus" class="level2">
+<h2 class="anchored" data-anchor-id="mis-on-p-väärtus">Mis on p-väärtus?</h2>
+<p>Enne kui ühtegi testi teeme, tuleb selgeks saada see arv, mille järgi me kõik oma otsused teeme.</p>
+<p><strong>P-väärtus on tõenäosus näha oma andmetes sellist tulemust (või veel ekstreemsemat), kui nullhüpotees oleks tõsi.</strong></p>
+<p>Loe see lause veel kord läbi. Ta on tinglik: “kui nullhüpotees oleks tõsi”. P-väärtus ei ütle sulle, kas nullhüpotees on tõsi — ta ütleb, kui hästi sinu andmed sellega kokku sobiksid.</p>
+<p>Mõtle sellest nii. Sa oletad korraks, et seost ei ole. Siis vaatad oma andmeid ja küsid: <strong>kui ebatavalised need andmed sellise oletuse juures oleksid?</strong></p>
+<ul>
+<li>Kui p-väärtus on <strong>suur</strong> (näiteks 0,60), siis on sinu andmed sellise oletusega täiesti kooskõlas. Midagi kummalist ei ole.</li>
+<li>Kui p-väärtus on <strong>väike</strong> (näiteks 0,002), siis oleksid sinu andmed sellise oletuse juures väga ebatavalised. Järelikult on oletus ilmselt vale ja seos on olemas.</li>
+</ul>
+<p>Praktilises kasutuses tõlgendatakse teda lühemalt: <strong>tõenäosus eksida, kui me väidame, et seos on päriselt olemas.</strong></p>
+<blockquote class="blockquote">
+<p><strong>Statistiline tava on 5%.</strong> Kui p-väärtus on väiksem kui 0,05 — ehk tõenäosus eksida on alla 5% — siis ütleme, et erinevus on <strong>statistiliselt oluline</strong>. See piir ei ole loodusseadus, vaid kokkulepe. Mõnes valdkonnas kasutatakse rangemaid piire (1% või 0,1%).</p>
+<p>Sama asja kohta öeldakse vahel ka “95% usaldusnivoo” — see on lihtsalt teine pool samast arvust. 5% tõenäosus eksida tähendab 95% kindlust.</p>
+</blockquote>
+<p><strong>Mida p-väärtus EI ole.</strong> Kolm väärarusaama, mis on nii levinud, et neid tasub eraldi välja tuua.</p>
+<ul>
+<li>Ta <strong>ei ole</strong> tõenäosus, et nullhüpotees on tõsi.</li>
+<li>Ta <strong>ei ütle midagi selle kohta, kui suur</strong> seos on. Väga väike p-väärtus võib käia täiesti tühise erinevuse kohta — vaata allpool osa statistilise ja sisulise olulisuse kohta.</li>
+<li>Ta <strong>ei ole</strong> tõenäosus, et sinu tulemus kordub, kui uuringut korrata.</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>P-väärtus on kogu järgneva kursuse võti.</strong> Ta näeb täpselt samasugune välja ja teda tõlgendatakse täpselt sama moodi t-testi, korrelatsiooni, regressiooni ja logistilise regressiooni juures. Kui ta siin selgeks saab, siis on kõik ülejäänu variatsioon samal teemal.</p>
+</blockquote>
+</section>
+<section id="otsustamine-usaldusvahemiku-abil" class="level2">
+<h2 class="anchored" data-anchor-id="otsustamine-usaldusvahemiku-abil">Otsustamine usaldusvahemiku abil</h2>
+<p>Nüüd on meil kõik olemas, mida otsustamiseks vaja. Ja tähelepanuväärne on see, et <strong>uut arvutust ei ole vaja teha</strong> — usaldusvahemik, mille me juba arvutasime, vastab hüpoteesi küsimusele ära.</p>
+<p>Meie valimi keskmine vanus on 50.1 ja 95% usaldusvahemik ulatub 49.1-st 51.1-ni.</p>
+<p>Küsime nüüd: <strong>kas Eesti elanike keskmine vanus võiks olla 52?</strong></p>
+<p>Arv 52 jääb sellest vahemikust <strong>välja</strong>. Meie andmetega on ta raskesti ühildatav — kui tõene keskmine oleks 52, siis oleks väga ebatavaline näha valimit, mille keskmine on 50.1.</p>
+<p>Ja <strong>kas ta võiks olla 50?</strong> See jääb vahemikku sisse. Seda me välistada ei saa.</p>
+<blockquote class="blockquote">
+<p><strong>See ongi hüpoteesi test.</strong> Kogu ülejäänu, mis järgmises praktikumis tuleb, on selle sama küsimuse täpsem sõnastus ja mugavam arvutamine:</p>
+<ul>
+<li>kui võrreldav väärtus jääb <strong>usaldusvahemikku sisse</strong>, siis ei saa me välistada, et ta ongi tõene väärtus — erinevus <strong>ei ole</strong> statistiliselt oluline;</li>
+<li>kui ta jääb <strong>väljapoole</strong>, siis on erinevus statistiliselt oluline.</li>
+</ul>
+<p>P-väärtus ütleb sama asja täpsemalt: mitte “jääb sisse või välja”, vaid “kui kaugel piirist”.</p>
+</blockquote>
+<div class="arutelu">
+<p><strong>Arutelu.</strong> Kui me arvutaksime 99% usaldusvahemiku, siis ta oleks laiem. <strong>Kas arv 52 võiks siis vahemikku sisse jääda?</strong> Ja mida see tähendaks meie järelduse jaoks?</p>
+</div>
+</section>
+<section id="kokkuvõte" class="level2">
+<h2 class="anchored" data-anchor-id="kokkuvõte">Kokkuvõte</h2>
+<p>Selles praktikumis käisime läbi kogu järeldava statistika loogika:</p>
+<ul>
+<li><strong>valim ja populatsioon</strong> — miks juhuslikkus on hädavajalik;</li>
+<li><strong>ebakindlus</strong> — kust ta tuleb ja miks ta valimi kasvades kahaneb;</li>
+<li><strong>standardviga ja usaldusvahemik</strong> — kuidas ebakindlust arvuliselt väljendada;</li>
+<li><strong>p-väärtus</strong> — arv, mille järgi otsuseid tehakse;</li>
+<li><strong>otsustamine usaldusvahemiku abil</strong> — hüpoteesi testi kõige lihtsam vorm.</li>
+</ul>
+<p>Kogu ülejäänu sellel kursusel on selle sama loogika kordamine erinevate seoste peal. Järgmises praktikumis võrdleme keskmisi, siis kahe pideva muutuja seost, siis regressioonimudeleid — aga p-väärtus tähendab igal pool täpselt sama asja.</p>
 </section>
 <section id="harjutused" class="level2">
 <h2 class="anchored" data-anchor-id="harjutused">Harjutused</h2>
@@ -795,6 +854,8 @@ window.Quarto = {
 <p><strong>2. Valimi suurus.</strong> Tee sama simulatsioon valimi suurusega 25 ja 400. Kui palju hajuvus muutub? Kontrolli valemiga, kas tulemus vastab ootusele.</p>
 <p><strong>3. Usaldusvahemik.</strong> Arvuta 95% usaldusvahemik muutuja <code>rahulolu_dem</code> keskmise ümber. Arvuta seejärel ka 99% usaldusvahemik — mis muutub ja miks?</p>
 <p><strong>4. Standardviga käsitsi.</strong> Arvuta muutuja <code>haridus</code> standardviga käsitsi (standardhälve jagatud ruutjuurega juhtumite arvust) ja kontrolli tulemust funktsiooniga <code>t.test()</code>.</p>
+<p><strong>5. Ühe grupi test.</strong> Testi, kas Eesti elanike keskmine rahulolu demokraatiaga erineb skaala keskpunktist 5. Sõnasta null- ja alternatiivhüpotees <strong>enne</strong> testi tegemist.</p>
+<p><strong>6. P-väärtus käsitsi.</strong> Võta eelmise harjutuse t-väärtus ja arvuta p-väärtus ise, funktsiooniga <code>pt()</code>. Kontrolli, et sinu tulemus klapib <code>t.test()</code> omaga. Ära unusta kumbagi kahest tehtest.</p>
 </div>
 
 
@@ -1203,13 +1264,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./05-kirjeldamine-ja-visualiseerimine.html" class="pagination-link" aria-label="5. Kirjeldamine ja visualiseerimine">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">5. Kirjeldamine ja visualiseerimine</span></span>
+      <a href="./05-andmete-ettevalmistus-2.html" class="pagination-link" aria-label="5. Andmete ettevalmistus II">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">5. Andmete ettevalmistus II</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07-hupoteeside-testimine.html" class="pagination-link" aria-label="7. Hüpoteeside testimine">
-        <span class="nav-page-text"><span class="chapter-title">7. Hüpoteeside testimine</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./07-keskmiste-vordlemine.html" class="pagination-link" aria-label="7. Keskmiste võrdlemine">
+        <span class="nav-page-text"><span class="chapter-title">7. Keskmiste võrdlemine</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
