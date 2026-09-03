@@ -314,6 +314,12 @@ window.Quarto = {
   <li><a href="#hüpoteesi-test" id="toc-hüpoteesi-test" class="nav-link" data-scroll-target="#hüpoteesi-test">Hüpoteesi test</a></li>
   </ul></li>
   <li><a href="#seose-tugevus-r-ruut" id="toc-seose-tugevus-r-ruut" class="nav-link" data-scroll-target="#seose-tugevus-r-ruut">Seose tugevus: R-ruut</a></li>
+  <li><a href="#mitu-korrelatsiooni-korraga" id="toc-mitu-korrelatsiooni-korraga" class="nav-link" data-scroll-target="#mitu-korrelatsiooni-korraga">Mitu korrelatsiooni korraga</a></li>
+  <li><a href="#erindid-üks-juhtum-võib-kõik-ära-rikkuda" id="toc-erindid-üks-juhtum-võib-kõik-ära-rikkuda" class="nav-link" data-scroll-target="#erindid-üks-juhtum-võib-kõik-ära-rikkuda">Erindid: üks juhtum võib kõik ära rikkuda</a></li>
+  <li><a href="#spearmani-korrelatsioon" id="toc-spearmani-korrelatsioon" class="nav-link" data-scroll-target="#spearmani-korrelatsioon">Spearmani korrelatsioon</a>
+  <ul class="collapse">
+  <li><a href="#kumba-kasutada" id="toc-kumba-kasutada" class="nav-link" data-scroll-target="#kumba-kasutada">Kumba kasutada?</a></li>
+  </ul></li>
   <li><a href="#kuidas-seda-kirja-panna" id="toc-kuidas-seda-kirja-panna" class="nav-link" data-scroll-target="#kuidas-seda-kirja-panna">Kuidas seda kirja panna</a></li>
   <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
   </ul>
@@ -562,6 +568,168 @@ window.Quarto = {
 <p><strong>Seetõttu räägi seose tugevusest R-ruudu kaudu, mitte korrelatsioonikordaja kaudu.</strong></p>
 </blockquote>
 </section>
+<section id="mitu-korrelatsiooni-korraga" class="level2">
+<h2 class="anchored" data-anchor-id="mitu-korrelatsiooni-korraga">Mitu korrelatsiooni korraga</h2>
+<p>Seni vaatasime kahte muutujat. Praktikas tahad sa tavaliselt näha korraga kõiki paare — see annab kiire ülevaate sellest, mis su andmetes üldse omavahel seotud on.</p>
+<p>Kui anda funktsioonile <code>cor()</code> mitme veeruga andmetabel, siis annabki ta <strong>korrelatsioonimaatriksi</strong>: iga muutuja iga teisega.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>huvipakkuvad <span class="ot">&lt;-</span> data[, <span class="fu">c</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"vanus"</span>, <span class="st">"haridus"</span>, <span class="st">"sissetulek"</span>, <span class="st">"usaldus_pol"</span>, <span class="st">"rahulolu_dem"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>)]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>korrelatsioonid <span class="ot">&lt;-</span> <span class="fu">cor</span>(huvipakkuvad, <span class="at">use =</span> <span class="st">"complete.obs"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(korrelatsioonid, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##              vanus haridus sissetulek usaldus_pol rahulolu_dem
+## vanus         1.00    0.16      -0.35       -0.09        -0.12
+## haridus       0.16    1.00       0.27        0.22         0.19
+## sissetulek   -0.35    0.27       1.00        0.21         0.24
+## usaldus_pol  -0.09    0.22       0.21        1.00         0.59
+## rahulolu_dem -0.12    0.19       0.24        0.59         1.00</code></pre>
+</div>
+</div>
+<p>Kuidas seda lugeda?</p>
+<ul>
+<li><strong>Diagonaalil on ühed</strong> — iga muutuja korrelatsioon iseendaga.</li>
+<li><strong>Maatriks on sümmeetriline</strong> — ülemine ja alumine pool on peegelpildid. Piisab ühe poole vaatamisest.</li>
+<li>Iga arv on ühe <strong>paari</strong> korrelatsioon.</li>
+</ul>
+<p>Tugevaim seos on usalduse ja rahulolu vahel (0,59) — see, mida me eespool juba vaatasime. Tugevaim <strong>negatiivne</strong> seos on vanuse ja sissetuleku vahel (−0,35): vanemad inimesed on Eestis madalama sissetulekuga.</p>
+<blockquote class="blockquote">
+<p><strong>Argument <code>use = "complete.obs"</code></strong> ütleb, et arvutada ainult nende vastajate põhjal, kellel <strong>kõik</strong> need muutujad on olemas. Alternatiiv <code>use = "pairwise.complete.obs"</code> arvutab iga paari eraldi, kasutades kõiki, kellel just see paar olemas on.</p>
+<p>Vahe on oluline: teine variant kasutab rohkem andmeid, aga siis põhineb iga arv <strong>eri inimeste hulgal</strong>, mis teeb võrdlemise petlikuks. Kahtluse korral kasuta <code>"complete.obs"</code> ja ütle juhtumite arv välja.</p>
+</blockquote>
+<div class="arutelu">
+<p><strong>Arutelu.</strong> Vaata hariduse rida. Haridus on positiivselt seotud sissetulekuga (0,27), usaldusega (0,22) ja rahuloluga (0,19). <strong>Kas see tähendab, et haridus neid kolme põhjustab?</strong> Mis muu seletus võiks olla?</p>
+</div>
+</section>
+<section id="erindid-üks-juhtum-võib-kõik-ära-rikkuda" class="level2">
+<h2 class="anchored" data-anchor-id="erindid-üks-juhtum-võib-kõik-ära-rikkuda">Erindid: üks juhtum võib kõik ära rikkuda</h2>
+<p>Nüüd üks hoiatus, mis on kõige olulisem asi, mida korrelatsiooni kohta teada.</p>
+<p><strong>Pearsoni korrelatsioon on erakordselt tundlik üksikute ekstreemsete väärtuste suhtes.</strong> Erind (<em>outlier</em>) on juhtum, mis on ülejäänutest väga kaugel — ja üksainus selline juhtum võib korrelatsiooni tundmatuseni muuta.</p>
+<p>Teeme katse. Meie tegelik korrelatsioon usalduse ja rahulolu vahel on:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>usaldus_ok <span class="ot">&lt;-</span> usaldus_rahulolu<span class="sc">$</span>usaldus_pol</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>rahulolu_ok <span class="ot">&lt;-</span> usaldus_rahulolu<span class="sc">$</span>rahulolu_dem</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(usaldus_ok, rahulolu_ok)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.59636</code></pre>
+</div>
+</div>
+<p>Nüüd lisame <strong>ühe ainsa</strong> vale väärtuse. Kujutame ette, et üks vastaja jäi puhastamata: tema usalduse väärtuseks on jäänud kood <strong>99</strong>, mis tähendas tegelikult “ei oska öelda”.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>usaldus_katki <span class="ot">&lt;-</span> <span class="fu">c</span>(usaldus_ok, <span class="dv">99</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>rahulolu_katki <span class="ot">&lt;-</span> <span class="fu">c</span>(rahulolu_ok, <span class="dv">5</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(usaldus_katki, rahulolu_katki)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 0.3849845</code></pre>
+</div>
+</div>
+<p><strong>Korrelatsioon kukkus 0.596-lt 0.385-le</strong> — ta kaotas umbes 35% oma väärtusest. Ja seda tegi <strong>üks juhtum 1219-st.</strong></p>
+<p>Vaatame, mis joonisel toimub.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>erindi_andmed <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">usaldus =</span> usaldus_katki,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">rahulolu =</span> rahulolu_katki</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(erindi_andmed, <span class="fu">aes</span>(<span class="at">x =</span> usaldus, <span class="at">y =</span> rahulolu)) <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"usaldus poliitikute vastu (üks väärtus on 99)"</span>,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"rahulolu demokraatiaga (0-10)"</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Üks puhastamata väärtus tõmbab kogu pildi laiali"</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08-korrelatsioon_files/figure-html/erind-joonis-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Kogu tegelik andmepilv on surutud vasakusse serva ja üks punkt istub kaugel paremal. Just see punkt otsustabki nüüd suure osa korrelatsioonist.</p>
+<blockquote class="blockquote">
+<p><strong>Siin läheb praktikumis 4 tehtud töö arvesse.</strong> Me nägime siis, et puhastamata koodid nagu 999 või 99 ei anna veateadet — nad on lihtsalt arvud teiste seas. Nüüd näed, mida nad tulemusega teevad.</p>
+<p><strong>Vaata alati oma muutuja miinimumi ja maksimumi enne korrelatsiooni arvutamist.</strong> Funktsioon <code>summary()</code> teeb selle kolme sekundiga. Kui maksimum on 99 ja skaala peaks olema 0–10, siis on midagi puhastamata.</p>
+</blockquote>
+</section>
+<section id="spearmani-korrelatsioon" class="level2">
+<h2 class="anchored" data-anchor-id="spearmani-korrelatsioon">Spearmani korrelatsioon</h2>
+<p>Erindite probleemile on olemas ka teine lahendus — <strong>Spearmani korrelatsioon</strong>.</p>
+<p>Idee on lihtne. Pearsoni korrelatsioon kasutab <strong>väärtusi endid</strong>. Spearmani korrelatsioon kasutab ainult <strong>järjestust</strong>: ta asendab iga väärtuse tema järjekorranumbriga ja arvutab korrelatsiooni nende põhjal.</p>
+<p>Sellest järeldub kohe kaks asja:</p>
+<ul>
+<li><strong>erindi suurus ei loe</strong> — kui väärtus on kõige suurem, siis ta on kõige suurem, olgu ta 11 või 99;</li>
+<li><strong>seos ei pea olema sirgjooneline</strong> — piisab sellest, et ta on ühesuunaline (kui üks kasvab, teine kasvab).</li>
+</ul>
+<p>R-is saab teda argumendiga <code>method = "spearman"</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pearson =</span> <span class="fu">cor</span>(usaldus_ok, rahulolu_ok),</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">spearman =</span> <span class="fu">cor</span>(usaldus_ok, rahulolu_ok, <span class="at">method =</span> <span class="st">"spearman"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##   pearson  spearman 
+## 0.5963600 0.5949891</code></pre>
+</div>
+</div>
+<p>Meie korrastatud andmetes on nad <strong>praktiliselt samad</strong>. See ei ole ebaõnnestunud näide — see on hea uudis: kui kaks korrelatsiooni langevad kokku, siis tähendab see, et seos on ühtlane ja ekstreemseid väärtusi ei ole.</p>
+<p>Aga vaata nüüd, mis juhtub sellesama puhastamata 99-ga:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pearson =</span> <span class="fu">cor</span>(usaldus_katki, rahulolu_katki),</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">spearman =</span> <span class="fu">cor</span>(usaldus_katki, rahulolu_katki, <span class="at">method =</span> <span class="st">"spearman"</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>##   pearson  spearman 
+## 0.3849845 0.5940081</code></pre>
+</div>
+</div>
+<p><strong>Pearson kukkus kolmandiku võrra. Spearman ei liikunud praktiliselt üldse.</strong> Talle on ükskõik, kas kõige suurem väärtus on 10 või 99 — ta on ikka kõige suurem.</p>
+<section id="kumba-kasutada" class="level3">
+<h3 class="anchored" data-anchor-id="kumba-kasutada">Kumba kasutada?</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kasuta <strong>Pearsonit</strong>, kui</th>
+<th>Kasuta <strong>Spearmanit</strong>, kui</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>mõlemad muutujad on pidevad</td>
+<td>muutujad on ordinaalsed</td>
+</tr>
+<tr class="even">
+<td>seos näeb jooniselt sirgjooneline välja</td>
+<td>seos on ühesuunaline, aga kõver</td>
+</tr>
+<tr class="odd">
+<td>ekstreemseid väärtusi ei ole</td>
+<td>andmetes on erindeid</td>
+</tr>
+<tr class="even">
+<td>tahad hiljem regressiooni teha</td>
+<td>tahad lihtsalt seost kirjeldada</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>Praktiline soovitus: arvuta mõlemad.</strong> See on üks lisarida koodi.</p>
+<p>Kui nad on <strong>sarnased</strong>, siis on kõik hästi ja raporteeri Pearson (ta on tavapärasem ja seotud regressiooniga).</p>
+<p>Kui nad on <strong>märgatavalt erinevad</strong>, siis on see märk, et midagi tasub uurida: kas on erindeid, kas seos on kõver, kas mõni väärtus on puhastamata. <strong>Erinevus ise on informatsioon.</strong></p>
+</blockquote>
+</section>
+</section>
 <section id="kuidas-seda-kirja-panna" class="level2">
 <h2 class="anchored" data-anchor-id="kuidas-seda-kirja-panna">Kuidas seda kirja panna</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Kuidas seda kirja panna">
@@ -594,8 +762,9 @@ window.Quarto = {
 <div class="harjutus">
 <p><strong>1. Korrelatsioon.</strong> Arvuta korrelatsioon muutujate <code>usaldus</code> ja <code>rahulolu_dem</code> vahel. Tee ka hüpoteesi test. Kui tugev seos on ja kui suure osa varieeruvusest ta seletab?</p>
 <p><strong>2. Joonis.</strong> Tee nende kahe muutuja kohta hajuvusdiagramm. Kas seos on jooniselt näha?</p>
-<p><strong>3. Mitu korrelatsiooni korraga.</strong> Arvuta korrelatsioonimaatriks muutujate <code>vanus</code>, <code>haridus</code>, <code>sissetulek</code> ja <code>rahulolu_dem</code> vahel. Milline paar on kõige tugevamalt seotud?</p>
-<p><strong>4. Negatiivne seos.</strong> Otsi andmestikust kaks muutujat, mille vaheline korrelatsioon on negatiivne. Kas see seos on sisuliselt mõistetav?</p>
+<p><strong>3. Korrelatsioonimaatriks.</strong> Tee korrelatsioonimaatriks, kus on sees <code>ranne</code>, <code>usaldus</code>, <code>haridus</code> ja <code>vanus</code>. Milline paar on kõige tugevamalt seotud? Kas mõni seos üllatab?</p>
+<p><strong>4. Spearman.</strong> Arvuta kõikide nende paaride kohta ka Spearmani korrelatsioon. Kas mõne paari puhul on vahe märgatav? Kui jah, siis vaata seda paari joonisel — mis seal toimub?</p>
+<p><strong>5. Erind.</strong> Vali üks muutujapaar ja lisa sinna ise üks ekstreemne väärtus. Kui palju korrelatsioon muutub? Proovi ka, kui palju on vaja väärtust suurendada, et Spearman lõpuks liikuma hakkaks.</p>
 </div>
 
 

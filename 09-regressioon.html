@@ -315,6 +315,7 @@ window.Quarto = {
   <li><a href="#kui-hea-mudel-on" id="toc-kui-hea-mudel-on" class="nav-link" data-scroll-target="#kui-hea-mudel-on">Kui hea mudel on?</a></li>
   </ul></li>
   <li><a href="#kas-mõõtmise-kvaliteet-loeb" id="toc-kas-mõõtmise-kvaliteet-loeb" class="nav-link" data-scroll-target="#kas-mõõtmise-kvaliteet-loeb">Kas mõõtmise kvaliteet loeb?</a></li>
+  <li><a href="#koefitsientide-standardiseerimine" id="toc-koefitsientide-standardiseerimine" class="nav-link" data-scroll-target="#koefitsientide-standardiseerimine">Koefitsientide standardiseerimine</a></li>
   <li><a href="#kuidas-seda-kirja-panna" id="toc-kuidas-seda-kirja-panna" class="nav-link" data-scroll-target="#kuidas-seda-kirja-panna">Kuidas seda kirja panna</a></li>
   <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
   </ul>
@@ -488,6 +489,52 @@ window.Quarto = {
 <p>Nii et valik ei ole “üks on õige, teine vale”. Faktorskoor mõõdab paremini, üksikküsimus on lihtsamini tõlgendatav — ja <strong>sina pead selle valiku teadlikult tegema ja oma töös välja ütlema.</strong></p>
 <div class="arutelu">
 <p><strong>Arutelu.</strong> Kumba sa oma bakalaureusetöös kasutaksid? Mille põhjal sa otsustaksid? Ja kas on olukordi, kus nõrgem, aga arusaadavam mõõdik on parem valik kui tugevam, aga raskesti seletatav?</p>
+</div>
+</section>
+<section id="koefitsientide-standardiseerimine" class="level2">
+<h2 class="anchored" data-anchor-id="koefitsientide-standardiseerimine">Koefitsientide standardiseerimine</h2>
+<p>Regressioonikoefitsiendi suurus sõltub muutuja mõõtskaalast. See tähendab, et <strong>kahe erineva muutuja koefitsiente ei saa omavahel võrrelda</strong>, kui nad on erineval skaalal.</p>
+<p>Meie mudelis on usaldus skaalal 0–10 ja vanus aastates. Kumb on tugevam seletaja? Koefitsientidest seda välja ei loe — nad on eri ühikutes.</p>
+<p>Koefitsiendid saab mudelist eraldi välja võtta funktsiooniga <code>coef()</code>. See on mugavam kui terve <code>summary()</code> väljundi lugemine, kui sind huvitavad ainult koefitsiendid.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mudel_kaks <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus_pol <span class="sc">+</span> vanus, <span class="at">data =</span> data)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coef</span>(mudel_kaks), <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## (Intercept) usaldus_pol       vanus 
+##      3.2321      0.6606     -0.0082</code></pre>
+</div>
+</div>
+<p>Vanuse koefitsient on peaaegu null ja usalduse oma palju suurem. Aga see ei tähenda, et vanus oleks ebaoluline — tähendab ainult, et üks eluaasta on väike samm, samal ajal kui üks usalduspunkt on suur samm.</p>
+<p><strong>Lahendus on muutujad enne mudelisse panekut standardiseerida.</strong> Standardiseerimine tähendab, et igast muutujast tehakse z-skoor — täpselt see tehe, mida nägime praktikumis 6. Pärast seda on iga muutuja keskmine 0 ja standardhälve 1, ehk <strong>kõik on samal skaalal</strong>.</p>
+<p>R-is teeb seda funktsioon <code>scale()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>usaldus_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>usaldus_pol)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>vanus_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>vanus)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>rahulolu_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>rahulolu_dem)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>mudel_std <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_z <span class="sc">~</span> usaldus_z <span class="sc">+</span> vanus_z, <span class="at">data =</span> data)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coef</span>(mudel_std), <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## (Intercept)   usaldus_z     vanus_z 
+##     -0.0043      0.5919     -0.0566</code></pre>
+</div>
+</div>
+<p>Nüüd on koefitsiendid võrreldavad. Neid nimetatakse <strong>standardiseeritud koefitsientideks</strong> ehk <strong>beeta-koefitsientideks</strong>.</p>
+<p><strong>Kuidas neid lugeda?</strong> Koefitsient ütleb, mitu <strong>standardhälvet</strong> muutub sõltuv muutuja, kui sõltumatu muutuja kasvab ühe standardhälbe võrra.</p>
+<p>Usalduse koefitsient on umbes kümme korda suurem kui vanuse oma. Ehk: usaldus on rahulolu seletamisel palju tugevam tegur.</p>
+<blockquote class="blockquote">
+<p><strong>Millal standardiseerida ja millal mitte?</strong></p>
+<p>Standardiseeri siis, kui sa tahad <strong>võrrelda erinevate muutujate suhtelist tugevust</strong> ühes mudelis.</p>
+<p>Ära standardiseeri siis, kui muutujal on <strong>sisuliselt tähendusrikas ühik</strong>. “Iga eluaasta kohta 0,01 punkti” on arusaadav lause. “Iga standardhälbe kohta 0,08 standardhälvet” ei ole.</p>
+<p>Ja binaarseid muutujaid ei ole üldse mõtet standardiseerida — “pool standardhälvet meheks olemist” ei tähenda midagi.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Üks hoiatus.</strong> Standardiseeritud koefitsient ütleb, kui tugev muutuja on <strong>selles konkreetses mudelis nende konkreetsete andmete peal.</strong> Ta ei ole muutuja “üldine tähtsus”. Kui sa lisad mudelisse uue muutuja või vahetad valimit, võib järjekord muutuda.</p>
+</blockquote>
+<div class="harjutus">
+<p><strong>Harjutus.</strong> Lisa standardiseeritud mudelisse ka haridus. Milline kolmest muutujast on kõige tugevam seletaja? Kontrolli, kas sama järjekord tuleb välja ka standardiseerimata mudelist — ja mõtle, miks see nii on või ei ole.</p>
 </div>
 </section>
 <section id="kuidas-seda-kirja-panna" class="level2">
