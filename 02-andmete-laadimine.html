@@ -270,7 +270,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Selle peatüki sisu</h2>
    
   <ul>
-  <li><a href="#kust-meie-andmed-tulevad" id="toc-kust-meie-andmed-tulevad" class="nav-link active" data-scroll-target="#kust-meie-andmed-tulevad">Kust meie andmed tulevad?</a></li>
+  <li><a href="#enne-alustamist-failid-oma-arvutisse" id="toc-enne-alustamist-failid-oma-arvutisse" class="nav-link active" data-scroll-target="#enne-alustamist-failid-oma-arvutisse">Enne alustamist: failid oma arvutisse</a>
+  <ul class="collapse">
+  <li><a href="#kuhu-nad-panna" id="toc-kuhu-nad-panna" class="nav-link" data-scroll-target="#kuhu-nad-panna">Kuhu nad panna</a></li>
+  <li><a href="#kuidas-kontrollida-kas-kõik-on-paigas" id="toc-kuidas-kontrollida-kas-kõik-on-paigas" class="nav-link" data-scroll-target="#kuidas-kontrollida-kas-kõik-on-paigas">Kuidas kontrollida, kas kõik on paigas</a></li>
+  <li><a href="#andmete-algallikas" id="toc-andmete-algallikas" class="nav-link" data-scroll-target="#andmete-algallikas">Andmete algallikas</a></li>
+  </ul></li>
+  <li><a href="#kust-meie-andmed-tulevad" id="toc-kust-meie-andmed-tulevad" class="nav-link" data-scroll-target="#kust-meie-andmed-tulevad">Kust meie andmed tulevad?</a></li>
   <li><a href="#koodiraamat" id="toc-koodiraamat" class="nav-link" data-scroll-target="#koodiraamat">Koodiraamat</a></li>
   <li><a href="#failiformaadid" id="toc-failiformaadid" class="nav-link" data-scroll-target="#failiformaadid">Failiformaadid</a>
   <ul class="collapse">
@@ -314,6 +320,77 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Eelmises praktikumis tegime ise väikese andmetabeli. Päris töös nii ei lähe — andmed tulevad kuskilt mujalt ja meie esimene ülesanne on nad R-i sisse saada.</p>
+<section id="enne-alustamist-failid-oma-arvutisse" class="level2">
+<h2 class="anchored" data-anchor-id="enne-alustamist-failid-oma-arvutisse">Enne alustamist: failid oma arvutisse</h2>
+<p>Selle ja kõikide järgnevate praktikumide jaoks on vaja kolme faili. Nad on kõik <strong>Moodle’is</strong> kursuse lehel.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 46%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Fail</th>
+<th>Mis see on</th>
+<th>Suurus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ess11_ee_raw.sav</code></td>
+<td>ESS-i Eesti andmed, muutmata kujul</td>
+<td>4,7 MB</td>
+</tr>
+<tr class="even">
+<td><code>ess11_ee_clean.rdata</code></td>
+<td>analüüsivalmis andmestik, mille me ise praktikumides 3–4 valmis teeme</td>
+<td>39 KB</td>
+</tr>
+<tr class="odd">
+<td><code>ESS11_koodiraamat.html</code></td>
+<td>koodiraamat — mida iga muutuja ja iga arv tähendab</td>
+<td>2,8 MB</td>
+</tr>
+</tbody>
+</table>
+<section id="kuhu-nad-panna" class="level3">
+<h3 class="anchored" data-anchor-id="kuhu-nad-panna">Kuhu nad panna</h3>
+<p>Praktikumis 1 tegid sa endale <strong>RStudio projekti</strong> ja selle sisse kausta nimega <code>data</code>. Kõik kolm faili lähevad sinna.</p>
+<p>Kui su projekti kaust on näiteks <code>statanal</code>, siis peaks pilt olema selline:</p>
+<pre><code>statanal/
+├── statanal.Rproj          &lt;- see fail avab projekti
+├── data/
+│   ├── ess11_ee_raw.sav
+│   ├── ess11_ee_clean.rdata
+│   └── ESS11_koodiraamat.html
+└── R/
+    └── minu_kood.R</code></pre>
+<blockquote class="blockquote">
+<p><strong>Miks just nii?</strong> Sest kogu materjalides olev kood eeldab seda paigutust. Kui kirjutame <code>read_sav("data/ess11_ee_raw.sav")</code>, siis otsib R faili sinu projektikausta alt kaustast <code>data</code>. Kui fail on mujal — näiteks allalaadimiste kaustas — siis ta seda ei leia ja annab veateate <code>cannot open file</code>.</p>
+<p>See on kõige sagedasem põhjus, miks kood “ei tööta”. Enne kui midagi muud otsid: <strong>kontrolli, kas fail on õiges kohas ja kas nimi on täpselt õige.</strong></p>
+</blockquote>
+</section>
+<section id="kuidas-kontrollida-kas-kõik-on-paigas" class="level3">
+<h3 class="anchored" data-anchor-id="kuidas-kontrollida-kas-kõik-on-paigas">Kuidas kontrollida, kas kõik on paigas</h3>
+<p>Jooksuta see käsk. Funktsioon <code>list.files()</code> näitab, mis failid antud kaustas on.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="st">"data"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] "ESS11_koodiraamat.html" "README.md"              "ess11_ee_clean.rdata"  
+## [4] "ess11_ee_raw.sav"</code></pre>
+</div>
+</div>
+<p>Kui sa näed seal oma faile, on kõik korras. Kui vastus on <code>character(0)</code>, siis on kaust tühi või teda ei ole olemas.</p>
+<blockquote class="blockquote">
+<p><strong>Kui midagi ei klapi</strong>, kontrolli kahte asja. Esiteks, kas RStudio ülaservas on kirjas sinu projekti nimi — kui ei, siis ava projekt <code>.Rproj</code> faili kaudu. Teiseks, kas failinimed on täpselt samad; suur ja väike täht loevad.</p>
+</blockquote>
+</section>
+<section id="andmete-algallikas" class="level3">
+<h3 class="anchored" data-anchor-id="andmete-algallikas">Andmete algallikas</h3>
+<p>Need failid on ette valmistatud ESS-i originaalandmetest, et sa saaksid kohe tööle hakata. Kui tahad originaali ise alla laadida — ja oma lõputöö jaoks peaksid — siis vaata praktikumi lõpust.</p>
+</section>
+</section>
 <section id="kust-meie-andmed-tulevad" class="level2">
 <h2 class="anchored" data-anchor-id="kust-meie-andmed-tulevad">Kust meie andmed tulevad?</h2>
 <p>Kogu kursuse vältel kasutame <strong>Euroopa Sotsiaaluuringu</strong> (<em>European Social Survey</em>, ESS) andmeid.</p>
@@ -341,7 +418,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>mis väärtused on võimalikud ja mida iga väärtus tähendab;</li>
 <li>kuidas on tähistatud puuduvad väärtused.</li>
 </ul>
-<p>ESS-i koodiraamat on meil failis <code>ESS11 codebook.html</code>. Ava ta oma veebilehitsejas ja otsi sealt üles muutuja <code>lrscale</code>.</p>
+<p>Meie koodiraamat on fail <strong><code>ESS11_koodiraamat.html</code></strong>, mille sa laadisid alla Moodle’ist ja panid kausta <code>data</code>. Ava ta oma veebilehitsejas: tee failil topeltklõps või lohista ta brauseriaknasse. Otsi sealt üles muutuja <code>lrscale</code> — brauseris saab lehelt otsida klahvikombinatsiooniga <strong>Ctrl+F</strong> (Macil <strong>Cmd+F</strong>).</p>
+<p>Sama info on olemas ka veebis, ESS-i enda lehel: <a href="https://ess.sikt.no/en/?tab=variables" target="_blank" rel="noopener noreferrer">ESS-i muutujate otsing</a>. Seal saab muutujaid otsida ka teema järgi ja võrrelda, kuidas sama küsimus on eri voorudes küsitud.</p>
 <blockquote class="blockquote">
 <p><strong>Ilma koodiraamatuta ei saa andmetega tööd teha.</strong> Mitte “on raskem” — ei saa. Sa ei tea, mida arvud tähendavad, sa ei tea, kummas skaala otsas on “rohkem”, ja sa ei tea, millised koodid tähendavad tegelikult “ei oska öelda”.</p>
 <p>Enne kui sa mõnda muutujat kasutad, vaata ta koodiraamatust üle. Iga kord. See on viieminutiline töö, mis päästab sind tundide kaupa segadusest.</p>
@@ -359,8 +437,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>save()</code> salvestab. Esimene argument on objekt, mida salvestada, ja argument <code>file</code> ütleb, mis nimega fail teha.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/ess11_ee_clean.rdata"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data, <span class="at">file =</span> <span class="st">"data/minu_andmed.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/ess11_ee_clean.rdata"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data, <span class="at">file =</span> <span class="st">"data/minu_andmed.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Pane tähele üht erisust: <code>load()</code> <strong>ei vaja</strong> objekti nime. Fail teab ise, mis objektid tema sees on, ja nad ilmuvad töökeskkonda oma nimedega. Seetõttu tasub <code>load()</code> järel alati vaadata, mis töökeskkonda tekkis.</p>
 <blockquote class="blockquote">
@@ -377,8 +455,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>row.names</code> ütleb salvestamisel, kas ridade numbrid tuleb eraldi veeruna faili kirjutada. Enamasti ei ole vaja.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>andmed <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"fail.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(andmed, <span class="at">file =</span> <span class="st">"valjund.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>andmed <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"fail.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(andmed, <span class="at">file =</span> <span class="st">"valjund.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <blockquote class="blockquote">
 <p>CSV on hea vahetusformaat, aga tal on üks suur puudus: ta <strong>ei säilita mitte midagi</strong> peale toorete väärtuste. Sildid, faktorid, puuduvate väärtuste definitsioonid — kõik kaob.</p>
@@ -389,11 +467,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>SPSS on statistikaprogramm, mida on küsitlusuuringutes kaua kasutatud, ja väga paljud andmestikud — sealhulgas ESS — on saadaval ka selles formaadis, laiendiga <code>.sav</code>.</p>
 <p>Selle lugemiseks kasutame paketti <strong>haven</strong> ja funktsiooni <code>read_sav()</code>. Tulemuse mõõtmeid — esmalt ridade, siis veergude arvu — näitab funktsioon <code>dim()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ee <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"data/ess11_ee_raw.sav"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ee)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ee <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"data/ess11_ee_raw.sav"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(ee)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## [1] 1293  426</code></pre>
 </div>
@@ -407,7 +485,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="stata-failid">Stata failid</h3>
 <p>Stata on veel üks statistikaprogramm, laiend <code>.dta</code>. Sama pakett <code>haven</code> loeb ka neid — selleks on funktsioon <code>read_dta()</code>, mis töötab täpselt nagu <code>read_sav()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>andmed <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"fail.dta"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>andmed <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"fail.dta"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
@@ -416,7 +494,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Kui andmed on sees, siis mida esimesena teha?</p>
 <p>Funktsioon <code>head()</code> näitab esimesi ridu.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ee[, <span class="fu">c</span>(<span class="st">"idno"</span>, <span class="st">"agea"</span>, <span class="st">"gndr"</span>, <span class="st">"lrscale"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ee[, <span class="fu">c</span>(<span class="st">"idno"</span>, <span class="st">"agea"</span>, <span class="st">"gndr"</span>, <span class="st">"lrscale"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## # A tibble: 6 × 4
 ##    idno agea      gndr       lrscale  
@@ -431,7 +509,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Funktsioon <code>str()</code> näitab objekti struktuuri — muutujad, nende tüübid ja esimesed väärtused.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ee[, <span class="fu">c</span>(<span class="st">"idno"</span>, <span class="st">"agea"</span>, <span class="st">"gndr"</span>, <span class="st">"lrscale"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ee[, <span class="fu">c</span>(<span class="st">"idno"</span>, <span class="st">"agea"</span>, <span class="st">"gndr"</span>, <span class="st">"lrscale"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## tibble [1,293 × 4] (S3: tbl_df/tbl/data.frame)
 ##  $ idno   : num [1:1293] 50030 50069 50119 50137 50147 ...
@@ -457,7 +535,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Funktsioon <code>summary()</code> annab igast muutujast kokkuvõtte.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ee[, <span class="fu">c</span>(<span class="st">"agea"</span>, <span class="st">"lrscale"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ee[, <span class="fu">c</span>(<span class="st">"agea"</span>, <span class="st">"lrscale"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>##       agea          lrscale      
 ##  Min.   :15.00   Min.   : 0.000  
@@ -471,7 +549,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Funktsioon <code>table()</code> teeb sagedustabeli — loendab, mitu korda iga väärtus esineb.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ee<span class="sc">$</span>gndr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(ee<span class="sc">$</span>gndr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## 
 ##   1   2 
@@ -481,7 +559,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Ja RStudios saab andmetabelit vaadata ka tabelina: tee “Environment” aknas objekti nimel hiireklõps.</p>
 <p>Kui objekti enam vaja ei lähe, saab ta töökeskkonnast eemaldada funktsiooniga <code>rm()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(ee)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(ee)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="muutujate-skaalad" class="level2">

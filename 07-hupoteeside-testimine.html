@@ -106,8 +106,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -359,7 +373,8 @@ window.Quarto = {
 </ul>
 <p>Praktilises kasutuses tõlgendatakse teda lühemalt: <strong>tõenäosus eksida, kui me väidame, et seos on päriselt olemas.</strong></p>
 <blockquote class="blockquote">
-<p><strong>Statistiline tava on 95%.</strong> Kui p-väärtus on väiksem kui 0,05, siis ütleme, et erinevus on <strong>statistiliselt oluline</strong>. See piir ei ole loodusseadus — ta on kokkulepe. Mõnes valdkonnas kasutatakse rangemaid piire (0,01 või 0,001).</p>
+<p><strong>Statistiline tava on 5%.</strong> Kui p-väärtus on väiksem kui 0,05 — ehk tõenäosus eksida on alla 5% — siis ütleme, et erinevus on <strong>statistiliselt oluline</strong>. See piir ei ole loodusseadus, vaid kokkulepe. Mõnes valdkonnas kasutatakse rangemaid piire (1% või 0,1%).</p>
+<p>Sama asja kohta öeldakse vahel ka “95% usaldusnivoo” — see on lihtsalt teine pool samast arvust. 5% tõenäosus eksida tähendab 95% kindlust.</p>
 </blockquote>
 <p><strong>Mida p-väärtus EI ole.</strong> Kolm väärarusaama, mis on nii levinud, et neid tasub eraldi välja tuua.</p>
 <ul>
@@ -378,7 +393,7 @@ window.Quarto = {
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Lihtsam seletus</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Täpsem seletus</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>Eelmises praktikumis arvutasime usaldusvahemiku. Ta ütles meile, kuhu tõeline keskmine tõenäoliselt jääb.</p>
+<p>Eelmises praktikumis arvutasime usaldusvahemiku. Ta ütles meile, kuhu tõene keskmine tõenäoliselt jääb.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>k_vanus <span class="ot">&lt;-</span> <span class="fu">mean</span>(vanus)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sviga <span class="ot">&lt;-</span> <span class="fu">sd</span>(vanus) <span class="sc">/</span> <span class="fu">length</span>(vanus)<span class="sc">^</span><span class="fl">0.5</span></span>
@@ -393,11 +408,11 @@ window.Quarto = {
 ## 49.08749 50.07309 51.05870</code></pre>
 </div>
 </div>
-<p>Tõeline keskmine vanus jääb 95% tõenäosusega vahemikku 49,1 kuni 51,1.</p>
+<p>Tõene keskmine vanus jääb 95% tõenäosusega vahemikku 49,1 kuni 51,1.</p>
 <p><strong>Kas 52 jääb sellesse vahemikku?</strong> Ei jää. Ta on üleval pool.</p>
 <p>Ja see ongi hüpoteesi test. Kogu ülejäänu on selle sama küsimuse täpsem sõnastus.</p>
 <ul>
-<li>Kui võrreldav väärtus jääb <strong>usaldusvahemikku sisse</strong>, siis ei saa me välistada, et ta ongi tõeline väärtus. Erinevus ei ole statistiliselt oluline.</li>
+<li>Kui võrreldav väärtus jääb <strong>usaldusvahemikku sisse</strong>, siis ei saa me välistada, et ta ongi tõene väärtus. Erinevus ei ole statistiliselt oluline.</li>
 <li>Kui ta jääb <strong>väljapoole</strong>, siis on ta meie andmetega raskesti ühildatav. Erinevus on statistiliselt oluline.</li>
 </ul>
 <p>Proovime nüüd väärtust 50:</p>
@@ -476,7 +491,7 @@ window.Quarto = {
 </div>
 </div>
 <p><strong>See ongi t-väärtus.</strong> Ta ütleb: võrreldav väärtus on 3,7 standardviga meie keskmisest eemal.</p>
-<p>Nüüd küsime: kui tõeline keskmine oleks tõesti 52, kui tõenäoline oleks siis näha valimi keskmist, mis on nii kaugel? Selleks on funktsioon <code>pt()</code>, mis töötab nagu <code>pnorm()</code>, kuid t-jaotuse jaoks. Lisaks vajab ta argumenti <code>df</code> — vabadusastmete arvu, millest praktikumis 6 juttu oli.</p>
+<p>Nüüd küsime: kui tõene keskmine oleks tõesti 52, kui tõenäoline oleks siis näha valimi keskmist, mis on nii kaugel? Selleks on funktsioon <code>pt()</code>, mis töötab nagu <code>pnorm()</code>, kuid t-jaotuse jaoks. Lisaks vajab ta argumenti <code>df</code> — vabadusastmete arvu, millest praktikumis 6 juttu oli.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>vabadusastmed <span class="ot">&lt;-</span> <span class="fu">length</span>(vanus) <span class="sc">-</span> <span class="dv">1</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -496,7 +511,7 @@ window.Quarto = {
 <pre><code>## [1] 6.665277e-05</code></pre>
 </div>
 </div>
-<p>Ja kuna me ei tea ette, kas tõeline väärtus on meie omast suurem või väiksem, huvitavad meid <strong>mõlemad otsad</strong>. Jaotus on sümmeetriline, seega korrutame selle otsa kahega.</p>
+<p>Ja kuna me ei tea ette, kas tõene väärtus on meie omast suurem või väiksem, huvitavad meid <strong>mõlemad otsad</strong>. Jaotus on sümmeetriline, seega korrutame selle otsa kahega.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>p_vaartus <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> ylemine_ots</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -627,7 +642,7 @@ window.Quarto = {
 <section id="statistiline-ja-sisuline-olulisus" class="level2">
 <h2 class="anchored" data-anchor-id="statistiline-ja-sisuline-olulisus">Statistiline ja sisuline olulisus</h2>
 <p>Nüüd kõige tähtsam hoiatus terves kursuses.</p>
-<p>Tuleta meelde standardvea valemit: <span class="math inline">\(se = sd / \sqrt{n}\)</span>. Nimetajas on valimi suurus. See tähendab, et <strong>mida rohkem andmeid, seda väiksem standardviga</strong> — ja seda väiksem p-väärtus, ilma et andmetes midagi muud muutuks.</p>
+<p>Tuleta meelde standardvea valemit: <span class="math inline">se = sd / \sqrt{n}</span>. Nimetajas on valimi suurus. See tähendab, et <strong>mida rohkem andmeid, seda väiksem standardviga</strong> — ja seda väiksem p-väärtus, ilma et andmetes midagi muud muutuks.</p>
 <p>Vaatame, mis juhtub, kui me sama erinevust suuremas valimis vaataksime. Teeme selleks kunstlikud andmed funktsiooniga <code>rnorm()</code>, mis genereerib juhuslikke arve normaaljaotusest. Argument <code>mean</code> määrab keskmise ja esimene argument ütleb, mitu arvu teha. Funktsioon <code>rep()</code> kordab väärtusi; argument <code>each</code> ütleb, mitu korda igaüht järjest korrata.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>

@@ -106,8 +106,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -314,7 +328,6 @@ window.Quarto = {
   <li><a href="#kui-hea-mudel-on" id="toc-kui-hea-mudel-on" class="nav-link" data-scroll-target="#kui-hea-mudel-on">Kui hea mudel on?</a></li>
   </ul></li>
   <li><a href="#kas-mõõtmise-kvaliteet-loeb" id="toc-kas-mõõtmise-kvaliteet-loeb" class="nav-link" data-scroll-target="#kas-mõõtmise-kvaliteet-loeb">Kas mõõtmise kvaliteet loeb?</a></li>
-  <li><a href="#koefitsientide-standardiseerimine" id="toc-koefitsientide-standardiseerimine" class="nav-link" data-scroll-target="#koefitsientide-standardiseerimine">Koefitsientide standardiseerimine</a></li>
   <li><a href="#kuidas-seda-kirja-panna" id="toc-kuidas-seda-kirja-panna" class="nav-link" data-scroll-target="#kuidas-seda-kirja-panna">Kuidas seda kirja panna</a></li>
   <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
   </ul>
@@ -454,9 +467,9 @@ window.Quarto = {
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p>Alustame sealt, kus praktikumis 6 pooleli jäime.</p>
 <p>Dispersioon mõõtis, kui kaugel on väärtused <strong>oma</strong> keskmisest. Kirjutame ta lahti nii, et hälve on korrutatud iseendaga:</p>
-<p><span class="math display">\[s^2 = \frac{\sum(x_i-\bar{x}) \times (x_i-\bar{x})}{n-1}\]</span></p>
+<p><span class="math display">s^2 = \frac{\sum(x_i-\bar{x}) \times (x_i-\bar{x})}{n-1}</span></p>
 <p><strong>Kovariatsioon</strong> on ainult natuke teistmoodi. Iga juhtumi puhul korrutame ühe muutuja hälbe keskmisest <strong>teise muutuja</strong> hälbega keskmisest:</p>
-<p><span class="math display">\[cov(x,y) = \frac{\sum(x_i-\bar{x}) \times (y_i-\bar{y})}{n-1}\]</span></p>
+<p><span class="math display">cov(x,y) = \frac{\sum(x_i-\bar{x}) \times (y_i-\bar{y})}{n-1}</span></p>
 <p>Mõtle läbi, mis siin toimub.</p>
 <ul>
 <li>Kui mõlemad hälbed on <strong>positiivsed</strong> (mõlemad üle keskmise), on korrutis positiivne.</li>
@@ -465,17 +478,17 @@ window.Quarto = {
 </ul>
 <p>Seega: kui hälbed on üldiselt samas suunas, tuleb kovariatsioon positiivne. Kui vastassuundades, siis negatiivne.</p>
 <p><strong>Korrelatsioon</strong> on standardiseeritud kovariatsioon — jagame ta mõlema muutuja standardhälbega:</p>
-<p><span class="math display">\[r = \frac{\sum(x_i-\bar{x}) \times (y_i-\bar{y})}{(n-1) \times \sigma_x \times \sigma_y}\]</span></p>
+<p><span class="math display">r = \frac{\sum(x_i-\bar{x}) \times (y_i-\bar{y})}{(n-1) \times \sigma_x \times \sigma_y}</span></p>
 <p>Nii saame arvu, mis jääb alati <strong>−1 ja +1 vahele</strong>, sõltumata mõõtskaalast.</p>
 <p>Arvutame ta käsitsi läbi. Kirjutame iga sammu eraldi reale, et oleks näha, mis toimub.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>alam <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data[, <span class="fu">c</span>(<span class="st">"usaldus_pol"</span>, <span class="st">"rahulolu_dem"</span>)])</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>usaldus_rahulolu <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(data[, <span class="fu">c</span>(<span class="st">"usaldus_pol"</span>, <span class="st">"rahulolu_dem"</span>)])</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>halve_x <span class="ot">&lt;-</span> alam<span class="sc">$</span>usaldus_pol <span class="sc">-</span> <span class="fu">mean</span>(alam<span class="sc">$</span>usaldus_pol)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>halve_y <span class="ot">&lt;-</span> alam<span class="sc">$</span>rahulolu_dem <span class="sc">-</span> <span class="fu">mean</span>(alam<span class="sc">$</span>rahulolu_dem)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>halve_x <span class="ot">&lt;-</span> usaldus_rahulolu<span class="sc">$</span>usaldus_pol <span class="sc">-</span> <span class="fu">mean</span>(usaldus_rahulolu<span class="sc">$</span>usaldus_pol)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>halve_y <span class="ot">&lt;-</span> usaldus_rahulolu<span class="sc">$</span>rahulolu_dem <span class="sc">-</span> <span class="fu">mean</span>(usaldus_rahulolu<span class="sc">$</span>rahulolu_dem)</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>korrutiste_summa <span class="ot">&lt;-</span> <span class="fu">sum</span>(halve_x <span class="sc">*</span> halve_y)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>nimetaja <span class="ot">&lt;-</span> (<span class="fu">nrow</span>(alam) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">sd</span>(alam<span class="sc">$</span>usaldus_pol) <span class="sc">*</span> <span class="fu">sd</span>(alam<span class="sc">$</span>rahulolu_dem)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>nimetaja <span class="ot">&lt;-</span> (<span class="fu">nrow</span>(usaldus_rahulolu) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">sd</span>(usaldus_rahulolu<span class="sc">$</span>usaldus_pol) <span class="sc">*</span> <span class="fu">sd</span>(usaldus_rahulolu<span class="sc">$</span>rahulolu_dem)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>korrutiste_summa <span class="sc">/</span> nimetaja</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -490,7 +503,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="pearsoni-korrelatsioon">Pearsoni korrelatsioon</h2>
 <p>Loomulikult on selleks R-is funktsioon — <code>cor()</code>, mida oleme juba praktikumis 4 kasutanud.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(alam<span class="sc">$</span>usaldus_pol, alam<span class="sc">$</span>rahulolu_dem)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(usaldus_rahulolu<span class="sc">$</span>usaldus_pol, usaldus_rahulolu<span class="sc">$</span>rahulolu_dem)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## [1] 0.59636</code></pre>
 </div>
@@ -527,12 +540,12 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="hüpoteesi-test">Hüpoteesi test</h3>
 <p>Ka korrelatsiooni kohta saab teha hüpoteesi testi. Nullhüpotees on, et <strong>korrelatsioon populatsioonis on null.</strong> Funktsioon on <code>cor.test()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(alam<span class="sc">$</span>usaldus_pol, alam<span class="sc">$</span>rahulolu_dem)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(usaldus_rahulolu<span class="sc">$</span>usaldus_pol, usaldus_rahulolu<span class="sc">$</span>rahulolu_dem)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## 
 ##  Pearson's product-moment correlation
 ## 
-## data:  alam$usaldus_pol and alam$rahulolu_dem
+## data:  usaldus_rahulolu$usaldus_pol and usaldus_rahulolu$rahulolu_dem
 ## t = 25.907, df = 1216, p-value &lt; 2.2e-16
 ## alternative hypothesis: true correlation is not equal to 0
 ## 95 percent confidence interval:
@@ -549,7 +562,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="seose-tugevus-r-ruut">Seose tugevus: R-ruut</h2>
 <p>Korrelatsioonikordaja ruutu nimetatakse <strong>determinatsioonikordajaks</strong> ehk <strong>R-ruuduks</strong>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(alam<span class="sc">$</span>usaldus_pol, alam<span class="sc">$</span>rahulolu_dem)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(usaldus_rahulolu<span class="sc">$</span>usaldus_pol, usaldus_rahulolu<span class="sc">$</span>rahulolu_dem)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## [1] 0.3556452</code></pre>
 </div>
@@ -567,7 +580,7 @@ window.Quarto = {
 <p>Korrelatsioon ütles meile suuna ja tugevuse. Aga ta ei ütle, <strong>kui palju</strong> rahulolu muutub, kui usaldus kasvab ühe punkti võrra.</p>
 <p>Selleks tuleb tõmmata punktipilvest läbi joon. Joonisele lisab trendijoone funktsioon <code>stat_smooth()</code>. Argument <code>method = "lm"</code> ütleb, et joon peab olema sirge (<em>linear model</em>), ja <code>se = FALSE</code> peidab joone ümbert usaldusvahemiku.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(alam, <span class="fu">aes</span>(<span class="at">x =</span> usaldus_pol, <span class="at">y =</span> rahulolu_dem)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(usaldus_rahulolu, <span class="fu">aes</span>(<span class="at">x =</span> usaldus_pol, <span class="at">y =</span> rahulolu_dem)) <span class="sc">+</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.25</span>, <span class="at">height =</span> <span class="fl">0.25</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"firebrick3"</span>) <span class="sc">+</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
@@ -589,14 +602,14 @@ window.Quarto = {
 <section id="regressioonivalem" class="level2">
 <h2 class="anchored" data-anchor-id="regressioonivalem">Regressioonivalem</h2>
 <p>Sirge võrrand on koolimatemaatikast tuttav:</p>
-<p><span class="math display">\[Y = a \times X + b\]</span></p>
+<p><span class="math display">Y = a \times X + b</span></p>
 <p>Regressioonis kirjutatakse ta tavaliselt nii:</p>
-<p><span class="math display">\[Y_i = \beta_0 + \beta_1 \times X_i + e_i\]</span></p>
+<p><span class="math display">Y_i = \beta_0 + \beta_1 \times X_i + e_i</span></p>
 <p>kus</p>
 <ul>
-<li><span class="math inline">\(\beta_0\)</span> on <strong>vabaliige</strong> (<em>intercept</em>) — koht, kus joon läbib y-telge, ehk ennustatud väärtus siis, kui X on null;</li>
-<li><span class="math inline">\(\beta_1\)</span> on <strong>regressioonikordaja</strong> (<em>slope</em>) — kui palju Y muutub, kui X kasvab ühe ühiku võrra;</li>
-<li><span class="math inline">\(e_i\)</span> on <strong>jääk</strong> (<em>residual</em>) — see osa, mida mudel ei seleta.</li>
+<li><span class="math inline">\beta_0</span> on <strong>vabaliige</strong> (<em>intercept</em>) — koht, kus joon läbib y-telge, ehk ennustatud väärtus siis, kui X on null;</li>
+<li><span class="math inline">\beta_1</span> on <strong>regressioonikordaja</strong> (<em>slope</em>) — kui palju Y muutub, kui X kasvab ühe ühiku võrra;</li>
+<li><span class="math inline">e_i</span> on <strong>jääk</strong> (<em>residual</em>) — see osa, mida mudel ei seleta.</li>
 </ul>
 </section>
 <section id="mudeli-sobitamine-ja-tõlgendamine" class="level2">
@@ -651,7 +664,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="kui-hea-mudel-on">Kui hea mudel on?</h3>
 <p>Selleks on tabeli lõpus <strong><code>Multiple R-squared</code></strong> — sama R-ruut, mida korrelatsiooni juures vaatasime. Ta ütleb, kui suure osa sõltuva muutuja varieeruvusest mudel ära seletab.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(alam<span class="sc">$</span>usaldus_pol, alam<span class="sc">$</span>rahulolu_dem)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(usaldus_rahulolu<span class="sc">$</span>usaldus_pol, usaldus_rahulolu<span class="sc">$</span>rahulolu_dem)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>## [1] 0.3556452</code></pre>
 </div>
@@ -696,48 +709,6 @@ window.Quarto = {
 <p>Nii et valik ei ole “üks on õige, teine vale”. Faktorskoor mõõdab paremini, üksikküsimus on lihtsamini tõlgendatav — ja <strong>sina pead selle valiku teadlikult tegema ja oma töös välja ütlema.</strong></p>
 <div class="arutelu">
 <p><strong>Arutelu.</strong> Kumba sa oma bakalaureusetöös kasutaksid? Mille põhjal sa otsustaksid? Ja kas on olukordi, kus nõrgem, aga arusaadavam mõõdik on parem valik kui tugevam, aga raskesti seletatav?</p>
-</div>
-</section>
-<section id="koefitsientide-standardiseerimine" class="level2">
-<h2 class="anchored" data-anchor-id="koefitsientide-standardiseerimine">Koefitsientide standardiseerimine</h2>
-<p>Regressioonikoefitsiendi suurus sõltub muutuja mõõtskaalast. See tähendab, et <strong>kahe erineva muutuja koefitsiente ei saa omavahel võrrelda</strong>, kui nad on erineval skaalal.</p>
-<p>Meie mudelis on usaldus skaalal 0–10 ja vanus aastates. Kumb on tugevam seletaja? Koefitsientidest seda välja ei loe — nad on eri ühikutes.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mudel_kaks <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> usaldus_pol <span class="sc">+</span> vanus, <span class="at">data =</span> data)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coef</span>(mudel_kaks), <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>## (Intercept) usaldus_pol       vanus 
-##      3.2321      0.6606     -0.0082</code></pre>
-</div>
-</div>
-<p>Vanuse koefitsient on peaaegu null ja usalduse oma palju suurem. Aga see ei tähenda, et vanus oleks ebaoluline — tähendab ainult, et üks eluaasta on väike samm, samal ajal kui üks usalduspunkt on suur samm.</p>
-<p><strong>Lahendus on muutujad enne mudelisse panekut standardiseerida.</strong> Standardiseerimine tähendab, et igast muutujast tehakse z-skoor — täpselt see tehe, mida nägime praktikumis 6. Pärast seda on iga muutuja keskmine 0 ja standardhälve 1, ehk <strong>kõik on samal skaalal</strong>.</p>
-<p>R-is teeb seda funktsioon <code>scale()</code>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>usaldus_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>usaldus_pol)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>vanus_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>vanus)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>rahulolu_z <span class="ot">&lt;-</span> <span class="fu">scale</span>(data<span class="sc">$</span>rahulolu_dem)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>mudel_std <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_z <span class="sc">~</span> usaldus_z <span class="sc">+</span> vanus_z, <span class="at">data =</span> data)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">coef</span>(mudel_std), <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>## (Intercept)   usaldus_z     vanus_z 
-##     -0.0043      0.5919     -0.0566</code></pre>
-</div>
-</div>
-<p>Nüüd on koefitsiendid võrreldavad. Neid nimetatakse <strong>standardiseeritud koefitsientideks</strong> ehk <strong>beeta-koefitsientideks</strong>.</p>
-<p><strong>Kuidas neid lugeda?</strong> Koefitsient ütleb, mitu <strong>standardhälvet</strong> muutub sõltuv muutuja, kui sõltumatu muutuja kasvab ühe standardhälbe võrra.</p>
-<p>Usalduse koefitsient on umbes kümme korda suurem kui vanuse oma. Ehk: usaldus on rahulolu seletamisel palju tugevam tegur.</p>
-<blockquote class="blockquote">
-<p><strong>Millal standardiseerida ja millal mitte?</strong></p>
-<p>Standardiseeri siis, kui sa tahad <strong>võrrelda erinevate muutujate suhtelist tugevust</strong> ühes mudelis.</p>
-<p>Ära standardiseeri siis, kui muutujal on <strong>sisuliselt tähendusrikas ühik</strong>. “Iga eluaasta kohta 0,01 punkti” on arusaadav lause. “Iga standardhälbe kohta 0,08 standardhälvet” ei ole.</p>
-<p>Ja binaarseid muutujaid ei ole üldse mõtet standardiseerida — “pool standardhälvet meheks olemist” ei tähenda midagi.</p>
-</blockquote>
-<div class="harjutus">
-<p><strong>Harjutus.</strong> Lisa standardiseeritud mudelisse ka haridus. Milline kolmest muutujast on kõige tugevam seletaja? Kontrolli, kas sama järjekord tuleb välja ka standardiseerimata mudelist — ja mõtle, miks see nii on või ei ole.</p>
 </div>
 </section>
 <section id="kuidas-seda-kirja-panna" class="level2">

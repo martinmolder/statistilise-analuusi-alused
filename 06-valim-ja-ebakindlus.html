@@ -106,8 +106,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -351,7 +365,7 @@ window.Quarto = {
 <p><strong>Valim</strong> on see osa populatsioonist, kelle kohta meil päriselt andmed on. Meie puhul: 1293 inimest.</p>
 <p>Kõige olulisem asi valimi juures on see, et ta on <strong>juhuvalim</strong>. See tähendab, et igal populatsiooni liikmel oli sama tõenäosus valimisse sattuda. Mitte vabatahtlikud, mitte need, keda oli lihtne kätte saada — juhuslikult valitud.</p>
 <blockquote class="blockquote">
-<p><strong>Miks juhuslikkus on nii oluline?</strong> Sest ainult juhuvalimi puhul saame me matemaatiliselt hinnata, kui kaugel meie valimist arvutatud arv võib olla tõelisest arvust populatsioonis. Mittejuhusliku valimi puhul ei ole mingit võimalust seda teada. Selline valim ei ole “natuke halvem” — ta on üldistuste tegemiseks lihtsalt kasutu.</p>
+<p><strong>Miks juhuslikkus on nii oluline?</strong> Sest ainult juhuvalimi puhul saame me matemaatiliselt hinnata, kui kaugel meie valimist arvutatud arv võib olla tõesest arvust populatsioonis. Mittejuhusliku valimi puhul ei ole mingit võimalust seda teada. Selline valim ei ole “natuke halvem” — ta on üldistuste tegemiseks lihtsalt kasutu.</p>
 </blockquote>
 <p>Ja siit tuleb probleem. Juhuslikkus tähendab, et <strong>meie valim ei ole populatsiooni täpne koopia.</strong> Mõned inimesed sattusid valimisse, teised mitte. Kui me võtaksime uue valimi, oleks ta natuke teistsugune. Ja seega oleks ka iga arv, mille me valimist arvutame, natuke teistsugune.</p>
 <p>Meie valimi keskmine vanus on:</p>
@@ -449,7 +463,7 @@ window.Quarto = {
 <p>Kolm asja, mida tähele panna:</p>
 <ol type="1">
 <li><strong>Keskmised ei ole kõik ühesugused.</strong> Nad hajuvad. See ongi ebakindlus.</li>
-<li><strong>Nad on koondunud tõelise väärtuse ümber.</strong> Ükski üksik valim ei taba täpselt õigesti, aga nad ei eksi ka süstemaatiliselt ühes suunas.</li>
+<li><strong>Nad on koondunud tõese väärtuse ümber.</strong> Ükski üksik valim ei taba täpselt õigesti, aga nad ei eksi ka süstemaatiliselt ühes suunas.</li>
 <li><strong>Jaotus on kellukesekujuline.</strong> See ei ole juhus — see on <strong>normaaljaotus</strong> ja ta tekib alati, kui sa piisavalt palju juhuvalimeid võtad.</li>
 </ol>
 <p>Kui hajusad nad on? Selle saame välja arvutada.</p>
@@ -459,7 +473,7 @@ window.Quarto = {
 <pre><code>## [1] 1.801523</code></pre>
 </div>
 </div>
-<p><strong>See arv ongi see, mida me otsime.</strong> Ta ütleb, kui palju üks üksik valimi keskmine tüüpiliselt tõelisest väärtusest eksib.</p>
+<p><strong>See arv ongi see, mida me otsime.</strong> Ta ütleb, kui palju üks üksik valimi keskmine tüüpiliselt tõesest väärtusest eksib.</p>
 <section id="mis-juhtub-kui-valim-on-suurem" class="level3">
 <h3 class="anchored" data-anchor-id="mis-juhtub-kui-valim-on-suurem">Mis juhtub, kui valim on suurem?</h3>
 <p>Teeme sama katse kolme erineva valimisuurusega.</p>
@@ -509,7 +523,7 @@ window.Quarto = {
 </div>
 </div>
 <blockquote class="blockquote">
-<p><strong>See on kogu asja tuum.</strong> Rohkem andmeid tähendab vähem ebakindlust. Mitte seetõttu, et suur valim oleks kuidagi “õigem”, vaid seetõttu, et suure valimi keskmised hajuvad tõelise väärtuse ümber vähem.</p>
+<p><strong>See on kogu asja tuum.</strong> Rohkem andmeid tähendab vähem ebakindlust. Mitte seetõttu, et suur valim oleks kuidagi “õigem”, vaid seetõttu, et suure valimi keskmised hajuvad tõese väärtuse ümber vähem.</p>
 </blockquote>
 <p>Sama loogika kehtib ka hajuvuse kohta andmetes endas: mida hajusamad on väärtused valimis, seda hajusamad on ka valimite keskmised, ja seda ebakindlamad me oleme.</p>
 <p>Nüüd on sul olemas kogu intuitsioon, mida vaja. Järgmises sakis on sama asi valemitega — ja seal selgub, et <strong>seda hajuvust ei olegi vaja simuleerida.</strong> Selle saab välja arvutada ühest ainsast valimist.</p>
@@ -518,7 +532,7 @@ window.Quarto = {
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p>Vaatame sama asja arvutuskäiguna. Alustame keskmisest.</p>
 <p><strong>Aritmeetiline keskmine</strong> on väärtuste summa jagatud väärtuste arvuga:</p>
-<p><span class="math display">\[\bar{X} = \frac{\sum_{i=1}^n{x_i}}{n}\]</span></p>
+<p><span class="math display">\bar{X} = \frac{\sum_{i=1}^n{x_i}}{n}</span></p>
 <p>Arvutame ta kõigepealt “käsitsi” ja siis funktsiooniga, et näha, et tulemus on sama.</p>
 <blockquote class="blockquote">
 <p>Funktsioon <code>as.vector()</code> teeb objektist tavalise vektori. Seda on siin vaja sellepärast, et <code>na.omit()</code> jätab objekti külge lisainfo selle kohta, millised read ta eemaldas, ja see segaks hilisemaid arvutusi.</p>
@@ -546,12 +560,12 @@ window.Quarto = {
 </div>
 <p>Vastus on praktiliselt null, sest positiivsed ja negatiivsed kõrvalekalded tühistavad üksteist. Keskmine kaugus keskmisest <strong>on alati null</strong> — see on keskmise definitsioon.</p>
 <blockquote class="blockquote">
-<p><strong>Mis on see <code>e-15</code>?</strong> See on <strong>teaduslik notatsioon</strong>. Väga suuri või väga väikeseid arve kuvab R niimoodi, et nad ekraanile ära mahuksid. <code>2.7e-15</code> tähendab <span class="math inline">\(2{,}7 \times 10^{-15}\)</span> ehk üliväikest arvu. Praktiliselt null.</p>
+<p><strong>Mis on see <code>e-15</code>?</strong> See on <strong>teaduslik notatsioon</strong>. Väga suuri või väga väikeseid arve kuvab R niimoodi, et nad ekraanile ära mahuksid. <code>2.7e-15</code> tähendab <span class="math inline">2{,}7 \times 10^{-15}</span> ehk üliväikest arvu. Praktiliselt null.</p>
 <p>Kui sa ei taha teaduslikku notatsiooni näha, jooksuta käsk <code>options(scipen = 5)</code>.</p>
 <p><strong>Jäta see meelde.</strong> Sa kohtad seda regressioonitabelites pidevalt ja siis on hilja imestada.</p>
 </blockquote>
 <p>Lahendus on võtta kaugused <strong>ruutu</strong>, mis teeb kõik positiivseks. Nii saame <strong>dispersiooni</strong> (<em>variance</em>):</p>
-<p><span class="math display">\[var = \frac{\sum(x_i-\bar{x})^2}{n}\]</span></p>
+<p><span class="math display">var = \frac{\sum(x_i-\bar{x})^2}{n}</span></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ruutkaugus <span class="ot">&lt;-</span> kaugus<span class="sc">^</span><span class="dv">2</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(ruutkaugus) <span class="sc">/</span> <span class="fu">length</span>(ruutkaugus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -560,7 +574,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Ruutu võtmine ajas aga mõõtühiku sassi — nüüd on tulemus ruutaastates. Võtame ruutjuure tagasi ja saame <strong>standardhälbe</strong>:</p>
-<p><span class="math display">\[sd = \sqrt{\frac{\sum(x_i-\bar{x})^2}{n}}\]</span></p>
+<p><span class="math display">sd = \sqrt{\frac{\sum(x_i-\bar{x})^2}{n}}</span></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">sum</span>(ruutkaugus) <span class="sc">/</span> <span class="fu">length</span>(ruutkaugus))<span class="sc">^</span><span class="fl">0.5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -570,8 +584,8 @@ window.Quarto = {
 <section id="parandus-mis-on-vajalik" class="level3">
 <h3 class="anchored" data-anchor-id="parandus-mis-on-vajalik">Parandus, mis on vajalik</h3>
 <p>Siin on üks konks. Meie valimis ei ole populatsiooni kõige haruldasemaid, kõige äärmuslikumaid väärtusi — nad on haruldased just sellepärast, et nad valimisse tõenäoliselt ei satu. Seetõttu <strong>alahindab valimi hajuvus alati populatsiooni hajuvust.</strong></p>
-<p>Selle parandamiseks jagatakse mitte <span class="math inline">\(n\)</span>-iga, vaid <span class="math inline">\(n-1\)</span>-ga:</p>
-<p><span class="math display">\[sd = \sqrt{\frac{\sum(x_i-\bar{x})^2}{n-1}}\]</span></p>
+<p>Selle parandamiseks jagatakse mitte <span class="math inline">n</span>-iga, vaid <span class="math inline">n-1</span>-ga:</p>
+<p><span class="math display">sd = \sqrt{\frac{\sum(x_i-\bar{x})^2}{n-1}}</span></p>
 <p>Just seda teevad R-i funktsioonid <code>var()</code> ja <code>sd()</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(vanus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -583,11 +597,11 @@ window.Quarto = {
 <pre><code>## [1] 18.03298</code></pre>
 </div>
 </div>
-<p>Seda <span class="math inline">\(n-1\)</span> nimetatakse <strong>vabadusastmeteks</strong> (<em>degrees of freedom</em>).</p>
+<p>Seda <span class="math inline">n-1</span> nimetatakse <strong>vabadusastmeteks</strong> (<em>degrees of freedom</em>).</p>
 <blockquote class="blockquote">
 <p><strong>Mida vabadusastmed tähendavad?</strong> Kõige lihtsam on mõelda neist kui <strong>vabast infost</strong> andmetes.</p>
 <p>Oletame, et sul on viis arvu ja sa juba tead nende keskmist. Kui nüüd neli arvu ette anda, siis viies <strong>ei ole enam vaba</strong> — ta on üheselt määratud, sest keskmine peab kokku tulema. Viiest arvust on vaba ainult neli.</p>
-<p>Üldiselt: iga suurus, mille sa <strong>oma andmetest välja arvutad</strong> ja hiljem kasutad, võtab ühe vabadusastme ära. Standardhälbe arvutamiseks oli meil vaja keskmist — see maksis ühe vabadusastme, seega jäi järele <span class="math inline">\(n-1\)</span>.</p>
+<p>Üldiselt: iga suurus, mille sa <strong>oma andmetest välja arvutad</strong> ja hiljem kasutad, võtab ühe vabadusastme ära. Standardhälbe arvutamiseks oli meil vaja keskmist — see maksis ühe vabadusastme, seega jäi järele <span class="math inline">n-1</span>.</p>
 <p>Sellepärast sõltub vabadusastmete arv kahest asjast: <strong>kui palju juhtumeid on</strong> ja <strong>kui palju suurusi on andmetest juba välja arvutatud</strong>. Regressioonis, kus arvutatakse mitu koefitsienti, kaob vabadusastmeid rohkem.</p>
 </blockquote>
 </section>
@@ -595,7 +609,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="standardviga">Standardviga</h3>
 <p>Nüüd kõige tähtsam samm. Meid ei huvita tegelikult mitte vanuse hajuvus, vaid <strong>keskmiste hajuvus</strong> — täpselt see, mida eelmises sakis simuleerisime.</p>
 <p>Juhuvalimi puhul kehtib matemaatiline seaduspära, mis lubab selle <strong>ühest ainsast valimist välja arvutada.</strong> Seda suurust nimetatakse <strong>standardveaks</strong>:</p>
-<p><span class="math display">\[se_{\bar{x}} = \frac{sd}{\sqrt{n}}\]</span></p>
+<p><span class="math display">se_{\bar{x}} = \frac{sd}{\sqrt{n}}</span></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(vanus) <span class="sc">/</span> <span class="fu">length</span>(vanus)<span class="sc">^</span><span class="fl">0.5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -714,7 +728,7 @@ window.Quarto = {
 <section id="usaldusvahemikud" class="level2">
 <h2 class="anchored" data-anchor-id="usaldusvahemikud">Usaldusvahemikud</h2>
 <p>Nüüd saame kokku panna kõik, mida vaja.</p>
-<p><strong>Usaldusvahemik</strong> näitab vahemikku, kuhu tõenäoliselt jääb tõeline väärtus populatsioonis. 95% usaldusvahemik ulatub 1,96 standardviga keskmisest mõlemale poole.</p>
+<p><strong>Usaldusvahemik</strong> näitab vahemikku, kuhu tõenäoliselt jääb tõene väärtus populatsioonis. 95% usaldusvahemik ulatub 1,96 standardviga keskmisest mõlemale poole.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>k_vanus <span class="ot">&lt;-</span> <span class="fu">mean</span>(vanus)</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>sviga <span class="ot">&lt;-</span> <span class="fu">sd</span>(vanus) <span class="sc">/</span> <span class="fu">length</span>(vanus)<span class="sc">^</span><span class="fl">0.5</span></span>
@@ -742,8 +756,8 @@ window.Quarto = {
 </div>
 <p>Vahe on tühine, nagu ennustatud.</p>
 <blockquote class="blockquote">
-<p><strong>Mida usaldusvahemik täpselt tähendab?</strong> Kui me võtaksime Eestist lõpmata palju kordi sama suure juhuvalimi ja arvutaksime iga kord usaldusvahemiku, siis 95% nendest vahemikest sisaldaks tõelist keskmist.</p>
-<p>Igapäevases kasutuses tõlgendatakse teda lihtsamalt: see on vahemik, kus tõeline väärtus <strong>tõenäoliselt</strong> asub. Rangelt võttes ei ole see päris täpne, aga praktilise töö jaoks piisab.</p>
+<p><strong>Mida usaldusvahemik täpselt tähendab?</strong> Kui me võtaksime Eestist lõpmata palju kordi sama suure juhuvalimi ja arvutaksime iga kord usaldusvahemiku, siis 95% nendest vahemikest sisaldaks tõest keskmist.</p>
+<p>Igapäevases kasutuses tõlgendatakse teda lihtsamalt: see on vahemik, kus tõene väärtus <strong>tõenäoliselt</strong> asub. Rangelt võttes ei ole see päris täpne, aga praktilise töö jaoks piisab.</p>
 </blockquote>
 </section>
 <section id="kuidas-seda-kirja-panna" class="level2">
@@ -765,7 +779,8 @@ window.Quarto = {
 <li><strong>standardhälve</strong> kirjeldab, kui hajusad on inimesed;</li>
 <li><strong>standardviga ja usaldusvahemik</strong> kirjeldavad, kui kindlad me keskmises oleme.</li>
 </ul>
-<p>Need kaks aetakse pidevalt segamini. Standardhälve on andmete omadus ja ta ei kahane, kui sa rohkem andmeid kogud. Standardviga on <strong>sinu teadmise</strong> omadus ja ta kahaneb.</p>
+<p>Need kaks aetakse pidevalt segamini. <strong>Standardhälve on andmete omadus</strong> — ta kirjeldab, kui erinevad inimesed omavahel on, ja ta ei kahane, kui sa rohkem andmeid kogud. Kui eestimaalaste vanused on hajusad, siis nad on hajusad ka siis, kui sa küsitled kümme korda rohkem inimesi.</p>
+<p><strong>Standardviga on sinu teadmise omadus</strong> — ta kirjeldab, kui täpselt sa keskmist tead. Ja tema <strong>kahaneb siis, kui andmete hulk suureneb</strong>: mida rohkem inimesi sa küsitled, seda täpsemalt sa keskmist tead, kuigi inimesed ise jäävad täpselt sama erinevaks.</p>
 </div>
 </div>
 </section>

@@ -291,7 +291,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#millal-kaalud-loevad" id="toc-millal-kaalud-loevad" class="nav-link" data-scroll-target="#millal-kaalud-loevad">Millal kaalud loevad?</a></li>
   <li><a href="#mida-sellest-järeldada" id="toc-mida-sellest-järeldada" class="nav-link" data-scroll-target="#mida-sellest-järeldada">Mida sellest järeldada</a></li>
   </ul></li>
-  <li><a href="#kokkuvõte" id="toc-kokkuvõte" class="nav-link" data-scroll-target="#kokkuvõte">Kokkuvõte</a></li>
+  <li><a href="#kokkuvõte" id="toc-kokkuvõte" class="nav-link" data-scroll-target="#kokkuvõte">Kokkuvõte</a>
+  <ul class="collapse">
+  <li><a href="#sinu-enda-skript" id="toc-sinu-enda-skript" class="nav-link" data-scroll-target="#sinu-enda-skript">Sinu enda skript</a></li>
+  </ul></li>
   <li><a href="#harjutused" id="toc-harjutused" class="nav-link" data-scroll-target="#harjutused">Harjutused</a></li>
   </ul>
 </nav>
@@ -444,7 +447,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Mõlemad korraga</span></span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>ee_raw[ee_raw<span class="sc">$</span>gndr <span class="sc">==</span> <span class="dv">2</span>, <span class="fu">c</span>(<span class="st">"agea"</span>, <span class="st">"gndr"</span>, <span class="st">"lrscale"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Andmeobjekti nime tuleb korrata iga tingimuse sees (<code>ee_raw$gndr</code>) ja muutujate nimed peavad olema jutumärkides.</p>
+<p>Pane tähele kahte tüütut asja. Tingimuse sees tuleb andmeobjekti nime <strong>uuesti korrata</strong> (<code>ee_raw$gndr</code>), kuigi me juba ütlesime nurksulgude ees, millisest tabelist jutt käib. Ja veergude valimisel peavad muutujate nimed olema <strong>jutumärkides</strong>.</p>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p>Kaks funktsiooni, kummalgi oma töö.</p>
@@ -458,7 +461,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Mõlemad korraga</span></span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(<span class="fu">filter</span>(ee_raw, gndr <span class="sc">==</span> <span class="dv">2</span>), agea, gndr, lrscale)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Andmeobjekti nime ei pea kordama — <code>filter()</code> teab niigi, millisest tabelist muutujaid otsida. Jutumärke ei ole vaja.</p>
+<p>Kumbki tüütus siin ei kordu. Tingimuse sees ei pea andmeobjekti nime uuesti kirjutama — piisab <code>gndr</code>-ist, sest <code>filter()</code> teab esimesest argumendist, millisest tabelist seda muutujat otsida. Ja <code>select()</code> ei nõua muutujate nimede ümber jutumärke.</p>
+<blockquote class="blockquote">
+<p>Seda omadust nimetatakse R-is <strong>korrastatud hindamiseks</strong> (<em>tidy evaluation</em>). Lühidalt: dplyr-i funktsioonid otsivad paljaid nimesid kõigepealt sellest andmetabelist, mille sa neile andsid. Sina pead teadma ainult tagajärge — vähem kirjutamist ja loetavam kood.</p>
+</blockquote>
 </div>
 </div>
 </div>
@@ -837,9 +843,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>saime aru, mis on kaalud ja millal neid vaja läheb.</li>
 </ul>
 <p>Järgmises praktikumis kodeerime muutujad ümber, ehitame nendest uued muutujad ja salvestame analüüsivalmis andmestiku.</p>
+<section id="sinu-enda-skript" class="level3">
+<h3 class="anchored" data-anchor-id="sinu-enda-skript">Sinu enda skript</h3>
+<p>Kogu selle praktikumi kood — ja järgmise praktikumi oma — moodustab kokku ühe terviku: skripti, mis viib toorest andmefailist analüüsivalmis andmestikuni.</p>
+<p><strong>Selle skripti kirjutad sa ise, jooksvalt praktikumi käigus.</strong> Loo praktikumi alguses oma projekti kausta <code>R</code> uus koodifail — näiteks nimega <code>ettevalmistus.R</code> — ja kirjuta kogu tänane kood sinna. Järgmises praktikumis jätkad sama faili.</p>
 <blockquote class="blockquote">
-<p>Kogu see töö on koos ühes failis: <code>R/ettevalmistus.R</code>. Hoia teda alles ja käi ta aeg-ajalt uuesti läbi.</p>
+<p><strong>Miks mitte lihtsalt konsooli kirjutada?</strong> Sest konsoolis tehtu kaob. Skript on <strong>kirjalik tõend selle kohta, mida sa andmetega tegid</strong> — ja kui midagi läks valesti, siis on ta ainus koht, kust seda üles leida.</p>
+<p>Täpselt samasugune fail peab kuuluma ka sinu bakalaureusetöö juurde. Juhendaja esimene küsimus on peaaegu alati: “näita, kuidas sa selle muutuja said”.</p>
 </blockquote>
+<p>Kui sa mõne koodijupi vahele jätsid või kaotasid, siis ei ole hullu — praktikumi 4 lõpus on kogu skript ühes tükis olemas ja materjalid jäävad veebi alles.</p>
+</section>
 </section>
 <section id="harjutused" class="level2">
 <h2 class="anchored" data-anchor-id="harjutused">Harjutused</h2>
