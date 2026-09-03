@@ -1,0 +1,206 @@
+# 9. Regressioon: baasmudel
+
+```{r}
+#| label: andmed
+library(dplyr)
+library(ggplot2)
+load("data/ess11_ee_clean.rdata")
+
+usaldus_rahulolu <- na.omit(data[, c("usaldus_pol", "rahulolu_dem")])
+```
+
+Eelmises praktikumis mõõtsime seose **tugevust ja suunda**. Korrelatsioon ütles, et usaldus ja rahulolu käivad tugevalt koos ning seos on positiivne.
+
+Aga ta ei ütle üht olulist asja: **kui palju** rahulolu muutub, kui usaldus kasvab ühe punkti võrra. Selleks on vaja regressiooni.
+
+> **Regressioon on vaid üks samm korrelatsioonist edasi.** Pilt, millest alustame, on täpselt seesama hajuvusdiagramm.
+
+## Joon läbi punktipilve
+
+Korrelatsioon ütles meile suuna ja tugevuse. Aga ta ei ütle, **kui palju** rahulolu
+muutub, kui usaldus kasvab ühe punkti võrra.
+
+Selleks tuleb tõmmata punktipilvest läbi joon. Joonisele lisab trendijoone funktsioon
+`stat_smooth()`. Argument `method = "lm"` ütleb, et joon peab olema sirge (*linear
+model*), ja `se = FALSE` peidab joone ümbert usaldusvahemiku.
+
+```{r}
+#| label: joon
+ggplot(usaldus_rahulolu, aes(x = usaldus_pol, y = rahulolu_dem)) +
+  geom_jitter(width = 0.25, height = 0.25, alpha = 0.3) +
+  stat_smooth(method = "lm", se = FALSE, color = "firebrick3") +
+  labs(
+    x = "usaldus poliitikute vastu (0-10)",
+    y = "rahulolu demokraatiaga (0-10)",
+    title = "Regressioonijoon"
+  ) +
+  theme_bw()
+```
+
+Võimalikke jooni läbi selle pilve oleks lõpmata palju. **Kõige parem joon on see, mille
+ennustusviga on kõige väiksem** — täpsemalt see, mille puhul punktide kauguste ruutude
+summa joonest on kõige väiksem.
+
+## Regressioonivalem
+
+Sirge võrrand on koolimatemaatikast tuttav:
+
+$$Y = a \times X + b$$
+
+Regressioonis kirjutatakse ta tavaliselt nii:
+
+$$Y_i = \beta_0 + \beta_1 \times X_i + e_i$$
+
+kus
+
+* $\beta_0$ on **vabaliige** (*intercept*) — koht, kus joon läbib y-telge, ehk ennustatud
+  väärtus siis, kui X on null;
+* $\beta_1$ on **regressioonikordaja** (*slope*) — kui palju Y muutub, kui X kasvab ühe
+  ühiku võrra;
+* $e_i$ on **jääk** (*residual*) — see osa, mida mudel ei seleta.
+
+## Mudeli sobitamine ja tõlgendamine
+
+Regressiooni tegemiseks on funktsioon `lm()`, mida nägime möödaminnes juba praktikumis
+3. Nüüd vaatame teda korralikult.
+
+Valem kirjutatakse tildega: **sõltuv muutuja ~ sõltumatu muutuja**. Argument `data`
+ütleb, millisest andmetabelist muutujaid otsida.
+
+Tulemused tuleb panna objekti ja vaadata funktsiooniga `summary()`.
+
+```{r}
+#| label: lm
+mudel <- lm(rahulolu_dem ~ usaldus_pol, data = data)
+
+summary(mudel)
+```
+
+### Kuidas seda tabelit lugeda
+
+Kõige tähtsam osa on **`Coefficients`**.
+
+* **`Estimate`** — koefitsiendi väärtus.
+* **`Std. Error`** — selle koefitsiendi standardviga, ehk kui kindlad me temas oleme.
+* **`t value`** — koefitsient jagatud standardveaga, ehk mitme standardvea kaugusel ta
+  nullist on.
+* **`Pr(>|t|)`** — p-väärtus. Nullhüpotees on, et koefitsient on **null** (seost ei ole).
+* **Tärnid** näitavad, millisesse vahemikku p-väärtus langeb.
+
+**Vabaliige** (`(Intercept)`) on 2,54. See tähendab: kui usaldus poliitikute vastu on 0,
+siis on ennustatud rahulolu demokraatiaga 2,54.
+
+**Regressioonikordaja** `usaldus_pol` juures on 0,55. See tähendab: **iga punkt
+usalduse kasvu juures kasvab rahulolu demokraatiaga keskmiselt 0,55 punkti.**
+
+> **Koefitsiendi arvuline väärtus sõltub mõõtskaalast.** Kui muutuja ühik on väike, on
+> koefitsient väike, ja vastupidi. Vanust saab mõõta päevades, aastates või
+> aastakümnetes ning koefitsient oleks igal juhul erinev — kuigi seos on täpselt sama.
+>
+> **Seetõttu ei saa koefitsientide suurusi omavahel võrrelda**, kui muutujad on erineval
+> skaalal. Proovi järele: jaga vanus sajaga ja vaata, mis koefitsiendiga juhtub.
+
+### Kui hea mudel on?
+
+Selleks on tabeli lõpus **`Multiple R-squared`** — sama R-ruut, mida korrelatsiooni juures
+vaatasime. Ta ütleb, kui suure osa sõltuva muutuja varieeruvusest mudel ära seletab.
+
+```{r}
+#| label: r-ruut-kontroll
+cor(usaldus_rahulolu$usaldus_pol, usaldus_rahulolu$rahulolu_dem)^2
+```
+
+Sama arv, mille me korrelatsioonist saime. **Kahe muutujaga regressiooni R-ruut ongi
+korrelatsiooni ruut.**
+
+> **Mis vahe on `Multiple R-squared` ja `Adjusted R-squared` vahel?** R-ruut kasvab
+> alati, kui mudelisse muutujaid juurde panna — isegi siis, kui need muutujad on
+> täiesti mõttetud. Kohandatud R-ruut karistab mudelit iga lisatud muutuja eest.
+> **Tõlgendamiseks kasuta kohandatud R-ruutu.**
+
+Sotsiaalteadustes on R-ruut tavaliselt madal. Mudel, mis seletab 10–20% varieeruvusest,
+on täiesti tavaline ja võib olla väga kasulik. Inimeste käitumine ei ole füüsika.
+
+## Kas mõõtmise kvaliteet loeb?
+
+Siin tasub korraks tagasi minna praktikumi 5 juurde.
+
+Seal me väitsime, et **üksik küsitlusküsimus on jäme ja mürane mõõdik** ning et mitmest küsimusest kokku pandud indeks mõõdab sama asja täpsemalt. Just sellepärast ehitasime faktoranalüüsiga muutuja `usaldus`, mis võtab kokku seitse usaldust puudutavat küsimust.
+
+Aga senini oleme selles peatükis kasutanud `usaldus_pol`-i — **üht üksikut küsimust** poliitikute usaldamise kohta.
+
+Kas sellel on vahet? Vaatame. Teeme sama mudeli kaks korda, ainult sõltumatu muutuja on erinev.
+
+```{r}
+#| label: moot-vordlus
+mudel_uksik <- lm(rahulolu_dem ~ usaldus_pol, data = data)
+mudel_indeks <- lm(rahulolu_dem ~ usaldus, data = data)
+
+c(
+  uksik_kysimus = summary(mudel_uksik)$r.squared,
+  faktorskoor = summary(mudel_indeks)$r.squared
+)
+```
+
+```{r}
+#| label: moot-arvud
+#| include: false
+r2_uksik <- round(summary(mudel_uksik)$r.squared, 3)
+r2_indeks <- round(summary(mudel_indeks)$r.squared, 3)
+n_uksik <- nobs(mudel_uksik)
+n_indeks <- nobs(mudel_indeks)
+```
+
+Üksiku küsimusega seletab mudel `r round(r2_uksik * 100)`% rahulolu varieeruvusest. Faktorskooriga **`r round(r2_indeks * 100)`%**.
+
+**Andmed on samad. Inimesed on samad. Nähtus on sama.** Ainus, mis muutus, on see, kui hoolikalt me seda nähtust mõõtsime — ja mudeli seletusvõime kasvas ligi poole võrra.
+
+> **See on kogu praktikumi 5 mõte ühe arvuna.** Mõõtmine ei ole tüütu eeltöö, mis tuleb enne "päris analüüsi" ära teha. Mõõtmise kvaliteet **on** tulemus. Halb mõõdik ei anna lihtsalt segasemat vastust — ta annab nõrgema seose, mis võib jääda leidmata.
+>
+> Kui sinu töös tuleb seos välja nõrgemana, kui kirjandus lubaks, siis on üks esimesi küsimusi: **kas ma mõõdan seda asja piisavalt hästi?**
+
+Miks me siis edaspidi ikkagi üksikküsimusi kasutame? Kahel praktilisel põhjusel.
+
+* **Tõlgendatavus.** Koefitsient `r round(coef(mudel_uksik)[2], 2)` tähendab "üks punkt usaldust juurde skaalal 0–10". Faktorskoori koefitsient `r round(coef(mudel_indeks)[2], 2)` tähendab "üks standardhälve usaldust juurde" — see nõuab iga kord lisaseletust.
+* **Juhtumite arv.** Indeksi jaoks peab vastaja olema vastanud **kõigile seitsmele** küsimusele. Seetõttu on mudelis `r n_indeks` juhtumit `r n_uksik` asemel.
+
+Nii et valik ei ole "üks on õige, teine vale". Faktorskoor mõõdab paremini, üksikküsimus on lihtsamini tõlgendatav — ja **sina pead selle valiku teadlikult tegema ja oma töös välja ütlema.**
+
+::: {.arutelu}
+**Arutelu.** Kumba sa oma bakalaureusetöös kasutaksid? Mille põhjal sa otsustaksid? Ja kas on olukordi, kus nõrgem, aga arusaadavam mõõdik on parem valik kui tugevam, aga raskesti seletatav?
+:::
+
+## Kuidas seda kirja panna
+
+::: {.callout-tip title="Kuidas seda kirja panna"}
+Regressiooni puhul tuleb lisaks statistilistele näitajatele öelda, mida koefitsient **sisuliselt** tähendab — ühikutes, mitte ainult arvuna:
+
+**Lineaarne regressioon näitas, et usaldus poliitikute vastu ennustab rahulolu
+demokraatiaga statistiliselt olulisel määral (β = 0,55; SE = 0,02; p < 0,001). Iga
+punkti võrra suurem usaldus poliitikute vastu vastab keskmiselt 0,55 punkti võrra
+suuremale rahulolule demokraatiaga (mõlemad skaalal 0–10). Mudel seletab 30% rahulolu
+varieeruvusest (kohandatud R² = 0,30).**
+
+:::
+
+> **Ja kõige tähtsam hoiatus.** Korrelatsioon ei ole põhjuslikkus. Meie mudel ei tõesta,
+> et usaldus **põhjustab** rahulolu. Sama hästi võib rahulolu põhjustada usaldust, või
+> võib mõlemat põhjustada midagi kolmandat. Regressioonivalemi kuju — üks muutuja
+> vasakul, teine paremal — ei tähenda mitte midagi põhjuslikkuse kohta.
+>
+> Kirjuta "on seotud" ja "vastab", mitte "põhjustab" ja "mõjutab", kui sul ei ole
+> põhjuslikkuse väitmiseks eraldi head argumenti.
+
+
+
+## Harjutused
+
+::: {.harjutus}
+**1. Oma mudel.** Sobita mudel, kus `ranne` on sõltuv muutuja ja `haridus` sõltumatu. Kuidas tõlgendad koefitsienti? Kirjuta tulemus välja korrektses vormis.
+
+**2. Skaala mõju.** Jaga muutuja `vanus` kümnega (nii mõõdad vanust aastakümnetes) ja sobita mudel `rahulolu_dem ~ vanus`. Võrdle koefitsienti algse mudeliga. Mis muutus ja mis jäi samaks?
+
+**3. Vabaliige.** Vaata mudeli `rahulolu_dem ~ vanus` vabaliiget. Mida ta sisuliselt tähendab? Kas see on mõistlik arv?
+
+**4. Mõõtmise kvaliteet.** Korda praktikumis tehtud võrdlust, aga kasuta sõltuva muutujana `ranne`. Kas ka siin annab faktorskoor tugevama seose kui üksik küsimus?
+:::

@@ -21,25 +21,43 @@ rakendamistingimustele ja R-is kasutamisele.
 
 ## Kuidas kursus üles on ehitatud
 
-Me alustame sellest, kuidas R oma arvutis tööle saada, ja liigume sealt edasi R-i
-kasutamise põhiloogika juurde. Seejärel tuleb **andmete ettevalmistus** — kaks
-praktikumi, mis on pühendatud sellele, kuidas võtta päris andmestik sellisel kujul, nagu
-ta uuringu läbiviijalt tuleb, ja teha temast analüüsikõlblik andmestik.
+Kursus koosneb loengutest ja praktikumidest. Loengus käsitleme meetodi üldist loogikat, praktikumis teeme ta R-is läbi. **Loeng tuleb alati enne vastavat praktikumi.**
 
-> **Miks nii palju aega andmete ettevalmistusele?** Sest see on see osa tööst, mis
-> päriselt aega võtab, ja see on koht, kus tehakse enamik vigu. Analüüsi enda tegemine on
-> tavaliselt üks või kaks koodirida. Kõik ülejäänu on ettevalmistus.
+Praktikumide järjekord on selline:
 
-Sealt edasi vaatame, kuidas andmeid kirjeldada ja visuaalselt kuvada. Siis liigume
-järeldava statistika juurde: kuidas hinnata ebakindlust ja kuidas testida hüpoteese.
-Lõpuks jõuame regressioonimudeliteni, mis on statistilise analüüsi üks kõige
-esmasemaid tööriistu. Me käsitleme kahte regressiooni vormi, sõltuvalt sellest, kas meid
-huvitav tunnus on arvuline (näiteks rahulolu demokraatiaga) või kahe kategooriaga
-(näiteks valimisosalus).
+| Nädal | Praktikum | Teema |
+|---|---|---|
+| 2 | 1 | R ja RStudio |
+| 3 | 2 | Andmete laadimine |
+| 4 | 3 | Kirjeldamine ja visualiseerimine |
+| 5 | 4 | Andmete ettevalmistus I |
+| 6 | 5 | Andmete ettevalmistus II |
+| 7 | 6 | Valim, ebakindlus ja hüpoteeside testimine |
+| 8 | — | **Test I** |
+| 9 | 7 | Keskmiste võrdlemine |
+| 10 | 8 | Korrelatsioon |
+| 11 | 9 | Regressioon: baasmudel |
+| 12 | 10 | Mitmene regressioon |
+| 13 | 11 | Tulemuste esitamine |
+| 14 | 12 | Logistiline regressioon |
+| 15 | — | Kordamine |
+| 16 | — | **Test II** |
+
+Me alustame sellest, kuidas R oma arvutis tööle saada, ja liigume sealt edasi andmete laadimise juurde. Kolmandas praktikumis teeme esimese päris analüüsi: kirjeldame andmeid ja teeme jooniseid.
+
+Seejärel tuleb **andmete ettevalmistus** — kaks praktikumi, mis on pühendatud sellele, kuidas võtta päris andmestik sellisel kujul, nagu ta uuringu läbiviijalt tuleb, ja teha temast analüüsikõlblik andmestik.
+
+> **Miks kirjeldamine tuleb enne ettevalmistust?** Sellepärast, et andmete kirjeldamist on lihtsam õppida siis, kui andmed on juba korras. Kolmandas praktikumis kasutame valmis tehtud andmestikku ja saame kohe midagi ära teha.
+>
+> Aga see tähendab, et **kolmandas praktikumis kasutad sa muutujaid, mille päritolu sa veel ei tea.** Nii see päris töös tavaliselt ei käi ja seetõttu tuleb ettevalmistus kohe järgmisena — praktikumid 4 ja 5 näitavad täpselt, kust iga muutuja tuli.
+
+> **Miks nii palju aega andmete ettevalmistusele?** Sest see on see osa tööst, mis päriselt aega võtab, ja see on koht, kus tehakse enamik vigu. Analüüsi enda tegemine on tavaliselt üks või kaks koodirida. Kõik ülejäänu on ettevalmistus.
+
+Sealt edasi liigume **järeldava statistika** juurde: kuidas hinnata ebakindlust ja kuidas testida hüpoteese. Viimane kolmandik kursusest on pühendatud **seostele ja mudelitele** — korrelatsioon, regressioon ja lõpuks logistiline regressioon, mis võimaldab modelleerida kahe kategooriaga tunnuseid nagu valimisosalus.
 
 ### Kaks rada raskemate teemade juures
 
-Osa selle kursuse materjalist on raskem kui ülejäänu. Kõige raskem koht on praktikum 8,
+Osa selle kursuse materjalist on raskem kui ülejäänu. Kõige raskem koht on praktikum 6,
 kus me vaatame, kust tuleb ebakindlus ja kuidas teda mõõta.
 
 Nendes kohtades on materjal esitatud **kahel viisil**, sakkide "Lihtsam seletus" ja

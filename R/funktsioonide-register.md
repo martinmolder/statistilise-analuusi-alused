@@ -9,117 +9,137 @@ viidata ilma uuesti seletamata.
 See register ütleb, kus miski esimest korda esineb. Enne uue peatüki kirjutamist vaata
 siit, mis on juba seletatud; pärast kirjutamist lisa siia see, mis uut sisse tuli.
 
-Legend: **[U]** = uus selles praktikumis, seletus vajalik · **[V]** = varem seletatud ·
-**[E]** = ettepoole viitav, kasutatakse enne kui õpetatakse
+Legend: **[U]** = uus selles praktikumis, seletus vajalik · **[E]** = ettepoole viitav
 
 ---
 
-## Praktikum 1 — R-i alused
+## Praktikum 1 — R ja RStudio
 
 Aritmeetika `+ - * / ^` · `<-` · `#` · `c()` · `log()` · `sum()` · `mean()` ·
 `round()` · `length()` · `class()` · `factor()` · `levels()` · `data.frame()` ·
 `names()` · `list()` · `$` · `[ ]` · `[i, j]` · `[[ ]]` · `NA` · `TRUE` / `FALSE` ·
-`na.omit()` · argument `na.rm` · argument `base` · `install.packages()` · `library()` · `help()` / `?`
+`na.omit()` · argument `na.rm` · argument `base` · `install.packages()` · `library()` ·
+`help()` / `?`
 
 > Jutumärkide reegel: tekst on jutumärkides, objektide ja funktsioonide nimed ilma.
 
 ## Praktikum 2 — Andmete laadimine
 
-`read_sav()` · `write_sav()` · `read.csv()` · `write.csv()` · `load()` · `save()` ·
-`head()` · `dim()` · `nrow()` · `ncol()` · `rm()` · `str()` · `summary()` · `table()`
+`read_sav()` · `write_sav()` · `read_dta()` · `read.csv()` · `write.csv()` · `load()` ·
+`save()` · `head()` · `dim()` · `nrow()` · `ncol()` · `rm()` · `str()` · `summary()` ·
+`table()` · `list.files()`
+
+Argumendid: `sep`, `header`, `row.names`
+
+Süntaks: `andmed[, c("a","b")]` veergude valimine nimede järgi
 
 > `foreign::read.spss()` mainitakse ainult möödaminnes kui vanem alternatiiv.
 
-## Praktikum 3 — Andmete ettevalmistus I
+## Praktikum 3 — Kirjeldamine ja visualiseerimine
 
-**[U]** `|>` (toru) · `filter()` · `select()` · `mutate()` · `group_by()` ·
-`summarise()` · `n()` · `%in%` · `is.na()` · `sapply()` · `function(x)` (anonüümne
-funktsioon) · `as_factor()` · `zap_labels()` · `attr()` · `as.numeric()` ·
-`as.character()` · `weighted.mean()` · `cbind()` · `coef()` · `round()`
+**[U]** `|>` (toru) · `prop.table()` · `median()` · `sd()` · `var()` · `quantile()` ·
+`group_by()` · `summarise()` · `n()` · `is.na()` · `!` · `weighted.mean()` ·
+`datasummary_skim()`
+
+**[U] ggplot:** `ggplot()` · `aes()` · `geom_bar()` · `geom_histogram()` ·
+`geom_density()` · `geom_boxplot()` · `geom_violin()` · `geom_point()` ·
+`geom_jitter()` · `labs()` · `theme_bw()` · `theme()` · `element_text()` ·
+`scale_fill_manual()` · `scale_x_discrete()` · `ggsave()` · `+` ggplot-i mõttes
+
+Argumendid: `margin`, `bins`, `position`, `values`, `angle`, `hjust`, `axis.text.x`,
+`type`, `output`
+
+**Mõisted:** kirjeldav ja järeldav statistika · mood · mediaan · standardhälve ·
+dispersioon · kvartiil · disainikaal · poststratifitseerimiskaal
+
+> Faktorskoorid `ranne` ja `usaldus` on siin juba olemas, kuid neid EI ehitata —
+> ainult seletatakse, mida nad tähendavad, ja viidatakse praktikumile 5.
+
+## Praktikum 4 — Andmete ettevalmistus I
+
+**[U]** `filter()` · `select()` · `mutate()` · `%in%` · `sapply()` ·
+`function(x)` (anonüümne funktsioon) · `as_factor()` · `zap_labels()` · `attr()` ·
+`as.numeric()` · `as.character()`
 
 Võrdlusoperaatorid `== != < > <= >=` · `&` · `|` · `which()`
 
-Argumendid: `col_select`, `user_na`, `useNA`, `use`
-
-**[E]** `lm()` · `~` · `coef()` — kasutame kaaluosas näitena, õpetame praktikumis 10–11.
-Öelda tudengile otse: praegu ei ole vaja aru saada, kuidas mudel töötab, vaata ainult,
-kui vähe arvud muutuvad.
+Argumendid: `col_select`, `user_na`, `useNA`
 
 **Mõisted:** `haven_labelled` · puuduv väärtus · kasutaja määratud puuduv kood
-(7/8/9, 77/88/99) · disainikaal · poststratifitseerimiskaal · straatum
+(7/8/9, 77/88/99)
 
-## Praktikum 4 — Andmete ettevalmistus II
+## Praktikum 5 — Andmete ettevalmistus II
 
-**[U]** `case_when()` · `if_else()` · `NA_real_` · `NA_character_` · `cor()` · `!` ·
-`complete.cases()` · `factanal()` · `lapply()` · `as.data.frame()` · `cbind()` ·
-`droplevels()` · `levels() <-` · `sort()` · `if () { }` · unaarne miinus
+**[U]** `case_when()` · `if_else()` · `cor()` · `complete.cases()` · `factanal()` ·
+`lapply()` · `as.data.frame()` · `droplevels()` · `levels() <-` · `sort()` ·
+`if () { }` · unaarne miinus · `enc2utf8()`
 
-Argumendid: `decreasing = TRUE`, `factors`, `scores = "regression"`, `levels`
+Argumendid: `decreasing`, `factors`, `scores`, `levels`, `use`, `.default`
 
-**[E]** `cor()` — kasutame suuna kontrollimiseks, õpetame praktikumis 10.
+**[E]** `cor()` — kasutame faktori suuna kontrollimiseks, õpetame praktikumis 8.
 Tudengile piisab: positiivne = sama suund, negatiivne = vastupidine suund.
 
-**Mõisted:** indeks · pööratud küsimus · faktor (faktoranalüüsis) · faktorlaadung ·
-faktorskoor · referentskategooria
+**Mõisted:** indeks · faktor (faktoranalüüsis) · faktorlaadung · faktorskoor ·
+referentskategooria
 
-## Praktikum 5 — Kirjeldav statistika
-
-**[U]** `prop.table()` · `median()` · `sd()` · `var()` · `quantile()` · argument `margin`
-
-## Praktikum 5b — Visualiseerimine (sama peatükk kui 5)
-
-**[U]** `ggplot()` · `aes()` · `geom_bar()` · `geom_histogram()` · `geom_density()` ·
-`geom_boxplot()` · `geom_violin()` · `geom_point()` · `labs()` · `theme_bw()` ·
-`theme()` · `element_text()` · `scale_fill_manual()` · `scale_x_discrete()` ·
-`ggsave()` · `geom_jitter()` · `+` ggplot-i mõttes
-
-Argumendid: `bins`, `position`, `values`, `angle`, `hjust`, `axis.text.x`
-
-## Praktikum 6 — Valim ja ebakindlus
+## Praktikum 6 — Valim, ebakindlus ja hüpoteeside testimine
 
 **[U]** `set.seed()` · `sample()` · `replicate()` · `geom_vline()` · `rep()` ·
-`pnorm()` · `qnorm()` · `qt()` · `as.vector()` · `range()` · `max()`
+`pnorm()` · `qnorm()` · `qt()` · `as.vector()` · `range()` · `max()` ·
+`geom_area()` · `annotate()` · `scale_x_continuous()` · `element_blank()` ·
+`rbind()` · `dnorm()` · `dt()` · `scale_color_manual()` · `scale_linetype_manual()`
 
-Argumendid: `lower.tail`, `df`, `each`, `xintercept`
+Argumendid: `replace`, `lower.tail`, `each`, `xintercept`
 
 **Mõisted:** valim · populatsioon · valimijaotus · standardviga · usaldusvahemik ·
-vabadusastmed · normaaljaotus · t-jaotus · z-skoor
+vabadusastmed · normaaljaotus · t-jaotus · z-skoor · nullhüpotees ·
+alternatiivne hüpotees · p-väärtus · statistiline olulisus
 
 > Simulatsioon toob sisse juhuarvud. `set.seed()` on hädavajalik — ilma selleta saab
 > igaüks erineva tulemuse ja materjalis olevad arvud ei klapi.
 
-## Praktikum 7 — Hüpoteeside testimine
+## Praktikum 7 — Keskmiste võrdlemine
 
-**[U]** `t.test()` · `pt()` · `rnorm()` · argumendid `mu`, `var.equal`
+**[U]** `t.test()` · `pt()` · `~` (mudeli valem, esimest korda) · `rnorm()` ·
+`signif()`
 
-**Mõisted:** nullhüpotees · alternatiivne hüpotees · p-väärtus · statistiline olulisus ·
-sisuline olulisus
+Argumendid: `mu`, `df`, `var.equal`
 
-## Praktikum 8 — Korrelatsioon ja lihtne regressioon
+**Mõisted:** ühe grupi t-test · kahe grupi t-test · sisuline olulisus
 
-**[U]** `cor.test()` · `lm()` (nüüd päriselt) · `~` (nüüd päriselt) · `summary()` mudeli
-peal · `stat_smooth()` · `geom_jitter()`
+## Praktikum 8 — Korrelatsioon
 
-**Mõisted:** kovariatsioon · korrelatsioonikordaja · determinatsioonikordaja (R-ruut) ·
-vabaliige · regressioonikordaja · jääk
+**[U]** `cor.test()` · `stat_smooth()` (hiljem regressioonis)
 
-## Praktikum 9 — Mitmene regressioon
+**Mõisted:** kovariatsioon · korrelatsioonikordaja · determinatsioonikordaja (R-ruut)
 
-**[U]** `predict()` · `nobs()` · `confint()` · `if_else()` mudelites
+## Praktikum 9 — Regressioon: baasmudel
 
-**Mõisted:** kontrollimine teiste muutujate suhtes · kohandatud R-ruut ·
-multikollineaarsus (mainida)
+**[U]** `lm()` · `summary()` mudeli peal · `stat_smooth()` · `coef()` · `cbind()`
 
-## Praktikum 10 — Tulemuste esitamine
+**Mõisted:** vabaliige · regressioonikordaja · jääk · kohandatud R-ruut ·
+mõõtmise kvaliteet
 
-**[U]** `modelsummary()` · `predict_response()` · `as.data.frame()` mudeliväljundil ·
-`geom_ribbon()` · `geom_errorbar()`
+## Praktikum 10 — Mitmene regressioon
 
-Argumendid: `output`, `stars`, `coef_map`, `gof_map`, `terms`, `ymin`, `ymax`
+**[U]** `predict()` · `nobs()` · `confint()`
 
-## Praktikum 11 — Logistiline regressioon
+Argument: `newdata`, `weights`
 
-**[U]** `glm()` · `exp()` · `fitted()` · `pR2()` · `seq()` · argument `family`, `exponentiate`
+**Mõisted:** kontrollimine teiste muutujate suhtes · multikollineaarsus (mainida)
+
+## Praktikum 11 — Tulemuste esitamine
+
+**[U]** `modelsummary()` · `predict_response()` · `geom_ribbon()` · `geom_errorbar()`
+
+Argumendid: `stars`, `coef_map`, `gof_map`, `terms`, `ymin`, `ymax`
+
+## Praktikum 12 — Logistiline regressioon
+
+**[U]** `glm()` · `exp()` · `fitted()` · `pR2()` · `seq()` · `geom_line()` ·
+`ylim()` · `sprintf()` · `registerS3method()` · `suppressMessages()`
+
+Argumendid: `family`, `exponentiate`, `length.out`
 
 **Mõisted:** šansid · šansside suhe · logit · pseudo R-ruut · sensitiivsus ·
 spetsiifilisus · klassifikatsioonitabel
@@ -134,5 +154,6 @@ Enne peatüki lõpetamist jooksuta:
 python3 R/kontrolli-esmakasutus.py <fail.qmd>
 ```
 
-See leiab funktsioonid, mida kasutatakse enne, kui neid on seletatud. Skript ei tea,
-mis on eelmistes praktikumides juba seletatud — selleks on käesolev register.
+See leiab funktsioonid ja argumendid, mida kasutatakse enne, kui neid on seletatud.
+Skript loeb varasemate praktikumide sisu käesolevast registrist, seega **register peab
+olema ajakohane**. Peidetud plokid (`echo: false`, `include: false`) jäetakse vahele.

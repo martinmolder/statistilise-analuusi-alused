@@ -1,0 +1,352 @@
+# 7. Keskmiste võrdlemine
+
+```{r}
+#| label: andmed
+library(dplyr)
+load("data/ess11_ee_clean.rdata")
+
+vanus <- as.vector(na.omit(data$vanus))
+```
+
+Eelmises praktikumis õppisime hüpoteesi testimise loogika ja nägime, et **usaldusvahemik vastab hüpoteesi küsimusele ära**: kui võrreldav väärtus jääb vahemikust välja, on erinevus statistiliselt oluline.
+
+Selles praktikumis teeme sama asja korralikult ja mugavalt — funktsiooniga, mis annab kohe p-väärtuse. Ja siis läheme edasi kõige tavalisema juhtumi juurde: **kahe grupi võrdlemiseni.**
+
+Kaks sammu:
+
+1. **ühe grupi t-test** — võrdleme ühe grupi keskmist kindla arvuga;
+2. **kahe grupi t-test** — võrdleme kahe grupi keskmisi omavahel.
+
+Teine neist on see, mida sa oma töös päriselt kasutad. Esimene on lihtsam ja aitab loogika selgeks saada.
+
+## Ühe grupi t-test
+
+Alustame kõige lihtsamast juhtumist. Meie valimi keskmine vanus on 50,1. **Kas Eesti
+elanike keskmine vanus võiks tegelikult olla 52?**
+
+::: {.panel-tabset}
+
+## Lihtsam seletus
+
+Eelmises praktikumis arvutasime usaldusvahemiku. Ta ütles meile, kuhu tõene keskmine
+tõenäoliselt jääb.
+
+```{r}
+#| label: uv-meenutus
+k_vanus <- mean(vanus)
+sviga <- sd(vanus) / length(vanus)^0.5
+
+c(
+  alumine = k_vanus - 1.96 * sviga,
+  keskmine = k_vanus,
+  ylemine = k_vanus + 1.96 * sviga
+)
+```
+
+Tõene keskmine vanus jääb 95% tõenäosusega vahemikku 49,1 kuni 51,1.
+
+**Kas 52 jääb sellesse vahemikku?** Ei jää. Ta on üleval pool.
+
+Ja see ongi hüpoteesi test. Kogu ülejäänu on selle sama küsimuse täpsem sõnastus.
+
+* Kui võrreldav väärtus jääb **usaldusvahemikku sisse**, siis ei saa me välistada, et ta
+  ongi tõene väärtus. Erinevus ei ole statistiliselt oluline.
+* Kui ta jääb **väljapoole**, siis on ta meie andmetega raskesti ühildatav. Erinevus on
+  statistiliselt oluline.
+
+Proovime nüüd väärtust 50:
+
+```{r}
+#| label: uv-50
+c(alumine = k_vanus - 1.96 * sviga, ylemine = k_vanus + 1.96 * sviga)
+```
+
+Arv 50 jääb vahemikku sisse. Seega ei saa me öelda, et Eesti keskmine vanus erineks
+50-st.
+
+> **Pane tähele, mida me ei öelnud.** Me ei öelnud, et keskmine vanus **on** 50. Me
+> ütlesime, et me ei suuda välistada, et ta on 50. Statistiline test ei tõesta kunagi
+> nullhüpoteesi — ta ainult ei suuda teda ümber lükata.
+
+R teeb selle kõik ühe funktsiooniga ära. Funktsioon `t.test()` võtab esimeseks
+argumendiks muutuja ja argumendiga `mu` öeldakse, millise väärtusega võrrelda.
+
+```{r}
+#| label: ttest-52
+t.test(vanus, mu = 52)
+```
+
+Väljundis on kõik, mida vaja:
+
+* **`mean of x`** — meie valimi keskmine;
+* **`95 percent confidence interval`** — usaldusvahemik, sama, mille me ise arvutasime;
+* **`p-value`** — tõenäosus eksida, kui väidame, et erinevus on olemas;
+* **`t`** — mitme standardvea kaugusel võrreldav väärtus keskmisest on.
+
+P-väärtus on siin väga väike, seega erinevus on statistiliselt oluline.
+
+Ja võrdlusena, väärtusega 50:
+
+```{r}
+#| label: ttest-50
+t.test(vanus, mu = 50)
+```
+
+P-väärtus on 0,89 — palju suurem kui 0,05. Erinevus ei ole statistiliselt oluline. Ja
+usaldusvahemik on täpselt sama, mis enne, sest ta ei sõltu sellest, millega me võrdleme.
+
+## Täpsem seletus
+
+Vaatame, kust p-väärtus tuleb.
+
+Esmalt: **kui kaugel on 52 meie keskmisest?**
+
+```{r}
+#| label: erinevus
+erinevus <- 52 - mean(vanus)
+erinevus
+```
+
+See arv üksi ei ütle midagi. Kaks aastat on palju või vähe sõltuvalt sellest, kui täpne
+meie hinnang üldse on. Seega teisendame ta **standardvigadeks** — sama moodi, nagu
+eelmises praktikumis tegime z-skoori.
+
+```{r}
+#| label: t-skoor
+sviga <- sd(vanus) / length(vanus)^0.5
+tskoor <- erinevus / sviga
+tskoor
+```
+
+**See ongi t-väärtus.** Ta ütleb: võrreldav väärtus on 3,7 standardviga meie keskmisest
+eemal.
+
+Nüüd küsime: kui tõene keskmine oleks tõesti 52, kui tõenäoline oleks siis näha valimi keskmist, mis on nii kaugel? Selleks on funktsioon `pt()`, mis töötab nagu `pnorm()`, kuid t-jaotuse jaoks. Lisaks vajab ta argumenti `df` — vabadusastmete arvu, millest oli juttu eespool.
+
+```{r}
+#| label: pt
+vabadusastmed <- length(vanus) - 1
+
+pt(tskoor, df = vabadusastmed)
+```
+
+Vaata seda arvu tähelepanelikult. Ta on peaaegu üks. Miks?
+
+Sest `pt()` ütleb, kui suur osa jaotusest jääb antud väärtusest **allapoole**. Meie t-väärtus on positiivne ja suur, seega jääb temast allapoole peaaegu kogu jaotus. See ei ole see, mida me tahame teada.
+
+Meid huvitab **jaotuse ots** — kui palju on veel ekstreemsemaid väärtusi. Selleks tuleb see arv ühest lahutada.
+
+```{r}
+#| label: pt-ots
+ylemine_ots <- 1 - pt(tskoor, df = vabadusastmed)
+
+ylemine_ots
+```
+
+Ja kuna me ei tea ette, kas tõene väärtus on meie omast suurem või väiksem, huvitavad meid **mõlemad otsad**. Jaotus on sümmeetriline, seega korrutame selle otsa kahega.
+
+```{r}
+#| label: p-vaartus
+p_vaartus <- 2 * ylemine_ots
+
+p_vaartus
+```
+
+**See ongi p-väärtus.** Ja ta on täpselt sama, mille `t.test()` meile andis.
+
+> **Pane see samm tähele, siin eksitakse pidevalt.** Kaks tehet käivad koos ja kumbagi ei tohi ära unustada:
+>
+> 1. **lahuta ühest** — et saada jaotuse ots, mitte kogu ülejäänud jaotus;
+> 2. **korruta kahega** — et arvestada mõlemat otsa.
+>
+> Kui sa ainult korrutad kahega, saad tulemuseks arvu, mis on suurem kui üks. **Tõenäosus ei saa kunagi olla suurem kui üks.** See on kõige lihtsam kontroll, mille sa oma arvutusele teha saad — kui p-väärtus tuleb üle ühe või alla nulli, siis on valemis viga.
+>
+> Sama tulemuse saab ka lühemalt, kui anda `pt()`-le negatiivne t-väärtus: `2 * pt(-abs(tskoor), df = vabadusastmed)`.
+
+```{r}
+#| label: ttest-vordlus
+t.test(vanus, mu = 52)
+```
+
+> **Mida p-väärtus tähendab?** Ta on tõenäosus näha oma andmetes sellist erinevust (või
+> veel suuremat), **kui nullhüpotees oleks tõsi**.
+>
+> Tinglikult ja praktilises kasutuses: **tõenäosus eksida, kui me väidame, et erinevus
+> on päriselt olemas.**
+>
+> Mida ta **ei** tähenda: p-väärtus ei ole tõenäosus, et nullhüpotees on tõsi. Ja ta ei
+> ütle midagi selle kohta, kui **suur** erinevus on. Väga väike p-väärtus võib käia
+> täiesti tühise erinevuse kohta.
+
+Tee siinkohal mõttepaus. Selles lõigus on peidus kogu ülejäänud kursuse võti — sama
+loogika kordub korrelatsiooni, regressiooni ja logistilise regressiooni juures täpselt
+ühtemoodi.
+
+:::
+
+## Kahe grupi t-test
+
+Praktikas huvitab meid harva üksiku keskmise võrdlemine mingi arvuga. Palju sagedamini
+tahame teada, **kas kaks gruppi erinevad.**
+
+Küsime: kas mehed ja naised paigutavad end vasak-parem skaalal erinevalt?
+
+Vaatame kõigepealt keskmisi.
+
+```{r}
+#| label: grupid
+data |>
+  group_by(sugu) |>
+  summarise(
+    n = sum(!is.na(vasak_parem)),
+    keskmine = mean(vasak_parem, na.rm = TRUE),
+    sd = sd(vasak_parem, na.rm = TRUE)
+  )
+```
+
+Erinevus on olemas, aga väike. Kas ta on piisavalt suur?
+
+Nullhüpotees on, et **kahe grupi keskmiste erinevus populatsioonis on null.**
+
+Kahe grupi võrdlemiseks kirjutatakse `t.test()` teistmoodi — **mudeli valemina**.
+
+Siin tuleb sisse üks uus operaator, mida sa kasutad edaspidi pidevalt: **tilde** `~`. Tema abil kirjeldatakse R-is mudeli valemit. Loogika on alati sama:
+
+* **vasakule poole** käib see muutuja, mida me seletada või võrrelda tahame;
+* **paremale poole** see, mille järgi me seda teeme.
+
+Meie näites: `vasak_parem ~ sugu` tähendab "vasak-parem enesepaigutus soo lõikes". Loe tildet sõnadega **"sõltuvalt"** või **"lõikes"**.
+
+> Sama tildet kasutame edaspidi korrelatsiooni, regressiooni ja logistilise regressiooni juures. Valemi kuju muutub, aga põhimõte jääb: **sõltuv muutuja vasakule, sõltumatud paremale.**
+
+```{r}
+#| label: ttest-kaks
+test_lr <- t.test(vasak_parem ~ sugu, data = data)
+
+test_lr
+```
+
+Väljund on sarnane, aga nüüd on näha **mõlema grupi keskmine** ja usaldusvahemik käib **nende erinevuse** kohta.
+
+Järgnevas plokis võtame testi väljundist arvud eraldi objektidesse, et neid tekstis
+kasutada. Funktsioon `signif()` ümardab tähendusrikaste numbrikohtade arvuni — erinevalt
+funktsioonist `round()`, mis ümardab komakohtade arvuni. Väga väikeste arvude puhul on
+`signif()` mugavam.
+
+```{r}
+#| label: ttest-lr-arvud
+#| include: false
+lr_mees <- round(test_lr$estimate[1], 2)
+lr_naine <- round(test_lr$estimate[2], 2)
+lr_vahe <- round(test_lr$estimate[1] - test_lr$estimate[2], 2)
+lr_ci <- round(test_lr$conf.int, 2)
+lr_p <- signif(test_lr$p.value, 2)
+```
+
+Kuidas seda lugeda?
+
+* Meeste keskmine on `r lr_mees` ja naiste oma `r lr_naine`, erinevus seega `r lr_vahe` punkti.
+* 95% usaldusvahemik erinevuse ümber on `r lr_ci[1]` kuni `r lr_ci[2]`.
+* **See vahemik ei sisalda nulli.**
+* P-väärtus on `r lr_p` — väiksem kui 0,05.
+
+**Järeldus: erinevus on statistiliselt oluline.** Eesti mehed paigutavad end vasak-parem skaalal keskmiselt veidi parempoolsemalt kui naised.
+
+::: {.arutelu}
+**Arutelu.** Erinevus on `r lr_vahe` punkti üheteistpunktisel skaalal. Statistiliselt on ta oluline. **Kas ta on ka sisuliselt oluline?** Mille põhjal sa seda otsustad?
+:::
+
+Proovime nüüd midagi, kus tulemus on teistsugune. Vaatame suhtumist sisserändesse.
+
+```{r}
+#| label: ttest-ranne
+test_ranne <- t.test(ranne ~ sugu, data = data)
+
+test_ranne
+```
+
+```{r}
+#| label: ttest-ranne-arvud
+#| include: false
+r_ci <- round(test_ranne$conf.int, 3)
+r_p <- round(test_ranne$p.value, 2)
+```
+
+Siin on pilt vastupidine. Usaldusvahemik ulatub `r r_ci[1]` kuni `r r_ci[2]` ja **sisaldab nulli**. P-väärtus on `r r_p` — palju suurem kui 0,05.
+
+**Järeldus: erinevus ei ole statistiliselt oluline.** Meie andmed ei anna alust väita, et Eesti meeste ja naiste suhtumine sisserändesse erineks.
+
+> **Pane tähele, kuidas need kaks järeldust sõnastatud on.** Esimesel juhul ütlesime "erinevus on olemas". Teisel juhul **ei öelnud me, et erinevust ei ole** — ütlesime, et andmed ei anna alust väita, et ta oleks. See ei ole sõnamäng. Erinevus võib populatsioonis olemas olla, aga meie valim on liiga väike, et teda tuvastada.
+
+> **Väike tehniline märkus.** R teeb vaikimisi testi, mis ei eelda, et hajuvus on
+> mõlemas grupis võrdne (nn Welchi test). See on peaaegu alati õige valik. Kui sa tahad
+> võrdset hajuvust eeldavat testi, on selleks argument `var.equal = TRUE` — aga
+> tavaliselt ei ole seda vaja.
+
+## Statistiline ja sisuline olulisus
+
+Nüüd kõige tähtsam hoiatus terves kursuses.
+
+Tuleta meelde standardvea valemit: $se = sd / \sqrt{n}$. Nimetajas on valimi suurus.
+See tähendab, et **mida rohkem andmeid, seda väiksem standardviga** — ja seda väiksem
+p-väärtus, ilma et andmetes midagi muud muutuks.
+
+Vaatame, mis juhtub, kui me sama erinevust suuremas valimis vaataksime. Teeme selleks kunstlikud andmed funktsiooniga `rnorm()`, mis genereerib juhuslikke arve normaaljaotusest. Argument `mean` määrab keskmise ja esimene argument ütleb, mitu arvu teha. Funktsioon `rep()` kordab väärtusi; argument `each` ütleb, mitu korda igaüht järjest korrata.
+
+```{r}
+#| label: n-efekt
+set.seed(2026)
+
+# Sama erinevus, aga kunstlikult suurendatud valim
+suur <- data.frame(
+  x = c(rnorm(10000, mean = 5.0), rnorm(10000, mean = 5.1)),
+  grupp = rep(c("a", "b"), each = 10000)
+)
+
+t.test(x ~ grupp, data = suur)
+```
+
+Erinevus on 0,1 punkti — sisuliselt olematu. Aga p-väärtus on väga väike, sest juhtumeid
+on 20 000.
+
+> **Piisavalt suure valimi puhul on kõik statistiliselt oluline.** Statistiline olulisus
+> ütleb ainult, et erinevus ei ole ilmselt null. Ta ei ütle **mitte midagi** selle
+> kohta, kas erinevus on piisavalt suur, et tema üle tasuks üldse rääkida.
+>
+> Seetõttu tuleb alati vaadata **ka erinevuse suurust** ja küsida, kas ta on sisuliselt
+> oluline. Kas kaks aastat keskmises vanuses on palju? Kas 0,1 punkti üheteistpunktisel
+> skaalal on midagi väärt?
+>
+> **Sellele küsimusele ei vasta statistika. Sellele vastad sina, oma valdkonna teadmiste
+> põhjal.**
+
+## Kuidas seda kirja panna
+
+::: {.callout-tip title="Kuidas seda kirja panna"}
+T-testi tulemuste esitamisel peab kirjas olema: mõlema grupi keskmine, nende erinevus,
+usaldusvahemik, t-väärtus, vabadusastmed, p-väärtus ja **sisuline järeldus**.
+
+Kui erinevus **on** statistiliselt oluline:
+
+**Meeste keskmine vasak-parem enesepaigutus oli `r lr_mees` ja naiste oma `r lr_naine`, erinevus seega `r lr_vahe` punkti skaalal 0–10. Kahe grupi keskmiste võrdlemiseks läbi viidud t-test näitas, et erinevus on statistiliselt oluline (t = `r round(test_lr$statistic, 2)`, df = `r round(test_lr$parameter, 1)`, p = `r lr_p`; 95% usaldusvahemik `r lr_ci[1]` kuni `r lr_ci[2]`). Eesti mehed paigutavad end seega keskmiselt veidi parempoolsemalt kui naised, kuigi erinevus on sisuliselt väike.**
+
+Kui erinevus **ei ole** statistiliselt oluline:
+
+**Meeste keskmine suhtumine sisserändesse oli `r round(test_ranne$estimate[1], 3)` ja naiste oma `r round(test_ranne$estimate[2], 3)` faktorskoori skaalal. T-test ei näidanud statistiliselt olulist erinevust (t = `r round(test_ranne$statistic, 2)`, df = `r round(test_ranne$parameter, 1)`, p = `r r_p`; 95% usaldusvahemik `r r_ci[1]` kuni `r r_ci[2]`). Andmed ei anna alust väita, et Eesti meeste ja naiste suhtumine sisserändesse erineks.**
+
+Kaks asja, mida **mitte** kirjutada:
+
+* **"erinevust ei ole"** — õige on "andmed ei anna alust väita, et erinevus oleks".
+  Erinevus võib olla olemas, aga meie valim on liiga väike, et teda tuvastada.
+* **"p = 0,000"** — kirjuta `p < 0,001`. Tõenäosus ei ole kunagi täpselt null.
+:::
+
+## Harjutused
+
+::: {.harjutus}
+**1. Kahe grupi test.** Kas poliitikast huvitatud ja mittehuvitatud inimeste usaldus poliitikute vastu erineb? Tee t-test ja kirjuta tulemus välja korrektses vormis.
+
+**2. Veel üks võrdlus.** Kas kõrgharidusega ja ilma kõrghariduseta inimeste suhtumine sisserändesse erineb? (Kasuta praktikumis 5 tehtud binaarset haridusmuutujat.)
+
+**3. Sisuline olulisus.** Vali üks eelmistest testidest, kus tulemus oli statistiliselt oluline. Kui suur erinevus tegelikult oli? Kas sa peaksid teda sisuliselt oluliseks? Põhjenda.
+:::

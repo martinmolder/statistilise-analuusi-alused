@@ -11,27 +11,26 @@ book:
   search: true
   chapters:
     - index.qmd
-    - part: "Alustamine"
+    - part: "Andmetega alustamine"
       chapters:
         - 01-r-alused.qmd
         - 02-andmete-laadimine.qmd
+        - 03-kirjeldamine-ja-visualiseerimine.qmd
     - part: "Andmete ettevalmistus"
       chapters:
-        - 03-andmete-ettevalmistus-1.qmd
-        - 04-andmete-ettevalmistus-2.qmd
-    - part: "Andmete kirjeldamine"
-      chapters:
-        - 05-kirjeldamine-ja-visualiseerimine.qmd
+        - 04-andmete-ettevalmistus-1.qmd
+        - 05-andmete-ettevalmistus-2.qmd
     - part: "Järeldav statistika"
       chapters:
-        - 06-valim-ja-ebakindlus.qmd
-        - 07-hupoteeside-testimine.qmd
+        - 06-valim-ja-hupoteesid.qmd
+        - 07-keskmiste-vordlemine.qmd
     - part: "Seosed ja mudelid"
       chapters:
-        - 08-korrelatsioon-ja-regressioon.qmd
-        - 09-mitmene-regressioon.qmd
-        - 10-tulemuste-esitamine.qmd
-        - 11-logistiline-regressioon.qmd
+        - 08-korrelatsioon.qmd
+        - 09-regressioon.qmd
+        - 10-mitmene-regressioon.qmd
+        - 11-tulemuste-esitamine.qmd
+        - 12-logistiline-regressioon.qmd
 
 lang: et
 
