@@ -35,7 +35,7 @@ populatsiooni liikmel oli sama tõenäosus valimisse sattuda. Mitte vabatahtliku
 need, keda oli lihtne kätte saada — juhuslikult valitud.
 
 > **Miks juhuslikkus on nii oluline?** Sest ainult juhuvalimi puhul saame me matemaatiliselt
-> hinnata, kui kaugel meie valimist arvutatud arv võib olla tõelisest arvust
+> hinnata, kui kaugel meie valimist arvutatud arv võib olla tõesest arvust
 > populatsioonis. Mittejuhusliku valimi puhul ei ole mingit võimalust seda teada. Selline
 > valim ei ole "natuke halvem" — ta on üldistuste tegemiseks lihtsalt kasutu.
 
@@ -152,7 +152,7 @@ keskmist, mille me juhuvalimitest saime.
 Kolm asja, mida tähele panna:
 
 1. **Keskmised ei ole kõik ühesugused.** Nad hajuvad. See ongi ebakindlus.
-2. **Nad on koondunud tõelise väärtuse ümber.** Ükski üksik valim ei taba täpselt
+2. **Nad on koondunud tõese väärtuse ümber.** Ükski üksik valim ei taba täpselt
    õigesti, aga nad ei eksi ka süstemaatiliselt ühes suunas.
 3. **Jaotus on kellukesekujuline.** See ei ole juhus — see on **normaaljaotus** ja ta
    tekib alati, kui sa piisavalt palju juhuvalimeid võtad.
@@ -165,7 +165,7 @@ sd(keskmised)
 ```
 
 **See arv ongi see, mida me otsime.** Ta ütleb, kui palju üks üksik valimi keskmine
-tüüpiliselt tõelisest väärtusest eksib.
+tüüpiliselt tõesest väärtusest eksib.
 
 ### Mis juhtub, kui valim on suurem?
 
@@ -214,7 +214,7 @@ ggplot(sim, aes(x = keskmine, fill = valim)) +
 
 > **See on kogu asja tuum.** Rohkem andmeid tähendab vähem ebakindlust. Mitte seetõttu,
 > et suur valim oleks kuidagi "õigem", vaid seetõttu, et suure valimi keskmised hajuvad
-> tõelise väärtuse ümber vähem.
+> tõese väärtuse ümber vähem.
 
 Sama loogika kehtib ka hajuvuse kohta andmetes endas: mida hajusamad on väärtused
 valimis, seda hajusamad on ka valimite keskmised, ja seda ebakindlamad me oleme.
@@ -500,7 +500,7 @@ jõuab piirväärtus arvule 1,96.
 
 Nüüd saame kokku panna kõik, mida vaja.
 
-**Usaldusvahemik** näitab vahemikku, kuhu tõenäoliselt jääb tõeline väärtus
+**Usaldusvahemik** näitab vahemikku, kuhu tõenäoliselt jääb tõene väärtus
 populatsioonis. 95% usaldusvahemik ulatub 1,96 standardviga keskmisest mõlemale poole.
 
 ```{r}
@@ -529,9 +529,9 @@ Vahe on tühine, nagu ennustatud.
 
 > **Mida usaldusvahemik täpselt tähendab?** Kui me võtaksime Eestist lõpmata palju kordi
 > sama suure juhuvalimi ja arvutaksime iga kord usaldusvahemiku, siis 95% nendest
-> vahemikest sisaldaks tõelist keskmist.
+> vahemikest sisaldaks tõest keskmist.
 >
-> Igapäevases kasutuses tõlgendatakse teda lihtsamalt: see on vahemik, kus tõeline
+> Igapäevases kasutuses tõlgendatakse teda lihtsamalt: see on vahemik, kus tõene
 > väärtus **tõenäoliselt** asub. Rangelt võttes ei ole see päris täpne, aga praktilise
 > töö jaoks piisab.
 
@@ -550,8 +550,9 @@ Pane tähele:
 * **standardhälve** kirjeldab, kui hajusad on inimesed;
 * **standardviga ja usaldusvahemik** kirjeldavad, kui kindlad me keskmises oleme.
 
-Need kaks aetakse pidevalt segamini. Standardhälve on andmete omadus ja ta ei kahane,
-kui sa rohkem andmeid kogud. Standardviga on **sinu teadmise** omadus ja ta kahaneb.
+Need kaks aetakse pidevalt segamini. **Standardhälve on andmete omadus** — ta kirjeldab, kui erinevad inimesed omavahel on, ja ta ei kahane, kui sa rohkem andmeid kogud. Kui eestimaalaste vanused on hajusad, siis nad on hajusad ka siis, kui sa küsitled kümme korda rohkem inimesi.
+
+**Standardviga on sinu teadmise omadus** — ta kirjeldab, kui täpselt sa keskmist tead. Ja tema **kahaneb siis, kui andmete hulk suureneb**: mida rohkem inimesi sa küsitled, seda täpsemalt sa keskmist tead, kuigi inimesed ise jäävad täpselt sama erinevaks.
 :::
 
 ## Järgmiseks

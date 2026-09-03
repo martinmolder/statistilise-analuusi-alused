@@ -60,9 +60,7 @@ Selleks on funktsioon `case_when()`. Ta on **mitmene tingimuslause**: iga rida t
 on kujul `tingimus ~ väärtus` ning neid loetakse ülevalt alla — esimene sobiv tingimus
 annab tulemuse. Argument `.default` määrab, mis saab kõigist ülejäänutest.
 
-`NA_real_` on puuduv väärtus arvulise muutuja jaoks. R-is on igal andmetüübil oma
-`NA`-variant (`NA_character_` tekstile, `NA_real_` arvudele) ja `case_when()` nõuab, et
-kõik harud annaksid sama tüüpi väärtuse.
+Puuduvat väärtust tähistab `NA`, nagu ikka.
 
 ```{r}
 #| label: vote-recode
@@ -71,7 +69,7 @@ ee <- ee |>
     valis = case_when(
       as.numeric(vote) == 1 ~ 1,   # jah, käisin valimas
       as.numeric(vote) == 2 ~ 0,   # ei käinud
-      .default = NA_real_          # 3 = ei olnud hääleõiguslik, ja NA-d
+      .default = NA          # 3 = ei olnud hääleõiguslik, ja NA-d
     )
   )
 
@@ -86,41 +84,32 @@ table(ee$valis, useNA = "ifany")
 
 ## Mitmest küsimusest üks muutuja
 
-### Miks küsitluses ei ole päris pidevaid muutujaid
+### Miks seda vaja on
 
-Peaaegu kõik meid huvitavad nähtused — hoiakud, väärtused, usaldus — ei ole
-otseselt mõõdetavad. Me küsime nende kohta küsimusi ja vastaja valib mõne vastuse skaalal, millel võib olla neli või seitse või üksteist (või mõni muu arv) kategooriat.
+Peaaegu kõik meid huvitavad nähtused — hoiakud, väärtused, usaldus — ei ole otseselt mõõdetavad. Me küsime nende kohta küsimusi ja vastaja valib mõne astme skaalal.
 
-Iga selline üksik küsimus on **jäme ja mürane mõõdik**. Jäme, sest kategooriaid on vähe ja
-vastaja tegelik hoiak jääb kuhugi kahe astme vahele. Mürane, sest vastust mõjutab
-küsimuse sõnastus, vastaja tuju ja see, mida temalt eelmisena küsiti.
+Iga selline üksik küsimus on **jäme ja mürane mõõdik**. Jäme, sest astmeid on vähe. Mürane, sest vastust mõjutab küsimuse sõnastus, vastaja tuju ja see, mida temalt eelmisena küsiti.
 
-Lahendus on küsida sama asja kohta **mitu küsimust** ja need kokku panna. Nii saame
-peenema skaala ja osa juhuslikust mürast taandub välja.
+Lahendus on küsida sama asja kohta **mitu küsimust** ja need kokku panna. Nii saame peenema skaala ja osa mürast taandub välja.
 
-### Miks mitte lihtsalt keskmine
+### Faktoranalüüs lühidalt
 
-Kõige lihtsam viis kokku panemiseks oleks võtta küsimuste keskmine. See aga eeldab, et
-kõik küsimused mõõdavad uuritavat nähtust **ühtviisi hästi**, mis üldiselt ei ole tõsi.
-Mõni küsimus tabab asja täpsemalt, mõni on kaudsem.
+Kokku panemiseks kasutame **faktoranalüüsi**. Tema loogika on lihtne ja seda tasub korraks läbi mõelda.
 
-Seetõttu kasutame **faktoranalüüsi**. Selle mõte on järgmine: kui mitu küsimust on
-omavahel seotud, siis on selle taga ilmselt üks ühine nähtus, mida nad kõik mõõdavad.
-See ühine nähtus ongi **faktor**. Faktoranalüüs leiab ta üles ja annab meile kaks asja:
+Kui mitu küsimust on omavahel tugevalt seotud — inimene, kes usaldab Riigikogu, usaldab enamasti ka kohtusüsteemi — siis on selle taga tõenäoliselt **üks ühine nähtus**, mida nad kõik natuke erineva nurga alt mõõdavad. Faktoranalüüs otsib selle ühise osa üles ja eraldab ta mürast.
 
-* **faktorlaadungid** — kui tugevalt iga küsimus selle ühise nähtusega seotud on. Mida
-  suurem laadung, seda paremini see küsimus nähtust mõõdab ja seda rohkem ta
-  lõpptulemuses kaalub;
-* **faktorskoorid** — iga vastaja väärtus sellel leitud ühisel nähtusel. Just see ongi
-  meie uus muutuja.
+Ta annab meile kaks asja:
 
-> Rohkem me faktoranalüüsi sellel kursusel ei käsitle — see on omaette teema omaette
-> kursusel. Meile piisab teadmisest, et ta annab paremini kaalutud kokkuvõtte muutujatest, mis mõõdavad sama asja, kui lihtne
-> keskmine.
+* **faktorlaadungid** — kui tugevalt iga küsimus selle ühise nähtusega seotud on. Küsimus, mis nähtust hästi tabab, saab suure laadungi ja kaalub lõpptulemuses rohkem;
+* **faktorskoorid** — iga vastaja väärtus sellel ühisel nähtusel. See ongi meie uus muutuja.
 
-### Suhtumine sisserändesse
+> **Rohkem me faktoranalüüsi sellel kursusel ei käsitle.** See on omaette teema omaette kursusel ja siin ei ole vaja aru saada, kuidas ta arvutuslikult töötab. Vaja on aru saada **kahest asjast**: mida ta meile annab ja kuidas saadud muutujat lugeda.
+>
+> Kui see osa tundub keeruline, siis ära jää pidama. Käi kood läbi, vaata tulemust ja mine edasi — muutujat ennast on lihtne kasutada.
 
-Kolm küsimust, kõik skaalal 0–10:
+### Teeme ära: suhtumine sisserändesse
+
+Kolm küsimust, kõik skaalal 0–10, kus suurem väärtus tähendab positiivsemat suhtumist:
 
 | Muutuja | 0 | 10 |
 |---------|---|-----|
@@ -128,21 +117,19 @@ Kolm küsimust, kõik skaalal 0–10:
 | `imueclt` | kahjustab kultuuri | rikastab kultuuri |
 | `imwbcnt` | halvem koht elamiseks | parem koht elamiseks |
 
-Enne kokku panemist tuleb kaks asja üle kontrollida: kas küsimused on **omavahel seotud** ja kas nad on **samas suunas**. Mõlemad on siin täidetud — küsimused on tugevalt seotud ja kõik käivad samas suunas, nii et suurem väärtus tähendab positiivsemat suhtumist.
+Küsimused on omavahel tugevalt seotud ja kõik samas suunas — see on eelnevalt üle kontrollitud. Kuidas seda ise kontrollida, vaatame praktikumis 8.
 
-> Kuidas seda kontrollida, vaatame praktikumis 8, kui jõuame korrelatsiooni juurde. Praegu võta see teadmiseks.
+Faktoranalüüsi teeb funktsioon `factanal()`. Kolm argumenti:
 
-Nüüd faktoranalüüs funktsiooniga `factanal()`. Argumendid:
-
-* esimene argument — andmetabel ainult nende küsimustega, mida analüüsida;
+* esimene argument — andmetabel ainult nende küsimustega;
 * `factors` — mitu ühist nähtust otsida. Meil on üks;
 * `scores` — väärtusega `"regression"` palume arvutada iga vastaja faktorskoori.
 
-Enne seda tuleb andmed ette valmistada. `factanal()` tahab tavalisi arvulisi muutujaid ja ei oska puuduvate väärtustega midagi peale hakata.
+Andmed tuleb enne ette valmistada, sest `factanal()` tahab tavalisi arvulisi muutujaid ja ei oska puuduvate väärtustega midagi peale hakata.
 
-* `lapply()` rakendab funktsiooni igale andmetabeli veerule eraldi. Siin: tee igast veerust `as.numeric()`. Ta sarnaneb funktsioonile `sapply()`, mida kasutasime eelmises praktikumis, kuid annab tulemuse nimekirjana.
-* `as.data.frame()` teeb saadud nimekirjast tagasi andmetabeli.
-* `complete.cases()` annab `TRUE` nende ridade kohta, kus ühtegi puuduvat väärtust ei ole.
+* `lapply()` rakendab funktsiooni igale veerule eraldi — siin teeb igast veerust `as.numeric()`. Ta sarnaneb funktsioonile `sapply()`, kuid annab tulemuse nimekirjana.
+* `as.data.frame()` teeb nimekirjast tagasi andmetabeli.
+* `complete.cases()` annab `TRUE` nende ridade kohta, kus puuduvaid väärtusi ei ole.
 
 ```{r}
 #| label: ranne-fa
@@ -161,33 +148,23 @@ ranne_fa <- factanal(
 ranne_fa$loadings
 ```
 
-Laadungid on kõik tugevad ja positiivsed. Kõige rohkem kaalub kolmas küsimus (kas sisserändajad teevad Eesti paremaks või halvemaks kohaks), kõige vähem esimene (mõju majandusele).
+Laadungid on kõik positiivsed ja tugevad. Kõige rohkem kaalub kolmas küsimus, kõige vähem esimene. Rida `Proportion Var` ütleb, kui suure osa kolme küsimuse koguvarieeruvusest see üks ühine nähtus ära seletab.
 
-Rida `Proportion Var` ütleb, kui suure osa kolme küsimuse koguvarieeruvusest see üks ühine nähtus ära seletab.
+### Skooride lisamine andmetesse
 
-### Faktorskooride tagasi panemine
-
-Nüüd paneme skoorid andmetabelisse. Siin on üks konks, mis kipub ununema: **kuna faktoranalüüs kasutas ainult osa ridadest, ei saa me skoore lihtsalt veeruks panna** — nad ei satuks õigete inimeste kohale.
-
-Seega teeme esmalt tühja muutuja ja täidame ainult need read, mille kohta skoor arvutati.
+Nüüd paneme skoorid andmetabelisse. Üks konks: **faktoranalüüs kasutas ainult terveid ridu**, seega ei saa skoore lihtsalt veeruks panna — nad ei satuks õigete inimeste kohale. Teeme tühja muutuja ja täidame ainult arvutatud read.
 
 ```{r}
 #| label: ranne-skoorid
-ee$ranne <- NA_real_
+ee$ranne <- NA
 ee$ranne[ranne_terved] <- ranne_fa$scores[, 1]
 ```
 
-Teine konks: **faktori suund on matemaatiliselt suvaline.** Analüüs ei tea, kumb ots on "positiivne suhtumine" — ta leiab ainult telje, mitte selle nime. Seega kontrollime ise üle ja pöörame vajadusel ümber.
+Teine konks: **faktori suund on matemaatiliselt suvaline.** Analüüs leiab telje, aga ei tea, kumb ots on "positiivne suhtumine". Kontrollime üle ja pöörame vajadusel ümber.
 
-Selleks on **tingimuslause** `if () { }`. Ümarsulgudes on tingimus, looksulgudes see, mida teha, kui tingimus on tõene. Kui tingimus on väär, siis ei tehta midagi.
+Kontrollimiseks kasutame funktsiooni `cor()`, mis mõõdab kahe muutuja seost. Meid huvitab siin ainult **märk**: kui faktorskoor on mõne algse küsimusega negatiivselt seotud, siis on ta tagurpidi. Argument `use = "complete.obs"` ütleb, et arvutada ainult nende vastajate põhjal, kellel mõlemad väärtused olemas on. Korrelatsiooni juurde tuleme praktikumis 8 — praegu piisab teadmisest, et positiivne arv tähendab sama suunda.
 
-> Erinevus funktsioonidest `if_else()` ja `case_when()`: need kaks töötavad muutuja iga väärtusega eraldi. `if ()` otsustab **ühe korra**, kas tervet plokki üldse käivitada.
-
-Suuna kontrollimiseks kasutame funktsiooni `cor()`, mis mõõdab kahe muutuja seost. Meid huvitab siin ainult **märk**: kui faktorskoor on mõne algse küsimusega negatiivselt seotud, siis on ta tagurpidi ja tuleb ümber pöörata. Argument `use = "complete.obs"` ütleb, et arvutada ainult nende vastajate põhjal, kellel mõlemad väärtused olemas on.
-
-> Korrelatsiooni juurde tuleme põhjalikult tagasi praktikumis 8. Praegu on vaja teada ainult üht asja: **positiivne arv tähendab sama suunda, negatiivne vastupidist.**
-
-Miinusmärk arvu ees pöörab kõik väärtused vastasmärgiliseks.
+Pööramise otsuse teeb tingimuslause `if () { }` — ümarsulgudes tingimus, looksulgudes see, mida teha, kui ta on tõene.
 
 ```{r}
 #| label: ranne-suund
@@ -197,19 +174,41 @@ ranne_suund <- cor(ee$ranne, imwbcnt_arvuna, use = "complete.obs")
 if (ranne_suund < 0) {
   ee$ranne <- -ee$ranne
 }
+```
 
+### Mida see uus muutuja tähendab?
+
+See on kõige olulisem küsimus terves selles osas. Vaatame.
+
+```{r}
+#| label: ranne-summary
 summary(ee$ranne)
 ```
 
-Suurem väärtus tähendab nüüd positiivsemat suhtumist sisserändesse.
+Kaks asja hakkavad kohe silma. **Keskmine on null** ja väärtused jäävad umbes −2 ja +2 vahele. Faktorskoor ei ole skaalal 0–10 nagu algsed küsimused — ta on **standardiseeritud**: keskmine on 0 ja standardhälve umbes 1.
+
+Seda loetakse nii:
+
+| Väärtus | Tähendus |
+|---|---|
+| **0** | keskmine eestimaalane |
+| **+1** | ühe standardhälbe võrra positiivsem kui keskmine |
+| **−1** | ühe standardhälbe võrra negatiivsem kui keskmine |
+| **+2** | tugevalt positiivne, umbes ülemine 2% |
+
+> **Mis siin võideti ja mis kaotati?**
+>
+> Võideti **täpsus**. Muutuja mõõdab suhtumist kolme küsimuse põhjal korraga ja tuleb välja peenema skaalaga kui ükski üksik küsimus.
+>
+> Kaotati **loomulik ühik**. "Seitse punkti kümnest" on arusaadav; "0,8 standardhälvet üle keskmise" nõuab seletust. Seetõttu tuleb faktorskoori kasutades alati öelda, mis skaalal ta on.
 
 ::: {.arutelu}
-**Arutelu.** Faktorskoori keskmine on null ja standardhälve umbes üks. **Mida tähendab siis see, kui inimese väärtus on −1,5?** Ja kas seda muutujat saab tõlgendada nii nagu algseid küsimusi skaalal 0–10?
+**Arutelu.** Inimese `ranne` väärtus on −1,5. **Mida see tema kohta ütleb?** Ja kas seda arvu saab võrrelda tema vastusega üksikule küsimusele skaalal 0–10?
 :::
 
-### Institutsionaalne usaldus
+### Sama asi teise näite peal: institutsionaalne usaldus
 
-Teeme sama asja teise näite peal. ESS-is küsitakse usalduse kohta seitset küsimust, kõik skaalal 0–10, kus 0 tähendab "ei usalda üldse" ja 10 "usaldan täielikult":
+ESS-is küsitakse usalduse kohta seitset küsimust, kõik skaalal 0–10, kus 0 on "ei usalda üldse":
 
 | Muutuja | Mida usaldatakse |
 |---|---|
@@ -221,7 +220,7 @@ Teeme sama asja teise näite peal. ESS-is küsitakse usalduse kohta seitset küs
 | `trstep` | Euroopa Parlament |
 | `trstun` | ÜRO |
 
-Ka need on eelnevalt üle kontrollitud: kõik samas suunas ja omavahel tugevalt seotud.
+Kood on täpselt sama kujuga nagu eelmine — muutuvad ainult muutujate nimed.
 
 ```{r}
 #| label: usaldus-fa
@@ -243,11 +242,11 @@ usaldus_fa <- factanal(
 usaldus_fa$loadings
 ```
 
-Kõik seitse laadungit on positiivsed ja tugevad. Kõige nõrgemalt laadub usaldus politsei vastu — inimesed, kes ei usalda poliitikuid, usaldavad politseid sageli siiski.
+Kõik seitse laadungit on positiivsed. Kõige nõrgemalt laadub usaldus politsei vastu — inimesed, kes poliitikuid ei usalda, usaldavad politseid sageli siiski.
 
 ```{r}
 #| label: usaldus-skoorid
-ee$usaldus <- NA_real_
+ee$usaldus <- NA
 ee$usaldus[usaldus_terved] <- usaldus_fa$scores[, 1]
 
 trstplt_arvuna <- as.numeric(ee$trstplt)
@@ -260,8 +259,9 @@ if (usaldus_suund < 0) {
 summary(ee$usaldus)
 ```
 
-> **Pane tähele, et kood on mõlema indeksi puhul täpselt sama kujuga.** Muutuvad ainult muutujate nimed. See ongi üks põhjus, miks tasub kood kirjutada selgete sammudena — teist korda on ta juba valmis muster, mida saab kohandada.
+Jälle keskmine null ja standardhälve umbes üks — sama lugemisviis nagu eelmisel.
 
+> **Neid kahte muutujat — `ranne` ja `usaldus` — kasutame edaspidi mitmel korral**, sest nad on meie andmestikus kõige "pidevamad" muutujad. Praktikumis 8 vaatame ka, kui palju parema mõõdiku kasutamine tulemust muudab.
 
 ## Väikeste kategooriate kokku panemine
 
@@ -306,7 +306,7 @@ erakond_lyhike <- case_when(
   erakond_tekstina == "Sotsiaaldemokraatlik Erakond" ~ "SDE",
   erakond_tekstina == "Eesti Konservatiivne Rahvaerakond" ~ "EKRE",
   erakond_tekstina == "Eesti Keskerakond" ~ "Kesk",
-  is.na(erakond_tekstina) ~ NA_character_,
+  is.na(erakond_tekstina) ~ NA,
   .default = "Muu"
 )
 
@@ -403,7 +403,7 @@ ee <- ee |>
     huvi_pol = case_when(
       as.numeric(polintr) %in% c(1, 2) ~ 1,
       as.numeric(polintr) %in% c(3, 4) ~ 0,
-      .default = NA_real_
+      .default = NA
     )
   )
 ```

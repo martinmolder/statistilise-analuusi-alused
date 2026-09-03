@@ -39,7 +39,9 @@ Mõtle sellest nii. Sa oletad korraks, et seost ei ole. Siis vaatad oma andmeid 
 
 Praktilises kasutuses tõlgendatakse teda lühemalt: **tõenäosus eksida, kui me väidame, et seos on päriselt olemas.**
 
-> **Statistiline tava on 95%.** Kui p-väärtus on väiksem kui 0,05, siis ütleme, et erinevus on **statistiliselt oluline**. See piir ei ole loodusseadus — ta on kokkulepe. Mõnes valdkonnas kasutatakse rangemaid piire (0,01 või 0,001).
+> **Statistiline tava on 5%.** Kui p-väärtus on väiksem kui 0,05 — ehk tõenäosus eksida on alla 5% — siis ütleme, et erinevus on **statistiliselt oluline**. See piir ei ole loodusseadus, vaid kokkulepe. Mõnes valdkonnas kasutatakse rangemaid piire (1% või 0,1%).
+>
+> Sama asja kohta öeldakse vahel ka "95% usaldusnivoo" — see on lihtsalt teine pool samast arvust. 5% tõenäosus eksida tähendab 95% kindlust.
 
 **Mida p-väärtus EI ole.** Kolm väärarusaama, mis on nii levinud, et neid tasub eraldi välja tuua.
 
@@ -58,7 +60,7 @@ elanike keskmine vanus võiks tegelikult olla 52?**
 
 ## Lihtsam seletus
 
-Eelmises praktikumis arvutasime usaldusvahemiku. Ta ütles meile, kuhu tõeline keskmine
+Eelmises praktikumis arvutasime usaldusvahemiku. Ta ütles meile, kuhu tõene keskmine
 tõenäoliselt jääb.
 
 ```{r}
@@ -73,14 +75,14 @@ c(
 )
 ```
 
-Tõeline keskmine vanus jääb 95% tõenäosusega vahemikku 49,1 kuni 51,1.
+Tõene keskmine vanus jääb 95% tõenäosusega vahemikku 49,1 kuni 51,1.
 
 **Kas 52 jääb sellesse vahemikku?** Ei jää. Ta on üleval pool.
 
 Ja see ongi hüpoteesi test. Kogu ülejäänu on selle sama küsimuse täpsem sõnastus.
 
 * Kui võrreldav väärtus jääb **usaldusvahemikku sisse**, siis ei saa me välistada, et ta
-  ongi tõeline väärtus. Erinevus ei ole statistiliselt oluline.
+  ongi tõene väärtus. Erinevus ei ole statistiliselt oluline.
 * Kui ta jääb **väljapoole**, siis on ta meie andmetega raskesti ühildatav. Erinevus on
   statistiliselt oluline.
 
@@ -151,7 +153,7 @@ tskoor
 **See ongi t-väärtus.** Ta ütleb: võrreldav väärtus on 3,7 standardviga meie keskmisest
 eemal.
 
-Nüüd küsime: kui tõeline keskmine oleks tõesti 52, kui tõenäoline oleks siis näha valimi keskmist, mis on nii kaugel? Selleks on funktsioon `pt()`, mis töötab nagu `pnorm()`, kuid t-jaotuse jaoks. Lisaks vajab ta argumenti `df` — vabadusastmete arvu, millest praktikumis 6 juttu oli.
+Nüüd küsime: kui tõene keskmine oleks tõesti 52, kui tõenäoline oleks siis näha valimi keskmist, mis on nii kaugel? Selleks on funktsioon `pt()`, mis töötab nagu `pnorm()`, kuid t-jaotuse jaoks. Lisaks vajab ta argumenti `df` — vabadusastmete arvu, millest praktikumis 6 juttu oli.
 
 ```{r}
 #| label: pt
@@ -173,7 +175,7 @@ ylemine_ots <- 1 - pt(tskoor, df = vabadusastmed)
 ylemine_ots
 ```
 
-Ja kuna me ei tea ette, kas tõeline väärtus on meie omast suurem või väiksem, huvitavad meid **mõlemad otsad**. Jaotus on sümmeetriline, seega korrutame selle otsa kahega.
+Ja kuna me ei tea ette, kas tõene väärtus on meie omast suurem või väiksem, huvitavad meid **mõlemad otsad**. Jaotus on sümmeetriline, seega korrutame selle otsa kahega.
 
 ```{r}
 #| label: p-vaartus

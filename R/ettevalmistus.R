@@ -319,7 +319,6 @@ table(zap_labels(ee$vote), useNA = "ifany")   # 111 inimest väärtusega 3
 # case_when() -- mitmene tingimuslause. Iga rida on kujul
 # "tingimus ~ väärtus" ja loetakse ülevalt alla: esimene sobiv tingimus
 # annab tulemuse. Argument .default määrab, mis saab kõigist ülejäänutest.
-# NA_real_ on arvulise muutuja puuduv väärtus.
 
 vote_arvuna <- as.numeric(ee$vote)
 
@@ -328,7 +327,7 @@ ee <- ee |>
     valis = case_when(
       vote_arvuna == 1 ~ 1,   # jah
       vote_arvuna == 2 ~ 0,   # ei
-      .default = NA_real_     # 3 = ei olnud hääleõiguslik + NA
+      .default = NA     # 3 = ei olnud hääleõiguslik + NA
     )
   )
 
@@ -392,7 +391,7 @@ ranne_fa$loadings
 # ridadest, ei saa skoore lihtsalt veeruks panna -- nad ei satuks õigete
 # inimeste kohale. Teeme tühja muutuja ja täidame ainult arvutatud read.
 
-ee$ranne <- NA_real_
+ee$ranne <- NA
 ee$ranne[ranne_terved] <- ranne_fa$scores[, 1]
 
 # Faktori SUUND on matemaatiliselt suvaline. Kontrollime ja pöörame
@@ -440,7 +439,7 @@ usaldus_fa <- factanal(
 
 usaldus_fa$loadings
 
-ee$usaldus <- NA_real_
+ee$usaldus <- NA
 ee$usaldus[usaldus_terved] <- usaldus_fa$scores[, 1]
 
 trstplt_arvuna <- as.numeric(ee$trstplt)
@@ -480,7 +479,7 @@ erakond_lyhike <- case_when(
   erakond_tekstina == "Sotsiaaldemokraatlik Erakond" ~ "SDE",
   erakond_tekstina == "Eesti Konservatiivne Rahvaerakond" ~ "EKRE",
   erakond_tekstina == "Eesti Keskerakond" ~ "Kesk",
-  is.na(erakond_tekstina) ~ NA_character_,
+  is.na(erakond_tekstina) ~ NA,
   .default = "Muu"
 )
 
@@ -553,7 +552,7 @@ ee <- ee |>
     huvi_pol = case_when(
       as.numeric(polintr) %in% c(1, 2) ~ 1,
       as.numeric(polintr) %in% c(3, 4) ~ 0,
-      .default = NA_real_
+      .default = NA
     )
   )
 

@@ -128,13 +128,13 @@ Arvutame ta käsitsi läbi. Kirjutame iga sammu eraldi reale, et oleks näha, mi
 
 ```{r}
 #| label: kor-kasitsi
-alam <- na.omit(data[, c("usaldus_pol", "rahulolu_dem")])
+usaldus_rahulolu <- na.omit(data[, c("usaldus_pol", "rahulolu_dem")])
 
-halve_x <- alam$usaldus_pol - mean(alam$usaldus_pol)
-halve_y <- alam$rahulolu_dem - mean(alam$rahulolu_dem)
+halve_x <- usaldus_rahulolu$usaldus_pol - mean(usaldus_rahulolu$usaldus_pol)
+halve_y <- usaldus_rahulolu$rahulolu_dem - mean(usaldus_rahulolu$rahulolu_dem)
 
 korrutiste_summa <- sum(halve_x * halve_y)
-nimetaja <- (nrow(alam) - 1) * sd(alam$usaldus_pol) * sd(alam$rahulolu_dem)
+nimetaja <- (nrow(usaldus_rahulolu) - 1) * sd(usaldus_rahulolu$usaldus_pol) * sd(usaldus_rahulolu$rahulolu_dem)
 
 korrutiste_summa / nimetaja
 ```
@@ -148,7 +148,7 @@ kasutanud.
 
 ```{r}
 #| label: cor
-cor(alam$usaldus_pol, alam$rahulolu_dem)
+cor(usaldus_rahulolu$usaldus_pol, usaldus_rahulolu$rahulolu_dem)
 ```
 
 Sama arv.
@@ -176,7 +176,7 @@ populatsioonis on null.** Funktsioon on `cor.test()`.
 
 ```{r}
 #| label: cor-test
-cor.test(alam$usaldus_pol, alam$rahulolu_dem)
+cor.test(usaldus_rahulolu$usaldus_pol, usaldus_rahulolu$rahulolu_dem)
 ```
 
 Väljund on väga sarnane t-testi omale — sest loogika ongi täpselt sama. Meil on
@@ -189,7 +189,7 @@ Korrelatsioonikordaja ruutu nimetatakse **determinatsioonikordajaks** ehk
 
 ```{r}
 #| label: r-ruut
-cor(alam$usaldus_pol, alam$rahulolu_dem)^2
+cor(usaldus_rahulolu$usaldus_pol, usaldus_rahulolu$rahulolu_dem)^2
 ```
 
 R-ruut näitab, **kui suur osa ühe muutuja varieeruvusest on seotud teise muutuja
@@ -215,7 +215,7 @@ model*), ja `se = FALSE` peidab joone ümbert usaldusvahemiku.
 
 ```{r}
 #| label: joon
-ggplot(alam, aes(x = usaldus_pol, y = rahulolu_dem)) +
+ggplot(usaldus_rahulolu, aes(x = usaldus_pol, y = rahulolu_dem)) +
   geom_jitter(width = 0.25, height = 0.25, alpha = 0.3) +
   stat_smooth(method = "lm", se = FALSE, color = "firebrick3") +
   labs(
@@ -296,7 +296,7 @@ vaatasime. Ta ütleb, kui suure osa sõltuva muutuja varieeruvusest mudel ära s
 
 ```{r}
 #| label: r-ruut-kontroll
-cor(alam$usaldus_pol, alam$rahulolu_dem)^2
+cor(usaldus_rahulolu$usaldus_pol, usaldus_rahulolu$rahulolu_dem)^2
 ```
 
 Sama arv, mille me korrelatsioonist saime. **Kahe muutujaga regressiooni R-ruut ongi
@@ -357,54 +357,6 @@ Nii et valik ei ole "üks on õige, teine vale". Faktorskoor mõõdab paremini, 
 
 ::: {.arutelu}
 **Arutelu.** Kumba sa oma bakalaureusetöös kasutaksid? Mille põhjal sa otsustaksid? Ja kas on olukordi, kus nõrgem, aga arusaadavam mõõdik on parem valik kui tugevam, aga raskesti seletatav?
-:::
-
-## Koefitsientide standardiseerimine
-
-Regressioonikoefitsiendi suurus sõltub muutuja mõõtskaalast. See tähendab, et **kahe erineva muutuja koefitsiente ei saa omavahel võrrelda**, kui nad on erineval skaalal.
-
-Meie mudelis on usaldus skaalal 0–10 ja vanus aastates. Kumb on tugevam seletaja? Koefitsientidest seda välja ei loe — nad on eri ühikutes.
-
-```{r}
-#| label: erinevad-skaalad
-mudel_kaks <- lm(rahulolu_dem ~ usaldus_pol + vanus, data = data)
-
-round(coef(mudel_kaks), 4)
-```
-
-Vanuse koefitsient on peaaegu null ja usalduse oma palju suurem. Aga see ei tähenda, et vanus oleks ebaoluline — tähendab ainult, et üks eluaasta on väike samm, samal ajal kui üks usalduspunkt on suur samm.
-
-**Lahendus on muutujad enne mudelisse panekut standardiseerida.** Standardiseerimine tähendab, et igast muutujast tehakse z-skoor — täpselt see tehe, mida nägime praktikumis 6. Pärast seda on iga muutuja keskmine 0 ja standardhälve 1, ehk **kõik on samal skaalal**.
-
-R-is teeb seda funktsioon `scale()`.
-
-```{r}
-#| label: standardiseeritud
-data$usaldus_z <- scale(data$usaldus_pol)
-data$vanus_z <- scale(data$vanus)
-data$rahulolu_z <- scale(data$rahulolu_dem)
-
-mudel_std <- lm(rahulolu_z ~ usaldus_z + vanus_z, data = data)
-
-round(coef(mudel_std), 4)
-```
-
-Nüüd on koefitsiendid võrreldavad. Neid nimetatakse **standardiseeritud koefitsientideks** ehk **beeta-koefitsientideks**.
-
-**Kuidas neid lugeda?** Koefitsient ütleb, mitu **standardhälvet** muutub sõltuv muutuja, kui sõltumatu muutuja kasvab ühe standardhälbe võrra.
-
-Usalduse koefitsient on umbes kümme korda suurem kui vanuse oma. Ehk: usaldus on rahulolu seletamisel palju tugevam tegur.
-
-> **Millal standardiseerida ja millal mitte?**
->
-> Standardiseeri siis, kui sa tahad **võrrelda erinevate muutujate suhtelist tugevust** ühes mudelis.
->
-> Ära standardiseeri siis, kui muutujal on **sisuliselt tähendusrikas ühik**. "Iga eluaasta kohta 0,01 punkti" on arusaadav lause. "Iga standardhälbe kohta 0,08 standardhälvet" ei ole.
->
-> Ja binaarseid muutujaid ei ole üldse mõtet standardiseerida — "pool standardhälvet meheks olemist" ei tähenda midagi.
-
-::: {.harjutus}
-**Harjutus.** Lisa standardiseeritud mudelisse ka haridus. Milline kolmest muutujast on kõige tugevam seletaja? Kontrolli, kas sama järjekord tuleb välja ka standardiseerimata mudelist — ja mõtle, miks see nii on või ei ole.
 :::
 
 ## Kuidas seda kirja panna

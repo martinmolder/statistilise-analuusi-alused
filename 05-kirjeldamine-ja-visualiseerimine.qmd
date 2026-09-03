@@ -13,214 +13,100 @@ Andmestik on korras. Nüüd hakkame temast midagi teada saama.
 
 Oma andmete põhjal järelduste tegemine jaguneb kaheks.
 
-**Kirjeldav statistika** (*descriptive*) kirjeldab seda, mida me oma andmestikus näeme.
-Kui suur osa vastajatest käis valimas? Milline on keskmine vanus? Kuidas jagunevad
-hariduskategooriad? Need on küsimused meie 1293 inimese kohta.
+**Kirjeldav statistika** kirjeldab seda, mida me oma andmestikus näeme. **Järeldav statistika** läheb sammu kaugemale ja küsib, kas see kehtib ka populatsioonis. Praegu tegeleme esimesega; järeldava statistikani jõuame praktikumis 6.
 
-**Järeldav statistika** (*inferential*) läheb sammu võrra kaugemale. Meie 1293 inimest
-on ainult valim kogu Eesti elanikkonnast. Järeldav statistika küsib: **kas see, mida me
-valimis näeme, kehtib ka populatsioonis?** Ja kui kindlad me selles olla saame?
+> Kirjeldav statistika ei ole "lihtsam" statistika, millest siis edasi liigutakse. Ta on **iga analüüsi esimene samm**, mida ei tohi vahele jätta. Kui sa ei tea, kuidas su muutujad jaotuvad, siis sa ei oska ka öelda, kas mudeli tulemus on mõistlik.
 
-Praegu tegeleme esimesega. Järeldava statistikani jõuame praktikumis 6.
-
-> Kirjeldav statistika ei ole "lihtsam" statistika, millest siis edasi liigutakse. Ta on
-> **iga analüüsi esimene samm**, mida ei tohi vahele jätta. Kui sa ei tea, kuidas su
-> muutujad jaotuvad, siis sa ei oska ka öelda, kas mudeli tulemus on mõistlik.
-
-Kirjeldamiseks on tavaliselt vaja kahte asja:
-
-* **keskväärtus** — mis on kõige tüüpilisem väärtus;
-* **hajuvus** — kui erinevad väärtused omavahel on ehk kui hästi see tüüpiline väärtus
-  kõiki juhtumeid iseloomustab.
-
-See, kuidas neid arvutada, sõltub muutuja skaalast.
+Kirjeldamiseks on vaja kahte asja: **keskväärtust** (mis on tüüpiline väärtus) ja **hajuvust** (kui erinevad väärtused omavahel on). See, kuidas neid arvutada, sõltub muutuja skaalast.
 
 ## Kategoorilised muutujad
 
-Kategoorilise muutuja puhul huvitab meid esmalt, **kui palju on igas kategoorias
-juhtumeid.** Selleks on funktsioon `table()`.
+Kategoorilise muutuja puhul huvitab meid, **kui palju on igas kategoorias juhtumeid**. Selleks on `table()`, ja osakaaludeks teisendab `prop.table()`.
 
 ```{r}
-#| label: table-elukoht
-table(data$elukoht)
-```
-
-Sagedused on kasulikud, aga võrdlemiseks on paremad **osakaalud**. Nende jaoks on
-funktsioon `prop.table()`, mis võtab sisendiks sagedustabeli.
-
-```{r}
-#| label: prop-table
-sagedustabel <- table(data$elukoht)
-
-prop.table(sagedustabel)
-```
-
-Loetavuse huvides tasub ka ümardada. Kirjutame iga sammu eraldi reale — nii on näha, et tegemist on kolme järjestikuse toiminguga, mitte ühe maagilise käsuga.
-
-```{r}
-#| label: prop-round
+#| label: kategooriline
 sagedused <- table(data$elukoht)
-osakaalud <- prop.table(sagedused)
+sagedused
 
+osakaalud <- prop.table(sagedused)
 round(osakaalud, 3)
 ```
 
 Ligi kolmandik vastajatest elab suurlinnas.
 
-### Keskväärtus kategoorilise muutuja puhul
-
-**Nominaalse** muutuja puhul saab välja tuua ainult **moodi** — kõige sagedasema
-kategooria. Seda saab tabelist lihtsalt välja lugeda.
-
-**Ordinaalse** muutuja puhul on kaks võimalust: mood või **mediaan** — väärtus, millest
-suuremaid ja väiksemaid juhtumeid on täpselt sama palju.
-
-> Kui klassitäis tudengeid pikkuse järgi ritta panna, siis mediaanpikkus on sellel
-> tudengil, kes seisab täpselt keskel — temast vasakule ja paremale jääb sama palju
-> inimesi.
-
-Mediaani arvutamiseks on funktsioon `median()`, mis töötab arvuliste muutujatega.
+**Keskväärtus.** Nominaalse muutuja puhul saab välja tuua ainult **moodi** — kõige sagedasema kategooria, mille loeb tabelist välja. Ordinaalse muutuja puhul saab ka **mediaani**, väärtuse, millest suuremaid ja väiksemaid juhtumeid on võrdselt. Mediaani arvutab funktsioon `median()`.
 
 ```{r}
-#| label: median-haridus
+#| label: mediaan-haridus
 median(data$haridus, na.rm = TRUE)
 ```
 
-Haridustaseme mediaan on 5, mis ESS-i skaalal tähendab kutseharidust keskhariduse
-baasil. Tuleta meelde: `na.rm = TRUE` on vajalik, sest muutujas on puuduvaid väärtusi.
-
-### Hajuvus kategoorilise muutuja puhul
-
-Kõige lihtsam viis hajuvust hinnata on vaadata, **kui suur osa juhtumitest on kõige
-sagedasemas kategoorias.** Mida suurem see osakaal, seda paremini see kategooria kogu
-andmestikku iseloomustab ja seda väiksem on hajuvus.
+**Hajuvus.** Kõige lihtsam viis on vaadata, kui suur osa juhtumitest on kõige sagedasemas kategoorias. Mida suurem see osakaal, seda väiksem hajuvus.
 
 ### Kaks muutujat korraga
 
-Sagedustabeli saab teha ka kahe muutuja kohta korraga — see näitab, kuidas üks muutuja
-jaotub teise kategooriate lõikes.
+Sagedustabeli saab teha ka kahe muutuja kohta. Argument `margin` ütleb, mille suhtes protsendid arvutada: `1` annab ridade osakaalud, `2` veergude omad.
 
 ```{r}
 #| label: risttabel
 tabel <- table(data$elukoht, data$sugu)
 tabel
-```
 
-Osakaaludeks tehes tuleb otsustada, **mille suhtes** protsendid arvutada. Selleks on
-argument `margin`:
-
-* `margin = 1` — ridade osakaalud, iga **rida** annab kokku 100%;
-* `margin = 2` — veergude osakaalud, iga **veerg** annab kokku 100%.
-
-```{r}
-#| label: risttabel-prop
 round(prop.table(tabel, margin = 2), 3)
 ```
 
-Nüüd on iga veerg eraldi 100%: 31,5% meestest ja 35,3% naistest elab suurlinnas.
+Iga veerg on eraldi 100%: nii mitu protsenti meestest ja nii mitu protsenti naistest elab igas kohatüübis.
 
-> **Mõtle alati läbi, kumb suund sind huvitab.** "Kui suur osa naistest elab
-> suurlinnas" ja "kui suur osa suurlinlastest on naised" on kaks täiesti erinevat
-> küsimust ja neile vastavad erinevad arvud.
+> **Mõtle alati läbi, kumb suund sind huvitab.** "Kui suur osa naistest elab suurlinnas" ja "kui suur osa suurlinlastest on naised" on kaks erinevat küsimust ja neile vastavad erinevad arvud.
 
 ## Pidevad muutujad
 
-Pideva muutuja puhul on keskväärtuseks kas **keskmine** või **mediaan**.
+Pideva muutuja keskväärtuseks on kas **keskmine** või **mediaan**, hajuvuseks **standardhälve** (`sd()`). Standardhälbe ruutu nimetatakse **dispersiooniks** (`var()`).
 
 ```{r}
-#| label: keskmine
+#| label: pidev
 mean(data$vanus, na.rm = TRUE)
 median(data$vanus, na.rm = TRUE)
-```
-
-Keskmine vanus on 50,1 ja mediaanvanus 50. Need on lähedal, mis viitab sellele, et
-jaotus on üsna sümmeetriline.
-
-> **Millal kumba kasutada?** Keskmine on tundlik üksikute väga suurte või väga väikeste
-> väärtuste suhtes, mediaan mitte. Kui jaotus on tugevalt viltu — näiteks sissetulek,
-> kus mõned inimesed teenivad väga palju — siis annab mediaan tüüpilisest väärtusest
-> ausama pildi. Kui keskmine ja mediaan on üksteisest kaugel, siis on see märk sellest,
-> et jaotus ei ole sümmeetriline.
-
-### Hajuvus
-
-Pideva muutuja hajuvust mõõdetakse **standardhälbega** (*standard deviation*). See
-näitab tinglikult, kui kaugel keskmisest asub tüüpiline juhtum. Funktsioon on `sd()`.
-
-```{r}
-#| label: sd
 sd(data$vanus, na.rm = TRUE)
 ```
 
-Standardhälve on 18,3 aastat. Mida suurem see arv, seda rohkem väärtused keskmisest
-hajuvad.
+Keskmine vanus on 50,1 ja standardhälve 18,3 aastat. Keskmine ja mediaan on lähedal, mis viitab üsna sümmeetrilisele jaotusele.
 
-Standardhälbe ruutu nimetatakse **dispersiooniks** (*variance*) ja teda arvutab
-funktsioon `var()`.
+> **Millal kumba keskväärtust kasutada?** Keskmine on tundlik üksikute väga suurte või väikeste väärtuste suhtes, mediaan mitte. Kui jaotus on tugevalt viltu — näiteks sissetulek — annab mediaan ausama pildi. **Kui keskmine ja mediaan on üksteisest kaugel, on see märk, et jaotus ei ole sümmeetriline.**
 
-```{r}
-#| label: var
-var(data$vanus, na.rm = TRUE)
-```
+> Standardhälve on suurus, mille juurde me praktikumis 6 pikemalt tagasi tuleme. Ta on kogu järeldava statistika alus.
 
-> Standardhälve on suurus, mille juurde me praktikumis 6 pikemalt tagasi tuleme. Ta on
-> kogu järeldava statistika alus — just tema kaudu saame hinnata, kui kindlad me oma
-> järeldustes olla võime.
-
-### Kvartiilid ja miinimum-maksimum
-
-Funktsioon `quantile()` näitab, millised väärtused jagavad jaotuse võrdseteks osadeks.
+Funktsioon `quantile()` näitab, millised väärtused jagavad jaotuse neljaks võrdseks osaks, ja `summary()` annab kogu selle info korraga.
 
 ```{r}
-#| label: quantile
-quantile(data$vanus, na.rm = TRUE)
+#| label: kvartiilid
+summary(data$vanus)
 ```
 
 Veerand vastajatest on alla 37-aastased, pooled alla 50 ja veerand üle 64.
 
-Kõige kiirem viis kogu selle info korraga saamiseks on `summary()`.
+### Gruppide kaupa
+
+Kui tahame kokkuvõtet gruppide lõikes, aitavad `group_by()` ja `summarise()`, millega tegime tutvust praktikumis 3.
 
 ```{r}
-#| label: summary-vanus
-summary(data$vanus)
-```
-
-### Mitu muutujat korraga
-
-Kui tahame kokkuvõtet mitmest muutujast korraga, saab kasutada torusid ja funktsiooni
-`summarise()`, millega tegime tutvust praktikumis 3.
-
-```{r}
-#| label: summarise-mitu
-data |>
-  summarise(
-    keskm_vanus = mean(vanus, na.rm = TRUE),
-    sd_vanus = sd(vanus, na.rm = TRUE),
-    keskm_usaldus = mean(usaldus_pol, na.rm = TRUE),
-    sd_usaldus = sd(usaldus_pol, na.rm = TRUE)
-  )
-```
-
-Ja gruppide kaupa, kui lisada `group_by()`.
-
-```{r}
-#| label: summarise-grupid
+#| label: grupid
 data |>
   group_by(sugu) |>
   summarise(
-    n = n(),
-    keskm_vasak_parem = mean(vasak_parem, na.rm = TRUE),
-    sd_vasak_parem = sd(vasak_parem, na.rm = TRUE)
+    n = sum(!is.na(vasak_parem)),
+    keskmine = mean(vasak_parem, na.rm = TRUE),
+    sd = sd(vasak_parem, na.rm = TRUE)
   )
 ```
 
-Meeste ja naiste keskmised on peaaegu samad. Kas see erinevus on üldse midagi väärt?
-Sellele küsimusele vastame praktikumis 5.
+::: {.arutelu}
+**Arutelu.** Meeste ja naiste keskmised erinevad. **Kas see erinevus on midagi väärt?** Mille põhjal sa seda otsustaksid — ja mida sa selleks veel teadma peaksid?
+:::
 
 ## Kaalutud ja kaalumata kirjeldav statistika
 
-Praktikumis 3 nägime, et kaalud on olulised just siis, kui me tahame öelda midagi
-**rahvastiku** kohta. Kirjeldav statistika on täpselt see koht.
+Praktikumis 3 nägime, et kaalud on olulised just siis, kui tahame öelda midagi **rahvastiku** kohta. Kirjeldav statistika on täpselt see koht.
 
 ```{r}
 #| label: kaalutud
@@ -230,11 +116,7 @@ c(
 )
 ```
 
-> **Meeldetuletus.** Kui sa kirjutad oma töösse lause "Eesti elanike keskmine vanus on
-> X" või "Y protsenti eestimaalastest käis valimas", siis pead kasutama kaale. Kui sa
-> uurid, kuidas kaks nähtust on omavahel seotud, siis on nende mõju väike.
->
-> Sellel kursusel arvutame edaspidi kaalumata, aga ütleme selle valiku välja.
+> **Meeldetuletus.** Kui sa kirjutad oma töösse lause "Eesti elanike keskmine vanus on X", siis pead kasutama kaale. Kui sa uurid seost kahe nähtuse vahel, on nende mõju väike. Sellel kursusel arvutame kaalumata, aga ütleme selle valiku välja.
 
 ## Kirjeldava statistika tabel
 

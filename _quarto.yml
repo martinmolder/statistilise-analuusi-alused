@@ -65,6 +65,10 @@ format:
     fig-width: 7
     fig-height: 4.5
     link-external-icon: false
+    # Valemid renderdatakse KaTeX-iga, mis pakitakse saidi sisse kaasa.
+    # Vaikimisi laeb Quarto MathJaxi CDN-ist -- see ei tööta, kui fail on
+    # avatud otse kettalt (file://) või kui internetiühendust ei ole.
+    html-math-method: katex
 
 # Välised lingid avanevad uues aknas (vt _extensions/valised-lingid.lua)
 filters:

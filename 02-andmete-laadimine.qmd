@@ -1,7 +1,54 @@
 # 2. Andmete laadimine
 
-Eelmises praktikumis tegime ise väikese andmetabeli. Päris töös nii ei lähe — andmed
-tulevad kuskilt mujalt ja meie esimene ülesanne on nad R-i sisse saada.
+Eelmises praktikumis tegime ise väikese andmetabeli. Päris töös nii ei lähe — andmed tulevad kuskilt mujalt ja meie esimene ülesanne on nad R-i sisse saada.
+
+## Enne alustamist: failid oma arvutisse
+
+Selle ja kõikide järgnevate praktikumide jaoks on vaja kolme faili. Nad on kõik **Moodle'is** kursuse lehel.
+
+| Fail | Mis see on | Suurus |
+|------|------------|--------|
+| `ess11_ee_raw.sav` | ESS-i Eesti andmed, muutmata kujul | 4,7 MB |
+| `ess11_ee_clean.rdata` | analüüsivalmis andmestik, mille me ise praktikumides 3–4 valmis teeme | 39 KB |
+| `ESS11_koodiraamat.html` | koodiraamat — mida iga muutuja ja iga arv tähendab | 2,8 MB |
+
+### Kuhu nad panna
+
+Praktikumis 1 tegid sa endale **RStudio projekti** ja selle sisse kausta nimega `data`. Kõik kolm faili lähevad sinna.
+
+Kui su projekti kaust on näiteks `statanal`, siis peaks pilt olema selline:
+
+```
+statanal/
+├── statanal.Rproj          <- see fail avab projekti
+├── data/
+│   ├── ess11_ee_raw.sav
+│   ├── ess11_ee_clean.rdata
+│   └── ESS11_koodiraamat.html
+└── R/
+    └── minu_kood.R
+```
+
+> **Miks just nii?** Sest kogu materjalides olev kood eeldab seda paigutust. Kui kirjutame `read_sav("data/ess11_ee_raw.sav")`, siis otsib R faili sinu projektikausta alt kaustast `data`. Kui fail on mujal — näiteks allalaadimiste kaustas — siis ta seda ei leia ja annab veateate `cannot open file`.
+>
+> See on kõige sagedasem põhjus, miks kood "ei tööta". Enne kui midagi muud otsid: **kontrolli, kas fail on õiges kohas ja kas nimi on täpselt õige.**
+
+### Kuidas kontrollida, kas kõik on paigas
+
+Jooksuta see käsk. Funktsioon `list.files()` näitab, mis failid antud kaustas on.
+
+```{r}
+#| label: kontrolli-faile
+list.files("data")
+```
+
+Kui sa näed seal oma faile, on kõik korras. Kui vastus on `character(0)`, siis on kaust tühi või teda ei ole olemas.
+
+> **Kui midagi ei klapi**, kontrolli kahte asja. Esiteks, kas RStudio ülaservas on kirjas sinu projekti nimi — kui ei, siis ava projekt `.Rproj` faili kaudu. Teiseks, kas failinimed on täpselt samad; suur ja väike täht loevad.
+
+### Andmete algallikas
+
+Need failid on ette valmistatud ESS-i originaalandmetest, et sa saaksid kohe tööle hakata. Kui tahad originaali ise alla laadida — ja oma lõputöö jaoks peaksid — siis vaata praktikumi lõpust.
 
 ## Kust meie andmed tulevad?
 
@@ -51,8 +98,9 @@ kohta:
 * mis väärtused on võimalikud ja mida iga väärtus tähendab;
 * kuidas on tähistatud puuduvad väärtused.
 
-ESS-i koodiraamat on meil failis `ESS11 codebook.html`. Ava ta oma veebilehitsejas ja
-otsi sealt üles muutuja `lrscale`.
+Meie koodiraamat on fail **`ESS11_koodiraamat.html`**, mille sa laadisid alla Moodle'ist ja panid kausta `data`. Ava ta oma veebilehitsejas: tee failil topeltklõps või lohista ta brauseriaknasse. Otsi sealt üles muutuja `lrscale` — brauseris saab lehelt otsida klahvikombinatsiooniga **Ctrl+F** (Macil **Cmd+F**).
+
+Sama info on olemas ka veebis, ESS-i enda lehel: [ESS-i muutujate otsing](https://ess.sikt.no/en/?tab=variables). Seal saab muutujaid otsida ka teema järgi ja võrrelda, kuidas sama küsimus on eri voorudes küsitud.
 
 > **Ilma koodiraamatuta ei saa andmetega tööd teha.** Mitte "on raskem" — ei saa. Sa ei
 > tea, mida arvud tähendavad, sa ei tea, kummas skaala otsas on "rohkem", ja sa ei tea, millised

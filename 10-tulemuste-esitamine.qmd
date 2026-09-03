@@ -96,10 +96,10 @@ nimed_koik <- c(
   "vanus" = "Vanus (aastates)",
   "haridus" = "Haridustase (1-7)",
   "sugunaine" = "Sugu: naine (ref. mees)",
-  "elukohtsuurlinna äärelinn" = "Elukoht: äärelinn (ref. suurlinn)",
-  "elukohtväiksem linn" = "Elukoht: väiksem linn (ref. suurlinn)",
+  "elukohtäärelinn" = "Elukoht: äärelinn (ref. suurlinn)",
+  "elukohtväikelinn" = "Elukoht: väikelinn (ref. suurlinn)",
   "elukohtmaa-asula" = "Elukoht: maa-asula (ref. suurlinn)",
-  "elukohttalu või maakodu" = "Elukoht: talu (ref. suurlinn)",
+  "elukohtmaakodu" = "Elukoht: maakodu (ref. suurlinn)",
   "(Intercept)" = "Vabaliige"
 )
 

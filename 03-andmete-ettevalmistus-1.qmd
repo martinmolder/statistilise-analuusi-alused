@@ -150,8 +150,7 @@ ee_raw[, c("agea", "gndr", "lrscale")]
 ee_raw[ee_raw$gndr == 2, c("agea", "gndr", "lrscale")]
 ```
 
-Andmeobjekti nime tuleb korrata iga tingimuse sees (`ee_raw$gndr`) ja muutujate nimed
-peavad olema jutumärkides.
+Pane tähele kahte tüütut asja. Tingimuse sees tuleb andmeobjekti nime **uuesti korrata** (`ee_raw$gndr`), kuigi me juba ütlesime nurksulgude ees, millisest tabelist jutt käib. Ja veergude valimisel peavad muutujate nimed olema **jutumärkides**.
 
 ## dplyr
 
@@ -170,8 +169,9 @@ select(ee_raw, agea, gndr, lrscale)
 select(filter(ee_raw, gndr == 2), agea, gndr, lrscale)
 ```
 
-Andmeobjekti nime ei pea kordama — `filter()` teab niigi, millisest tabelist muutujaid
-otsida. Jutumärke ei ole vaja.
+Kumbki tüütus siin ei kordu. Tingimuse sees ei pea andmeobjekti nime uuesti kirjutama — piisab `gndr`-ist, sest `filter()` teab esimesest argumendist, millisest tabelist seda muutujat otsida. Ja `select()` ei nõua muutujate nimede ümber jutumärke.
+
+> Seda omadust nimetatakse R-is **korrastatud hindamiseks** (*tidy evaluation*). Lühidalt: dplyr-i funktsioonid otsivad paljaid nimesid kõigepealt sellest andmetabelist, mille sa neile andsid. Sina pead teadma ainult tagajärge — vähem kirjutamist ja loetavam kood.
 
 :::
 
@@ -617,8 +617,17 @@ Selles praktikumis me
 Järgmises praktikumis kodeerime muutujad ümber, ehitame nendest uued muutujad ja
 salvestame analüüsivalmis andmestiku.
 
-> Kogu see töö on koos ühes failis: `R/ettevalmistus.R`. Hoia teda alles ja käi ta
-> aeg-ajalt uuesti läbi.
+### Sinu enda skript
+
+Kogu selle praktikumi kood — ja järgmise praktikumi oma — moodustab kokku ühe terviku: skripti, mis viib toorest andmefailist analüüsivalmis andmestikuni.
+
+**Selle skripti kirjutad sa ise, jooksvalt praktikumi käigus.** Loo praktikumi alguses oma projekti kausta `R` uus koodifail — näiteks nimega `ettevalmistus.R` — ja kirjuta kogu tänane kood sinna. Järgmises praktikumis jätkad sama faili.
+
+> **Miks mitte lihtsalt konsooli kirjutada?** Sest konsoolis tehtu kaob. Skript on **kirjalik tõend selle kohta, mida sa andmetega tegid** — ja kui midagi läks valesti, siis on ta ainus koht, kust seda üles leida.
+>
+> Täpselt samasugune fail peab kuuluma ka sinu bakalaureusetöö juurde. Juhendaja esimene küsimus on peaaegu alati: "näita, kuidas sa selle muutuja said".
+
+Kui sa mõne koodijupi vahele jätsid või kaotasid, siis ei ole hullu — praktikumi 4 lõpus on kogu skript ühes tükis olemas ja materjalid jäävad veebi alles.
 
 ## Harjutused
 
