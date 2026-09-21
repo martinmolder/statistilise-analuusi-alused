@@ -203,6 +203,7 @@ Nüüd on joonise tegemine tavaline ggplot-i töö. Kaks uut kihti:
 ggplot(ennustus_tabel, aes(x = x, y = predicted)) +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high), fill = "grey80") +
   geom_line(linewidth = 1, color = "dodgerblue3") +
+  scale_x_continuous(breaks = 0:10) +
   labs(
     x = "usaldus poliitikute vastu (0-10)",
     y = "rahulolu demokraatiaga (0-10)",

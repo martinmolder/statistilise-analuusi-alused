@@ -29,6 +29,8 @@ model*), ja `se = FALSE` peidab joone ümbert usaldusvahemiku.
 ggplot(usaldus_rahulolu, aes(x = usaldus_pol, y = rahulolu_dem)) +
   geom_jitter(width = 0.25, height = 0.25, alpha = 0.3) +
   stat_smooth(method = "lm", se = FALSE, color = "firebrick3") +
+  scale_x_continuous(breaks = 0:10) +
+  scale_y_continuous(breaks = 0:10) +
   labs(
     x = "usaldus poliitikute vastu (0-10)",
     y = "rahulolu demokraatiaga (0-10)",

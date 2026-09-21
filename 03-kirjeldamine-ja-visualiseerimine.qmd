@@ -524,10 +524,21 @@ Kui palju punkte satub täpselt üksteise peale — mis juhtub sageli, kui muutu
 
 **Esimene: läbipaistvus.** Argument `alpha` funktsioonis `geom_point()` teeb punktid poolläbipaistvaks, nii et üksteise peal olevad punktid tulevad tumedamad.
 
+Siin tuleb sisse ka üks uus kiht. `usaldus_pol` on skaalal 0–10 ja võtab ainult
+täisarvulisi väärtusi. ggplot seda ei tea ja paneb y-teljele vaikimisi märgised 0, 2.5,
+5, 7.5 ja 10 — aga väärtust 2.5 ei ole kellelgi. Telje märgised peaksid vastama sellele,
+mis väärtused muutujal päriselt olla saavad.
+
+Telje märgiseid määrab funktsioon `scale_y_continuous()` (x-telje jaoks on samasugune
+`scale_x_continuous()`). Tema argument `breaks` võtab vektori kohtadest, kuhu märgised
+panna. Kirjutame selle vektori operaatoriga `:` — `0:10` tähendab kõiki täisarve
+nullist kümneni, sama mis `c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)`, ainult lühemalt.
+
 ```{r}
 #| label: scatter-alpha
 ggplot(data, aes(x = vanus, y = usaldus_pol)) +
   geom_point(alpha = 0.2) +
+  scale_y_continuous(breaks = 0:10) +
   labs(
     x = "vanus",
     y = "usaldus poliitikute vastu (0-10)",
@@ -536,7 +547,9 @@ ggplot(data, aes(x = vanus, y = usaldus_pol)) +
   theme_bw()
 ```
 
-Siin on näha üks tüüpiline probleem: `usaldus_pol` on skaalal 0–10 ja võtab ainult täisarvulisi väärtusi, seega paiknevad punktid korrapärastesse ridadesse. Selle lahendust vaatasime just eespool — `geom_jitter()`.
+Siin on näha üks tüüpiline probleem: kuna `usaldus_pol` võtab ainult täisarvulisi väärtusi, paiknevad punktid korrapärastesse ridadesse. Selle lahendust vaatasime just eespool — `geom_jitter()`.
+
+> **Reegel, mida tasub alati järgida.** Kui muutuja skaala on täisarvuline (0–10, 1–5, 1–7 vms), siis peavad ka telje märgised olema täisarvud — iga täisarv või üle ühe, aga mitte 2.5 või 7.5. Sama kehtib ka teiste jooniste kohta, mida me edaspidi teeme.
 
 ## Jooniste salvestamine
 

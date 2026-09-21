@@ -44,10 +44,14 @@ Süntaks: `andmed[, c("a","b")]` veergude valimine nimede järgi
 **[U] ggplot:** `ggplot()` · `aes()` · `geom_bar()` · `geom_histogram()` ·
 `geom_density()` · `geom_boxplot()` · `geom_violin()` · `geom_point()` ·
 `geom_jitter()` · `labs()` · `theme_bw()` · `theme()` · `element_text()` ·
-`scale_fill_manual()` · `scale_x_discrete()` · `ggsave()` · `+` ggplot-i mõttes
+`scale_fill_manual()` · `scale_x_discrete()` · `scale_y_continuous()` ·
+`scale_x_continuous()` · `ggsave()` · `+` ggplot-i mõttes · `:` (arvujada)
 
 Argumendid: `margin`, `bins`, `position`, `values`, `angle`, `hjust`, `axis.text.x`,
-`type`, `output`
+`type`, `output`, `breaks`, `alpha`
+
+> Täisarvulise skaalaga muutuja (0–10 jne) telje märgised peavad olema täisarvud:
+> `scale_y_continuous(breaks = 0:10)`. Reegel kehtib kõigis peatükkides.
 
 **Mõisted:** kirjeldav ja järeldav statistika · mood · mediaan · standardhälve ·
 dispersioon · kvartiil · disainikaal · poststratifitseerimiskaal
@@ -86,7 +90,7 @@ referentskategooria
 
 **[U]** `set.seed()` · `sample()` · `replicate()` · `geom_vline()` · `rep()` ·
 `pnorm()` · `qnorm()` · `qt()` · `as.vector()` · `range()` · `max()` ·
-`geom_area()` · `annotate()` · `scale_x_continuous()` · `element_blank()` ·
+`geom_area()` · `annotate()` · `element_blank()` ·
 `rbind()` · `dnorm()` · `dt()` · `scale_color_manual()` · `scale_linetype_manual()`
 
 Argumendid: `replace`, `lower.tail`, `each`, `xintercept`

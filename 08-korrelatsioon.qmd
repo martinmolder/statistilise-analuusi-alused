@@ -25,6 +25,8 @@ rahulolu demokraatiaga.
 #| label: scatter-esimene
 ggplot(data, aes(x = usaldus_pol, y = rahulolu_dem)) +
   geom_point() +
+  scale_x_continuous(breaks = 0:10) +
+  scale_y_continuous(breaks = 0:10) +
   labs(
     x = "usaldus poliitikute vastu (0-10)",
     y = "rahulolu demokraatiaga (0-10)",
@@ -46,6 +48,8 @@ Selle vastu on kaks abinõu.
 #| label: scatter-jitter
 ggplot(data, aes(x = usaldus_pol, y = rahulolu_dem)) +
   geom_jitter(width = 0.25, height = 0.25, alpha = 0.3) +
+  scale_x_continuous(breaks = 0:10) +
+  scale_y_continuous(breaks = 0:10) +
   labs(
     x = "usaldus poliitikute vastu (0-10)",
     y = "rahulolu demokraatiaga (0-10)",
@@ -283,6 +287,7 @@ erindi_andmed <- data.frame(
 
 ggplot(erindi_andmed, aes(x = usaldus, y = rahulolu)) +
   geom_jitter(width = 0.25, height = 0.25, alpha = 0.3) +
+  scale_y_continuous(breaks = 0:10) +
   labs(
     x = "usaldus poliitikute vastu (üks väärtus on 99)",
     y = "rahulolu demokraatiaga (0-10)",
