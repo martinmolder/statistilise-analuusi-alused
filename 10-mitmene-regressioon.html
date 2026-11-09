@@ -394,6 +394,7 @@ window.Quarto = {
 <p>Seda nimetatakse <strong>teiste muutujate suhtes kontrollimiseks</strong>.</p>
 <p>Miks see oluline on? Sest muutujad on omavahel seotud. Vanus ja haridus on seotud. Haridus ja sissetulek on seotud. Kui me vaataksime ainult haridust, näeksime osaliselt ka vanuse mõju, sest vanemad inimesed on Eestis teistsuguse haridusega kui nooremad.</p>
 <p>Vaatame, mis juhtub, kui muutujaid järjest juurde panna.</p>
+<p>Selleks on vaja mudelist ainult koefitsiente, mitte kogu <code>summary()</code> väljundit. Koefitsiendid saab mudelist eraldi välja võtta funktsiooniga <code>coef()</code>. Ta annab vektori, mille elementidel on nimed — muutujate nimed —, nii et ühe koefitsiendi saab kätte nurksulgudes nime järgi, näiteks <code>coef(m_a)["vanus"]</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>m_a <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> vanus, <span class="at">data =</span> data)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>m_b <span class="ot">&lt;-</span> <span class="fu">lm</span>(rahulolu_dem <span class="sc">~</span> vanus <span class="sc">+</span> usaldus_pol, <span class="at">data =</span> data)</span>
@@ -734,7 +735,7 @@ window.Quarto = {
 <section id="harjutused" class="level2">
 <h2 class="anchored" data-anchor-id="harjutused">Harjutused</h2>
 <div class="harjutus">
-<p><strong>1. Mudeli ehitamine.</strong> Sobita mudel, kus <code>ranne</code> on sõltuv muutuja ning sõltumatud on vanus, haridus ja sissetulek. Milline neist on tugevaim seletaja? Kontrolli standardiseeritud koefitsientidega.</p>
+<p><strong>1. Mudeli ehitamine.</strong> Sobita mudel, kus <code>ranne</code> on sõltuv muutuja ning sõltumatud on vanus, haridus ja sissetulek. Milliste muutujate seos on statistiliselt oluline ja mida iga koefitsient sisuliselt tähendab?</p>
 <p><strong>2. Kategooriline muutuja.</strong> Lisa eelmisesse mudelisse <code>erakond</code>. Kuidas tulemused muutuvad? Millise erakonna valijad erinevad referentskategooriast kõige rohkem?</p>
 <p><strong>3. Juhtumite arv.</strong> Vaata, mitu juhtumit igas mudelis on. Miks arv väheneb, kui muutujaid juurde tuleb?</p>
 <p><strong>4. Ennustatud väärtused.</strong> Arvuta ennustatud <code>ranne</code> väärtus kolme erineva haridustaseme kohta, hoides ülejäänud muutujad konstantsena.</p>
