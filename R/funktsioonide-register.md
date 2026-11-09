@@ -119,14 +119,14 @@ Argumendid: `mu`, `df`, `var.equal`
 
 ## Praktikum 9 — Regressioon: baasmudel
 
-**[U]** `lm()` · `summary()` mudeli peal · `stat_smooth()` · `coef()` · `cbind()`
+**[U]** `lm()` · `summary()` mudeli peal · `stat_smooth()` · `cbind()`
 
 **Mõisted:** vabaliige · regressioonikordaja · jääk · kohandatud R-ruut ·
 mõõtmise kvaliteet
 
 ## Praktikum 10 — Mitmene regressioon
 
-**[U]** `predict()` · `nobs()` · `confint()`
+**[U]** `coef()` · `predict()` · `nobs()` · `confint()`
 
 Argument: `newdata`, `weights`
 

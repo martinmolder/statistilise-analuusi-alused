@@ -49,6 +49,8 @@ ka vanuse mõju, sest vanemad inimesed on Eestis teistsuguse haridusega kui noor
 
 Vaatame, mis juhtub, kui muutujaid järjest juurde panna.
 
+Selleks on vaja mudelist ainult koefitsiente, mitte kogu `summary()` väljundit. Koefitsiendid saab mudelist eraldi välja võtta funktsiooniga `coef()`. Ta annab vektori, mille elementidel on nimed — muutujate nimed —, nii et ühe koefitsiendi saab kätte nurksulgudes nime järgi, näiteks `coef(m_a)["vanus"]`.
+
 ```{r}
 #| label: astmeline
 m_a <- lm(rahulolu_dem ~ vanus, data = data)
@@ -321,7 +323,7 @@ Neli asja, mis peavad kindlasti kirjas olema:
 ## Harjutused
 
 ::: {.harjutus}
-**1. Mudeli ehitamine.** Sobita mudel, kus `ranne` on sõltuv muutuja ning sõltumatud on vanus, haridus ja sissetulek. Milline neist on tugevaim seletaja? Kontrolli standardiseeritud koefitsientidega.
+**1. Mudeli ehitamine.** Sobita mudel, kus `ranne` on sõltuv muutuja ning sõltumatud on vanus, haridus ja sissetulek. Milliste muutujate seos on statistiliselt oluline ja mida iga koefitsient sisuliselt tähendab?
 
 **2. Kategooriline muutuja.** Lisa eelmisesse mudelisse `erakond`. Kuidas tulemused muutuvad? Millise erakonna valijad erinevad referentskategooriast kõige rohkem?
 
