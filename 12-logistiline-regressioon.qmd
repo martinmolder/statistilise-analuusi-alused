@@ -349,10 +349,11 @@ funktsioon `pR2()` paketist `pscl`.
 
 ```{r}
 #| label: pr2
-# pR2() trükib arvutamise ajal teate null-mudeli sobitamise kohta.
-# suppressMessages() vaigistab selle -- tulemus ise ei muutu.
-suppressMessages(pR2(logit1))
+pR2(logit1)
 ```
+
+Rida `fitting null model for pseudo-r2` ei ole viga. Funktsioon annab teada, et ta sobitas võrdluseks ka mudeli, kus ühtegi sõltumatut muutujat ei ole.
+
 
 Kolm viimast arvu on pseudo R-ruudud: **McFadden** oma nime all, **Cox ja Snell** nime
 all `r2ML` ning **Nagelkerke** nime all `r2CU`.
@@ -370,10 +371,13 @@ Teine viis mudelit hinnata on küsida: **kui hästi ta juhtumeid ära arvab?**
 Ennustatud tõenäosused saab funktsiooniga `fitted()`. Kui neid ümardada, saame
 ennustuse 0 või 1 — ümardamise piir on 0,5.
 
+Enne tabeli tegemist teeme ennustusest faktori ja ütleme argumendiga `levels` ise ette, et võimalikud kategooriad on 0 ja 1. Nii on tabelis alati mõlemad read, ka siis, kui mudel kedagi mittevalijaks ei ennusta.
+
 ```{r}
 #| label: klassifikatsioon
 toenaosused <- fitted(logit1)
 ennustatud <- round(toenaosused)
+ennustatud <- factor(ennustatud, levels = c(0, 1))
 
 # Mudel jättis puuduvate väärtustega read välja, seega peame võtma
 # tegelikud väärtused mudeli enda andmetest, mitte algsest tabelist.
@@ -394,7 +398,9 @@ tabel
 nobs(logit1)
 ```
 
-Sellest tabelist saab kaks olulist arvu.
+> **Miks me kategooriad ise ette ütleme?** Nõrk mudel võib ennustada kõik vastajad ühte kategooriasse. Ilma argumendita `levels` oleks tabelis siis ainult üks rida ja järgmine arvutus annaks kas veateate või — mis hullem — vale arvu ilma ühegi veateateta. Kui kategooriad on ette öeldud, siis on puuduva ennustuse real lihtsalt nullid.
+
+Sellest tabelist saab kaks olulist arvu. Võtame tabelist lahtreid ridade ja veergude **nimede** järgi (jutumärkides), mitte järjekorranumbri järgi. Rida on ennustus ja veerg on tegelikkus: `tabel["1", "1"]` on need, kelle kohta mudel ennustas 1 ja kes ka tegelikult valimas käisid.
 
 * **Sensitiivsus** — kui suure osa tegelikest valijatest mudel õigesti ära tundis.
 * **Spetsiifilisus** — kui suure osa tegelikest mittevalijatest mudel õigesti ära
@@ -402,8 +408,8 @@ Sellest tabelist saab kaks olulist arvu.
 
 ```{r}
 #| label: sens-spec
-sensitiivsus <- tabel[2, 2] / sum(tabel[, 2])
-spetsiifilisus <- tabel[1, 1] / sum(tabel[, 1])
+sensitiivsus <- tabel["1", "1"] / sum(tabel[, "1"])
+spetsiifilisus <- tabel["0", "0"] / sum(tabel[, "0"])
 
 round(c(sensitiivsus = sensitiivsus, spetsiifilisus = spetsiifilisus), 3)
 ```
@@ -438,20 +444,23 @@ Kas ta on parem? Vaatame kõiki kolme sobivusnäitajat korraga.
 
 Selle asemel et sama koodi kaks korda kirjutada, teeme **oma funktsiooni**. Funktsiooni loomine käib nii: nimi, `<-`, sõna `function`, sulgudes sisendite nimed ja looksulgudes see, mida teha. Viimane rida funktsiooni sees on see, mille ta tagastab.
 
-Nimetame ta `sobivus()` — ta võtab sisendiks mudeli ja annab tagasi kolm sobivusnäitajat.
+Nimetame ta `sobivus()` — ta võtab sisendiks mudeli ja annab tagasi kolm sobivusnäitajat. Funktsiooni `pR2()` teadet me iga kord näha ei taha. Selle jaoks on funktsioon `capture.output()`, mis püüab kinni kõik, mis muidu ekraanile trükitaks; arvutus ise tehakse ikka ära.
 
 ```{r}
 #| label: sobivuse-funktsioon
 sobivus <- function(mudel) {
   toenaosused <- fitted(mudel)
   ennustatud <- round(toenaosused)
+  # mõlemad kategooriad peavad tabelis olema, ka siis, kui üht ei ennustata
+  ennustatud <- factor(ennustatud, levels = c(0, 1))
   tegelik <- mudel$model[[1]]
   tabel <- table(ennustatud, tegelik)
 
   sens <- tabel["1", "1"] / sum(tabel[, "1"])
   spets <- tabel["0", "0"] / sum(tabel[, "0"])
-  # pR2() trükib teate null-mudeli sobitamise kohta; suppressMessages() vaigistab ta
-  mcf <- suppressMessages(pR2(mudel))[["McFadden"]]
+  # capture.output() püüab pR2() teate kinni, nii et ta väljundisse ei jõua
+  capture.output(pseudo <- pR2(mudel))
+  mcf <- pseudo[["McFadden"]]
 
   tulemus <- c(
     McFadden = mcf,
@@ -606,27 +615,42 @@ modelsummary(
 
 ## Kuidas seda kirja panna
 
+```{r}
+#| label: kirja-arvud
+#| include: false
+koma <- function(x, k) formatC(x, digits = k, format = "f", decimal.mark = ",")
+kirja <- list(
+  huvi = koma(exp(coef(logit1)[["huvi_pol"]]), 1),
+  haridus = koma(exp(coef(logit1)[["haridus"]]), 1),
+  vanus = koma(exp(coef(logit1)[["vanus"]]), 2),
+  sugu_p = koma(summary(logit1)$coefficients["sugunaine", 4], 2),
+  mcf = koma(s1[["McFadden"]], 3),
+  sens = round(100 * s1[["sensitiivsus"]]),
+  spets = round(100 * s1[["spetsiifilisus"]])
+)
+```
+
 ::: {.callout-tip title="Kuidas seda kirja panna"}
 Logistilise regressiooni esitamisel tuleb arvestada kolme asja, mida tavalise regressiooni puhul ei
 olnud: **šansside suhted**, **pseudo R-ruut** ja **klassifitseerimistäpsus**.
 
 **Valimas käimise ennustamiseks koostati logistiline regressioonimudel (tabel 2), kuhu
-kaasati 1170 vastajat. Kõige tugevam seos ilmnes poliitikahuviga: iga punkti võrra
-suurem huvi poliitika vastu suurendab valimas käimise šansse 2,1 korda (p < 0,001).
-Statistiliselt oluline oli ka vanus — iga eluaasta suurendab šansse 1,03 korda
-(p < 0,001) — ning haridustase (šansside suhe 1,14; p < 0,01). Soo puhul olulist seost
-ei ilmnenud.**
+kaasati `r nobs(logit1)` vastajat. Poliitikast huvitatud vastajate šansid valimas käia on
+`r kirja$huvi` korda suuremad kui mittehuvitatutel (p < 0,001). Iga haridusaste suurendab
+valimas käimise šansse `r kirja$haridus` korda (p < 0,001). Statistiliselt oluline on ka
+vanus: iga eluaasta suurendab šansse `r kirja$vanus` korda (p < 0,01). Soo puhul olulist
+seost ei ilmnenud (p = `r kirja$sugu_p`).**
 
-**Mudeli seletusvõime on tagasihoidlik (McFadden pseudo R² = 0,09). Mudel klassifitseerib
-valijad hästi (sensitiivsus 98%), kuid mittevalijaid praktiliselt ei tuvasta
-(spetsiifilisus 8%).**
+**Mudeli seletusvõime on tagasihoidlik (McFadden pseudo R² = `r kirja$mcf`). Mudel
+klassifitseerib valijad hästi (sensitiivsus `r kirja$sens`%), kuid mittevalijaid tuvastab
+halvasti (spetsiifilisus `r kirja$spets`%).**
 
 Neli asja, mille peale mõelda:
 
 * **Ütle, mis on sõltuva muutuja puhul kodeeritud kui 1.** Ilma selleta ei tea lugeja, kumba suunda
   koefitsient näitab.
-* **Šansside suhe on "korda", mitte "võrra".** Šansside suhe 2,1 tähendab
-  kahekordistumist, mitte 2,1 protsendipunkti.
+* **Šansside suhe on "korda", mitte "võrra".** Šansside suhe 2 tähendab
+  kahekordistumist, mitte 2 protsendipunkti.
 * **Ära aja segamini šansse ja tõenäosust.** Šansside kahekordistumine ei tähenda
   tõenäosuse kahekordistumist.
 * **Raporteeri sensitiivsus ja spetsiifilisus koos.** Üksik arv on eksitav.

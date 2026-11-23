@@ -141,7 +141,7 @@ Argumendid: `stars`, `coef_map`, `gof_map`, `terms`, `ymin`, `ymax`
 ## Praktikum 12 — Logistiline regressioon
 
 **[U]** `glm()` · `exp()` · `fitted()` · `pR2()` · `seq()` · `geom_line()` ·
-`ylim()` · `sprintf()` · `registerS3method()` · `suppressMessages()`
+`ylim()` · `sprintf()` · `registerS3method()` · `capture.output()`
 
 Argumendid: `family`, `exponentiate`, `length.out`
 
